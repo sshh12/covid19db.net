@@ -1,0 +1,28 @@
+{
+    "country": {
+        "codes": {
+            "alpha2Code": "US",
+            "alpha3Code": "USA"
+        },
+        "name": "United States of America"
+    },
+    "location": {
+        "lat": 38.0,
+        "lng": -97.0
+    },
+    "populationDensity": 35.608,
+    "medianAge": 38.3,
+    "aged65Older": 15.413,
+    "aged70Older": 9.732,
+    "gdpPerCapita": 54225.446,
+    "gini": 48.0,
+    "extremePovertyRate": 1.2,
+    "cardiovascDeathRate": 151.089,
+    "diabetesPrevalence": 10.79,
+    "femaleSmokers": 19.1,
+    "maleSmokers": 24.6,
+    "hospitalBedsPerThousand": 2.77,
+    "lifeExpectancy": 78.86,
+    "humanDevelopmentIndex": 0.924,
+    "handwashingFacilities": null
+}

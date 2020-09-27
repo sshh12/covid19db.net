@@ -1,0 +1,134 @@
+{
+    "name": "Mexico",
+    "codes": {
+        "alpha2Code": "MX",
+        "alpha3Code": "MEX"
+    },
+    "callingCodes": [
+        "52"
+    ],
+    "captial": {
+        "name": "Mexico City",
+        "location": {
+            "lat": 19.4326296,
+            "lng": -99.1331785
+        },
+        "img": "https://cdn-image.departures.com/sites/default/files/1546980380/independence-monument-mexico-city-CDMX0119.jpg"
+    },
+    "alternateNames": [
+        "MX",
+        "Mexicanos",
+        "United Mexican States",
+        "Estados Unidos Mexicanos"
+    ],
+    "region": {
+        "region": "Americas",
+        "subregion": "Central America"
+    },
+    "population": 122273473,
+    "location": {
+        "lat": 23.0,
+        "lng": -102.0
+    },
+    "area": 1964375.0,
+    "gini": 47.0,
+    "timezones": [
+        "UTC-08:00",
+        "UTC-07:00",
+        "UTC-06:00"
+    ],
+    "borders": [
+        "BLZ",
+        "GTM",
+        "USA"
+    ],
+    "currencies": [
+        {
+            "code": "MXN",
+            "name": "Mexican peso",
+            "symbol": "$"
+        }
+    ],
+    "languages": [
+        {
+            "iso639_1": "es",
+            "iso639_2": "spa",
+            "name": "Spanish",
+            "nativeName": "Español"
+        }
+    ],
+    "flag": "https://restcountries.eu/data/mex.svg",
+    "regionalBlocs": [
+        {
+            "acronym": "PA",
+            "name": "Pacific Alliance",
+            "otherAcronyms": [],
+            "otherNames": [
+                "Alianza del Pacífico"
+            ]
+        },
+        {
+            "acronym": "NAFTA",
+            "name": "North American Free Trade Agreement",
+            "otherAcronyms": [],
+            "otherNames": [
+                "Tratado de Libre Comercio de América del Norte",
+                "Accord de Libre-échange Nord-Américain"
+            ]
+        }
+    ],
+    "news": [
+        {
+            "source": {
+                "id": null,
+                "name": "Unotv.com"
+            },
+            "author": null,
+            "title": "Padres decidirán si hijos van a clases presenciales, aun con semáforo verde: SEP - Uno TV Noticias",
+            "description": "Padres y madres podrán decidir si sus hijos estudiantes acuden a clases presenciales, aun cuando el semáforo epidemiológico del COVID-19 esté en verde.",
+            "url": "https://www.unotv.com/nacional/padres-decidiran-si-hijos-van-a-clases-presenciales-aun-con-semaforo-verde-sep/",
+            "urlToImage": "https://www.unotv.com/uploads/2020/09/New-Project-1-43.jpg",
+            "publishedAt": "2020-09-26T00:35:00Z",
+            "content": "Padres y madres podrán decidir si sus hijos estudiantes acuden a clases presenciales, aun cuando el semáforo epidemiológico del nuevo coronavirus (COVID-19) esté en verde, confirmó a Unotv.com la Sec… [+3229 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "El Universal"
+            },
+            "author": null,
+            "title": "Vacuna de Johnson & Johnson produce fuerte respuesta inmune ante Covid, arrojan pruebas | El Universal - El Universal",
+            "description": "La vacuna, llamada Ad26.COV2.S, ha sido igualmente bien tolerada en dos dosis diferentes, según los resultados preliminares publicados este viernes",
+            "url": "https://www.eluniversal.com.mx/mundo/vacuna-de-johnson-johnson-produce-fuerte-respuesta-inmune-ante-covid-arrojan-pruebas",
+            "urlToImage": "https://www.eluniversal.com.mx/sites/default/files/2020/09/25/vacuna-johnson-johnson.jpeg",
+            "publishedAt": "2020-09-26T00:24:48Z",
+            "content": "La vacuna de dosis única contra el coronavirus de Johnson &amp; Johnson, produce una fuerte respuesta inmune, según resultados preliminares publicados este viernes.\r\nLa vacuna, llamada Ad26.COV2.S, h… [+777 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Unotv.com"
+            },
+            "author": null,
+            "title": "Resultados fase 3 de vacuna COVID-19, a fines de 2020: Pascal Soriot, de AstraZeneca - Uno TV Noticias",
+            "description": "Pascal Soriot, director ejecutivo de AstraZeneca, prevé que para fines de 2020 se obtengan los resultados de las pruebas fase 3 de la vacuna COVID-19.",
+            "url": "https://www.unotv.com/nacional/vacuna-covid-19-astrazeneca-resultados-de-fase-3-a-fines-de-2020-dice-pascal-soriot/",
+            "urlToImage": "https://www.unotv.com/uploads/2020/09/New-Project-173.jpg",
+            "publishedAt": "2020-09-25T21:45:00Z",
+            "content": "Los resultados de la fase 3 relacionados con la vacuna contra el nuevo coronavirus (COVID-19), desarrollada en conjunto por el laboratorio AstraZeneca y la Fundación Carlos Slim, podrían estar listos… [+2391 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "El Financiero"
+            },
+            "author": "El Financiero",
+            "title": "Investigadores encuentran anticuerpos que ayudan al COVID-19, en vez de combatirlo - El Financiero",
+            "description": "1 de cada 10 pacientes graves produjeron proteínas que bloquearon el efecto del interferón en su organismo, una sustancia producida por el cuerpo contra los patógenos virales",
+            "url": "https://elfinanciero.com.mx/salud",
+            "urlToImage": "https://elfinanciero.com.mx/uploads/2020/09/25/88a839f2f61601052780_standard_desktop_fullhd.jpeg",
+            "publishedAt": "2020-09-25T17:27:18Z",
+            "content": "Cuando dos hermanos se enfermaron gravemente de COVID-19 aproximadamente al mismo tiempo en marzo, sus médicos estaban desconcertados. Ambos eran jóvenes (29 y 31 años) y estaban sanos. Sin embargo, … [+9470 chars]"
+        }
+    ]
+}

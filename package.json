@@ -17,8 +17,10 @@
   "scripts": {
     "react": "react-scripts start",
     "flask": "python main.py",
-    "gcp:deploy": "gcloud app deploy",
-    "gcp:browse": "gcloud app browse",
+    "branches": "git branch -vv -a",
+    "log": "git log",
+    "deploy": "gcloud app deploy",
+    "gcp": "gcloud app browse",
     "build": "react-scripts build"
   },
   "eslintConfig": {

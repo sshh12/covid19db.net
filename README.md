@@ -1,3 +1,76 @@
-# SWE IDB Project
+# COVID-19 DB
 
-Repository for our SWE IDB Project (Fall 2020, group 9)
+Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
+
+## Info
+
+Git SHA: tbd
+
+Project leader: Jeffrey Moulckers
+
+GitLab pipelines: https://gitlab.com/jrmoulckers/covid19db-net/-/pipelines
+
+Website: https://covid19db.net
+
+Comments: tbd
+
+## Members
+
+Name:
+
+EID:
+
+GitLab ID:
+
+Estimated completion time:
+
+Actual completion time:
+
+---
+
+Name:
+
+EID:
+
+GitLab ID:
+
+Estimated completion time:
+
+Actual completion time:
+
+---
+
+Name:
+
+EID:
+
+GitLab ID:
+
+Estimated completion time:
+
+Actual completion time:
+
+
+---
+
+Name:
+
+EID:
+
+GitLab ID:
+
+Estimated completion time:
+
+Actual completion time:
+
+---
+
+Name:
+
+EID:
+
+GitLab ID:
+
+Estimated completion time:
+
+Actual completion time:

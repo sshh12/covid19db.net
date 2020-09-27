@@ -6,7 +6,9 @@ threadsafe: true
 handlers:
   - url: /
     static_files: build/index.html
+    secure: always
     upload: build/index.html
   - url: /(.*)
     static_files: build/\1
+    secure: always
     upload: build/(.*)

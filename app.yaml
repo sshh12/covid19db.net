@@ -1,1 +1,14 @@
-runtime: python37
+# https://cloud.google.com/appengine/docs/standard/python/config/appref
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+  - url: /
+    static_files: build/index.html
+    secure: always
+    upload: build/index.html
+  - url: /(.*)
+    static_files: build/\11
+    secure: always
+    upload: build/(.*)

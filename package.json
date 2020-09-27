@@ -19,7 +19,8 @@
     "flask": "python main.py",
     "branches": "git branch -vv -a",
     "log": "git log",
-    "deploy": "gcloud app deploy",
+    "deploy:site": "gcloud app deploy",
+    "deploy:api": "pushd backend && gcloud app deploy && popd",
     "gcp": "gcloud app browse",
     "build": "react-scripts build"
   },

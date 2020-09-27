@@ -1,0 +1,9 @@
+# https://cloud.google.com/appengine/docs/standard/python/config/appref
+runtime: python37
+
+module: api
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always

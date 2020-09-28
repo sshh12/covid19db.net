@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./app.css";
 import Routes from "./routes";
 
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";

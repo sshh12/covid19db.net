@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button } from "react-bootstrap";
 
-// https://gitlab.com/api/v4/projects/21269899/issues
 export default class About extends Component {
   render() {
     return (

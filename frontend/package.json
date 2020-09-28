@@ -18,11 +18,11 @@
   },
   "scripts": {
     "react": "react-scripts start",
-    "flask": "python main.py",
+    "flask": "cd ../backend && python main.py",
     "branches": "git branch -vv -a",
     "log": "git log",
     "deploy:site": "gcloud app deploy",
-    "deploy:api": "pushd backend && gcloud app deploy && popd",
+    "deploy:api": "pushd ../backend && gcloud app deploy && popd",
     "gcp": "gcloud app browse",
     "build": "react-scripts build"
   },

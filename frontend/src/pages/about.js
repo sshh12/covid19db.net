@@ -42,6 +42,7 @@ const GROUP_MEMBERS = [
   },
 ].sort((a, b) => Math.random() - 0.5);
 
+// TODO
 const TOOLS = [
   {
     name: "React",
@@ -52,6 +53,21 @@ const TOOLS = [
     name: "Flask",
     url: "https://flask.palletsprojects.com/en/1.1.x/",
     desc: "For serving our API data in a RESTful way.",
+  },
+  {
+    name: "GCP",
+    url: "https://cloud.google.com",
+    desc: "For hosting our site on the cloud.",
+  },
+  {
+    name: "Postman",
+    url: "https://www.postman.com",
+    desc: "For building and testing API's.",
+  },
+  {
+    name: "GitLab",
+    url: "https://gitlab.com/explore",
+    desc: "DevOps tool for issue-tracking, continuous integration, testing, and deployment.",
   },
 ];
 
@@ -93,9 +109,16 @@ export default class About extends Component {
             </Button>
           </LinkContainer>
         </header>
+        {/* TODO */}
         <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
-          description of the site, its purpose, its intended users and
-          explanation of the interesting result of integrating disparate data
+          Our COVID-19 Database site allows users to gather quick statistics on the 
+          coronavirus in terms of country, cases, and potential risks. 
+          This website is intended for those susceptible to contracting the virus 
+          (that means you!), and our aim is to keep users informed about the coronavirus. 
+          
+          Integrating disparate data allows us to correlate different types 
+          of coronavirus cases, symptoms, and risks with location around the world, 
+          exposing the different attributes attached to each unique COVID-19 strain.
         </div>
         <hr />
         <ProjectInfo />

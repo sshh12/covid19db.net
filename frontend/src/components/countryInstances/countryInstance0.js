@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
+import GBRData from './data/GBR.json';
+
 // Area - 242900.0
 // ISO alpha3 code - GBR
 // Alternate names - United Kingdom of Great Britain and Northern Ireland, GB, UK, Great Britain

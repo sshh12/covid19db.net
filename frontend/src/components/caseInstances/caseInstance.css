@@ -1,0 +1,42 @@
+.Case-header {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-top: 50px;
+  align-items: start;
+  justify-content: start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+#page-title{
+  font-weight: 800;
+  font-size: 1.25em;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-right: 35px;
+}
+
+.totals-title{
+  font-weight: 500;
+  font-size: medium;
+  color: #a0a0a0;
+}
+
+.totals-data{
+  font-weight: 700;
+  font-size: large;
+}
+
+.new-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

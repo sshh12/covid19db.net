@@ -8,17 +8,17 @@ export default class Cases extends Component {
       <div className="App">
         <header className="App-header">
           <h1> Case Page </h1>
-          <LinkContainer className="App-link" to="/case-instance-0">
+          <LinkContainer className="App-link" to="/cases/GBR">
             <Button variant="outline-secondary" size="lg">
               Case 0
             </Button>
           </LinkContainer>
-          <LinkContainer className="App-link" to="/case-instance-1">
+          <LinkContainer className="App-link" to="/cases/MEX">
             <Button variant="outline-secondary" size="lg">
               Case 1
             </Button>
           </LinkContainer>
-          <LinkContainer className="App-link" to="/case-instance-2">
+          <LinkContainer className="App-link" to="/cases/USA">
             <Button variant="outline-secondary" size="lg">
               Case 2
             </Button>

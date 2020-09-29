@@ -57,7 +57,7 @@ export default class Risks extends Component {
       //   ),
       // },
     ];
-    
+
     const data = [
       {
         key: '1',
@@ -84,8 +84,8 @@ export default class Risks extends Component {
         gini: USAData.gini,
       },
     ];
-    
-    return(<Table columns={columns} dataSource={data} />);
+
+    return (<Table columns={columns} dataSource={data} />);
 
 
     // return (

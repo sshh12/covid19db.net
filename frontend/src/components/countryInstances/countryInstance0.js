@@ -19,7 +19,7 @@ import { Button } from 'react-bootstrap';
 //         image of capital, interactive map of capital
 
 
-export default class CountryInstance0 extends Component {
+export default class CountryInstanceGBR extends Component {
   render() {
     return (
       <div className='App'>

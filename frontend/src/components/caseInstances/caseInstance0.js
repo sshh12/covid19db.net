@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
-class CaseInstance0 extends Component {
+class CaseInstanceGBR extends Component {
   render() {
     return (
       <div className='App'>
@@ -17,4 +17,4 @@ class CaseInstance0 extends Component {
   }
 }
 
-export default CaseInstance0;
+export default CaseInstanceGBR;

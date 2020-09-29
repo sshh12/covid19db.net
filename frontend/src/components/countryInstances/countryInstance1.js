@@ -19,7 +19,7 @@ import { Button } from 'react-bootstrap';
 
 
 
-export default class CountryInstance1 extends Component {
+export default class CountryInstanceMEX extends Component {
   render() {
     return (
       <div className='App'>

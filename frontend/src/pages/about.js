@@ -67,7 +67,8 @@ const TOOLS = [
   {
     name: "GitLab",
     url: "https://gitlab.com/explore",
-    desc: "DevOps tool for issue-tracking, continuous integration, testing, and deployment.",
+    desc:
+      "DevOps tool for issue-tracking, continuous integration, testing, and deployment.",
   },
 ];
 
@@ -111,14 +112,14 @@ export default class About extends Component {
         </header>
         {/* TODO */}
         <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
-          Our COVID-19 Database site allows users to gather quick statistics on the 
-          coronavirus in terms of country, cases, and potential risks. 
-          This website is intended for those susceptible to contracting the virus 
-          (that means you!), and our aim is to keep users informed about the coronavirus. 
-          
-          Integrating disparate data allows us to correlate different types 
-          of coronavirus cases, symptoms, and risks with location around the world, 
-          exposing the different attributes attached to each unique COVID-19 strain.
+          Our COVID-19 Database site allows users to gather quick statistics on
+          the coronavirus in terms of country, cases, and potential risks. This
+          website is intended for those susceptible to contracting the virus
+          (that means you!), and our aim is to keep users informed about the
+          coronavirus. Integrating disparate data allows us to correlate
+          different types of coronavirus cases, symptoms, and risks with
+          location around the world, exposing the different attributes attached
+          to each unique COVID-19 strain.
         </div>
         <hr />
         <ProjectInfo />
@@ -130,6 +131,10 @@ export default class About extends Component {
           <br />
           <a href="https://gitlab.com/jrmoulckers/covid19db-net">
             gitlab.com/jrmoulckers/covid19db-net
+          </a>
+          <br />
+          <a href="https://documenter.getpostman.com/view/12799044/TVKJxuP4">
+            Postman Docs
           </a>
         </div>
         <hr />

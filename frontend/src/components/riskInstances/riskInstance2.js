@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
-export default class RiskInstance2 extends Component {
+export default class RiskInstanceUSA extends Component {
   render() {
     return (
       <div className='App'>

@@ -21,7 +21,7 @@ import GBRData from './data/GBR.json';
 //         image of capital, interactive map of capital
 
 
-export default class CountryInstance0 extends Component {
+export default class CountryInstanceGBR extends Component {
   render() {
     return (
       <div className='App'>

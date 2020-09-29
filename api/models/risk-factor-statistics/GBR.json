@@ -1,0 +1,28 @@
+{
+    "country": {
+        "codes": {
+            "alpha2Code": "GB",
+            "alpha3Code": "GBR"
+        },
+        "name": "United Kingdom of Great Britain and Northern Ireland"
+    },
+    "location": {
+        "lat": 54.0,
+        "lng": -2.0
+    },
+    "populationDensity": 272.898,
+    "medianAge": 40.8,
+    "aged65Older": 18.517,
+    "aged70Older": 12.527,
+    "gdpPerCapita": 39753.244,
+    "gini": 34.0,
+    "extremePovertyRate": 0.2,
+    "cardiovascDeathRate": 122.137,
+    "diabetesPrevalence": 4.28,
+    "femaleSmokers": 20.0,
+    "maleSmokers": 24.7,
+    "hospitalBedsPerThousand": 2.54,
+    "lifeExpectancy": 81.32,
+    "humanDevelopmentIndex": 0.922,
+    "handwashingFacilities": null
+}

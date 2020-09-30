@@ -1,33 +1,89 @@
 import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button } from "react-bootstrap";
+import { Button, Table, Tag, Space } from "antd";
+
+import USAData from '../components/caseInstances/data/USA.json';
+import GBRData from '../components/caseInstances/data/GBR.json';
+import MEXData from '../components/caseInstances/data/MEX.json';
+import '../components/caseInstances/caseInstance.css';
 
 export default class Cases extends Component {
   render() {
+    const columns = [
+      {
+        title: 'Explore Case',
+        dataIndex: 'exploreRisk',
+        key: 'exploreRisk',
+        render: code => <LinkContainer to={`/cases/${code}`}><Button>Explore</Button></LinkContainer>,
+      },
+      {
+        title: 'Country',
+        dataIndex: 'country',
+        key: 'country',
+        render: country => <LinkContainer to={`/countries/${country.codes.alpha3Code}`}><a>{country.name}</a></LinkContainer>,
+        sorter: (a, b) => a.country.name.localeCompare(b.country.name),
+      },
+      {
+        title: 'Total Cases',
+        dataIndex: 'totalCases',
+        key: 'totalCases',
+        sorter: (a, b) => a.totalCases - b.totalCases,
+      },
+      {
+        title: 'Total Deaths',
+        dataIndex: 'totalDeaths',
+        key: 'totalDeaths',
+        sorter: (a, b) => a.totalDeaths - b.totalDeaths,
+      },
+      {
+        title: 'Total Recovered',
+        dataIndex: 'totalRecovered',
+        key: 'totalRecovered',
+        sorter: (a, b) => a.totalRecovered - b.totalRecovered,
+      },
+      {
+        title: 'Total Active',
+        dataIndex: 'totalActive',
+        key: 'totalActive',
+        sorter: (a, b) => a.totalActive - b.totalActive,
+      },
+    ];
+
+    const data = [
+      {
+        key: '1',
+        country: GBRData.country,
+        totalCases: GBRData.totals.cases,
+        totalDeaths: GBRData.totals.deaths,
+        totalRecovered: GBRData.totals.recovered,
+        totalActive: GBRData.totals.active,
+        exploreRisk: GBRData.country.codes.alpha3Code,
+      },
+      {
+        key: '2',
+        country: MEXData.country,
+        totalCases: MEXData.totals.cases,
+        totalDeaths: MEXData.totals.deaths,
+        totalRecovered: MEXData.totals.recovered,
+        totalActive: MEXData.totals.active,
+        exploreRisk: MEXData.country.codes.alpha3Code,
+      },
+      {
+        key: '3',
+        country: USAData.country,
+        totalCases: USAData.totals.cases,
+        totalDeaths: USAData.totals.deaths,
+        totalRecovered: USAData.totals.recovered,
+        totalActive: USAData.totals.active,
+        exploreRisk: USAData.country.codes.alpha3Code,
+      },
+    ];
+
     return (
       <div className="App">
-        <header className="App-header">
-          <h1> Case Page </h1>
-          <LinkContainer className="App-link" to="/cases/GBR">
-            <Button variant="outline-secondary" size="lg">
-              Case 0
-            </Button>
-          </LinkContainer>
-          <LinkContainer className="App-link" to="/cases/MEX">
-            <Button variant="outline-secondary" size="lg">
-              Case 1
-            </Button>
-          </LinkContainer>
-          <LinkContainer className="App-link" to="/cases/USA">
-            <Button variant="outline-secondary" size="lg">
-              Case 2
-            </Button>
-          </LinkContainer>
-          <LinkContainer className="App-link" to="/">
-            <Button variant="outline-secondary">
-              Click here to go back to the main page
-            </Button>
-          </LinkContainer>
+        <header className="Case-header">
+          <h1> Cases Page </h1>
+          <Table columns={columns} dataSource={data} />
         </header>
       </div>
     );

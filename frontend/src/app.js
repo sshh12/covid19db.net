@@ -14,7 +14,6 @@ class App extends Component {
           <LinkContainer to="/">
             <Navbar.Brand>COVID-19 DB</Navbar.Brand>
           </LinkContainer>
-
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="navbar">

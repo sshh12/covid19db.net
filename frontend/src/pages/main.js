@@ -30,7 +30,7 @@ export default class Main extends Component {
         <Map
           center={[15, 30]}
           zoom={1.95}
-          height={window.innerHeight + 420 - 69 - 420} // Perfect value to fit the map on the splash page... nice
+          height={window.innerHeight - 69 + (420 - 420)} // Perfect value to fit the map on the splash page... nice
           width={'100vw'}
         />
       </div>

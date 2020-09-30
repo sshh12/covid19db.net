@@ -104,7 +104,7 @@ export default class About extends Component {
     );
     return (
       <div className="App">
-        <h1>About</h1>
+        <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}>About</h1>
         {/* <header className="App-header" style={{ minHeight: "10rem" }}>
           <h1> About Page </h1>
           <LinkContainer className="App-link" to="/">

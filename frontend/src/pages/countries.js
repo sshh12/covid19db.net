@@ -29,7 +29,7 @@ export default class Countries extends Component {
   render() {
     return (
       <div className="App">
-        <h1> Countries </h1>
+        <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}>Countries </h1>
 
         <div className="site-card-wrapper" style={{ margin: '0 5vw' }}>
           <Row gutter={16}>

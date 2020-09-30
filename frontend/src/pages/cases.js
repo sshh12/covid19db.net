@@ -93,8 +93,8 @@ export default class Cases extends Component {
     return (
       <div className="App">
         {/* <header className="Case-header"> */}
-          <h1> Cases </h1>
-          <Table style={{margin: '0 5vw', outline: '1px solid lightgrey'}} columns={columns} dataSource={data} pagination={false} />
+        <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}> Cases </h1>
+        <Table style={{ margin: '0 5vw', outline: '1px solid lightgrey' }} columns={columns} dataSource={data} pagination={false} />
         {/* </header> */}
       </div>
     );

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button, Card, Media, Tab, Row, Col, ListGroup } from "react-bootstrap";
+import { Card, Tab, Row, Col, ListGroup } from "react-bootstrap";
 
+const GITLAB_API_BASE = "https://gitlab.com/api/v4";
 const REPO_ID = "21269899";
 
 const GROUP_MEMBERS = [
@@ -42,7 +43,6 @@ const GROUP_MEMBERS = [
   },
 ].sort((a, b) => Math.random() - 0.5);
 
-// TODO
 const TOOLS = [
   {
     name: "React",
@@ -86,10 +86,12 @@ export default class About extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://gitlab.com/api/v4/projects/${REPO_ID}/issues`)
+    fetch(`${GITLAB_API_BASE}/projects/${REPO_ID}/issues?state=closed`)
       .then((resp) => resp.json())
       .then((issues) => this.setState({ issues: issues }));
-    fetch(`https://gitlab.com/api/v4/projects/${REPO_ID}/repository/commits`)
+    fetch(
+      `${GITLAB_API_BASE}/projects/${REPO_ID}/repository/commits?all=true&per_page=1000`
+    )
       .then((resp) => resp.json())
       .then((commits) => this.setState({ commits: commits }));
   }
@@ -111,16 +113,15 @@ export default class About extends Component {
             </Button>
           </LinkContainer>
         </header> */}
-        {/* TODO */}
         <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
           Our COVID-19 Database site allows users to gather quick statistics on
           the coronavirus in terms of country, cases, and potential risks. This
           website is intended for those susceptible to contracting the virus
           (that means you!), and our aim is to keep users informed about the
-          coronavirus. Integrating disparate data sets allows us to form
-          a broad overview of how countries have handled the COVID-19 pandemic,
-          present some of the unique risks each country's population faces,
-          and possibly indicate the near future trajectory of the pandemic.
+          coronavirus. Integrating disparate data sets allows us to form a broad
+          overview of how countries have handled the COVID-19 pandemic, present
+          some of the unique risks each country's population faces, and possibly
+          indicate the near future trajectory of the pandemic.
         </div>
         <hr />
         <ProjectInfo />

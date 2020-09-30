@@ -20,7 +20,7 @@ export default class RiskInstanceMEX extends Component {
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >
             <BigStat title="Human Development Index" data={MEXData.humanDevelopmentIndex.toFixed(3)} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
             <BigStat title="Gini Index" data={MEXData.gini.toFixed(1)} avg={Agg.gini.toFixed(1)} />
-            <BigStat title="GDP Per Capita" prefix='$' data={`${MEXData.gdpPerCapita.toLocaleString()}`} suffix='/person'  avg={`$${Agg.gdpPerCapita.toLocaleString()}`}/>
+            <BigStat title="GDP Per Capita" prefix='$' data={`${MEXData.gdpPerCapita.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
           </div>
           <div>
             <div id='demogr-factor-title-div'>
@@ -46,18 +46,18 @@ export default class RiskInstanceMEX extends Component {
               <HealthFactor title="Handwashing Facilities" data={`${MEXData.handwashingFacilities?.toFixed(3)}%`} avg={`${Agg.handwashingFacilities?.toFixed(3)}%`} suffix=' access' />
             </div>
           </div>
-            {/* media / visual */}
-            <div style={{ marginTop: "1vh" }}>
-              <div id='title-div'>
-                <h2 id='subtitle'>Map:</h2>
-              </div>
-              <Map
-                center={[MEXData.location.lng, MEXData.location.lat]}
-                zoom={4}
-                height={window.innerHeight * 0.4}
-                width={window.innerWidth * 0.4}
-              />
-            </div>        
+          {/* media / visual */}
+          <div style={{ marginTop: "1vh" }}>
+            <div id='title-div'>
+              <h2 id='subtitle'>Map</h2>
+            </div>
+            <Map
+              center={[MEXData.location.lng, MEXData.location.lat]}
+              zoom={4}
+              height={window.innerHeight * 0.4}
+              width={window.innerWidth * 0.4}
+            />
+          </div>
         </header>
       </div>
     );

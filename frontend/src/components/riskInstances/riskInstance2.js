@@ -20,7 +20,7 @@ export default class RiskInstanceUSA extends Component {
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >
             <BigStat title="Human Development Index" data={USAData.humanDevelopmentIndex.toFixed(3)} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
             <BigStat title="Gini Index" data={USAData.gini.toFixed(1)} avg={Agg.gini.toFixed(1)} />
-            <BigStat title="GDP Per Capita" prefix='$' data={`${USAData.gdpPerCapita.toLocaleString()}`} suffix='/person'  avg={`$${Agg.gdpPerCapita.toLocaleString()}`}/>
+            <BigStat title="GDP Per Capita" prefix='$' data={`${USAData.gdpPerCapita.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
           </div>
           <div>
             <div id='demogr-factor-title-div'>
@@ -49,7 +49,7 @@ export default class RiskInstanceUSA extends Component {
           {/* media / visual */}
           <div style={{ marginTop: "1vh" }}>
             <div id='title-div'>
-              <h2 id='subtitle'>Map:</h2>
+              <h2 id='subtitle'>Map</h2>
             </div>
             <Map
               center={[USAData.location.lng, USAData.location.lat]}
@@ -57,7 +57,7 @@ export default class RiskInstanceUSA extends Component {
               height={window.innerHeight * 0.4}
               width={window.innerWidth * 0.4}
             />
-          </div>        
+          </div>
         </header>
       </div>
     );

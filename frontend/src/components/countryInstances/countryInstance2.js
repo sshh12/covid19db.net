@@ -26,7 +26,7 @@ export default class CountryInstanceUSA extends Component {
 
           <div>
             <div id='title-div'>
-              <h2 id='subtitle'>General Information:</h2>
+              <h2 id='subtitle'>General Information</h2>
             </div>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
               <GeneralInfo title="Population" data={USAData.population} />
@@ -47,7 +47,7 @@ export default class CountryInstanceUSA extends Component {
           {/* media / visual */}
           <div style={{ marginTop: '1vh' }}>
             <div id="title-div">
-              <h2 id='subtitle'>Map of Capital:</h2>
+              <h2 id='subtitle'>Map of Capital</h2>
             </div>
             <Map
               center={[USAData.capital.location.lng, USAData.capital.location.lat]}
@@ -59,7 +59,7 @@ export default class CountryInstanceUSA extends Component {
 
           <div style={{ marginTop: '1vh', marginBottom: "10vh" }}>
             <div id='title-div'>
-              <h2 id='subtitle'>News:</h2>
+              <h2 id='subtitle'>News</h2>
             </div>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
               <News title={USAData.news[0].title} url={USAData.news[0].url} source={USAData.news[0].source.name} />

@@ -26,7 +26,7 @@ export default class CountryInstanceMEX extends Component {
 
           <div>
             <div id='title-div'>
-              <h2 id='subtitle'>General Information:</h2>
+              <h2 id='subtitle'>General Information</h2>
             </div>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
               <GeneralInfo title="Population" data={MEXData.population} />
@@ -47,7 +47,7 @@ export default class CountryInstanceMEX extends Component {
           {/* media / visual */}
           <div style={{ marginTop: '1vh' }}>
             <div id="title-div">
-              <h2 id='subtitle'>Map of Capital:</h2>
+              <h2 id='subtitle'>Map of Capital</h2>
             </div>
             <Map
               center={[MEXData.capital.location.lng, MEXData.capital.location.lat]}
@@ -59,7 +59,7 @@ export default class CountryInstanceMEX extends Component {
 
           <div style={{ marginTop: '1vh', marginBottom: "10vh" }}>
             <div id='title-div'>
-              <h2 id='subtitle'>News:</h2>
+              <h2 id='subtitle'>News</h2>
             </div>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
               <News title={MEXData.news[0].title} url={MEXData.news[0].url} source={MEXData.news[0].source.name} />

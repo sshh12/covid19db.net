@@ -20,7 +20,7 @@ export default class RiskInstanceGBR extends Component {
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >
             <BigStat title="Human Development Index" data={GBRData.humanDevelopmentIndex.toFixed(3)} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
             <BigStat title="Gini Index" data={GBRData.gini.toFixed(1)} avg={Agg.gini.toFixed(1)} />
-            <BigStat title="GDP Per Capita" prefix='$' data={`${GBRData.gdpPerCapita.toLocaleString()}`} suffix='/person'  avg={`$${Agg.gdpPerCapita.toLocaleString()}`}/>
+            <BigStat title="GDP Per Capita" prefix='$' data={`${GBRData.gdpPerCapita.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
           </div>
           <div>
             <div id='demogr-factor-title-div'>
@@ -49,7 +49,7 @@ export default class RiskInstanceGBR extends Component {
           {/* media / visual */}
           <div style={{ marginTop: "1vh" }}>
             <div id='title-div'>
-              <h2 id='subtitle'>Map:</h2>
+              <h2 id='subtitle'>Map</h2>
             </div>
             <Map
               center={[GBRData.location.lng, GBRData.location.lat]}

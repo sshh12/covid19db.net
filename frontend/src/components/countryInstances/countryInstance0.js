@@ -1,35 +1,49 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
-
+import "./countryInstance.css";
+import { GeneralInfo } from './countryComponents';
 import GBRData from './data/GBR.json';
-
-// Area - 242900.0
-// ISO alpha3 code - GBR
-// Alternate names - United Kingdom of Great Britain and Northern Ireland, GB, UK, Great Britain
-// Region - Europe
-// Subregion - Northern Europe
-// Latitude lat - 54.0
-// Longitude lng - -2.0
-// Regional blocs - European Union
-// Currencies - British pound
-// Bordering countries - IRL
-// Time zones         "UTC-08:00","UTC-05:00","UTC-04:00","UTC-03:00","UTC-02:00",
-// "UTC","UTC+01:00","UTC+02:00","UTC+06:00"
-// Calling codes - 44
-// Media: flag, interactive map, related COVID-19 news, 
-//         image of capital, interactive map of capital
-
 
 export default class CountryInstanceGBR extends Component {
   render() {
     return (
       <div className='App'>
-        <header className='App-header'>
-          <h1> Great Britain </h1>
-          <LinkContainer className='App-link' to='/countries'>
-            <Button variant='outline-secondary'>Click here to go back</Button>
+        <header className='Case-header'>
+          <LinkContainer className='Back-link' to='/countries'>
+            <Button variant='outline-secondary'>Go back</Button>
           </LinkContainer>
+
+          <h1 id='page-title'> {GBRData.name} ({GBRData.codes.alpha3Code})</h1>
+          <h2 id='subtitle'> Capital - {GBRData.capital.name}</h2>
+
+          {/* media / visual */}
+          {/* <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
+            <h2 id='subtitle'>Map</h2>
+            <CaseResponseLine data={GBRData} />
+          </div> */}
+
+          <div>
+            <div id='title-div'>
+              <h2 id='subtitle'>General Information</h2>
+            </div>
+            <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
+              <GeneralInfo title="Population" data={GBRData.population} />
+              <GeneralInfo title="Currency" data={GBRData.currencies[0].code} />
+              <GeneralInfo title="Longitude" data={GBRData.location.lng} />
+              <GeneralInfo title="Latitude" data={GBRData.location.lat} />
+            </div>
+          </div>
+
+          <div style={{ marginTop: '50px' }}>
+            <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
+              <GeneralInfo title="Region" data={GBRData.region.region} />
+              <GeneralInfo title="Sub-Region" data={GBRData.region.subregion} />
+              <GeneralInfo title="Border" data={GBRData.borders[0]} />
+              <GeneralInfo title="Languages" data={GBRData.languages[0].name} />
+            </div>
+          </div>
+
         </header>
       </div>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Table, Tag, Space } from "antd";
+import { Button, Table } from "antd";
 import { LinkContainer } from "react-router-bootstrap";
+import '../components/countryInstances/countryInstance.css';
 
 import USAData from '../components/countryInstances/data/USA.json';
 import GBRData from '../components/countryInstances/data/GBR.json';

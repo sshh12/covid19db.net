@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'antd';
 import { Totals, NewStats, GenStats, CaseResponseLine } from './caseComponents';
+import Map from "../../components/map";
 import "./caseInstance.css";
 import MEXData from './data/MEX.json';
 
@@ -47,6 +48,14 @@ class CaseInstanceMEX extends Component {
           <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
             <h2 id='subtitle'>Trends and Visuals</h2>
             <CaseResponseLine data={MEXData} />
+          </div>
+          <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
+            <h2 id='subtitle'>Map</h2>
+            <Map
+              center={[MEXData.location.lng, MEXData.location.lat]}
+              zoom={4}
+              height={window.innerHeight - 400}
+            />
           </div>
         </header>
       </div>

@@ -46,16 +46,19 @@ export default class RiskInstanceMEX extends Component {
               <HealthFactor title="Handwashing Facilities" data={`${MEXData.handwashingFacilities?.toFixed(3)}%`} avg={`${Agg.handwashingFacilities?.toFixed(3)}%`} suffix=' access' />
             </div>
           </div>
+            {/* media / visual */}
+            <div style={{ marginTop: "1vh" }}>
+              <div id='title-div'>
+                <h2 id='subtitle'>Map:</h2>
+              </div>
+              <Map
+                center={[MEXData.location.lng, MEXData.location.lat]}
+                zoom={4}
+                height={window.innerHeight * 0.4}
+                width={window.innerWidth * 0.4}
+              />
+            </div>        
         </header>
-        <div style={{ margin:'auto' }}>
-        <div style={{ height:'40vh', alignSelf:'center'}}>
-          <Map
-            center={[MEXData.location.lng, MEXData.location.lat]}
-            zoom={4}
-            height={window.innerHeight/1.5} // Perfect value to fit the map on the splash page... nice
-          />           
-        </div>          
-        </div>
       </div>
     );
   }

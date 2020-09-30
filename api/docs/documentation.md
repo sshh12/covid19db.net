@@ -29,20 +29,22 @@ Retrieve a country instance. See the `identifier` parameter.
     - If omitted, all fields are included.
     - The `name` and `codes` attributes are always included in the response.
     - Options
-        - `callingCodes`
-        - `capital`
-        - `alternateNames`
-        - `region`
-        - `population`
-        - `location`
-        - `area`
-        - `timezones`
-        - `borders`
-        - `currencies`
-        - `languages`
-        - `flag`
-        - `regionalBlocs`
-        - `news`
+        - `name` - Country name
+        - `codes` - ISO alpha codes
+        - `callingCodes` - Phone calling codes
+        - `capital` - Information about the country's capital
+        - `alternateNames` - The country's alternate names
+        - `region` - Geographic region
+        - `population` - Geographic subregion
+        - `location` - Coordinate location
+        - `area` - Area of the country in km<sup>2</sup>
+        - `timezones` - All timezones within the country
+        - `borders` - Codes of bordering countries
+        - `currencies` - The country's currencies
+        - `languages` - Languages spoken in the country
+        - `flag` - SVG image of the country flag
+        - `regionalBlocs` - Blocs that the country is a member of
+        - `news` - News specific to the country pertaining to COVID-19
 
 #### Path parameters
 
@@ -76,13 +78,20 @@ Retrieve an instance of case statistics. See the `identifier` parameter.
     - If omitted, all fields are included.
     - The `country` and `date` attributes are always included in the response.
     - Options
-        - `location`
-        - `totals`
-        - `new`
-        - `smoothedNew`
-        - `percentages`
-        - `derivativeNew`
-        - `history`
+        - `country` - Identifiers of the associated country
+        - `date` - Date of data renewal
+        - `location` - Location of the country
+        - `totals` - Object containing totals for: cases, deaths, recoveries, and active cases
+        - `new` - Object containing data for the number of daily new: cases, deaths, recoveries, and active cases
+        - `smoothedNew` - Object containing smoothed (7-day rolling average) data for the number of new cases and deaths
+        - `percentages` - Object containing percentage data on fatalities, infection, recoveries, and activeness
+            - `fatality` = total deaths / total cases * 100
+            - `infected` = total cases / country population * 100
+            - `haveRecovered` = total recoveries / total cases * 100
+            - `expectedRecovered` **(expected to be removed because not insightful)** = 100 - fatality
+            - `active` = total active / total cases * 100
+        - `derivativeNew` = Object containing data on the single day acceleration of: cases, deaths, recoveries, and active cases
+        - `history` - Historical data for the totals data
 
 #### Path parameters
 
@@ -116,22 +125,23 @@ Retireve an instance of risk factor statistics. See the `identifier` parameter.
     - If omitted, all fields are included.
     - The `country` attribute is always included in the response.
     - Options
-        - `location`
-        - `populationDensity`
-        - `medianAge`
-        - `aged65Older`
-        - `aged70Older`
-        - `gdpPerCapita`
-        - `gini`
-        - `extremePovertyRate`
-        - `cardiovascDeathRate`
-        - `diabetesPrevalence`
-        - `femaleSmokers`
-        - `maleSmokers`
-        - `hospitalBedsPerThousand`
-        - `lifeExpectancy`
-        - `humanDevelopmentIndex`
-        - `handwashingFacilities`
+        - `country` - Identifiers of the associated country
+        - `location` - Location of the country
+        - `populationDensity` - Number of people per km<sup>2</sup>
+        - `medianAge` - The median age of the population
+        - `aged65Older` - Percentage of population that is 65 or older
+        - `aged70Older` - Percentage of population that is 70 or older
+        - `gdpPerCapita` - Gross domestic product at purchasing power parity
+        - `gini` - Coefficient which measures the level of wealth inequality (larger values imply more inequality)
+        - `extremePovertyRate` - Percentage of population living in extreme poverty
+        - `cardiovascDeathRate` - Annual number of deaths per 100,000 people resulting from cardiovascular disease
+        - `diabetesPrevalence` - Percentage of population which has diabetes
+        - `femaleSmokers` - Percentage of women who smoke
+        - `maleSmokers` - Percentage of men who smoke
+        - `hospitalBedsPerThousand` - Number of hospital beds per 1,000 people
+        - `lifeExpectancy` - Life expectancy at birth
+        - `humanDevelopmentIndex` - Indicator of level of human development (larger values imply more development)
+        - `handwashingFacilities` - Percentage of the population with access to basic handwashing facilities
 
 #### Path parameters
 

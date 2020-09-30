@@ -27,8 +27,8 @@ export default class CountryInstanceMEX extends Component {
             {/* <GetImage data={MEXData.capital.img} /> */}
             {/* <div id='pic'>{GetImage(MEXData.flag)}</div> */}
             <Map
-              center={[MEXData.location.lng, MEXData.location.lat]}
-              zoom={5}
+              center={[MEXData.capital.location.lng, MEXData.capital.location.lat]}
+              zoom={6}
               height={window.innerHeight - 400}
               width={window.innerWidth - 400}
             />

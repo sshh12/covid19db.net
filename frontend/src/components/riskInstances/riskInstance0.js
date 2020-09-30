@@ -1,361 +1,61 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button, Collapse, Statistic, Card, Row, Col } from 'antd';
-import "./riskInstance.css";
+import { Button } from 'antd';
+import Map from "../map";
+import { BigStat, DemographicFactor, HealthFactor, CaseResponseLine } from './riskComponents';
 
 import GBRData from './data/GBR.json';
-import AggregateData from './data/Aggregate.json';
-
-const { Panel } = Collapse;
+import Agg from './data/Aggregate.json';
 
 export default class RiskInstanceGBR extends Component {
   render() {
-    function callback(key) {
-      console.log(key);
-    }
-
     return (
       <div className='App'>
-        <header className='App-header'>
-          <h1>{GBRData.country.name}</h1>
-          <div className="site-statistic-card">
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Population Density"
-                    value={GBRData.populationDensity}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="people/sq.mi."
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Population Density"
-                    value={AggregateData.populationDensity}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="people/sq.mi."
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Median Age"
-                    value={GBRData.medianAge}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="yrs."
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Median Age"
-                    value={AggregateData.medianAge}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="yrs."
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Age 65 or Older"
-                    value={GBRData.aged65Older}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Age 65 or Older"
-                    value={AggregateData.aged65Older}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Age 70 or Older"
-                    value={GBRData.aged70Older}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Age 70 or Older"
-                    value={AggregateData.aged70Older}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="GDP Per Capita"
-                    value={GBRData.gdpPerCapita}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    prefix="$"
-                    suffix="/person"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average GDP Per Capita"
-                    value={AggregateData.gdpPerCapita}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    prefix="$"
-                    suffix="/person"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Gini Index"
-                    value={GBRData.gini}
-                    precision={1}
-                    valueStyle={{ color: '#3f8600' }}
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Gini Index"
-                    value={AggregateData.gini}
-                    precision={1}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="people/sq.mi."
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Extreme Poverty Rate"
-                    value={GBRData.extremePovertyRate}
-                    precision={1}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Extreme Poverty Rate"
-                    value={AggregateData.extremePovertyRate}
-                    precision={1}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Cardiovascular Death Rate"
-                    value={GBRData.cardiovascDeathRate}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="deaths/100,000"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Cardiovascular Death Rate"
-                    value={AggregateData.cardiovascDeathRate}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="deaths/100,000"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Diabetes Prevalence"
-                    value={GBRData.diabetesPrevalence}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="% of adults"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Diabetes Prevalence"
-                    value={AggregateData.diabetesPrevalence}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="% of adults"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Female Smokers"
-                    value={GBRData.femaleSmokers}
-                    precision={1}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Female Smokers"
-                    value={AggregateData.femaleSmokers}
-                    precision={1}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Male Smokers"
-                    value={GBRData.maleSmokers}
-                    precision={1}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Male Smokers"
-                    value={AggregateData.maleSmokers}
-                    precision={1}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="# Hospital Beds"
-                    value={GBRData.hospitalBedsPerThousand}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="/1,000 people"
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average # Hospital Beds"
-                    value={AggregateData.diabetesPrevalence}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="/1,000 people"
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Life Expectancy"
-                    value={GBRData.lifeExpectancy}
-                    precision={2}
-                    valueStyle={{ color: '#3f8600' }}
-                    suffix="yrs."
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Life Expectancy"
-                    value={AggregateData.lifeExpectancy}
-                    precision={2}
-                    valueStyle={{ color: '#cf1322' }}
-                    suffix="yrs."
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Human Development Index"
-                    value={GBRData.humanDevelopmentIndex}
-                    precision={3}
-                    valueStyle={{ color: '#3f8600' }}
-                  />
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card>
-                  <Statistic
-                    title="Average Human Development Index"
-                    value={AggregateData.humanDevelopmentIndex}
-                    precision={3}
-                    valueStyle={{ color: '#cf1322' }}
-                  />
-                </Card>
-              </Col>
-            </Row>
+        <header className='risk-header'>
+          <LinkContainer className='Back-link' to='/risks'>
+            <Button variant='outline-secondary'>Go back</Button>
+          </LinkContainer>
+
+          <h1 id='page-title'>Risk Factors in {GBRData.country.name} ({GBRData.country.codes.alpha3Code})</h1>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >
+            <BigStat title="Human Development Index" data={GBRData.humanDevelopmentIndex.toFixed(3)} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
+            <BigStat title="Gini Index" data={GBRData.gini.toFixed(1)} avg={Agg.gini.toFixed(1)} />
+            <BigStat title="GDP Per Capita" prefix='$' data={`${GBRData.gdpPerCapita.toLocaleString()}`} suffix='/person'  avg={`$${Agg.gdpPerCapita.toLocaleString()}`}/>
+          </div>
+          <div>
+            <div id='demogr-factor-title-div'>
+              <h2 id='subtitle'>Demographic Risk Factors</h2>
+            </div>
+            <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left', flexWrap: 'wrap' }}>
+              <DemographicFactor title="Population Density" data={GBRData.populationDensity.toFixed(3)} suffix='people/sq.mi.' avg={Agg.populationDensity.toFixed(3)} />
+              <DemographicFactor title="Median Age" data={GBRData.medianAge.toFixed(3)} suffix='yrs.' avg={Agg.medianAge.toFixed(3)} />
+              <DemographicFactor title="Age 65 and Older" data={`${GBRData.aged65Older.toFixed(3)}%`} avg={`${Agg.aged65Older.toFixed(3)} %`} />
+              <DemographicFactor title="Age 70 and Older" data={`${GBRData.aged70Older.toFixed(3)}%`} avg={`${Agg.aged70Older.toFixed(3)} %`} />
+            </div>
+          </div>
+          <div style={{ marginTop: '50px' }}>
+            <h2 id='subtitle'>Health Risk Factors</h2>
+            <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left', flexWrap: 'wrap' }}>
+              <HealthFactor title="Life Expectancy" data={GBRData.lifeExpectancy.toFixed(2)} suffix='yrs.' avg={`${Agg.lifeExpectancy.toFixed(2)}`} />
+              <HealthFactor title="Extreme Poverty Rate" data={`${GBRData.extremePovertyRate.toFixed(1)}%`} avg={`${Agg.extremePovertyRate.toFixed(1)}%`} />
+              <HealthFactor title="Hospital Beds Per Thousand" data={GBRData.hospitalBedsPerThousand.toFixed(3)} avg={Agg.hospitalBedsPerThousand.toFixed(3)} suffix='/thousand' />
+              <HealthFactor title="Cardiovascular Death Rate" data={GBRData.cardiovascDeathRate.toFixed(3)} avg={Agg.cardiovascDeathRate.toFixed(3)} suffix='/100,000' />
+              <HealthFactor title="Diabetes Prevlaence" data={`${GBRData.diabetesPrevalence.toFixed(3)}%`} avg={`${Agg.diabetesPrevalence.toFixed(3)}%`} suffix=' of adults' />
+              <HealthFactor title="Female Smokers" data={`${GBRData.femaleSmokers.toFixed(1)}%`} avg={`${Agg.femaleSmokers.toFixed(1)}%`} suffix='of adults' />
+              <HealthFactor title="Male Smokers" data={`${GBRData.maleSmokers.toFixed(1)}%`} avg={`${Agg.maleSmokers.toFixed(1)}%`} suffix='of adults' />
+              <HealthFactor title="Handwashing Facilities" data={`${GBRData.handwashingFacilities?.toFixed(3)}%`} avg={`${Agg.handwashingFacilities?.toFixed(3)}%`} suffix=' access' />
+            </div>
           </div>
         </header>
+        <div style={{ margin:'auto' }}>
+        <div style={{ height:'40vh', alignSelf:'center'}}>
+          <Map
+            center={[GBRData.location.lng, GBRData.location.lat]}
+            zoom={4}
+            height={window.innerHeight/1.5} // Perfect value to fit the map on the splash page... nice
+          />           
+        </div>          
+        </div>
       </div>
     );
   }

@@ -13,7 +13,7 @@ export default class Risks extends Component {
         title: 'Explore Risk',
         dataIndex: 'exploreRisk',
         key: 'exploreRisk',
-        render: code => <LinkContainer to={`/risks/${code}`}><Button>Explore</Button></LinkContainer>,
+        render: countryCode => <LinkContainer to={`/risks/${countryCode}`}><Button>Explore</Button></LinkContainer>,
       },
       {
         title: 'Country',
@@ -38,6 +38,7 @@ export default class Risks extends Component {
         title: 'Population Density',
         dataIndex: 'populationDensity',
         key: 'populationDensity',
+        render: population => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.populationDensity - b.populationDensity,
       },
       {
@@ -50,28 +51,8 @@ export default class Risks extends Component {
         title: 'Explore Risk',
         dataIndex: 'exploreRisk',
         key: 'exploreRisk',
-        render: code => <LinkContainer to={`/risks/${code}`}><Button>Explore</Button></LinkContainer>,
+        render: countryCode => <LinkContainer to={`/risks/${countryCode}`}><Button>Explore</Button></LinkContainer>,
       },
-      // {
-      //   title: 'Tags',
-      //   key: 'tags',
-      //   dataIndex: 'tags',
-      //   render: tags => (
-      //     <>
-      //       {tags.map(tag => {
-      //         let color = tag.length > 5 ? 'geekblue' : 'green';
-      //         if (tag === 'loser') {
-      //           color = 'volcano';
-      //         }
-      //         return (
-      //           <Tag color={color} key={tag}>
-      //             {tag.toUpperCase()}
-      //           </Tag>
-      //         );
-      //       })}
-      //     </>
-      //   ),
-      // },
     ];
 
     const data = [
@@ -106,10 +87,10 @@ export default class Risks extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h1> Risk Page </h1>
-          <Table columns={columns} dataSource={data} />
-        </header>
+        {/* <header className="App-header"> */}
+          <h1> Risk Factors & Statistics </h1>
+          <Table style={{margin: '0 5vw', outline: '1px solid lightgrey'}} columns={columns} dataSource={data} pagination={false} />
+        {/* </header> */}
       </div>
     );
   }

@@ -27,25 +27,36 @@ export default class Cases extends Component {
         title: 'Total Cases',
         dataIndex: 'totalCases',
         key: 'totalCases',
+        render: population => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalCases - b.totalCases,
       },
       {
         title: 'Total Deaths',
         dataIndex: 'totalDeaths',
         key: 'totalDeaths',
+        render: population => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalDeaths - b.totalDeaths,
       },
       {
         title: 'Total Recovered',
         dataIndex: 'totalRecovered',
         key: 'totalRecovered',
+        render: population => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalRecovered - b.totalRecovered,
       },
       {
         title: 'Total Active',
         dataIndex: 'totalActive',
         key: 'totalActive',
+        render: population => <>{population.toLocaleString()}</>,
+
         sorter: (a, b) => a.totalActive - b.totalActive,
+      },
+      {
+        title: 'Explore Case',
+        dataIndex: 'exploreRisk',
+        key: 'exploreRisk',
+        render: code => <LinkContainer to={`/cases/${code}`}><Button>Explore</Button></LinkContainer>,
       },
     ];
 
@@ -81,10 +92,10 @@ export default class Cases extends Component {
 
     return (
       <div className="App">
-        <header className="Case-header">
-          <h1> Cases Page </h1>
-          <Table columns={columns} dataSource={data} />
-        </header>
+        {/* <header className="Case-header"> */}
+          <h1> Cases </h1>
+          <Table style={{margin: '0 5vw', outline: '1px solid lightgrey'}} columns={columns} dataSource={data} pagination={false} />
+        {/* </header> */}
       </div>
     );
   }

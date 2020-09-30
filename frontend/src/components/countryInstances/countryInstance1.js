@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Button } from 'antd';
 import "./countryInstance.css";
 import { GeneralInfo, News, GetImage, AllNews } from './countryComponents';
 import MEXData from './data/MEX.json';

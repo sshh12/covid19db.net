@@ -28,13 +28,14 @@ export default class Countries extends Component {
         title: 'Country',
         dataIndex: 'country',
         key: 'country',
-        // sorter: (a, b) => a.name.localeCompare(b.name),
+        render: country => <LinkContainer to={`/countries/${country.code}`}><a>{country.name}</a></LinkContainer>,
+        sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
       {
         title: 'Alpha 2 Code',
         dataIndex: 'alpha2Code',
         key: 'alpha2Code',
-        // sorter: (a, b) => a.codes.alpha2Code.localeCompare(b.codes.alpha2Code),
+        sorter: (a, b) => a.alpha2Code.localeCompare(b.alpha2Code),
       },
       {
         title: 'Languages',
@@ -45,13 +46,14 @@ export default class Countries extends Component {
         title: 'Population',
         dataIndex: 'population',
         key: 'population',
-        // sorter: (a, b) => a.population - b.population,
+        render: population => <>{population.toLocaleString()}</>,
+        sorter: (a, b) => a.population - b.population,
       },
       {
         title: 'Capital',
         dataIndex: 'capital',
         key: 'capital',
-        // sorter: (a, b) => a.capital.name.localeCompare(b.capital.name),
+        sorter: (a, b) => a.capital.localeCompare(b.capital),
       },
       {
         title: 'Explore Country',
@@ -64,7 +66,7 @@ export default class Countries extends Component {
     const data = [
       {
         key: '1',
-        country: GBRData.name,
+        country: {name: GBRData.name, code: GBRData.codes.alpha3Code},
         alpha2Code: GBRData.codes.alpha2Code,
         // languages: GBRData.languages[0].name,
         languages: allLanguages(GBRData.languages),
@@ -74,7 +76,7 @@ export default class Countries extends Component {
       },
       {
         key: '2',
-        country: USAData.name,
+        country: {name: USAData.name, code: USAData.codes.alpha3Code},
         alpha2Code: USAData.codes.alpha2Code,
         languages: allLanguages(USAData.languages),
         population: USAData.population,
@@ -83,7 +85,7 @@ export default class Countries extends Component {
       },
       {
         key: '3',
-        country: MEXData.name,
+        country: {name: MEXData.name, code: MEXData.codes.alpha3Code},
         alpha2Code: MEXData.codes.alpha2Code,
         languages: allLanguages(MEXData.languages),
         population: MEXData.population,
@@ -95,8 +97,8 @@ export default class Countries extends Component {
     return (
       <div className="App">
         {/* <header className="App-header"> */}
-        <h1> Country Page </h1>
-        <Table columns={columns} dataSource={data} />
+        <h1> Countries </h1>
+        <Table style={{margin: '0 5vw', outline: '1px solid lightgrey'}} columns={columns} dataSource={data} pagination={false} />
         {/* </header> */}
       </div>
     );

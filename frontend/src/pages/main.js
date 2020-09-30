@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Button, ButtonGroup } from "react-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
+// import { Button, ButtonGroup } from "react-bootstrap";
 import Map from "../components/map";
 
 export default class Main extends Component {
@@ -28,10 +28,10 @@ export default class Main extends Component {
           </ButtonGroup>
         </header> */}
         <Map
-          center={[0, 0]}
-          zoom={1}
-          height={window.innerHeight}
-          width={window.innerWidth}
+          center={[15, 30]}
+          zoom={1.95}
+          height={window.innerHeight-69} // Perfect value to fit the map on the splash page... nice
+          width={'100vw'}
         />
       </div>
     );

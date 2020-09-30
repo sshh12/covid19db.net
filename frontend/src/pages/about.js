@@ -117,10 +117,10 @@ export default class About extends Component {
           the coronavirus in terms of country, cases, and potential risks. This
           website is intended for those susceptible to contracting the virus
           (that means you!), and our aim is to keep users informed about the
-          coronavirus. Integrating disparate data allows us to correlate
-          different types of coronavirus cases, symptoms, and risks with
-          location around the world, exposing the different attributes attached
-          to each unique COVID-19 strain.
+          coronavirus. Integrating disparate data sets allows us to form
+          a broad overview of how countries have handled the COVID-19 pandemic,
+          present some of the unique risks each country's population faces,
+          and possibly indicate the near future trajectory of the pandemic.
         </div>
         <hr />
         <ProjectInfo />

@@ -37,10 +37,10 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 
 ---
 
-- Name:
-- EID:
-- GitLab ID:
-- Estimated completion time:
+- Name: Jeffrey Moulckers
+- EID: jrm7328
+- GitLab ID: jrmoulckers
+- Estimated completion time: 10 hrs (phase 1)
 - Actual completion time:
 
 ---

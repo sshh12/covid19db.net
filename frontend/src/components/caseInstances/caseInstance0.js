@@ -1,34 +1,13 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button, Collapse, Statistic, Card, Row, Col } from 'antd';
+import { Button } from 'antd';
+import { Totals, NewStats, GenStats, CaseResponseLine } from './caseComponents';
 import "./caseInstance.css";
-
 import GBRData from './data/GBR.json';
 
-function Totals(props) {
-  return <div className='totals'>
-    <h2 className='totals-title'>{props.title}</h2>
-    <h2 className='totals-data'>{props.data}</h2>
-  </div>
-}
-
-function NewStats(props) {
-  return <div className='new-stats'>
-    <h2 className='new-stats-title'>{props.title}</h2>
-    <h2 className='new-stats-data'>{props.data}</h2>
-    <h2 className='new-stats-title'>{props.yesterday} from yesterday</h2>
-  </div>
-}
-
-function GenStats(props) {
-  return <div className='new-stats'>
-    <h2 className='new-stats-title'>{props.title}</h2>
-    <h2 className='new-stats-data'>{props.data}%</h2>
-    <h2 className='gen-stats-description'>{props.description}</h2>
-  </div>
-}
 
 class CaseInstanceGBR extends Component {
+
   render() {
     return (
       <div className='App'>
@@ -65,9 +44,9 @@ class CaseInstanceGBR extends Component {
               <GenStats title="Active Rate" data={GBRData.percentages.active} description='total active/total cases' />
             </div>
           </div>
-          <div style={{ marginTop: '50px' }}>
+          <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
             <h2 id='subtitle'>Trends and Visuals</h2>
-
+            <CaseResponseLine data={GBRData} />
           </div>
         </header>
       </div>

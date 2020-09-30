@@ -27,8 +27,8 @@ export default class CountryInstanceUSA extends Component {
             {/* <GetImage data={USAData.capital.img} /> */}
             {/* <div id='pic'>{GetImage(USAData.flag)}</div> */}
             <Map
-              center={[USAData.location.lng, USAData.location.lat]}
-              zoom={3}
+              center={[USAData.capital.location.lng, USAData.capital.location.lat]}
+              zoom={6}
               height={window.innerHeight - 400}
               width={window.innerWidth - 400}
             />

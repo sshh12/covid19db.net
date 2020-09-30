@@ -27,7 +27,7 @@ export default class CountryInstanceGBR extends Component {
             {/* <GetImage data={GBRData.capital.img} /> */}
             {/* <div id='pic'>{GetImage(GBRData.flag)}</div> */}
             <Map
-              center={[GBRData.location.lng, GBRData.location.lat]}
+              center={[GBRData.capital.location.lng, GBRData.capital.location.lat]}
               zoom={5}
               height={window.innerHeight - 400}
               width={window.innerWidth - 400}

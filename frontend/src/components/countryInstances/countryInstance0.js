@@ -47,11 +47,11 @@ export default class CountryInstanceGBR extends Component {
           {/* media / visual */}
           <div style={{ marginTop: "1vh" }}>
             <div id='title-div'>
-              <h2 id='subtitle'>Map:</h2>
+              <h2 id='subtitle'>Map of Capital:</h2>
             </div>
             <Map
-              center={[GBRData.location.lng, GBRData.location.lat]}
-              zoom={4}
+              center={[GBRData.capital.location.lng, GBRData.capital.location.lat]}
+              zoom={8}
               height={window.innerHeight * 0.4}
               width={window.innerWidth * 0.4}
             />

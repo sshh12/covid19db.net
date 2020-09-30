@@ -47,11 +47,11 @@ export default class CountryInstanceMEX extends Component {
           {/* media / visual */}
           <div style={{ marginTop: '1vh' }}>
             <div id="title-div">
-              <h2 id='subtitle'>Map:</h2>
+              <h2 id='subtitle'>Map of Capital:</h2>
             </div>
             <Map
-              center={[MEXData.location.lng, MEXData.location.lat]}
-              zoom={4}
+              center={[MEXData.capital.location.lng, MEXData.capital.location.lat]}
+              zoom={8}
               height={window.innerHeight * 0.4}
               width={window.innerWidth * 0.4}
             />

@@ -5,6 +5,7 @@ import { Totals, NewStats, GenStats, CaseResponseLine } from './caseComponents';
 import Map from "../../components/map";
 import "./caseInstance.css";
 import USAData from './data/USA.json';
+import TestData from './data/testing-data.json';
 
 
 class CaseInstanceUSA extends Component {
@@ -23,6 +24,7 @@ class CaseInstanceUSA extends Component {
             <Totals title="Total Active" data={USAData.totals.active} />
             <Totals title="Total Deaths" data={USAData.totals.deaths} />
             <Totals title="Total Recovered" data={USAData.totals.recovered} />
+            <Totals title="Total Tests" data={TestData.USA.totalTests.value} />
           </div>
           <div>
             <div id='new-stats-title-div'>

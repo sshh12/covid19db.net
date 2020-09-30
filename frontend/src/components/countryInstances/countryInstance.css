@@ -53,3 +53,9 @@
   font-size: small;
   color: #818181;
 }
+
+#capital-image{
+  width: 100%;
+  max-width: 30vw;
+  height: auto;
+}

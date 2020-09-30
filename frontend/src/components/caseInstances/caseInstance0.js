@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'antd';
 import { Totals, NewStats, GenStats, CaseResponseLine } from './caseComponents';
+import Map from "../../components/map";
 import "./caseInstance.css";
 import GBRData from './data/GBR.json';
+import TestData from './data/testing-data.json';
 
 
 class CaseInstanceGBR extends Component {
@@ -22,6 +24,7 @@ class CaseInstanceGBR extends Component {
             <Totals title="Total Active" data={GBRData.totals.active} />
             <Totals title="Total Deaths" data={GBRData.totals.deaths} />
             <Totals title="Total Recovered" data={GBRData.totals.recovered} />
+            <Totals title="Total Tests" data={TestData.GBR.totalTests.value} />
           </div>
           <div>
             <div id='new-stats-title-div'>
@@ -47,6 +50,14 @@ class CaseInstanceGBR extends Component {
           <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
             <h2 id='subtitle'>Trends and Visuals</h2>
             <CaseResponseLine data={GBRData} />
+          </div>
+          <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
+            <h2 id='subtitle'>Map</h2>
+            <Map
+              center={[GBRData.location.lng, GBRData.location.lat]}
+              zoom={4}
+              height={window.innerHeight - 400}
+            />
           </div>
         </header>
       </div>

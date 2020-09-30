@@ -32,6 +32,9 @@ class App extends Component {
               <LinkContainer to="/risks">
                 <Nav.Link>Risks</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/globalNews">
+                <Nav.Link>Global News</Nav.Link>
+              </LinkContainer>
             </Nav>
             <Form inline>
               <FormControl

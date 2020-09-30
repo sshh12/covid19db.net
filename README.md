@@ -37,10 +37,10 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 
 ---
 
-- Name:
-- EID:
-- GitLab ID:
-- Estimated completion time:
+- Name: Yash Shenvi Kakodkar
+- EID: ys22297
+- GitLab ID: YashKakodkar
+- Estimated completion time: 8 hrs (phase 1)
 - Actual completion time:
 
 ---

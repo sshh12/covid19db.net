@@ -102,14 +102,15 @@ export default class About extends Component {
     );
     return (
       <div className="App">
-        <header className="App-header" style={{ minHeight: "10rem" }}>
+        <h1>About</h1>
+        {/* <header className="App-header" style={{ minHeight: "10rem" }}>
           <h1> About Page </h1>
           <LinkContainer className="App-link" to="/">
             <Button variant="outline-secondary">
               Click here to go back to the main page
             </Button>
           </LinkContainer>
-        </header>
+        </header> */}
         {/* TODO */}
         <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
           Our COVID-19 Database site allows users to gather quick statistics on

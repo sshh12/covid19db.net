@@ -7,7 +7,7 @@ export default class Main extends Component {
   render() {
     return (
       <div className="App">
-        <header
+        {/* <header
           className="App-header"
           style={{ minHeight: "10rem", padding: "18px" }}
         >
@@ -26,11 +26,11 @@ export default class Main extends Component {
               <Button variant="outline-secondary">Risks Page</Button>
             </LinkContainer>
           </ButtonGroup>
-        </header>
+        </header> */}
         <Map
           center={[0, 0]}
           zoom={1}
-          height={window.innerHeight - 370}
+          height={window.innerHeight}
           width={window.innerWidth}
         />
       </div>

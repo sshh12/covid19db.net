@@ -1,0 +1,2088 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "COVID-19 DB API",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://api.covid19db.net"
+        }
+    ],
+    "paths": {
+        "/countries": {
+            "summary": "All countries",
+            "get": {
+                "summary": "Details about all countries",
+                "operationId": "getAllCountries",
+                "tags": [
+                    "countries"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/countryAttributes"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details about all countries",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Country"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/countries/{identifier}": {
+            "summary": "A country",
+            "get": {
+                "summary": "Details about a country",
+                "operationId": "getCountry",
+                "tags": [
+                    "countries"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/countryID"
+                    },
+                    {
+                        "$ref": "#/components/parameters/countryAttributes"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details about a country",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/case-statistics": {
+            "summary": "All case statistics",
+            "get": {
+                "summary": "Retrieve all instances of case statistics",
+                "operationId": "getAllCaseStatistics",
+                "tags": [
+                    "case-statistics"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/caseStatsAttributes"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieve all instances of case statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CaseStatistics"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/case-statistics/{identifier}": {
+            "summary": "An instance of case statistics",
+            "get": {
+                "summary": "Retrieve one instance of case statistics",
+                "operationId": "getCaseStatistics",
+                "tags": [
+                    "case-statistics"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/countryID"
+                    },
+                    {
+                        "$ref": "#/components/parameters/caseStatsAttributes"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieve one instance of case statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CaseStatistics"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/risk-factor-statistics": {
+            "summary": "All risk factor statistics",
+            "get": {
+                "summary": "Retrieve all instances of risk factor statistics",
+                "operationId": "getAllRiskFactorStatistics",
+                "tags": [
+                    "risk-factor-statistics"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/riskFactorStatsAttributes"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieve all instances of risk factor statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RiskFactorStatistics"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/risk-factor-statistics/{identifier}": {
+            "summary": "An instance of risk factor statistics",
+            "get": {
+                "summary": "Retrieve one instance of risk factor statistics",
+                "operationId": "getRiskFactorStatistics",
+                "tags": [
+                    "risk-factor-statistics"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/countryID"
+                    },
+                    {
+                        "$ref": "#/components/parameters/riskFactorStatsAttributes"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieve one instance of risk factor statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RiskFactorStatistics"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Country": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "code"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "object",
+                        "required": [
+                            "alpha2Code",
+                            "alpha3Code"
+                        ],
+                        "properties": {
+                            "alpha2Code": {
+                                "type": "string"
+                            },
+                            "alpha3Code": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "region": {
+                        "type": "object",
+                        "required": [
+                            "region",
+                            "subregion"
+                        ],
+                        "properties": {
+                            "region": {
+                                "type": "string"
+                            },
+                            "subregion": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "population": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "area": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "alternateNames": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "languages": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "iso639_1",
+                                "iso639_2",
+                                "name",
+                                "nativeName"
+                            ],
+                            "properties": {
+                                "iso639_1": {
+                                    "type": "string"
+                                },
+                                "iso639_2": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "nativeName": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "capital": {
+                        "type": "object",
+                        "required": [
+                            "name",
+                            "location",
+                            "img"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "location": {
+                                "$ref": "#/components/schemas/Location"
+                            },
+                            "img": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "regionalBlocs": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "acronym",
+                                "name",
+                                "otherAcronyms",
+                                "otherNames"
+                            ],
+                            "properties": {
+                                "acronym": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "otherAcronyms": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "otherNames": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "borders": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "currencies": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "code",
+                                "name",
+                                "symbol"
+                            ],
+                            "properties": {
+                                "code": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "symbol": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "timezones": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "callingCodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "flag": {
+                        "type": "string"
+                    },
+                    "news": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NewsHeadline"
+                        }
+                    }
+                },
+                "example": {
+                    "name": "United States of America",
+                    "codes": {
+                        "alpha2Code": "US",
+                        "alpha3Code": "USA"
+                    },
+                    "callingCodes": [
+                        "1"
+                    ],
+                    "capital": {
+                        "name": "Washington, D.C.",
+                        "location": {
+                            "lat": 38.8949855,
+                            "lng": -77.0365708
+                        },
+                        "img": "https://2yrr8n1h5wj043subb2ardvg-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/Location-Washingtopn.png"
+                    },
+                    "alternateNames": [
+                        "US",
+                        "USA",
+                        "United States of America"
+                    ],
+                    "region": {
+                        "region": "Americas",
+                        "subregion": "Northern America"
+                    },
+                    "population": 323947000,
+                    "location": {
+                        "lat": 38,
+                        "lng": -97
+                    },
+                    "area": 9629091,
+                    "timezones": [
+                        "UTC-12:00",
+                        "UTC-11:00",
+                        "UTC-10:00",
+                        "UTC-09:00",
+                        "UTC-08:00",
+                        "UTC-07:00",
+                        "UTC-06:00",
+                        "UTC-05:00",
+                        "UTC-04:00",
+                        "UTC+10:00",
+                        "UTC+12:00"
+                    ],
+                    "borders": [
+                        "CAN",
+                        "MEX"
+                    ],
+                    "currencies": [
+                        {
+                            "code": "USD",
+                            "name": "United States dollar",
+                            "symbol": "$"
+                        }
+                    ],
+                    "languages": [
+                        {
+                            "iso639_1": "en",
+                            "iso639_2": "eng",
+                            "name": "English",
+                            "nativeName": "English"
+                        }
+                    ],
+                    "flag": "https://restcountries.eu/data/usa.svg",
+                    "regionalBlocs": [
+                        {
+                            "acronym": "NAFTA",
+                            "name": "North American Free Trade Agreement",
+                            "otherAcronyms": [],
+                            "otherNames": [
+                                "Tratado de Libre Comercio de América del Norte",
+                                "Accord de Libre-échange Nord-Américain"
+                            ]
+                        }
+                    ],
+                    "news": [
+                        {
+                            "source": {
+                                "id": null,
+                                "name": "Yahoo Entertainment"
+                            },
+                            "author": "Cassandra Negley",
+                            "title": "Falcons place CB A.J. Terrell on reserve/COVID-19 list; he'll reportedly miss game vs. Bears - Yahoo Sports",
+                            "description": "Terrell is the first player to be placed on the list in the regular season.",
+                            "url": "https://sports.yahoo.com/falcons-place-cb-aj-terrell-on-reserve-covid-19-list-will-reportedly-miss-bears-game-181300009.html",
+                            "urlToImage": "https://s.yimg.com/uu/api/res/1.2/R.Ui1Jx7gn50.Q_7qx49cQ--~B/aD0yMjgyO3c9MjYwMDtzbT0xO2FwcGlkPXl0YWNoeW9u/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2020-09/5401c9e0-0027-11eb-9e0f-0cd5b4415533",
+                            "publishedAt": "2020-09-26T18:13:00Z",
+                            "content": "The Atlanta Falcons placed cornerback A.J. Terrellon the reserved/COVID-19 list on Saturday. He is the first player to be placed on the list since the season kicked off Sept. 10.\r\nTerrell, the 16th o… [+1277 chars]"
+                        },
+                        {
+                            "source": {
+                                "id": null,
+                                "name": "BBC News"
+                            },
+                            "author": "https://www.facebook.com/bbcnews",
+                            "title": "Covid: Clashes as police shut down protest over new rules - BBC News",
+                            "description": "Police and demonstrators injured as protest shut down in London over a failure to social distance.",
+                            "url": "https://www.bbc.com/news/uk-54309603",
+                            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/558F/production/_114630912_mediaitem114630911.jpg",
+                            "publishedAt": "2020-09-26T16:18:45Z",
+                            "content": "Image copyrightPA Media\r\nPolice have clashed with demonstrators at a rally in London protesting the latest coronavirus restrictions.\r\nPolice officers used batons to control the crowd, after bottles a… [+3058 chars]"
+                        },
+                        {
+                            "source": {
+                                "id": null,
+                                "name": "New York Post"
+                            },
+                            "author": "Eileen AJ Connelly",
+                            "title": "New study says US is nowhere near COVID-19 herd immunity - New York Post ",
+                            "description": "About a third of New Yorkers and less than a tenth of American adults were exposed to the coronavirus by the end of July, a new study of dialysis patients found. That level is far from the “h…",
+                            "url": "https://nypost.com/2020/09/26/new-study-says-us-is-nowhere-near-covid-19-herd-immunity/",
+                            "urlToImage": "https://nypost.com/wp-content/uploads/sites/2/2020/09/herd-immunity-mike-ryan.jpg?quality=90&strip=all&w=1200",
+                            "publishedAt": "2020-09-26T15:06:00Z",
+                            "content": "About a third of New Yorkers and less than a tenth of American adults were exposed to the coronavirus by the end of July, a new study of dialysis patients found. That level is far from the “herd immu… [+2612 chars]"
+                        },
+                        {
+                            "source": {
+                                "id": null,
+                                "name": "New York Times"
+                            },
+                            "author": "Sui-Lee Wee",
+                            "title": "China Gives Unproven Covid-19 Vaccines to Thousands, With Risks Unknown - The New York Times",
+                            "description": "Drug company workers, government officials and others have been injected outside the usual testing process. More will be soon, bewildering experts who worry about potential ill effects.",
+                            "url": "https://www.nytimes.com/2020/09/26/business/china-coronavirus-vaccine.html",
+                            "urlToImage": "https://static01.nyt.com/images/2020/09/24/business/00china-vaccines-4/00china-vaccines-4-facebookJumbo.jpg",
+                            "publishedAt": "2020-09-26T14:44:00Z",
+                            "content": "Raina MacIntyre, who heads the biosecurity program at the Kirby Institute of the University of New South Wales in Sydney, Australia, said she would not recommend the emergency use of vaccines before … [+1703 chars]"
+                        },
+                        {
+                            "source": {
+                                "id": "business-insider",
+                                "name": "Business Insider"
+                            },
+                            "author": "Charles Davis",
+                            "title": "Trump administration spends $300 million to defend handling of COVID-19: report - Business Insider - Business Insider",
+                            "description": "A Trump appointee at the US Centers for Disease Control is using taxpayer money to defend the handling of COVID-19.",
+                            "url": "https://www.businessinsider.com/trump-administration-spends-300-million-to-defend-handling-of-covid-19-report-2020-9",
+                            "urlToImage": "https://i.insider.com/5f6eb4470ab50d00184aca73?width=1200&format=jpeg",
+                            "publishedAt": "2020-09-26T04:31:42Z",
+                            "content": "The Trump administration is using over $300 million in funding diverted from the US Centers for Disease Control and Prevention to make advertisements to \"defeat despair\" over COVID-19, Politico revea… [+1765 chars]"
+                        },
+                        {
+                            "source": {
+                                "id": null,
+                                "name": "Deadline"
+                            },
+                            "author": "Tom Tapp",
+                            "title": "Netflix Reunites ‘Father Of The Bride’ Cast For COVID-Era, Zoom-Style “Special Sequel” - Deadline",
+                            "description": "The cast of Father of the Bride reunited for the first time in 25 years on Friday for what was called Father of the Bride Part 3 (ish). Introduced by Reese Witherspoon, the “special sequel” saw the Banks Family gathered together for a Zoom call and a wedding-…",
+                            "url": "https://deadline.com/2020/09/netflix-reunites-father-of-the-bride-cast-for-covid-era-zoom-style-special-sequel-1234585704/",
+                            "urlToImage": "https://deadline.com/wp-content/uploads/2020/09/Screen-Shot-2020-09-25-at-7.41.29-PM.png?w=1024",
+                            "publishedAt": "2020-09-26T03:12:00Z",
+                            "content": "The cast of Father of the Bride reunited for the first time in 25 years on Friday for what was called Father of the Bride Part 3 (ish).\r\nIntroduced by Reese Witherspoon, the “special sequel” saw the … [+1010 chars]"
+                        },
+                        {
+                            "source": {
+                                "id": "the-hill",
+                                "name": "The Hill"
+                            },
+                            "author": "Celine Castronuovo",
+                            "title": "More than 150 restaurant owners endorse Biden, citing Trump's COVID-19 response | TheHill - The Hill",
+                            "description": "More than 150 restaurant owners and chefs on Thursday released ...",
+                            "url": "https://thehill.com/homenews/campaign/518324-more-than-150-restaurant-owners-endorse-biden-citing-trumps-covid-19",
+                            "urlToImage": "https://thehill.com/sites/default/files/bidenjoe_090920getty_camp.jpg",
+                            "publishedAt": "2020-09-25T21:55:45Z",
+                            "content": "More than 150 restaurant owners and chefs on Thursday released a joint letter announcing their support for Democratic presidential nominee Joe BidenJoe BidenFormer Pence aide: White House staffers di… [+3186 chars]"
+                        }
+                    ]
+                }
+            },
+            "NewsHeadline": {
+                "type": "object",
+                "required": [
+                    "source",
+                    "author",
+                    "title",
+                    "description",
+                    "url",
+                    "urlToImage",
+                    "publishedAt",
+                    "content"
+                ],
+                "properties": {
+                    "source": {
+                        "type": "object",
+                        "required": [
+                            "id",
+                            "name"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "urlToImage": {
+                        "type": "string"
+                    },
+                    "publishedAt": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Location": {
+                "type": "object",
+                "required": [
+                    "lat",
+                    "lng"
+                ],
+                "properties": {
+                    "lat": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "lng": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "CaseStatistics": {
+                "type": "object",
+                "required": [
+                    "country",
+                    "date"
+                ],
+                "properties": {
+                    "country": {
+                        "$ref": "#/components/schemas/CountryID"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "totals": {
+                        "type": "object",
+                        "required": [
+                            "cases",
+                            "deaths",
+                            "recovered",
+                            "active"
+                        ],
+                        "properties": {
+                            "cases": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "deaths": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "recovered": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "active": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    },
+                    "new": {
+                        "type": "object",
+                        "required": [
+                            "cases",
+                            "deaths",
+                            "recovered",
+                            "active"
+                        ],
+                        "properties": {
+                            "cases": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "deaths": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "recovered": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "active": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    },
+                    "smoothedNew": {
+                        "type": "object",
+                        "required": [
+                            "cases",
+                            "deaths"
+                        ],
+                        "properties": {
+                            "cases": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "deaths": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    },
+                    "percentages": {
+                        "type": "object",
+                        "required": [
+                            "fatality",
+                            "infected",
+                            "haveRecovered",
+                            "expectedRecovered",
+                            "active"
+                        ],
+                        "properties": {
+                            "fatality": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "infected": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "haveRecovered": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "expectedRecovered": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "active": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    },
+                    "derivativeNew": {
+                        "type": "object",
+                        "required": [
+                            "cases",
+                            "deaths",
+                            "recovered",
+                            "active"
+                        ],
+                        "properties": {
+                            "cases": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "deaths": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "recovered": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "active": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    },
+                    "history": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CaseDataEntry"
+                        }
+                    }
+                },
+                "example": {
+                    "country": {
+                        "codes": {
+                            "alpha2Code": "GB",
+                            "alpha3Code": "GBR"
+                        },
+                        "name": "United Kingdom of Great Britain and Northern Ireland"
+                    },
+                    "location": {
+                        "lat": 54,
+                        "lng": -2
+                    },
+                    "date": "2020-09-25",
+                    "totals": {
+                        "cases": 425767,
+                        "deaths": 42025,
+                        "recovered": 2303,
+                        "active": 381439
+                    },
+                    "new": {
+                        "cases": 6878,
+                        "deaths": 34,
+                        "recovered": 21,
+                        "active": 6823
+                    },
+                    "smoothedNew": {
+                        "cases": 5328.571,
+                        "deaths": 29.143
+                    },
+                    "percentages": {
+                        "fatality": 9.870422085,
+                        "infected": 0.653919521,
+                        "haveRecovered": 0.540906176,
+                        "expectedRecovered": 90.129577915,
+                        "active": 89.588671738
+                    },
+                    "derivativeNew": {
+                        "cases": 234,
+                        "deaths": -6,
+                        "recovered": -14,
+                        "active": 254
+                    },
+                    "history": [
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 357613,
+                            "Deaths": 41683,
+                            "Recovered": 1831,
+                            "Active": 314099,
+                            "Date": "2020-09-09T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 360544,
+                            "Deaths": 41697,
+                            "Recovered": 1845,
+                            "Active": 317002,
+                            "Date": "2020-09-10T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 364088,
+                            "Deaths": 41703,
+                            "Recovered": 1848,
+                            "Active": 320537,
+                            "Date": "2020-09-11T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 367592,
+                            "Deaths": 41712,
+                            "Recovered": 1880,
+                            "Active": 324000,
+                            "Date": "2020-09-12T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 370930,
+                            "Deaths": 41717,
+                            "Recovered": 2146,
+                            "Active": 327067,
+                            "Date": "2020-09-13T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 373555,
+                            "Deaths": 41726,
+                            "Recovered": 2152,
+                            "Active": 329677,
+                            "Date": "2020-09-14T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 376670,
+                            "Deaths": 41753,
+                            "Recovered": 2184,
+                            "Active": 332733,
+                            "Date": "2020-09-15T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 380677,
+                            "Deaths": 41773,
+                            "Recovered": 2190,
+                            "Active": 336714,
+                            "Date": "2020-09-16T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 384087,
+                            "Deaths": 41794,
+                            "Recovered": 2201,
+                            "Active": 340092,
+                            "Date": "2020-09-17T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 388416,
+                            "Deaths": 41821,
+                            "Recovered": 2213,
+                            "Active": 344382,
+                            "Date": "2020-09-18T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 392845,
+                            "Deaths": 41848,
+                            "Recovered": 2227,
+                            "Active": 348770,
+                            "Date": "2020-09-19T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 396744,
+                            "Deaths": 41866,
+                            "Recovered": 2228,
+                            "Active": 352650,
+                            "Date": "2020-09-20T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 401122,
+                            "Deaths": 41877,
+                            "Recovered": 2228,
+                            "Active": 357017,
+                            "Date": "2020-09-21T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 406058,
+                            "Deaths": 41914,
+                            "Recovered": 2238,
+                            "Active": 361906,
+                            "Date": "2020-09-22T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 412245,
+                            "Deaths": 41951,
+                            "Recovered": 2247,
+                            "Active": 368047,
+                            "Date": "2020-09-23T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 418889,
+                            "Deaths": 41991,
+                            "Recovered": 2282,
+                            "Active": 374616,
+                            "Date": "2020-09-24T00:00:00Z"
+                        },
+                        {
+                            "Country": "United Kingdom",
+                            "Confirmed": 425767,
+                            "Deaths": 42025,
+                            "Recovered": 2303,
+                            "Active": 381439,
+                            "Date": "2020-09-25T00:00:00Z"
+                        }
+                    ]
+                }
+            },
+            "CaseDataEntry": {
+                "type": "object",
+                "required": [
+                    "Country",
+                    "Confirmed",
+                    "Deaths",
+                    "Recovered",
+                    "Active",
+                    "Date"
+                ],
+                "properties": {
+                    "Country": {
+                        "type": "string"
+                    },
+                    "Confirmed": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "Deaths": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "Recovered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "Active": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "Date": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RiskFactorStatistics": {
+                "type": "object",
+                "required": [
+                    "country"
+                ],
+                "properties": {
+                    "country": {
+                        "$ref": "#/components/schemas/CountryID"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "populationDensity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "medianAge": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "aged65Older": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "aged70Older": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "gdpPerCapita": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "gini": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "extremePovertyRate": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cardiovascDeathRate": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "diabetesPrevalence": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "femaleSmokers": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maleSmokers": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "hospitalBedsPerThousand": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "lifeExpectancy": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "humanDevelopmentIndex": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "handwashingFacilities": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "example": {
+                    "country": {
+                        "codes": {
+                            "alpha2Code": "MX",
+                            "alpha3Code": "MEX"
+                        },
+                        "name": "Mexico"
+                    },
+                    "location": {
+                        "lat": 23,
+                        "lng": -102
+                    },
+                    "populationDensity": 66.444,
+                    "medianAge": 29.3,
+                    "aged65Older": 6.857,
+                    "aged70Older": 4.321,
+                    "gdpPerCapita": 17336.469,
+                    "gini": 47,
+                    "extremePovertyRate": 2.5,
+                    "cardiovascDeathRate": 152.783,
+                    "diabetesPrevalence": 13.06,
+                    "femaleSmokers": 6.9,
+                    "maleSmokers": 21.4,
+                    "hospitalBedsPerThousand": 1.38,
+                    "lifeExpectancy": 75.05,
+                    "humanDevelopmentIndex": 0.774,
+                    "handwashingFacilities": 87.847
+                }
+            },
+            "CountryID": {
+                "type": "object",
+                "required": [
+                    "codes"
+                ],
+                "properties": {
+                    "codes": {
+                        "type": "object",
+                        "required": [
+                            "alpha2Code",
+                            "alpha3Code"
+                        ],
+                        "properties": {
+                            "alpha2Code": {
+                                "type": "string"
+                            },
+                            "alpha3Code": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "countryAttributes": {
+                "name": "attributes",
+                "in": "query",
+                "description": "Describes the fields to include in the response (other than the required ones). Delimit the fields with a comma if there are multiple. If this parameter is omitted, all fields will be returned.",
+                "explode": false,
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Country attributes",
+                        "enum": [
+                            "name",
+                            "codes",
+                            "callingCodes",
+                            "capital",
+                            "alternateNames",
+                            "region",
+                            "population",
+                            "location",
+                            "area",
+                            "timezones",
+                            "borders",
+                            "currencies",
+                            "languages",
+                            "flag",
+                            "regionalBlocs",
+                            "news"
+                        ],
+                        "example": "location"
+                    }
+                }
+            },
+            "caseStatsAttributes": {
+                "name": "attributes",
+                "in": "query",
+                "description": "Describes the fields to include in the response (other than the required ones). Delimit the fields with a comma if there are multiple. If this parameter is omitted, all fields will be returned.",
+                "explode": false,
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Case statistics attributes",
+                        "enum": [
+                            "country",
+                            "location",
+                            "date",
+                            "totals",
+                            "new",
+                            "smoothedNew",
+                            "percentages",
+                            "derivativeNew",
+                            "history"
+                        ],
+                        "example": "smoothedNew"
+                    }
+                }
+            },
+            "riskFactorStatsAttributes": {
+                "name": "attributes",
+                "in": "query",
+                "description": "Describes the fields to include in the response (other than the required ones). Delimit the fields with a comma if there are multiple. If this parameter is omitted, all fields will be returned.",
+                "explode": false,
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Risk factor statistics attributes",
+                        "enum": [
+                            "country",
+                            "location",
+                            "populationDensity",
+                            "medianAge",
+                            "aged65Older",
+                            "aged70Older",
+                            "gdpPerCapita",
+                            "gini",
+                            "extremePovertyRate",
+                            "cardiovascDeathRate",
+                            "diabetesPrevalence",
+                            "femaleSmokers",
+                            "maleSmokers",
+                            "hospitalBedsPerThousand",
+                            "lifeExpectancy",
+                            "humanDevelopmentIndex",
+                            "handwashingFacilities"
+                        ],
+                        "example": "diabetesPrevalence"
+                    }
+                }
+            },
+            "countryID": {
+                "name": "identifier",
+                "in": "path",
+                "description": "Unique identifier which is used to select data by country. Valid identifiers include alpha codes and the primary country name.",
+                "required": true,
+                "schema": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "Country name",
+                            "enum": [
+                                "Afghanistan",
+                                "Åland Islands",
+                                "Albania",
+                                "Algeria",
+                                "American Samoa",
+                                "Andorra",
+                                "Angola",
+                                "Anguilla",
+                                "Antarctica",
+                                "Antigua and Barbuda",
+                                "Argentina",
+                                "Armenia",
+                                "Aruba",
+                                "Australia",
+                                "Austria",
+                                "Azerbaijan",
+                                "Bahamas",
+                                "Bahrain",
+                                "Bangladesh",
+                                "Barbados",
+                                "Belarus",
+                                "Belgium",
+                                "Belize",
+                                "Benin",
+                                "Bermuda",
+                                "Bhutan",
+                                "Bolivia (Plurinational State of)",
+                                "Bonaire, Sint Eustatius and Saba",
+                                "Bosnia and Herzegovina",
+                                "Botswana",
+                                "Bouvet Island",
+                                "Brazil",
+                                "British Indian Ocean Territory",
+                                "United States Minor Outlying Islands",
+                                "Virgin Islands (British)",
+                                "Virgin Islands (U.S.)",
+                                "Brunei Darussalam",
+                                "Bulgaria",
+                                "Burkina Faso",
+                                "Burundi",
+                                "Cambodia",
+                                "Cameroon",
+                                "Canada",
+                                "Cabo Verde",
+                                "Cayman Islands",
+                                "Central African Republic",
+                                "Chad",
+                                "Chile",
+                                "China",
+                                "Christmas Island",
+                                "Cocos (Keeling) Islands",
+                                "Colombia",
+                                "Comoros",
+                                "Congo",
+                                "Congo (Democratic Republic of the)",
+                                "Cook Islands",
+                                "Costa Rica",
+                                "Croatia",
+                                "Cuba",
+                                "Curaçao",
+                                "Cyprus",
+                                "Czech Republic",
+                                "Denmark",
+                                "Djibouti",
+                                "Dominica",
+                                "Dominican Republic",
+                                "Ecuador",
+                                "Egypt",
+                                "El Salvador",
+                                "Equatorial Guinea",
+                                "Eritrea",
+                                "Estonia",
+                                "Ethiopia",
+                                "Falkland Islands (Malvinas)",
+                                "Faroe Islands",
+                                "Fiji",
+                                "Finland",
+                                "France",
+                                "French Guiana",
+                                "French Polynesia",
+                                "French Southern Territories",
+                                "Gabon",
+                                "Gambia",
+                                "Georgia",
+                                "Germany",
+                                "Ghana",
+                                "Gibraltar",
+                                "Greece",
+                                "Greenland",
+                                "Grenada",
+                                "Guadeloupe",
+                                "Guam",
+                                "Guatemala",
+                                "Guernsey",
+                                "Guinea",
+                                "Guinea-Bissau",
+                                "Guyana",
+                                "Haiti",
+                                "Heard Island and McDonald Islands",
+                                "Holy See",
+                                "Honduras",
+                                "Hong Kong",
+                                "Hungary",
+                                "Iceland",
+                                "India",
+                                "Indonesia",
+                                "Côte d'Ivoire",
+                                "Iran (Islamic Republic of)",
+                                "Iraq",
+                                "Ireland",
+                                "Isle of Man",
+                                "Israel",
+                                "Italy",
+                                "Jamaica",
+                                "Japan",
+                                "Jersey",
+                                "Jordan",
+                                "Kazakhstan",
+                                "Kenya",
+                                "Kiribati",
+                                "Kuwait",
+                                "Kyrgyzstan",
+                                "Lao People's Democratic Republic",
+                                "Latvia",
+                                "Lebanon",
+                                "Lesotho",
+                                "Liberia",
+                                "Libya",
+                                "Liechtenstein",
+                                "Lithuania",
+                                "Luxembourg",
+                                "Macao",
+                                "Macedonia (the former Yugoslav Republic of)",
+                                "Madagascar",
+                                "Malawi",
+                                "Malaysia",
+                                "Maldives",
+                                "Mali",
+                                "Malta",
+                                "Marshall Islands",
+                                "Martinique",
+                                "Mauritania",
+                                "Mauritius",
+                                "Mayotte",
+                                "Mexico",
+                                "Micronesia (Federated States of)",
+                                "Moldova (Republic of)",
+                                "Monaco",
+                                "Mongolia",
+                                "Montenegro",
+                                "Montserrat",
+                                "Morocco",
+                                "Mozambique",
+                                "Myanmar",
+                                "Namibia",
+                                "Nauru",
+                                "Nepal",
+                                "Netherlands",
+                                "New Caledonia",
+                                "New Zealand",
+                                "Nicaragua",
+                                "Niger",
+                                "Nigeria",
+                                "Niue",
+                                "Norfolk Island",
+                                "Korea (Democratic People's Republic of)",
+                                "Northern Mariana Islands",
+                                "Norway",
+                                "Oman",
+                                "Pakistan",
+                                "Palau",
+                                "Palestine, State of",
+                                "Panama",
+                                "Papua New Guinea",
+                                "Paraguay",
+                                "Peru",
+                                "Philippines",
+                                "Pitcairn",
+                                "Poland",
+                                "Portugal",
+                                "Puerto Rico",
+                                "Qatar",
+                                "Republic of Kosovo",
+                                "Réunion",
+                                "Romania",
+                                "Russian Federation",
+                                "Rwanda",
+                                "Saint Barthélemy",
+                                "Saint Helena, Ascension and Tristan da Cunha",
+                                "Saint Kitts and Nevis",
+                                "Saint Lucia",
+                                "Saint Martin (French part)",
+                                "Saint Pierre and Miquelon",
+                                "Saint Vincent and the Grenadines",
+                                "Samoa",
+                                "San Marino",
+                                "Sao Tome and Principe",
+                                "Saudi Arabia",
+                                "Senegal",
+                                "Serbia",
+                                "Seychelles",
+                                "Sierra Leone",
+                                "Singapore",
+                                "Sint Maarten (Dutch part)",
+                                "Slovakia",
+                                "Slovenia",
+                                "Solomon Islands",
+                                "Somalia",
+                                "South Africa",
+                                "South Georgia and the South Sandwich Islands",
+                                "Korea (Republic of)",
+                                "South Sudan",
+                                "Spain",
+                                "Sri Lanka",
+                                "Sudan",
+                                "Suriname",
+                                "Svalbard and Jan Mayen",
+                                "Swaziland",
+                                "Sweden",
+                                "Switzerland",
+                                "Syrian Arab Republic",
+                                "Taiwan",
+                                "Tajikistan",
+                                "Tanzania, United Republic of",
+                                "Thailand",
+                                "Timor-Leste",
+                                "Togo",
+                                "Tokelau",
+                                "Tonga",
+                                "Trinidad and Tobago",
+                                "Tunisia",
+                                "Turkey",
+                                "Turkmenistan",
+                                "Turks and Caicos Islands",
+                                "Tuvalu",
+                                "Uganda",
+                                "Ukraine",
+                                "United Arab Emirates",
+                                "United Kingdom of Great Britain and Northern Ireland",
+                                "United States of America",
+                                "Uruguay",
+                                "Uzbekistan",
+                                "Vanuatu",
+                                "Venezuela (Bolivarian Republic of)",
+                                "Viet Nam",
+                                "Wallis and Futuna",
+                                "Western Sahara",
+                                "Yemen",
+                                "Zambia",
+                                "Zimbabwe"
+                            ],
+                            "example": "Sweden"
+                        },
+                        {
+                            "type": "string",
+                            "description": "Country alpha2 code",
+                            "enum": [
+                                "AF",
+                                "AX",
+                                "AL",
+                                "DZ",
+                                "AS",
+                                "AD",
+                                "AO",
+                                "AI",
+                                "AQ",
+                                "AG",
+                                "AR",
+                                "AM",
+                                "AW",
+                                "AU",
+                                "AT",
+                                "AZ",
+                                "BS",
+                                "BH",
+                                "BD",
+                                "BB",
+                                "BY",
+                                "BE",
+                                "BZ",
+                                "BJ",
+                                "BM",
+                                "BT",
+                                "BO",
+                                "BQ",
+                                "BA",
+                                "BW",
+                                "BV",
+                                "BR",
+                                "IO",
+                                "UM",
+                                "VG",
+                                "VI",
+                                "BN",
+                                "BG",
+                                "BF",
+                                "BI",
+                                "KH",
+                                "CM",
+                                "CA",
+                                "CV",
+                                "KY",
+                                "CF",
+                                "TD",
+                                "CL",
+                                "CN",
+                                "CX",
+                                "CC",
+                                "CO",
+                                "KM",
+                                "CG",
+                                "CD",
+                                "CK",
+                                "CR",
+                                "HR",
+                                "CU",
+                                "CW",
+                                "CY",
+                                "CZ",
+                                "DK",
+                                "DJ",
+                                "DM",
+                                "DO",
+                                "EC",
+                                "EG",
+                                "SV",
+                                "GQ",
+                                "ER",
+                                "EE",
+                                "ET",
+                                "FK",
+                                "FO",
+                                "FJ",
+                                "FI",
+                                "FR",
+                                "GF",
+                                "PF",
+                                "TF",
+                                "GA",
+                                "GM",
+                                "GE",
+                                "DE",
+                                "GH",
+                                "GI",
+                                "GR",
+                                "GL",
+                                "GD",
+                                "GP",
+                                "GU",
+                                "GT",
+                                "GG",
+                                "GN",
+                                "GW",
+                                "GY",
+                                "HT",
+                                "HM",
+                                "VA",
+                                "HN",
+                                "HK",
+                                "HU",
+                                "IS",
+                                "IN",
+                                "ID",
+                                "CI",
+                                "IR",
+                                "IQ",
+                                "IE",
+                                "IM",
+                                "IL",
+                                "IT",
+                                "JM",
+                                "JP",
+                                "JE",
+                                "JO",
+                                "KZ",
+                                "KE",
+                                "KI",
+                                "KW",
+                                "KG",
+                                "LA",
+                                "LV",
+                                "LB",
+                                "LS",
+                                "LR",
+                                "LY",
+                                "LI",
+                                "LT",
+                                "LU",
+                                "MO",
+                                "MK",
+                                "MG",
+                                "MW",
+                                "MY",
+                                "MV",
+                                "ML",
+                                "MT",
+                                "MH",
+                                "MQ",
+                                "MR",
+                                "MU",
+                                "YT",
+                                "MX",
+                                "FM",
+                                "MD",
+                                "MC",
+                                "MN",
+                                "ME",
+                                "MS",
+                                "MA",
+                                "MZ",
+                                "MM",
+                                "NA",
+                                "NR",
+                                "NP",
+                                "NL",
+                                "NC",
+                                "NZ",
+                                "NI",
+                                "NE",
+                                "NG",
+                                "NU",
+                                "NF",
+                                "KP",
+                                "MP",
+                                "NO",
+                                "OM",
+                                "PK",
+                                "PW",
+                                "PS",
+                                "PA",
+                                "PG",
+                                "PY",
+                                "PE",
+                                "PH",
+                                "PN",
+                                "PL",
+                                "PT",
+                                "PR",
+                                "QA",
+                                "XK",
+                                "RE",
+                                "RO",
+                                "RU",
+                                "RW",
+                                "BL",
+                                "SH",
+                                "KN",
+                                "LC",
+                                "MF",
+                                "PM",
+                                "VC",
+                                "WS",
+                                "SM",
+                                "ST",
+                                "SA",
+                                "SN",
+                                "RS",
+                                "SC",
+                                "SL",
+                                "SG",
+                                "SX",
+                                "SK",
+                                "SI",
+                                "SB",
+                                "SO",
+                                "ZA",
+                                "GS",
+                                "KR",
+                                "SS",
+                                "ES",
+                                "LK",
+                                "SD",
+                                "SR",
+                                "SJ",
+                                "SZ",
+                                "SE",
+                                "CH",
+                                "SY",
+                                "TW",
+                                "TJ",
+                                "TZ",
+                                "TH",
+                                "TL",
+                                "TG",
+                                "TK",
+                                "TO",
+                                "TT",
+                                "TN",
+                                "TR",
+                                "TM",
+                                "TC",
+                                "TV",
+                                "UG",
+                                "UA",
+                                "AE",
+                                "GB",
+                                "US",
+                                "UY",
+                                "UZ",
+                                "VU",
+                                "VE",
+                                "VN",
+                                "WF",
+                                "EH",
+                                "YE",
+                                "ZM",
+                                "ZW"
+                            ],
+                            "example": "SW"
+                        },
+                        {
+                            "type": "string",
+                            "description": "Country alpha3 code",
+                            "enum": [
+                                "AFG",
+                                "ALA",
+                                "ALB",
+                                "DZA",
+                                "ASM",
+                                "AND",
+                                "AGO",
+                                "AIA",
+                                "ATA",
+                                "ATG",
+                                "ARG",
+                                "ARM",
+                                "ABW",
+                                "AUS",
+                                "AUT",
+                                "AZE",
+                                "BHS",
+                                "BHR",
+                                "BGD",
+                                "BRB",
+                                "BLR",
+                                "BEL",
+                                "BLZ",
+                                "BEN",
+                                "BMU",
+                                "BTN",
+                                "BOL",
+                                "BES",
+                                "BIH",
+                                "BWA",
+                                "BVT",
+                                "BRA",
+                                "IOT",
+                                "UMI",
+                                "VGB",
+                                "VIR",
+                                "BRN",
+                                "BGR",
+                                "BFA",
+                                "BDI",
+                                "KHM",
+                                "CMR",
+                                "CAN",
+                                "CPV",
+                                "CYM",
+                                "CAF",
+                                "TCD",
+                                "CHL",
+                                "CHN",
+                                "CXR",
+                                "CCK",
+                                "COL",
+                                "COM",
+                                "COG",
+                                "COD",
+                                "COK",
+                                "CRI",
+                                "HRV",
+                                "CUB",
+                                "CUW",
+                                "CYP",
+                                "CZE",
+                                "DNK",
+                                "DJI",
+                                "DMA",
+                                "DOM",
+                                "ECU",
+                                "EGY",
+                                "SLV",
+                                "GNQ",
+                                "ERI",
+                                "EST",
+                                "ETH",
+                                "FLK",
+                                "FRO",
+                                "FJI",
+                                "FIN",
+                                "FRA",
+                                "GUF",
+                                "PYF",
+                                "ATF",
+                                "GAB",
+                                "GMB",
+                                "GEO",
+                                "DEU",
+                                "GHA",
+                                "GIB",
+                                "GRC",
+                                "GRL",
+                                "GRD",
+                                "GLP",
+                                "GUM",
+                                "GTM",
+                                "GGY",
+                                "GIN",
+                                "GNB",
+                                "GUY",
+                                "HTI",
+                                "HMD",
+                                "VAT",
+                                "HND",
+                                "HKG",
+                                "HUN",
+                                "ISL",
+                                "IND",
+                                "IDN",
+                                "CIV",
+                                "IRN",
+                                "IRQ",
+                                "IRL",
+                                "IMN",
+                                "ISR",
+                                "ITA",
+                                "JAM",
+                                "JPN",
+                                "JEY",
+                                "JOR",
+                                "KAZ",
+                                "KEN",
+                                "KIR",
+                                "KWT",
+                                "KGZ",
+                                "LAO",
+                                "LVA",
+                                "LBN",
+                                "LSO",
+                                "LBR",
+                                "LBY",
+                                "LIE",
+                                "LTU",
+                                "LUX",
+                                "MAC",
+                                "MKD",
+                                "MDG",
+                                "MWI",
+                                "MYS",
+                                "MDV",
+                                "MLI",
+                                "MLT",
+                                "MHL",
+                                "MTQ",
+                                "MRT",
+                                "MUS",
+                                "MYT",
+                                "MEX",
+                                "FSM",
+                                "MDA",
+                                "MCO",
+                                "MNG",
+                                "MNE",
+                                "MSR",
+                                "MAR",
+                                "MOZ",
+                                "MMR",
+                                "NAM",
+                                "NRU",
+                                "NPL",
+                                "NLD",
+                                "NCL",
+                                "NZL",
+                                "NIC",
+                                "NER",
+                                "NGA",
+                                "NIU",
+                                "NFK",
+                                "PRK",
+                                "MNP",
+                                "NOR",
+                                "OMN",
+                                "PAK",
+                                "PLW",
+                                "PSE",
+                                "PAN",
+                                "PNG",
+                                "PRY",
+                                "PER",
+                                "PHL",
+                                "PCN",
+                                "POL",
+                                "PRT",
+                                "PRI",
+                                "QAT",
+                                "KOS",
+                                "REU",
+                                "ROU",
+                                "RUS",
+                                "RWA",
+                                "BLM",
+                                "SHN",
+                                "KNA",
+                                "LCA",
+                                "MAF",
+                                "SPM",
+                                "VCT",
+                                "WSM",
+                                "SMR",
+                                "STP",
+                                "SAU",
+                                "SEN",
+                                "SRB",
+                                "SYC",
+                                "SLE",
+                                "SGP",
+                                "SXM",
+                                "SVK",
+                                "SVN",
+                                "SLB",
+                                "SOM",
+                                "ZAF",
+                                "SGS",
+                                "KOR",
+                                "SSD",
+                                "ESP",
+                                "LKA",
+                                "SDN",
+                                "SUR",
+                                "SJM",
+                                "SWZ",
+                                "SWE",
+                                "CHE",
+                                "SYR",
+                                "TWN",
+                                "TJK",
+                                "TZA",
+                                "THA",
+                                "TLS",
+                                "TGO",
+                                "TKL",
+                                "TON",
+                                "TTO",
+                                "TUN",
+                                "TUR",
+                                "TKM",
+                                "TCA",
+                                "TUV",
+                                "UGA",
+                                "UKR",
+                                "ARE",
+                                "GBR",
+                                "USA",
+                                "URY",
+                                "UZB",
+                                "VUT",
+                                "VEN",
+                                "VNM",
+                                "WLF",
+                                "ESH",
+                                "YEM",
+                                "ZMB",
+                                "ZWE"
+                            ],
+                            "example": "SWE"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "countries",
+            "description": "Related to countries"
+        },
+        {
+            "name": "case-statistics",
+            "description": "Related to COVID-19 case statistics data"
+        },
+        {
+            "name": "risk-factor-statistics",
+            "description": "Related to risk factor statistics data"
+        }
+    ]
+}

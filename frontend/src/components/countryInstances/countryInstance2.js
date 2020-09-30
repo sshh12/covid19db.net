@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 import "./countryInstance.css";
-import { GeneralInfo, CaseResponseLine } from './countryComponents';
+import { GeneralInfo } from './countryComponents';
 import USAData from './data/USA.json';
+import { GetImage } from './countryComponents';
+import Map from "../../components/map";
+
 
 export default class CountryInstanceUSA extends Component {
   render() {
@@ -17,12 +20,20 @@ export default class CountryInstanceUSA extends Component {
           <h1 id='page-title'> {USAData.name} ({USAData.codes.alpha3Code})</h1>
           <h2 id='subtitle'> Capital - {USAData.capital.name}</h2>
 
-          {/* media / visual */}
-          {/* <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
-            <h2 id='subtitle'>Map</h2>
-            <CaseResponseLine data={USAData} />
-          </div> */}
+          {/* <div>{GetImage(USAData.capital.img)}</div> */}
 
+          {/* media / visual */}
+          <div style={{ marginTop: '50px', height: '300px', width: '100%' }}>
+            {/* <h2 id='subtitle'>Map - </h2> */}
+            {/* <GetImage data={USAData.capital.img} /> */}
+            {/* <div id='pic'>{GetImage(USAData.flag)}</div> */}
+            <Map
+              center={[USAData.location.lng, USAData.location.lat]}
+              zoom={3}
+              height={window.innerHeight - 400}
+              width={window.innerWidth - 400}
+            />
+          </div>
           <div>
             <div id='title-div'>
               <h2 id='subtitle'>General Information</h2>
@@ -43,6 +54,8 @@ export default class CountryInstanceUSA extends Component {
               <GeneralInfo title="Languages" data={USAData.languages[0].name} />
             </div>
           </div>
+
+          <div style={{ marginTop: '50px' }}></div>
 
         </header>
       </div>

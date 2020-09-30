@@ -4,6 +4,9 @@ import { Button } from 'react-bootstrap';
 import "./countryInstance.css";
 import { GeneralInfo } from './countryComponents';
 import GBRData from './data/GBR.json';
+import { GetImage } from './countryComponents';
+import Map from "../../components/map";
+
 
 export default class CountryInstanceGBR extends Component {
   render() {
@@ -17,12 +20,20 @@ export default class CountryInstanceGBR extends Component {
           <h1 id='page-title'> {GBRData.name} ({GBRData.codes.alpha3Code})</h1>
           <h2 id='subtitle'> Capital - {GBRData.capital.name}</h2>
 
-          {/* media / visual */}
-          {/* <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
-            <h2 id='subtitle'>Map</h2>
-            <CaseResponseLine data={GBRData} />
-          </div> */}
+          {/* <div>{GetImage(GBRData.capital.img)}</div> */}
 
+          {/* media / visual */}
+          <div style={{ marginTop: '50px', height: '300px', width: '100%' }}>
+            {/* <h2 id='subtitle'>Map - </h2> */}
+            {/* <GetImage data={GBRData.capital.img} /> */}
+            {/* <div id='pic'>{GetImage(GBRData.flag)}</div> */}
+            <Map
+              center={[GBRData.location.lng, GBRData.location.lat]}
+              zoom={5}
+              height={window.innerHeight - 400}
+              width={window.innerWidth - 400}
+            />
+          </div>
           <div>
             <div id='title-div'>
               <h2 id='subtitle'>General Information</h2>
@@ -43,6 +54,8 @@ export default class CountryInstanceGBR extends Component {
               <GeneralInfo title="Languages" data={GBRData.languages[0].name} />
             </div>
           </div>
+
+          <div style={{ marginTop: '50px' }}></div>
 
         </header>
       </div>

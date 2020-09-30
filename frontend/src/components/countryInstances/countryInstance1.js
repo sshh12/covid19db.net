@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 import "./countryInstance.css";
-import { GeneralInfo, CaseResponseLine } from './countryComponents';
+import { GeneralInfo } from './countryComponents';
 import MEXData from './data/MEX.json';
+import { GetImage } from './countryComponents';
+import Map from "../../components/map";
+
 
 export default class CountryInstanceMEX extends Component {
   render() {
@@ -17,12 +20,20 @@ export default class CountryInstanceMEX extends Component {
           <h1 id='page-title'> {MEXData.name} ({MEXData.codes.alpha3Code})</h1>
           <h2 id='subtitle'> Capital - {MEXData.capital.name}</h2>
 
-          {/* media / visual */}
-          {/* <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>
-            <h2 id='subtitle'>Map</h2>
-            <CaseResponseLine data={MEXData} />
-          </div> */}
+          {/* <div>{GetImage(MEXData.capital.img)}</div> */}
 
+          {/* media / visual */}
+          <div style={{ marginTop: '50px', height: '300px', width: '100%' }}>
+            {/* <h2 id='subtitle'>Map - </h2> */}
+            {/* <GetImage data={MEXData.capital.img} /> */}
+            {/* <div id='pic'>{GetImage(MEXData.flag)}</div> */}
+            <Map
+              center={[MEXData.location.lng, MEXData.location.lat]}
+              zoom={5}
+              height={window.innerHeight - 400}
+              width={window.innerWidth - 400}
+            />
+          </div>
           <div>
             <div id='title-div'>
               <h2 id='subtitle'>General Information</h2>
@@ -43,6 +54,8 @@ export default class CountryInstanceMEX extends Component {
               <GeneralInfo title="Languages" data={MEXData.languages[0].name} />
             </div>
           </div>
+
+          <div style={{ marginTop: '50px' }}></div>
 
         </header>
       </div>

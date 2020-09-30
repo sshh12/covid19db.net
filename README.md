@@ -29,10 +29,10 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 
 ---
 
-- Name:
-- EID:
-- GitLab ID:
-- Estimated completion time:
+- Name: Vassi Gianitsos
+- EID: vg8968
+- GitLab ID: vassi_gianitsos
+- Estimated completion time: 8 hrs (phase 1)
 - Actual completion time:
 
 ---

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Table, Tag, Space } from "antd";
-import { Button } from "react-bootstrap";
+import { Button, Table, Tag, Space } from "antd";
 import { LinkContainer } from "react-router-bootstrap";
 
 import USAData from '../components/countryInstances/data/USA.json';
@@ -15,22 +14,26 @@ function allLanguages(myList) {
   return str;
 }
 
-export default class CountriesPage extends Component {
+export default class Countries extends Component {
   render() {
     const columns = [
+      {
+        title: 'Explore Country',
+        dataIndex: 'exploreCountry',
+        key: 'exploreCountry',
+        render: code => <LinkContainer to={`/countries/${code}`}><Button>Explore</Button></LinkContainer>,
+      },
       {
         title: 'Country',
         dataIndex: 'country',
         key: 'country',
-        // render: text => <a>{text}</a>,
-        render: code => <LinkContainer to={`/countries/${code}`}>
-          <Button>{code}</Button>
-        </LinkContainer>,
+        // sorter: (a, b) => a.name.localeCompare(b.name),
       },
       {
         title: 'Alpha 2 Code',
         dataIndex: 'alpha2Code',
         key: 'alpha2Code',
+        // sorter: (a, b) => a.codes.alpha2Code.localeCompare(b.codes.alpha2Code),
       },
       {
         title: 'Languages',
@@ -41,11 +44,19 @@ export default class CountriesPage extends Component {
         title: 'Population',
         dataIndex: 'population',
         key: 'population',
+        // sorter: (a, b) => a.population - b.population,
       },
       {
         title: 'Capital',
         dataIndex: 'capital',
         key: 'capital',
+        // sorter: (a, b) => a.capital.name.localeCompare(b.capital.name),
+      },
+      {
+        title: 'Explore Country',
+        dataIndex: 'exploreCountry',
+        key: 'exploreCountry',
+        render: code => <LinkContainer to={`/countries/${code}`}><Button>Explore</Button></LinkContainer>,
       },
     ];
 
@@ -58,6 +69,7 @@ export default class CountriesPage extends Component {
         languages: allLanguages(GBRData.languages),
         population: GBRData.population,
         capital: GBRData.capital.name,
+        exploreCountry: GBRData.codes.alpha3Code,
       },
       {
         key: '2',
@@ -66,6 +78,7 @@ export default class CountriesPage extends Component {
         languages: allLanguages(USAData.languages),
         population: USAData.population,
         capital: USAData.capital.name,
+        exploreCountry: USAData.codes.alpha3Code,
       },
       {
         key: '3',
@@ -74,10 +87,18 @@ export default class CountriesPage extends Component {
         languages: allLanguages(MEXData.languages),
         population: MEXData.population,
         capital: MEXData.capital.name,
+        exploreCountry: MEXData.codes.alpha3Code,
       },
     ];
 
-    return (<Table columns={columns} dataSource={data} />);
+    return (
+      <div className="App">
+        {/* <header className="App-header"> */}
+        <h1> Country Page </h1>
+        <Table columns={columns} dataSource={data} />
+        {/* </header> */}
+      </div>
+    );
   }
 }
 

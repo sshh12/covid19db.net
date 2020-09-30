@@ -24,7 +24,7 @@ export default class CountryInstanceMEX extends Component {
     return (
       <div className='App'>
         <header className='App-header'>
-          <h1> USA </h1>
+          <h1> Mexico </h1>
           <LinkContainer className='App-link' to='/countries'>
             <Button variant='outline-secondary'>Click here to go back to the countries page</Button>
           </LinkContainer>

@@ -1,3 +1,7 @@
+.Back-link {
+  color: #555555;
+  margin-bottom: 10px;
+}
 .Case-header {
   background-color: #ffffff;
   min-height: 100vh;
@@ -21,7 +25,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-right: 35px;
+  margin-right: 50px;
 }
 
 .totals-title{
@@ -32,11 +36,60 @@
 
 .totals-data{
   font-weight: 700;
-  font-size: large;
+  font-size: 1em;
+}
+
+#new-stats-title-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+#subtitle {
+  font-weight: 800;
+  font-size: 20px;
+  text-align: left;
+}
+
+#new-stats-date {
+  background-color: rgb(200, 240, 255);
+  color: rgb(0, 69, 173);
+  font-weight: 500;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .new-stats {
+  flex: 1;
+  background-color: #eeeeee;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
+  margin-right: 50px;
+  padding: 10px;
+  width: 230px;
+  border-radius: 5px;
+}
+
+
+.new-stats-title{
+  font-weight: 500;
+  font-size: medium;
+  color: #818181;
+}
+
+.new-stats-data{
+  font-weight: 700;
+  font-size: 1em;
+}
+
+.gen-stats-description{
+  font-weight: 500;
+  font-size: small;
+  color: #818181;
 }

@@ -64,6 +64,12 @@ function compileData(data) {
   return lineData;
 }
 
+
+
+/*
+  Need to style graph and fix x-axis spacing
+  Graph should be horizontallly scrollable?
+*/
 function CaseResponseLine(props) {
   return <ResponsiveLine
     data={compileData(props.data)}

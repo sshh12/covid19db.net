@@ -50,6 +50,9 @@ function compileData(data) {
 
   var lineData = [];
   lineData.push({ "id": 'New Cases', "data": dailyCases });
+  /* 
+    Considering to split lines into separate graphs in future phases
+  */
   // lineData.push({ "id": 'Confirmed', "data": confirmed });
   // lineData.push({ "id": 'Deaths', "data": deaths });
   // lineData.push({ "id": 'Recovered', "data": recovered });

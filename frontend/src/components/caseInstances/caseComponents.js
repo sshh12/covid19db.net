@@ -25,6 +25,11 @@ function GenStats(props) {
   </div>
 }
 
+
+/* 
+  Method to transform given case data into format needed to pass
+  into NOVI line graph.
+*/
 function compileData(data) {
   var history = data.history;
   var confirmed = [];

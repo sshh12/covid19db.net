@@ -38,6 +38,8 @@ function compileData(data) {
   var active = [];
   var dailyCases = [];
   for (var i = 7; i < history.length; i += 3) {
+    //Need to format date on x-axis for the graph
+
     var date = i;//history[i].Date;
     //date = 0
     dailyCases.push({ "x": date, "y": history[i].Confirmed - history[i - 7].Confirmed });

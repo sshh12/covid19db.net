@@ -11,6 +11,7 @@ import TestData from './data/testing-data.json';
 class CaseInstanceGBR extends Component {
 
   render() {
+    //Need to make flex box items responsive when changing window size
     return (
       <div className='App'>
         <header className='Case-header'>

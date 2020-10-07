@@ -25,8 +25,9 @@ Example:
 
 import os
 import copy
-
 import json
+from pathlib import Path
+
 import requests
 import config
 from requests.exceptions import HTTPError
@@ -88,7 +89,7 @@ def build_country(country_data):
     instance and returns it.
     country_data - a response from REST Countries
     """
-    # Remove unnecessary fields
+    # remove unnecessary fields
     country_data.pop("topLevelDomain", None)
     country_data.pop("demonym", None)
     country_data.pop("gini", None)
@@ -96,22 +97,31 @@ def build_country(country_data):
     country_data.pop("numericCode", None)
     country_data.pop("translations", None)
     country_data.pop("cioc", None)
-    # Reorganize fields
+    # reorganize fields
     country_data["codes"] = {"alpha2Code": country_data.pop("alpha2Code"), "alpha3Code": country_data.pop("alpha3Code")}
-    # TODO: use Google Places API to later populate capital's location and image
-    country_data["capital"] = {"name": country_data.pop("capital"), "location": None, "img": None}
+    code = country_data["codes"]["alpha3Code"]
+    # read capital data and insert into this country instance
+    capital_data_dir = Path(DIR_PATH) / "../capital_data" / code
+    capital_info = json.load((capital_data_dir / (code + ".json")).open())
+    location = capital_info["candidates"][0]["geometry"]["location"]
+    country_data["capital"] = {
+        "name": country_data.pop("capital"),
+        "location": {"lat": location["lat"], "lng": location["lng"]},
+        "img": config.OUR_API_URL + "/images/capitals/" + capital_info["image_name"],
+    }
     country_data["alternateNames"] = country_data.pop("altSpellings")
     country_data["region"] = {"region": country_data.pop("region"), "subregion": country_data.pop("subregion")}
     latlng = country_data.pop("latlng")
     country_data["location"] = {"lat": latlng[0], "lng": latlng[1]}
     # TODO: use News API to later populate news field
     country_data["news"] = None
-    # TODO: fill sources later
     country_data["sources"] = [
         {
             "name": "REST Countries",
-            "url": config.REST_COUNTRIES_API_URL + "/alpha/" + country_data["codes"]["alpha3Code"],
-        }
+            "url": config.REST_COUNTRIES_API_URL + "/alpha/" + code,
+        },
+        {"name": "Google Places API", "url": "https://maps.googleapis.com/maps/api/place"},
+        {"name": "NewsAPI", "url": config.NEWS_API_URL},
     ]
     return country_data
 

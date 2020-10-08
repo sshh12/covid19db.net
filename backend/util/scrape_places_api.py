@@ -33,6 +33,9 @@ from PIL import Image
 DIR_PATH = Path(os.path.dirname(os.path.realpath(__file__)))
 CAPITAL_DATA_PATH = DIR_PATH / "../capital_data"
 
+"""
+!!!    DON'T FORGET TO REMOVE API KEY BEFORE COMMITTING    !!!
+"""
 gmaps = googlemaps.Client(key="")
 
 

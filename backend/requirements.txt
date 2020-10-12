@@ -1,2 +1,7 @@
 Flask==1.1.2
 SQLAlchemy==1.3.18
+flask-restful
+Flask-SQLAlchemy
+mypy
+coverage
+black

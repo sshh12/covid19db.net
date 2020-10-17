@@ -30,15 +30,29 @@ def get_attributes(args):
     return ret
 
 
-def validate_attributes(attributes, valid):
+def validate_attributes(attributes, valid_attributes):
     """
     Validates the given attributes by ensuring each specified value is a member
     of the given set.
     """
     for attribute in attributes:
-        if attribute not in valid:
+        if attribute not in valid_attributes:
             return False
     return True
+
+
+def validate_identifier(identifier):
+    """
+    Validates the given identifier. Returns a string indicating the type of identifier
+    or None. Valid identifier types include: "country_name", "alpha3_code", and "alpha2_code".
+    """
+    if identifier in const.VALID_COUNTRY_NAMES:
+        return const.Identifier.COUNTRY_NAME
+    if identifier in const.VALID_ALPHA3_CODES:
+        return const.Identifier.ALPHA3_CODE
+    if identifier in const.VALID_ALPHA2_CODES:
+        return const.Identifier.ALPHA2_CODE
+    return None
 
 
 def error_response(http_code, error_message):
@@ -66,15 +80,22 @@ class Countries:
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
+
             return {"message": "This is the GET on Countries.All", "attributes": list(attributes)}
 
     class Single(Resource):
         def get(self, identifier):
+            id_type = validate_identifier(identifier)
+            # none indicates bad id
+            if id_type is None:
+                return error_response(422, "Bad identifier")
+
             args = parser.parse_args()
             attributes = Countries.polish_attributes(get_attributes(args))
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
+
             return {
                 "message": "This is the GET on Countries.Single",
                 "identifier": identifier,

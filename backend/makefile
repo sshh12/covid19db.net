@@ -7,14 +7,17 @@ clean: docker-clean
 branches:
 	git branch -vv -a
 
+run_server:
+	python main.py
+
 docker-build:
-	docker build -t $(container_name) .
+	docker build -t $(image_name) .
 
 docker-run:
 	docker run -d -v $(shell pwd):/app/backend 	 		\
 	-p $(flask_server_port):$(flask_server_port) 		\
-	--rm --name=$(container_name) $(image_name)
-	docker exec -d $(container_name) python /app/backend/main.py
+	--rm --name=$(container_name) $(image_name)			\
+	python /app/backend/main.py
 
 docker-stop:
 	docker container stop $(container_name)

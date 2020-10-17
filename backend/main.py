@@ -1,7 +1,7 @@
 """
 Entrypoint into the backend API.
 """
-from src import app
+from src import app, routes
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -3,7 +3,6 @@ container_name = "covid19db-api-server"
 flask_server_port = 5000
 
 clean: docker-clean
-	rm -rf util/__pycache__
 
 branches:
 	git branch -vv -a

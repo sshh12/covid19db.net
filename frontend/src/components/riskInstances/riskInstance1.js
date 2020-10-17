@@ -22,7 +22,7 @@ export default class RiskInstanceMEX extends Component {
             <BigStat title="Gini Index" data={MEXData.gini.toFixed(1)} avg={Agg.gini.toFixed(1)} />
             <BigStat title="GDP Per Capita" prefix='$' data={`${MEXData.gdpPerCapita.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
           </div>
-          <div>
+          <div style={{ marginTop: '80px' }}>
             <div id='demogr-factor-title-div'>
               <h2 id='subtitle'>Demographic Risk Factors</h2>
             </div>

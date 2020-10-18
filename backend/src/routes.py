@@ -150,8 +150,57 @@ class CaseStatisticsAPI:
             if not validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
 
+            case_statistic = models.CaseStatistics.retrieve_by_id(identifier, id_type, attributes)
+            return case_statistic
+
+class RiskFactorStatisticsAPI:
+    @staticmethod
+    def polish_attributes(attributes):
+        # add defaults to attributes if specified
+        if attributes is not None:
+            attributes = frozenset({"country", *attributes})
+        # if attributes unspecified, include all
+        else:
+            attributes = frozenset(const.VALID_RISK_FACTOR_STATS_ATTRIBUTES)
+        return attributes
+
+    class RiskFactorStatistics(Resource):
+        def get(self):
+            """
+            Get all risk factor statistics
+            """
+            args = parser.parse_args()
+            attributes = RiskFactorStatisticsAPI.polish_attributes(get_attributes(args))
+            # validate attributes parameter
+            if not validate_attributes(attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES):
+                return error_response(422, "Specified attributes are invalid")
+            
+            all_risk_factor_statics = models.RiskFactorStatistics.retrieve_all(attributes)
+            return all_risk_factor_statics
+
+    class RiskFactorStatistic(Resource):
+        def get(self, identifier):
+            """
+            Get a risk factor statistic
+            """
+            id_type = validate_identifier(identifier)
+            # none indicates bad id
+            if id_type is None:
+                return error_response(422, "Bad identifier")
+
+            args = parser.parse_args()
+            attributes = RiskFactorStatisticsAPI.polish_attributes(get_attributes(args))
+            # validate attributes parameter
+            if not validate_attributes(attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES):
+                return error_response(422, "Specified attributes are invalid")
+
+            risk_factor_statistic = models.RiskFactorStatistics.retrieve_by_id(identifier, id_type, attributes)
+            return risk_factor_statistic
+
 # adds all of the available endpoints to the given api object.
 api.add_resource(CountriesAPI.Countries, "/countries")
 api.add_resource(CountriesAPI.Country, "/countries/<identifier>")
 api.add_resource(CaseStatisticsAPI.CaseStatistics, "/case-statistics")
 api.add_resource(CaseStatisticsAPI.CaseStatistic, "/case-statistics/<identifier>")
+api.add_resource(RiskFactorStatisticsAPI.RiskFactorStatistics, "/risk-factor-statistics")
+api.add_resource(RiskFactorStatisticsAPI.RiskFactorStatistic, "/risk-factor-statistics/<identifier>")

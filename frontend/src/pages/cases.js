@@ -18,8 +18,9 @@ export default class Cases extends Component {
           // <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
           //   <a>{country.name}</a>
           // </LinkContainer>
+
           <a href={`/countries/${country.codes.alpha3Code}`}>
-            <Button>{country.name}</Button>
+           {country.name}
           </a>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),

@@ -319,7 +319,7 @@ class CaseStatistics(db.Model):
 
     def polished(self, attributes):
         """
-        Transforms this Countries database entry into a usable dict with only the given attributes.
+        Transforms this Case Statistics database entry into a usable dict with only the given attributes.
         """
         ret = dict()
         if "country" in attributes:
@@ -510,7 +510,7 @@ class RiskFactorStatistics(db.Model):
 
     def polished(self, attributes):
         """
-        Transforms this Countries database entry into a usable dict with only the given attributes.
+        Transforms this Risk Factor Statistics database entry into a usable dict with only the given attributes.
         """
         ret = dict()
         if "aged65Older" in attributes:
@@ -569,14 +569,35 @@ and there should only ever be a single row per corresponding table.
 
 
 class GlobalNews(db.Model):
+    """
+    Database model representing a list of global COVID-19 news.
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     news = db.Column(db.ARRAY(db.JSON), nullable=False)
+
+    @staticmethod
+    def retrieve():
+        """
+        Retrieves global news from the database and returns it.
+        """
+        return GlobalNews.query.first().polished()
+
+    def polished(self):
+        """
+        Transforms the raw properties of this class into a more usable dict.
+        """
+        return self.news
 
     def __repr__(self):
         return str(self.news)
 
 
 class GlobalStats(db.Model):
+    """
+    Database model containing global COVID-19 statistics.
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     # totals
     total_cases = db.Column(db.Integer, nullable=False)
@@ -588,6 +609,30 @@ class GlobalStats(db.Model):
     new_deaths = db.Column(db.Integer, nullable=False)
     new_recovered = db.Column(db.Integer, nullable=False)
     new_active = db.Column(db.Integer, nullable=False)
+
+    @staticmethod
+    def retrieve():
+        """
+        Retrieves global statistics from the database and returns it.
+        """
+        return GlobalStats.query.first().polished()
+
+    def polished(self):
+        """
+        Transforms the raw properties of this class into a more usable dict
+        """
+        ret = dict()
+        ret["totals"] = dict()
+        ret["totals"]["cases"] = self.total_cases
+        ret["totals"]["deaths"] = self.total_deaths
+        ret["totals"]["recovered"] = self.total_recovered
+        ret["totals"]["active"] = self.total_active
+        ret["new"] = dict()
+        ret["new"]["cases"] = self.new_cases
+        ret["new"]["deaths"] = self.new_deaths
+        ret["new"]["recovered"] = self.new_recovered
+        ret["new"]["active"] = self.new_active
+        return ret
 
     def __repr__(self):
         return str(self.total_cases) + " " + str(self.new_cases)

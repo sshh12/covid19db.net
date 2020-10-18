@@ -200,6 +200,24 @@ class RiskFactorStatisticsAPI:
             return risk_factor_statistic
 
 
+class GlobalNewsAPI:
+    class GlobalNews(Resource):
+        def get(self):
+            """
+            Get global COVID-19 related news
+            """
+            return models.GlobalNews.retrieve()
+
+
+class GlobalStatsAPI:
+    class GlobalStats(Resource):
+        def get(self):
+            """
+            Get global COVID-19 statistics
+            """
+            return models.GlobalStats.retrieve()
+
+
 # adds all of the available endpoints to the given api object.
 api.add_resource(CountriesAPI.Countries, "/countries")
 api.add_resource(CountriesAPI.Country, "/countries/<identifier>")
@@ -207,3 +225,5 @@ api.add_resource(CaseStatisticsAPI.CaseStatistics, "/case-statistics")
 api.add_resource(CaseStatisticsAPI.CaseStatistic, "/case-statistics/<identifier>")
 api.add_resource(RiskFactorStatisticsAPI.RiskFactorStatistics, "/risk-factor-statistics")
 api.add_resource(RiskFactorStatisticsAPI.RiskFactorStatistic, "/risk-factor-statistics/<identifier>")
+api.add_resource(GlobalNewsAPI.GlobalNews, "/global-news")
+api.add_resource(GlobalStatsAPI.GlobalStats, "/global-stats")

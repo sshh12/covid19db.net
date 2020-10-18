@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
 
 import USAData from "../components/caseInstances/data/USA.json";
@@ -15,9 +15,12 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
-            <a>{country.name}</a>
-          </LinkContainer>
+          // <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
+          //   <a>{country.name}</a>
+          // </LinkContainer>
+          <a href={`/countries/${country.codes.alpha3Code}`}>
+          <Button>{country.name}</Button>
+          </a>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
@@ -47,7 +50,6 @@ export default class Cases extends Component {
         dataIndex: "totalActive",
         key: "totalActive",
         render: (population) => <>{population.toLocaleString()}</>,
-
         sorter: (a, b) => a.totalActive - b.totalActive,
       },
       {
@@ -55,9 +57,12 @@ export default class Cases extends Component {
         dataIndex: "exploreRisk",
         key: "exploreCase",
         render: (code) => (
-          <LinkContainer to={`/cases/${code}`}>
+          // <LinkContainer to={`/cases/${code}`}>
+          //   <Button>Explore</Button>
+          // </LinkContainer>
+          <a href={`/cases/${code}`}>
             <Button>Explore</Button>
-          </LinkContainer>
+          </a>
         ),
       },
       {
@@ -65,9 +70,12 @@ export default class Cases extends Component {
         dataIndex: "exploreRisk",
         key: "exploreRisk",
         render: (code) => (
-          <LinkContainer to={`/risks/${code}`}>
+          // <LinkContainer to={`/risks/${code}`}>
+          //   <Button>Explore</Button>
+          // </LinkContainer>
+          <a href={`/risks/${code}`}>
             <Button>Explore</Button>
-          </LinkContainer>
+          </a>
         ),
       },
     ];

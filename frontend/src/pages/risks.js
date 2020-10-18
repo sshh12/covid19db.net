@@ -71,7 +71,7 @@ export default class Risks extends Component {
           //   <Button>Explore</Button>
           // </LinkContainer>
           <a href={`/cases/${code}`}>
-          <Button>Explore</Button>
+            <Button>Explore</Button>
           </a>
         ),
       },

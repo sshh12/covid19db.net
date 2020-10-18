@@ -181,8 +181,7 @@ class Countries(db.Model):
 class CaseStatistics(db.Model):
     """
     Database model representing an instance of case statistics.
-    """
-
+    """    
     id = db.Column(db.Integer, primary_key=True)
     # can retrieve other relevant country data using this ISO code
     country_alpha3_code = db.Column(db.String(3), unique=True, nullable=False)
@@ -220,6 +219,152 @@ class CaseStatistics(db.Model):
     total_cases = db.Column(db.Integer, nullable=False)
     total_deaths = db.Column(db.Integer, nullable=False)
     total_recovered = db.Column(db.Integer, nullable=False)
+
+    @staticmethod
+    def fix_attributes(attributes):
+        """
+        Translates the given request attributes into the corresponding columns in
+        the database.
+        """
+        attr_to_cols = {
+            "country": [
+                CaseStatistics.country_alpha3_code
+            ],
+            "date": [CaseStatistics.date],
+            "derivativeNew": [
+                CaseStatistics.derivative_new_active,
+                CaseStatistics.derivative_new_cases,
+                CaseStatistics.derivative_new_deaths,
+                CaseStatistics.derivative_new_recovered
+            ],
+            "history": [CaseStatistics.history],
+            "location": [None, None],
+            "new": [
+                CaseStatistics.new_active,
+                CaseStatistics.new_cases,
+                CaseStatistics.new_deaths,
+                CaseStatistics.new_recovered,
+            ],
+            "percentages": [
+                CaseStatistics.percent_active,
+                CaseStatistics.percent_fatality,
+                CaseStatistics.percent_have_recovered,
+                CaseStatistics.percent_infected,
+            ],
+            "smoothedNew": [
+                CaseStatistics.smoothed_new_cases,
+                CaseStatistics.smoothed_new_deaths
+            ],
+            "sources": [
+                CaseStatistics.sources
+            ],
+            "testing": [
+                CaseStatistics.new_tests,
+                CaseStatistics.new_tests_smoothed,
+                CaseStatistics.positive_rate,
+                CaseStatistics.total_tests
+            ],
+            "totals": [
+                CaseStatistics.total_active,
+                CaseStatistics.total_cases,
+                CaseStatistics.total_deaths,
+                CaseStatistics.total_recovered,
+            ],
+        }
+        fixed = list()
+        for attribute in attributes:
+            fixed += attr_to_cols[attribute]
+        return fixed
+
+    @staticmethod
+    def retrieve_all(attributes):
+        """
+        Retrieves all entries from the Case Statistics table in the database, including only the given attributes.
+        """
+        ret = []
+        all_entries = CaseStatistics.query.options(load_only(*CaseStatistics.fix_attributes(attributes))).all()
+        for entry in all_entries:
+            ret += [entry.polished(attributes)]
+        return ret
+
+    @staticmethod
+    def retrieve_by_id(identifier, id_type, attributes):
+        """
+        Retrieves the entry from the Case Statistics table in the database corresponding
+        to the given identifier. id_type should be one of const.Identifier. Only the fields indicated
+        by attributes are included in the retrieval.
+        """
+        entry = None
+        fixed_attr = CaseStatistics.fix_attributes(attributes)
+        if id_type == const.Identifier.ALPHA3_CODE:
+            entry = CaseStatistics.query.filter_by(country_alpha3_code=identifier).options(load_only(*fixed_attr)).first()            
+        if entry is not None:
+            entry = entry.polished(attributes)
+        return entry
+
+    def polished(self, attributes):
+        """
+        Transforms this Countries database entry into a usable dict with only the given attributes.
+        """
+        ret = dict()
+        if "country" in attributes:
+            ret["country"] = dict()
+            country = ret["country"]
+            country["name"] = None
+            country["codes"] = dict()
+            country["codes"]["alpha2Code"] = None
+            country["codes"]["alpha3Code"] = self.country_alpha3_code
+        if "date" in attributes:
+            ret["date"] = self.date
+        if "derivativeNew" in attributes:
+            ret["derivativeNew"] = dict()
+            derNew = ret["derivativeNew"]
+            derNew["active"] = self.derivative_new_active
+            derNew["cases"] = self.derivative_new_cases
+            derNew["deaths"] = self.derivative_new_deaths
+            derNew["recovered"] = self.derivative_new_recovered
+        if "history" in attributes:
+            ret["history"] = self.history
+        if "location" in attributes:
+            ret["location"] = dict()
+            ret["location"]["lat"] = None
+            ret["location"]["lng"] = None
+        if "new" in attributes:
+            ret["new"] = dict()
+            new = ret["new"]
+            new["active"] = self.new_active
+            new["cases"] = self.new_cases
+            new["active"] = self.new_deaths
+            new["active"] = self.new_recovered
+        if "percentages" in attributes:
+            ret["percentages"] = dict()
+            percentages = ret["percentages"]
+            new["active"] = self.percent_active
+            new["fatality"] = self.percent_fatality
+            new["haveRecovered"] = self.percent_have_recovered
+            new["infectd"] = self.percent_infected
+        if "smoothedNew" in attributes:
+            ret["smoothedNew"] = dict()
+            smoothedNew = ret["smoothedNew"]
+            smoothedNew["cases"] = self.smoothed_new_cases
+            smoothedNew["deaths"] = self.smoothed_new_deaths
+        if "sources" in attributes:
+            ret["sources"] = self.sources
+        if "testing" in attributes:
+            ret["testing"] = dict()
+            testing = ret["testing"]
+            testing["newTests"] = self.new_tests
+            testing["newTestsSmoothed"] = self.new_tests_smoothed
+            testing["positiveRate"] = self.positive_rate
+            testing["totalTests"] = self.total_tests
+        if "totals" in attributes:
+            ret["totals"] = dict()
+            totals = ret["totals"]
+            totals["active"] = self.total_active
+            totals["cases"] = self.total_cases
+            totals["deaths"] = self.total_deaths
+            totals["recovered"] = self.total_recovered
+        return ret
 
     def __repr__(self):
         return self.country_alpha3_code + " " + self.date + " " + str(self.total_cases)
@@ -274,7 +419,6 @@ class RiskFactorStatistics(db.Model):
 The following "models" are just for storing global news and stats in the database
 and there should only ever be a single row per corresponding table.
 """
-
 
 class GlobalNews(db.Model):
     id = db.Column(db.Integer, primary_key=True)

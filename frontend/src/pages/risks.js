@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
 
 import USAData from "../components/riskInstances/data/USA.json";
@@ -14,9 +14,12 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
-            <a>{country.name}</a>
-          </LinkContainer>
+        <a href={`/countries/${country.codes.alpha3Code}`}>
+          {country.name}
+        </a>
+        // <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
+        //   <a>{country.name}</a>
+        // </LinkContainer>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
@@ -50,9 +53,13 @@ export default class Risks extends Component {
         dataIndex: "exploreRisk",
         key: "exploreRisk",
         render: (code) => (
-          <LinkContainer to={`/risks/${code}`}>
+          // <LinkContainer to={`/risks/${code}`}>
+          //   <Button>Explore</Button>
+          // </LinkContainer>
+
+          <a href={`/risks/${code}`}>
             <Button>Explore</Button>
-          </LinkContainer>
+          </a>
         ),
       },
       {
@@ -60,9 +67,12 @@ export default class Risks extends Component {
         dataIndex: "exploreRisk",
         key: "exploreCase",
         render: (code) => (
-          <LinkContainer to={`/cases/${code}`}>
-            <Button>Explore</Button>
-          </LinkContainer>
+          // <LinkContainer to={`/cases/${code}`}>
+          //   <Button>Explore</Button>
+          // </LinkContainer>
+          <a href={`/cases/${code}`}>
+          <Button>Explore</Button>
+          </a>
         ),
       },
     ];

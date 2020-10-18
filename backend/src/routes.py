@@ -109,6 +109,7 @@ class CountriesAPI:
             country = models.Countries.retrieve_by_id(identifier, id_type, attributes)
             return country
 
+
 class CaseStatisticsAPI:
     @staticmethod
     def polish_attributes(attributes):
@@ -130,7 +131,7 @@ class CaseStatisticsAPI:
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
-            
+
             all_case_statics = models.CaseStatistics.retrieve_all(attributes)
             return all_case_statics
 
@@ -138,7 +139,7 @@ class CaseStatisticsAPI:
         def get(self, identifier):
             """
             Get a case statistic
-            """           
+            """
             id_type = validate_identifier(identifier)
             # none indicates bad id
             if id_type is None:
@@ -152,6 +153,7 @@ class CaseStatisticsAPI:
 
             case_statistic = models.CaseStatistics.retrieve_by_id(identifier, id_type, attributes)
             return case_statistic
+
 
 class RiskFactorStatisticsAPI:
     @staticmethod
@@ -174,7 +176,7 @@ class RiskFactorStatisticsAPI:
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
-            
+
             all_risk_factor_statics = models.RiskFactorStatistics.retrieve_all(attributes)
             return all_risk_factor_statics
 
@@ -196,6 +198,7 @@ class RiskFactorStatisticsAPI:
 
             risk_factor_statistic = models.RiskFactorStatistics.retrieve_by_id(identifier, id_type, attributes)
             return risk_factor_statistic
+
 
 # adds all of the available endpoints to the given api object.
 api.add_resource(CountriesAPI.Countries, "/countries")

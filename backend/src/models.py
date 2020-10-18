@@ -42,7 +42,7 @@ class Countries(db.Model):
     # news
     news = db.Column(db.ARRAY(db.JSON), nullable=True)
     # population
-    population = db.Column(db.Float, nullable=False)
+    population = db.Column(db.BigInteger, nullable=False)
     # region
     region_region = db.Column(db.String, nullable=False)
     region_subregion = db.Column(db.String, nullable=False)
@@ -111,9 +111,9 @@ class Countries(db.Model):
         if id_type == const.Identifier.COUNTRY_NAME:
             entry = Countries.query.filter_by(name=identifier).options(load_only(*fixed_attr)).first()
         elif id_type == const.Identifier.ALPHA2_CODE:
-            entry = Countries.query.filter_by(codes_alpha2_codee=identifier).options(load_only(*fixed_attr)).first()
+            entry = Countries.query.filter_by(codes_alpha2_code=identifier).options(load_only(*fixed_attr)).first()
         elif id_type == const.Identifier.ALPHA3_CODE:
-            entry = Countries.query.filter_by(codes_alpha3_codee=identifier).options(load_only(*fixed_attr)).first()
+            entry = Countries.query.filter_by(codes_alpha3_code=identifier).options(load_only(*fixed_attr)).first()
         if entry is not None:
             entry = entry.polished(attributes)
         return entry
@@ -181,7 +181,8 @@ class Countries(db.Model):
 class CaseStatistics(db.Model):
     """
     Database model representing an instance of case statistics.
-    """    
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     # country
     country_codes_alpha2_code = db.Column(db.String(2), unique=True, nullable=False)
@@ -200,10 +201,10 @@ class CaseStatistics(db.Model):
     location_lat = db.Column(db.Float, nullable=False)
     location_lng = db.Column(db.Float, nullable=False)
     # new
-    new_active = db.Column(db.Integer, nullable=False)
-    new_cases = db.Column(db.Integer, nullable=False)
-    new_deaths = db.Column(db.Integer, nullable=False)
-    new_recovered = db.Column(db.Integer, nullable=False)
+    new_active = db.Column(db.BigInteger, nullable=False)
+    new_cases = db.Column(db.BigInteger, nullable=False)
+    new_deaths = db.Column(db.BigInteger, nullable=False)
+    new_recovered = db.Column(db.BigInteger, nullable=False)
     # percentages
     percentages_active = db.Column(db.Float, nullable=False)
     percentages_fatality = db.Column(db.Float, nullable=False)
@@ -220,10 +221,10 @@ class CaseStatistics(db.Model):
     testing_positive_rate = db.Column(db.JSON, nullable=False)
     testing_total_tests = db.Column(db.JSON, nullable=False)
     # totals
-    totals_active = db.Column(db.Integer, nullable=False)
-    totals_cases = db.Column(db.Integer, nullable=False)
-    totals_deaths = db.Column(db.Integer, nullable=False)
-    totals_recovered = db.Column(db.Integer, nullable=False)
+    totals_active = db.Column(db.BigInteger, nullable=False)
+    totals_cases = db.Column(db.BigInteger, nullable=False)
+    totals_deaths = db.Column(db.BigInteger, nullable=False)
+    totals_recovered = db.Column(db.BigInteger, nullable=False)
 
     @staticmethod
     def fix_attributes(attributes):
@@ -235,14 +236,14 @@ class CaseStatistics(db.Model):
             "country": [
                 CaseStatistics.country_name,
                 CaseStatistics.country_codes_alpha2_code,
-                CaseStatistics.country_codes_alpha3_code
+                CaseStatistics.country_codes_alpha3_code,
             ],
             "date": [CaseStatistics.date],
             "derivativeNew": [
                 CaseStatistics.derivative_new_active,
                 CaseStatistics.derivative_new_cases,
                 CaseStatistics.derivative_new_deaths,
-                CaseStatistics.derivative_new_recovered
+                CaseStatistics.derivative_new_recovered,
             ],
             "history": [CaseStatistics.history],
             "location": [CaseStatistics.location_lat, CaseStatistics.location_lng],
@@ -258,18 +259,13 @@ class CaseStatistics(db.Model):
                 CaseStatistics.percentages_have_recovered,
                 CaseStatistics.percentages_infected,
             ],
-            "smoothedNew": [
-                CaseStatistics.smoothed_new_cases,
-                CaseStatistics.smoothed_new_deaths
-            ],
-            "sources": [
-                CaseStatistics.sources
-            ],
+            "smoothedNew": [CaseStatistics.smoothed_new_cases, CaseStatistics.smoothed_new_deaths],
+            "sources": [CaseStatistics.sources],
             "testing": [
                 CaseStatistics.testing_new_tests,
                 CaseStatistics.testing_new_tests_smoothed,
                 CaseStatistics.testing_positive_rate,
-                CaseStatistics.testing_total_tests
+                CaseStatistics.testing_total_tests,
             ],
             "totals": [
                 CaseStatistics.totals_active,
@@ -306,9 +302,17 @@ class CaseStatistics(db.Model):
         if id_type == const.Identifier.COUNTRY_NAME:
             entry = CaseStatistics.query.filter_by(country_name=identifier).options(load_only(*fixed_attr)).first()
         elif id_type == const.Identifier.ALPHA2_CODE:
-            entry = CaseStatistics.query.filter_by(country_codes_alpha2_code=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                CaseStatistics.query.filter_by(country_codes_alpha2_code=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         elif id_type == const.Identifier.ALPHA3_CODE:
-            entry = CaseStatistics.query.filter_by(country_codes_alpha3_code=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                CaseStatistics.query.filter_by(country_codes_alpha3_code=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         if entry is not None:
             entry = entry.polished(attributes)
         return entry
@@ -345,15 +349,15 @@ class CaseStatistics(db.Model):
             new = ret["new"]
             new["active"] = self.new_active
             new["cases"] = self.new_cases
-            new["active"] = self.new_deaths
-            new["active"] = self.new_recovered
+            new["deaths"] = self.new_deaths
+            new["recovered"] = self.new_recovered
         if "percentages" in attributes:
             ret["percentages"] = dict()
             percentages = ret["percentages"]
-            new["active"] = self.percentages_active
-            new["fatality"] = self.percentages_fatality
-            new["haveRecovered"] = self.percentages_have_recovered
-            new["infectd"] = self.percentages_infected
+            percentages["active"] = self.percentages_active
+            percentages["fatality"] = self.percentages_fatality
+            percentages["haveRecovered"] = self.percentages_have_recovered
+            percentages["infected"] = self.percentages_infected
         if "smoothedNew" in attributes:
             ret["smoothedNew"] = dict()
             smoothedNew = ret["smoothedNew"]
@@ -396,7 +400,7 @@ class RiskFactorStatistics(db.Model):
     # country
     country_codes_alpha2_code = db.Column(db.String(2), unique=True, nullable=False)
     country_codes_alpha3_code = db.Column(db.String(3), unique=True, nullable=False)
-    country_name = db.Column(db.String, unique=True, nullable=False)    
+    country_name = db.Column(db.String, unique=True, nullable=False)
     # diabetesPrevalence
     diabetes_prevalence = db.Column(db.Float, nullable=True)
     # extremePovertyRate
@@ -438,9 +442,9 @@ class RiskFactorStatistics(db.Model):
             "aged70Older": [RiskFactorStatistics.aged_70_older],
             "cardiovascDeathRate": [RiskFactorStatistics.cardiovascular_death_rate],
             "country": [
-                CaseStatistics.country_name,
-                CaseStatistics.country_codes_alpha2_code,
-                CaseStatistics.country_codes_alpha3_code
+                RiskFactorStatistics.country_name,
+                RiskFactorStatistics.country_codes_alpha2_code,
+                RiskFactorStatistics.country_codes_alpha3_code,
             ],
             "diabetesPrevalence": [RiskFactorStatistics.diabetes_prevalence],
             "extremePovertyRate": [RiskFactorStatistics.extreme_poverty_rate],
@@ -468,7 +472,9 @@ class RiskFactorStatistics(db.Model):
         Retrieves all entries from the Risk Factor Statistics table in the database, including only the given attributes.
         """
         ret = []
-        all_entries = RiskFactorStatistics.query.options(load_only(*RiskFactorStatistics.fix_attributes(attributes))).all()
+        all_entries = RiskFactorStatistics.query.options(
+            load_only(*RiskFactorStatistics.fix_attributes(attributes))
+        ).all()
         for entry in all_entries:
             ret += [entry.polished(attributes)]
         return ret
@@ -483,11 +489,21 @@ class RiskFactorStatistics(db.Model):
         entry = None
         fixed_attr = RiskFactorStatistics.fix_attributes(attributes)
         if id_type == const.Identifier.COUNTRY_NAME:
-            entry = RiskFactorStatistics.query.filter_by(country_name=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                RiskFactorStatistics.query.filter_by(country_name=identifier).options(load_only(*fixed_attr)).first()
+            )
         elif id_type == const.Identifier.ALPHA2_CODE:
-            entry = RiskFactorStatistics.query.filter_by(country_codes_alpha2_code=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                RiskFactorStatistics.query.filter_by(country_codes_alpha2_code=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         elif id_type == const.Identifier.ALPHA3_CODE:
-            entry = RiskFactorStatistics.query.filter_by(country_codes_alpha3_code=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                RiskFactorStatistics.query.filter_by(country_codes_alpha3_code=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         if entry is not None:
             entry = entry.polished(attributes)
         return entry
@@ -550,6 +566,7 @@ class RiskFactorStatistics(db.Model):
 The following "models" are just for storing global news and stats in the database
 and there should only ever be a single row per corresponding table.
 """
+
 
 class GlobalNews(db.Model):
     id = db.Column(db.Integer, primary_key=True)

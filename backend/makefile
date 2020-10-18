@@ -1,21 +1,24 @@
 image_name = covid19db/backend
 container_name = "covid19db-api-server"
 flask_server_port = 5000
+path = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 clean: docker-clean
-	rm -rf util/__pycache__
 
 branches:
 	git branch -vv -a
 
+run-server:
+	python main.py
+
 docker-build:
-	docker build -t $(container_name) .
+	docker build -t $(image_name) .
 
 docker-run:
-	docker run -d -v $(shell pwd):/app/backend 	 		\
+	docker run -d -v $(path):/app/backend 	 		\
 	-p $(flask_server_port):$(flask_server_port) 		\
-	--rm --name=$(container_name) $(image_name)
-	docker exec -d $(container_name) python /app/backend/main.py
+	--rm --name=$(container_name) $(image_name)			\
+	python /app/backend/main.py
 
 docker-stop:
 	docker container stop $(container_name)

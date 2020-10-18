@@ -1,3 +1,8 @@
-util/__pycache__
+**/__pycache__/
+
+# static data
 data
 capital_data
+
+# env
+secret.py

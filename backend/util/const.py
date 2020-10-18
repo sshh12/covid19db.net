@@ -1,5 +1,5 @@
 """
-Defines all of the constant values relevant to the backend
+Defines all of the constant values relevant backend scripts.
 """
 # General
 OUR_API_URL = "https://api.covid19db.net"

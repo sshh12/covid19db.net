@@ -62,7 +62,7 @@ def error_response(http_code, error_message):
     return {"error": error_message}, http_code
 
 
-class Countries:
+class CountriesAPI:
     @staticmethod
     def polish_attributes(attributes):
         """
@@ -76,13 +76,13 @@ class Countries:
             attributes = frozenset(const.VALID_COUNTRIES_ATTRIBUTES)
         return attributes
 
-    class All(Resource):
+    class Countries(Resource):
         def get(self):
             """
             Get all countries
             """
             args = parser.parse_args()
-            attributes = Countries.polish_attributes(get_attributes(args))
+            attributes = CountriesAPI.polish_attributes(get_attributes(args))
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
@@ -90,7 +90,7 @@ class Countries:
             all_countries = models.Countries.retrieve_all(attributes)
             return all_countries
 
-    class Single(Resource):
+    class Country(Resource):
         def get(self, identifier):
             """
             Get a country
@@ -101,7 +101,7 @@ class Countries:
                 return error_response(422, "Bad identifier")
 
             args = parser.parse_args()
-            attributes = Countries.polish_attributes(get_attributes(args))
+            attributes = CountriesAPI.polish_attributes(get_attributes(args))
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
@@ -109,7 +109,49 @@ class Countries:
             country = models.Countries.retrieve_by_id(identifier, id_type, attributes)
             return country
 
+class CaseStatisticsAPI:
+    @staticmethod
+    def polish_attributes(attributes):
+        # add defaults to attributes if specified
+        if attributes is not None:
+            attributes = frozenset({"country", "date", *attributes})
+        # if attributes unspecified, include all
+        else:
+            attributes = frozenset(const.VALID_CASE_STATS_ATTRIBUTES)
+        return attributes
+
+    class CaseStatistics(Resource):
+        def get(self):
+            """
+            Get all case statistics
+            """
+            args = parser.parse_args()
+            attributes = CaseStatisticsAPI.polish_attributes(get_attributes(args))
+            # validate attributes parameter
+            if not validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES):
+                return error_response(422, "Specified attributes are invalid")
+            
+            all_case_statics = models.CaseStatistics.retrieve_all(attributes)
+            return all_case_statics
+
+    class CaseStatistic(Resource):
+        def get(self, identifier):
+            """
+            Get a case statistic
+            """           
+            id_type = validate_identifier(identifier)
+            # none indicates bad id
+            if id_type is None:
+                return error_response(422, "Bad identifier")
+
+            args = parser.parse_args()
+            attributes = CaseStatisticsAPI.polish_attributes(get_attributes(args))
+            # validate attributes parameter
+            if not validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES):
+                return error_response(422, "Specified attributes are invalid")
 
 # adds all of the available endpoints to the given api object.
-api.add_resource(Countries.All, "/countries")
-api.add_resource(Countries.Single, "/countries/<identifier>")
+api.add_resource(CountriesAPI.Countries, "/countries")
+api.add_resource(CountriesAPI.Country, "/countries/<identifier>")
+api.add_resource(CaseStatisticsAPI.CaseStatistics, "/case-statistics")
+api.add_resource(CaseStatisticsAPI.CaseStatistic, "/case-statistics/<identifier>")

@@ -7,7 +7,7 @@ clean: docker-clean
 branches:
 	git branch -vv -a
 
-run_server:
+run-server:
 	python main.py
 
 docker-build:

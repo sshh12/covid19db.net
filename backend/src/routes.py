@@ -2,7 +2,7 @@
 Defines the valid routes for the backend server.
 """
 from flask_restful import Resource, reqparse
-from . import db, api, const
+from . import api, const, models
 
 # used to parse url query parameters
 parser = reqparse.RequestParser()
@@ -65,6 +65,9 @@ def error_response(http_code, error_message):
 class Countries:
     @staticmethod
     def polish_attributes(attributes):
+        """
+        Adds defaults to the attributes that were specified by the client.
+        """
         # add defaults to attributes if specified
         if attributes is not None:
             attributes = frozenset({"name", "codes", *attributes})
@@ -75,16 +78,23 @@ class Countries:
 
     class All(Resource):
         def get(self):
+            """
+            Get all countries
+            """
             args = parser.parse_args()
             attributes = Countries.polish_attributes(get_attributes(args))
             # validate attributes parameter
             if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
 
-            return {"message": "This is the GET on Countries.All", "attributes": list(attributes)}
+            all_countries = models.Countries.retrieve_all(attributes)
+            return all_countries
 
     class Single(Resource):
         def get(self, identifier):
+            """
+            Get a country
+            """
             id_type = validate_identifier(identifier)
             # none indicates bad id
             if id_type is None:
@@ -96,11 +106,8 @@ class Countries:
             if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
                 return error_response(422, "Specified attributes are invalid")
 
-            return {
-                "message": "This is the GET on Countries.Single",
-                "identifier": identifier,
-                "attributes": list(attributes),
-            }
+            country = models.Countries.retrieve_by_id(identifier, id_type, attributes)
+            return country
 
 
 # adds all of the available endpoints to the given api object.

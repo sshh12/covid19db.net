@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+// import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'antd';
 import Map from "../map";
 import { BigStat, DemographicFactor, HealthFactor, CaseResponseLine } from './riskComponents';
@@ -12,9 +12,9 @@ export default class RiskInstanceMEX extends Component {
     return (
       <div className='App'>
         <header className='risk-header'>
-          <LinkContainer className='Back-link' to='/risks'>
+          {/* <LinkContainer className='Back-link' to='/risks'>
             <Button variant='outline-secondary'>Go back</Button>
-          </LinkContainer>
+          </LinkContainer> */}
 
           <h1 id='page-title'>Risk Factors in {MEXData.country.name} ({MEXData.country.codes.alpha3Code})</h1>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >

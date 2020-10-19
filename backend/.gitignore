@@ -6,3 +6,4 @@ capital_data
 
 # env
 secret.py
+.env

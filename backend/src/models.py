@@ -259,7 +259,10 @@ class CaseStatistics(db.Model):
                 CaseStatistics.percentages_have_recovered,
                 CaseStatistics.percentages_infected,
             ],
-            "smoothedNew": [CaseStatistics.smoothed_new_cases, CaseStatistics.smoothed_new_deaths],
+            "smoothedNew": [
+                CaseStatistics.smoothed_new_cases,
+                CaseStatistics.smoothed_new_deaths,
+            ],
             "sources": [CaseStatistics.sources],
             "testing": [
                 CaseStatistics.testing_new_tests,
@@ -455,7 +458,10 @@ class RiskFactorStatistics(db.Model):
             "hospitalBedsPerThousand": [RiskFactorStatistics.hospital_beds_per_thousand],
             "humanDevelopmentIndex": [RiskFactorStatistics.human_development_index],
             "lifeExpectancy": [RiskFactorStatistics.life_expectancy],
-            "location": [RiskFactorStatistics.location_lat, RiskFactorStatistics.location_lng],
+            "location": [
+                RiskFactorStatistics.location_lat,
+                RiskFactorStatistics.location_lng,
+            ],
             "maleSmokers": [RiskFactorStatistics.male_smokers],
             "medianAge": [RiskFactorStatistics.median_age],
             "populationDensity": [RiskFactorStatistics.population_density],

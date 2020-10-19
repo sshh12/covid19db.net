@@ -15,9 +15,9 @@ docker-build:
 	docker build -t $(image_name) .
 
 docker-run:
-	docker run -d -v $(path):/app/backend 	 		\
-	-p $(flask_server_port):$(flask_server_port) 		\
-	--rm --name=$(container_name) $(image_name)			\
+	docker run -d -v $(path):/app/backend			\
+	-p $(flask_server_port):$(flask_server_port)	\
+	--rm --name=$(container_name) $(image_name)		\
 	python /app/backend/main.py
 
 docker-stop:
@@ -29,3 +29,9 @@ docker-clean:
 
 docker-containers:
 	docker container ls -a
+
+format:
+	black -l 120 main.py src/*.py
+
+install-python-deps:
+	pip install -r requirements.txt

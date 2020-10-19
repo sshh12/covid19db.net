@@ -366,6 +366,16 @@
                                 }
                             }
                         }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -377,13 +387,13 @@
                 "type": "object",
                 "required": [
                     "name",
-                    "code"
+                    "codes"
                 ],
                 "properties": {
                     "name": {
                         "type": "string"
                     },
-                    "code": {
+                    "codes": {
                         "type": "object",
                         "required": [
                             "alpha2Code",

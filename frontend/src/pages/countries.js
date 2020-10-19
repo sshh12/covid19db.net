@@ -51,7 +51,6 @@ export default class Countries extends Component {
     console.log(this.state.lastCardIndex)
 
     const data = this.state.countriesCardData
-
     // Get all loaded country cards in the current view
     const currentViewCards = data && data.length > 0 && data
       .slice(this.state.firstCardIndex, this.state.lastCardIndex)

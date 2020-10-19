@@ -46,7 +46,7 @@ export default class RiskInstance extends Component {
           <h3>{country.name}</h3>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >
             <BigStat title="Human Development Index" data={humanDevelopmentIndex} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
-            <BigStat title="Gini Index" data={gini.toFixed(1)} avg={Agg.gini.toFixed(1)} />
+            <BigStat title="Gini Index" data={gini} avg={Agg.gini.toFixed(1)} />
             <BigStat title="GDP Per Capita" prefix='$' data={`${gdpPerCapita.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
           </div>
           <div style={{ marginTop: '80px' }}>

@@ -59,19 +59,19 @@ class CaseInstance extends Component {
               <h2 id='new-stats-date'>{data.date}</h2>
             </div>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
-              <NewStats title="Cases" data={data.new.cases} yesterday={data.derivativeNew.cases} />
-              <NewStats title="Active" data={data.new.active} yesterday={data.derivativeNew.active} />
-              <NewStats title="Deaths" data={data.new.deaths} yesterday={data.derivativeNew.deaths} />
-              <NewStats title="Recovered" data={data.new.recovered} yesterday={data.derivativeNew.recovered} />
+              <NewStats title="Cases" data={data.new.cases} yesterday={Math.round((data.derivativeNew.cases + Number.EPSILON) * 100) / 100} />
+              <NewStats title="Active" data={data.new.active} yesterday={Math.round((data.derivativeNew.active + Number.EPSILON) * 100) / 100} />
+              <NewStats title="Deaths" data={data.new.deaths} yesterday={Math.round((data.derivativeNew.deaths + Number.EPSILON) * 100) / 100} />
+              <NewStats title="Recovered" data={data.new.recovered} yesterday={Math.round((data.derivativeNew.recovered + Number.EPSILON) * 100) / 100} />
             </div>
           </div>
           <div style={{ marginTop: '50px' }}>
             <h2 id='subtitle'>General Stats</h2>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
-              <GenStats title="Fatality Rate" data={data.percentages.fatality} description='total deaths/total cases' />
-              <GenStats title="Infection Rate" data={data.percentages.infected} description='total cases/total population' />
-              <GenStats title="Recovery Rate" data={data.percentages.haveRecovered} description='total recovered/total cases' />
-              <GenStats title="Active Rate" data={data.percentages.active} description='total active/total cases' />
+              <GenStats title="Fatality Rate" data={Math.round((data.percentages.fatality + Number.EPSILON) * 100) / 100} description='total deaths/total cases' />
+              <GenStats title="Infection Rate" data={Math.round((data.percentages.infected + Number.EPSILON) * 100) / 100} description='total cases/total population' />
+              <GenStats title="Recovery Rate" data={Math.round((data.percentages.haveRecovered + Number.EPSILON) * 100) / 100} description='total recovered/total cases' />
+              <GenStats title="Active Rate" data={Math.round((data.percentages.active + Number.EPSILON) * 100) / 100} description='total active/total cases' />
             </div>
           </div>
           <div style={{ marginTop: '50px', height: '500px', width: '100%' }}>

@@ -2,9 +2,9 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { About, Cases, Countries, Main, Risks, GlobalNews } from './pages/allPages'
-import { CountryInstanceGBR, CountryInstanceMEX, CountryInstanceUSA } from './components/countryInstances/allCountryInstances';
 import { CaseInstanceGBR, CaseInstanceMEX, CaseInstanceUSA } from './components/caseInstances/allCaseInstances';
 import { RiskInstanceGBR, RiskInstanceMEX, RiskInstanceUSA } from './components/riskInstances/allRiskInstances';
+import CountryInstance from "./components/country/countryInstance";
 
 function Routes() {
   return (
@@ -13,12 +13,13 @@ function Routes() {
       <Route exact path="/home"><Main /></Route>
       <Route exact path="/about"><About /></Route>
       <Route exact path="/countries"><Countries /></Route>
+      <Route exact path="/countries/:countryCode" render={(props) => {
+        const countryCode = props.match.params.countryCode;
+        return <CountryInstance code={countryCode}/>
+      }}></Route>
       <Route exact path="/cases"><Cases /></Route>
       <Route exact path="/risks"><Risks /></Route>
       <Route exact path="/globalNews"><GlobalNews /></Route>
-      <Route exact path="/countries/GBR"><CountryInstanceGBR /></Route>
-      <Route exact path="/countries/MEX"><CountryInstanceMEX /></Route>
-      <Route exact path="/countries/USA"><CountryInstanceUSA /></Route>
       <Route exact path="/cases/GBR"><CaseInstanceGBR /></Route>
       <Route exact path="/cases/MEX"><CaseInstanceMEX /></Route>
       <Route exact path="/cases/USA"><CaseInstanceUSA /></Route>

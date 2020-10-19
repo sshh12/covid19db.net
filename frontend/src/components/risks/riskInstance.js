@@ -42,35 +42,35 @@ export default class RiskInstance extends Component {
     return (
       <div className='App'>
         <header className='risk-header'>
-          <h1 id='page-title'>Risk Factors in {country.name} ({country.codes.alpha3Code})</h1>
-          <h3>{country.name}</h3>
+          <h1 id='page-title'>Risk Factors in {country?.name} ({country?.codes?.alpha3Code})</h1>
+          <h3>{country?.name}</h3>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >
-            <BigStat title="Human Development Index" data={humanDevelopmentIndex} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
-            <BigStat title="Gini Index" data={gini} avg={Agg.gini.toFixed(1)} />
-            <BigStat title="GDP Per Capita" prefix='$' data={`${gdpPerCapita.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
+            <BigStat title="Human Development Index" data={humanDevelopmentIndex?.toFixed(3)} avg={Agg.humanDevelopmentIndex.toFixed(3)} />
+            <BigStat title="Gini Index" data={gini?.toFixed(1)} avg={Agg.gini.toFixed(1)} />
+            <BigStat title="GDP Per Capita" prefix='$' data={`${gdpPerCapita?.toLocaleString()}`} suffix='/person' avg={`$${Agg.gdpPerCapita.toLocaleString()}`} />
           </div>
           <div style={{ marginTop: '80px' }}>
             <div id='demogr-factor-title-div'>
               <h2 id='subtitle'>Demographic Risk Factors</h2>
             </div>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left', flexWrap: 'wrap' }}>
-              <DemographicFactor title="Population Density" data={populationDensity} suffix='people/sq.mi.' avg={Agg.populationDensity.toFixed(3)} />
-              <DemographicFactor title="Median Age" data={medianAge} suffix='yrs.' avg={Agg.medianAge.toFixed(3)} />
-              <DemographicFactor title="Age 65 and Older" data={`${aged65Older}%`} avg={`${Agg.aged65Older.toFixed(3)} %`} />
-              <DemographicFactor title="Age 70 and Older" data={`${aged70Older}%`} avg={`${Agg.aged70Older.toFixed(3)} %`} />
+              <DemographicFactor title="Population Density" data={populationDensity?.toFixed(3)} suffix='people/sq.mi.' avg={Agg.populationDensity.toFixed(3)} />
+              <DemographicFactor title="Median Age" data={medianAge?.toFixed(3)} suffix='yrs.' avg={Agg.medianAge.toFixed(3)} />
+              <DemographicFactor title="Age 65 and Older" data={`${aged65Older?.toFixed(3)}%`} avg={`${Agg.aged65Older.toFixed(3)} %`} />
+              <DemographicFactor title="Age 70 and Older" data={`${aged70Older?.toFixed(3)}%`} avg={`${Agg.aged70Older.toFixed(3)} %`} />
             </div>
           </div>
           <div style={{ marginTop: '50px' }}>
             <h2 id='subtitle'>Health Risk Factors</h2>
             <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left', flexWrap: 'wrap' }}>
-              <HealthFactor title="Life Expectancy" data={lifeExpectancy} suffix='yrs.' avg={`${Agg.lifeExpectancy.toFixed(2)}`} />
-              <HealthFactor title="Extreme Poverty Rate" data={`${extremePovertyRate}%`} avg={`${Agg.extremePovertyRate.toFixed(1)}%`} />
-              <HealthFactor title="Hospital Beds Per Thousand" data={hospitalBedsPerThousand} avg={Agg.hospitalBedsPerThousand.toFixed(3)} suffix='/thousand' />
-              <HealthFactor title="Cardiovascular Death Rate" data={cardiovascDeathRate} avg={Agg.cardiovascDeathRate.toFixed(3)} suffix='/100,000' />
-              <HealthFactor title="Diabetes Prevlaence" data={`${diabetesPrevalence}%`} avg={`${Agg.diabetesPrevalence.toFixed(3)}%`} suffix=' of adults' />
-              <HealthFactor title="Female Smokers" data={`${femaleSmokers}%`} avg={`${Agg.femaleSmokers.toFixed(1)}%`} suffix='of adults' />
-              <HealthFactor title="Male Smokers" data={`${maleSmokers}%`} avg={`${Agg.maleSmokers.toFixed(1)}%`} suffix='of adults' />
-              <HealthFactor title="Handwashing Facilities" data={`${handwashingFacilities}%`} avg={`${Agg.handwashingFacilities?.toFixed(3)}%`} suffix=' access' />
+              <HealthFactor title="Life Expectancy" data={lifeExpectancy?.toFixed(2)} suffix='yrs.' avg={`${Agg.lifeExpectancy.toFixed(2)}`} />
+              <HealthFactor title="Extreme Poverty Rate" data={`${extremePovertyRate?.toFixed(1)}%`} avg={`${Agg.extremePovertyRate.toFixed(1)}%`} />
+              <HealthFactor title="Hospital Beds Per Thousand" data={hospitalBedsPerThousand?.toFixed(3)} avg={Agg.hospitalBedsPerThousand.toFixed(3)} suffix='/thousand' />
+              <HealthFactor title="Cardiovascular Death Rate" data={cardiovascDeathRate?.toFixed(3)} avg={Agg.cardiovascDeathRate.toFixed(3)} suffix='/100,000' />
+              <HealthFactor title="Diabetes Prevlaence" data={`${diabetesPrevalence?.toFixed(3)}%`} avg={`${Agg.diabetesPrevalence.toFixed(3)}%`} suffix=' of adults' />
+              <HealthFactor title="Female Smokers" data={`${femaleSmokers?.toFixed(1)}%`} avg={`${Agg.femaleSmokers.toFixed(1)}%`} suffix='of adults' />
+              <HealthFactor title="Male Smokers" data={`${maleSmokers?.toFixed(1)}%`} avg={`${Agg.maleSmokers.toFixed(1)}%`} suffix='of adults' />
+              <HealthFactor title="Handwashing Facilities" data={`${handwashingFacilities?.toFixed(3)}%`} avg={`${Agg.handwashingFacilities?.toFixed(3)}%`} suffix=' access' />
             </div>
           </div>
           {/* media / visual */}
@@ -79,7 +79,7 @@ export default class RiskInstance extends Component {
               <h2 id='subtitle'>Map</h2>
             </div>
             <Map
-              center={[location.lng, location.lat]}
+              center={[location?.lng, location?.lat]}
               zoom={4}
               height={window.innerHeight * 0.4}
               width={window.innerWidth * 0.4}

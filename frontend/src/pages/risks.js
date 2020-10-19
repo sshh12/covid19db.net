@@ -31,12 +31,16 @@ export default class Risks extends Component {
       })
   }
 
-  handleChange = value => {
-    console.log(value)
-    this.setState({
-      firstEntryIndex: (value - 1) * this.numPerPage,
-      lastEntryIndex: value * this.numPerPage
-    })
+  // handleChange = value => {
+  //   console.log(value)
+  //   this.setState({
+  //     firstEntryIndex: (value - 1) * this.numPerPage,
+  //     lastEntryIndex: value * this.numPerPage
+  //   })
+  // }
+
+  handleChange(pagination, filters, sorter, extra) {
+    console.log('params', pagination, filters, sorter, extra);
   }
 
   render() {
@@ -46,43 +50,43 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-        <a href={`/countries/${country.codes.alpha3Code}`}>
-          {country.name}
+        <a href={`/countries/${country?.codes?.alpha3Code}`}>
+          {country?.name}
         </a>
         ),
-        sorter: (a, b) => a.country.name.localeCompare(b.country.name),
+        sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
       },
       {
         title: "Life Expectancy",
         dataIndex: "lifeExpectancy",
         key: "lifeExpectancy",
-        sorter: (a, b) => a.lifeExpectancy - b.lifeExpectancy,
+        sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
       },
       {
         title: "Human Development Index",
         dataIndex: "humanDevelopmentIndex",
         key: "humanDevelopmentIndex",
-        sorter: (a, b) => a.humanDevelopmentIndex - b.humanDevelopmentIndex,
+        sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
       },
       {
         title: "Population Density",
         dataIndex: "populationDensity",
         key: "populationDensity",
-        render: (population) => <>{population.toLocaleString()}</>,
-        sorter: (a, b) => a.populationDensity - b.populationDensity,
+        render: (population) => <>{population?.toLocaleString()}</>,
+        sorter: (a, b) => a?.populationDensity - b?.populationDensity,
       },
       {
         title: "Gini",
         dataIndex: "gini",
         key: "gini",
-        sorter: (a, b) => a.gini - b.gini,
+        sorter: (a, b) => a?.gini - b?.gini,
       },
       {
         title: "Explore Risks",
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/risk-factor-statistics/${country.codes.alpha3Code}`}>
+          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
         )
@@ -92,7 +96,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/cases/${country.codes.alpha3Code}`}>
+          <a href={`/cases/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
         ),

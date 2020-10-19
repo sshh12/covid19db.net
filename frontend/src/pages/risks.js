@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Button, Col, Pagination, Row, Table} from "antd";
+import { Button, Col, Pagination, Row, Table } from "antd";
 import axios from 'axios';
 
 export default class Risks extends Component {
@@ -8,7 +8,7 @@ export default class Risks extends Component {
   constructor() {
     super();
     this.state = {
-      riskData : [],
+      riskData: [],
       firstEntryIndex: 0,
       lastEntryIndex: this.numPerPage
     };
@@ -23,7 +23,7 @@ export default class Risks extends Component {
         attributes: "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities"
       }
     })
-    .then(res => {
+      .then(res => {
         const riskData = res.data;
         this.setState({ riskData })
       }, (error) => {
@@ -50,9 +50,9 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-        <a href={`/countries/${country?.codes?.alpha3Code}`}>
-          {country?.name}
-        </a>
+          <a href={`/countries/${country?.codes?.alpha3Code}`}>
+            {country?.name}
+          </a>
         ),
         sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
       },
@@ -96,7 +96,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/cases/${country?.codes?.alpha3Code}`}>
+          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
         ),

@@ -33,6 +33,7 @@ export default class Cases extends Component {
             totalDeaths: data.totals.deaths,
             totalRecovered: data.totals.recovered,
             totalActive: data.totals.active,
+            exploreCase: data.country.codes.alpha3Code,
             exploreRisk: data.country.codes.alpha3Code,
           };
 
@@ -52,6 +53,7 @@ export default class Cases extends Component {
       totalDeaths: data.totals.deaths,
       totalRecovered: data.totals.recovered,
       totalActive: data.totals.active,
+      exploreCase: data.country.codes.alpha3Code,
       exploreRisk: data.country.codes.alpha3Code,
     };
 
@@ -106,29 +108,23 @@ export default class Cases extends Component {
       },
       {
         title: "Explore Cases",
-        dataIndex: "exploreRisk",
-        key: "exploreCase",
-        render: (code) => (
-          // <LinkContainer to={`/cases/${code}`}>
-          //   <Button>Explore</Button>
-          // </LinkContainer>
-          <a href={`/cases/${code}`}>
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
         ),
       },
       {
         title: "Explore Risks",
-        dataIndex: "exploreRisk",
-        key: "exploreRisk",
-        render: (code) => (
-          // <LinkContainer to={`/risks/${code}`}>
-          //   <Button>Explore</Button>
-          // </LinkContainer>
-          <a href={`/risk-factor-statistics/${code}`}>
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
-        ),
+        )
       },
     ];
 

@@ -3,6 +3,7 @@ Defines Python constants related to the backend.
 """
 from enum import Enum
 
+
 class Identifier(Enum):
     """
     Enum used to specify identifier types
@@ -11,6 +12,7 @@ class Identifier(Enum):
     COUNTRY_NAME = 1
     ALPHA3_CODE = 2
     ALPHA2_CODE = 3
+
 
 VALID_COUNTRY_NAMES = frozenset(
     {

@@ -1,14 +1,9 @@
-// import { LinkContainer } from "react-router-bootstrap";
 import React, { Component, Fragment } from "react";
-import { Button, Card, Col, Pagination, Row, Table} from "antd";
-// import { Button, Table, Tag, Space } from "antd";
+import { Button, Col, Pagination, Row, Table} from "antd";
 import axios from 'axios';
-// import RiskEntry from "../components/risks/riskEntry";
 
 export default class Risks extends Component {
-
-
-  numPerPage = 15;
+  numPerPage = 10; // this number simply does not mean anything and is not used
 
   constructor() {
     super();
@@ -26,7 +21,6 @@ export default class Risks extends Component {
     axios.get('sampleData.json', {
       params: {
         attributes: "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities"
-        // attributes: "country,location,populationDensity,humanDevelopmentIndex,gini"
       }
     })
     .then(res => {
@@ -44,13 +38,6 @@ export default class Risks extends Component {
       lastEntryIndex: value * this.numPerPage
     })
   }
-
-
-
-
-
-
-
 
   render() {
     const columns = [
@@ -113,30 +100,24 @@ export default class Risks extends Component {
     ];
 
     const data = this.state.riskData
-    // var riskInstance = {country, location, populationDensity, humanDevelopmentIndex, gini, gdpPerCapita, medianAge, aged65Older, aged70Older, extremePovertyRate, cardiovascDeathRate, diabetesPrevalence, femaleSmokers, maleSmokers, hospitalBedsPerThousand, lifeExpectancy, handwashingFacilities};
-
     // get all risk entries in the current view
-    const currentView = data && data.length > 0 && data
-      .slice(this.state.firstEntryIndex, this.state.lastEntryIndex)
-      .map(riskData => <Table columns={columns} dataSource={data} onChange={this.handleChange} />);
-      // .map(riskData => <div key={riskData.country}>| {riskData.populationDensity} | {riskData.gini}| </div>);
+    // const currentView = data && data.length > 0 && data
+    //   .slice(this.state.firstEntryIndex, this.state.lastEntryIndex)
+    //   .map(riskData => <Table columns={columns} dataSource={data} onChange={this.handleChange} />);
+    //   // .map(riskData => <div key={riskData.country}>| {riskData.populationDensity} | {riskData.gini}| </div>);
 
-
-    
-
-
-    console.log(this.state.firstEntryIndex, this.state.lastEntryIndex);
-    const risks = data 
-      ? (<Fragment>
-        {currentView}
-        <Pagination
-          defaultCurrent={1} // default to first page
-          defaultPageSize={this.numPerPage} // default size of page
-          onChange={this.handleChange}
-          total={data.length} //total number of countries
-        />
-      </Fragment>)
-      : <div/>;
+    // console.log(this.state.firstEntryIndex, this.state.lastEntryIndex);
+    // const risks = data 
+    //   ? (<Fragment>
+    //     {currentView}
+    //     <Pagination
+    //       defaultCurrent={1} // default to first page
+    //       defaultPageSize={this.numPerPage} // default size of page
+    //       onChange={this.handleChange}
+    //       total={data.length} //total number of countries
+    //     />
+    //   </Fragment>)
+    //   : <div/>;
 
     return (
       <div className="App">
@@ -152,28 +133,6 @@ export default class Risks extends Component {
         </h1>
         <Table style={{ margin: "0 5vw", outline: "1px solid lightgrey" }} columns={columns} dataSource={data} onChange={this.handleChange}></Table>
       </div>
-      // currentView
-    // <div className="App">
-    //   <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}>Risks </h1>
-    //   {/* <div style={{ margin: "0 5vw" }}>
-    //     before {risks} after
-    //   </div> */}
-    //   {/* <Table
-    //     style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
-    //     // columns={columns}
-    //     dataSource={<RiskEntry key={data.country.codes.alpha3Code}></RiskEntry>}
-    //     pagination={false}
-    //   /> */}
-    //   <div>
-    //     data: {data[0]}
-    //     here: {currentView[0]}
-    //     {/* {RiskEntry.country} */}
-    //     {/* {this.riskData} */}
-    //     {/* const {country, location, populationDensity, humanDevelopmentIndex, gini, gdpPerCapita, medianAge, aged65Older, aged70Older, extremePovertyRate, cardiovascDeathRate, diabetesPrevalence, femaleSmokers, maleSmokers, hospitalBedsPerThousand, lifeExpectancy, handwashingFacilities} = this.props.data; */}
-    //     {/* for every element in currentView, put in table */}
-    //     {/* {risks} */}
-    //   </div>
-    // </div>
     );
   }
 }

@@ -3,7 +3,7 @@ import { Button, Col, Pagination, Row, Table} from "antd";
 import axios from 'axios';
 
 export default class Risks extends Component {
-  numPerPage = 10; // this number simply does not mean anything and is not used
+  numPerPage = 10; // this number simply does not mean anything and is not used here
 
   constructor() {
     super();
@@ -18,7 +18,7 @@ export default class Risks extends Component {
   // risk-factor-statistics
   // 'sampleData.json'
   componentDidMount() {
-    axios.get('sampleData.json', {
+    axios.get('risk-factor-statistics', {
       params: {
         attributes: "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities"
       }

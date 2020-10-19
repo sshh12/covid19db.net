@@ -24,6 +24,7 @@ export default class RiskInstance extends Component {
         this.setState({ riskData })
       }, (error) => {
         console.log("error: promise not fulfilled")
+        console.log(error)
       })
   }
 

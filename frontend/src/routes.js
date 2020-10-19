@@ -15,7 +15,7 @@ function Routes() {
       <Route exact path="/countries"><Countries /></Route>
       <Route exact path="/cases"><Cases /></Route>
       <Route exact path="/risks"><Risks /></Route>
-      <Route exact path="/risks/:countryCode" render={(props) => {
+      <Route exact path="/risk-factor-statistics/:countryCode" render={(props) => {
         const countryCode = props.match.params.countryCode;
         return <RiskInstance code={countryCode}/>
       }}></Route>

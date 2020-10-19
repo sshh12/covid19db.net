@@ -4,16 +4,16 @@ import { Card, Col, Row } from 'antd';
 import news from "../data/global-covid-news.json"
 
 const { Meta } = Card;
-const { articles } = news
+const { articles } = news;
 
 function NewsCard(props) {
   const author = props.author != null ? props.author : undefined
   return (
-    <Col>
-      <a href={props.link}>
+    <Col >
+      <a href={props.link} style={{height: 300}}>
         <Card
           hoverable
-          style={{ width: 240 }}
+          style={{ width: 240, height: 500}}
           cover={<img src={props.img} alt="Article image" />}
           title={props.title}
         >
@@ -25,27 +25,22 @@ function NewsCard(props) {
 }
 
 export default class GlobalNews extends Component {
-  render() {
-    let newsList = new Array()
-    // accumulate newscards into an array
-    for (let i = 0; i < articles.length; ++i) {
-      let article = articles[i]
-      let newsCard = (
-        <NewsCard
-          title={article.title}
-          author={article.author}
-          link={article.url}
-          img={article.urlToImage}
-          description={article.description}
-        ></NewsCard>)
-      newsList.push(newsCard);
-    }
+  render() { 
+    const newsList = articles.map(a => 
+      <NewsCard
+        title={a.title}
+        author={a.author}
+        link={a.url}
+        img={a.urlToImage}
+        description={a.description}
+      ></NewsCard>
+    )
 
     return (
       <div className="App">
         <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}>Global News</h1>
         <div className="site-card-wrapper" style={{ margin: '0 5vw' }}>
-          <Row gutter={8}>
+          <Row gutter={8} type="flex">
             {newsList}
           </Row>
         </div>

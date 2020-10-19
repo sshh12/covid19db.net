@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { ResponsiveLine } from '@nivo/line';
+import { Card, Col } from 'antd'
 import "./countryInstance.css";
-import { getMinimumRangeTransitionRange } from 'rc-tree/lib/NodeList';
+
+const { Meta } = Card;
 
 function GeneralInfo(props) {
   return <div className='new-stats'>
@@ -15,19 +16,23 @@ function News(props) {
     <a className='title' href={props.url}>{props.title}</a>
     <h2 className='source'>({props.source})</h2>
   </div>
-
 }
 
-function AllNews(GBRData, news) {
-  // for (var i = 0; i < news.length; i += 1) {
-  //   <html>
-  //     <div style={{ marginTop: '50px' }}>
-  //       <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'left' }}>
-  //         <News title={GBRData.news[i].url} data={GBRData.news[i].title} source={GBRData.news[i].source.name} />
-  //       </div>
-  //     </div>
-  //   </html>
-  // }
+function AllNews(news) {
+  return news.map(n => 
+    <Col>
+      <a href={n.url}>
+        <Card
+          hoverable
+          style={{ width: 240 }}
+          cover={<img src={n.urlToImage} alt="Article image" />}
+          title={n.title}
+        >
+          <Meta title={n.author} description={n.description} />
+        </Card>
+      </a>
+    </Col>
+  )
 }
 
 function GetImage(url) {
@@ -35,8 +40,6 @@ function GetImage(url) {
   image.src = url;
   document.body.appendChild(image);
 }
-
-
 
 export {
   GeneralInfo,

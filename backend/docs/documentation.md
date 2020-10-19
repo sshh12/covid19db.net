@@ -45,6 +45,7 @@ Retrieve a country instance. See the `identifier` parameter.
         - `flag` - SVG image of the country flag
         - `regionalBlocs` - Blocs that the country is a member of
         - `news` - News specific to the country pertaining to COVID-19
+        - `sources` - Sources used to collect the included data
 
 #### Path parameters
 
@@ -88,10 +89,16 @@ Retrieve an instance of case statistics. See the `identifier` parameter.
             - `fatality` = total deaths / total cases * 100
             - `infected` = total cases / country population * 100
             - `haveRecovered` = total recoveries / total cases * 100
-            - `expectedRecovered` **(expected to be removed because not insightful)** = 100 - fatality
             - `active` = total active / total cases * 100
-        - `derivativeNew` = Object containing data on the single day acceleration of: cases, deaths, recoveries, and active cases
+        - `derivativeNew` = Object containing data on the 7-day rolling average of acceleration of: cases, deaths, recoveries, and active cases
         - `history` - Historical data for the totals data
+        - `sources` - Sources used to collect the included data
+        - `testing` - Testing data
+            - Note that testing data among countries is often sparse and inconsistently reported, which is why each of the following has its own associated date and value. Both will be null if the data does not exist.
+            - `newTests` - Daily increase in the number of tests
+            - `newTestsSmoothed` - Rolling average of the daily increase in the number of tests
+            - `positiveRate` - The positivity rate (positive tests/total tests)
+            - `totalTests` - The total number of tests completed
 
 #### Path parameters
 
@@ -142,6 +149,7 @@ Retireve an instance of risk factor statistics. See the `identifier` parameter.
         - `lifeExpectancy` - Life expectancy at birth
         - `humanDevelopmentIndex` - Indicator of level of human development (larger values imply more development)
         - `handwashingFacilities` - Percentage of the population with access to basic handwashing facilities
+        - `sources` - Sources used to collect the included data
 
 #### Path parameters
 
@@ -151,1254 +159,953 @@ Retireve an instance of risk factor statistics. See the `identifier` parameter.
     - Specifies the instance to select based on the relevant country.
     - See below for a full list of valid identifiers.
 
+## Global News Endpoints
+
+### GET
+
+Retrieve global news relating to COVID-19.
+
+- `/global-news`
+
+### Parameters
+
+N/A
+
+## Global Stats Endpoints
+
+### GET
+
+Retrieve global statistics for COVID-19.
+
+- `/global-stats`
+
+### Parameters
+
+N/A
+
 ## Identifiers
 
 ### Afghanistan
 - Afghanistan
-- AF
 - AFG
-
-### Åland Islands
-- Åland Islands
-- AX
-- ALA
+- AF
 
 ### Albania
 - Albania
-- AL
 - ALB
+- AL
 
 ### Algeria
 - Algeria
-- DZ
 - DZA
-
-### American Samoa
-- American Samoa
-- AS
-- ASM
+- DZ
 
 ### Andorra
 - Andorra
-- AD
 - AND
+- AD
 
 ### Angola
 - Angola
-- AO
 - AGO
-
-### Anguilla
-- Anguilla
-- AI
-- AIA
-
-### Antarctica
-- Antarctica
-- AQ
-- ATA
+- AO
 
 ### Antigua and Barbuda
 - Antigua and Barbuda
-- AG
 - ATG
+- AG
 
 ### Argentina
 - Argentina
-- AR
 - ARG
+- AR
 
 ### Armenia
 - Armenia
-- AM
 - ARM
-
-### Aruba
-- Aruba
-- AW
-- ABW
+- AM
 
 ### Australia
 - Australia
-- AU
 - AUS
+- AU
 
 ### Austria
 - Austria
-- AT
 - AUT
+- AT
 
 ### Azerbaijan
 - Azerbaijan
-- AZ
 - AZE
+- AZ
 
 ### Bahamas
 - Bahamas
-- BS
 - BHS
+- BS
 
 ### Bahrain
 - Bahrain
-- BH
 - BHR
+- BH
 
 ### Bangladesh
 - Bangladesh
-- BD
 - BGD
+- BD
 
 ### Barbados
 - Barbados
-- BB
 - BRB
+- BB
 
 ### Belarus
 - Belarus
-- BY
 - BLR
+- BY
 
 ### Belgium
 - Belgium
-- BE
 - BEL
+- BE
 
 ### Belize
 - Belize
-- BZ
 - BLZ
+- BZ
 
 ### Benin
 - Benin
-- BJ
 - BEN
-
-### Bermuda
-- Bermuda
-- BM
-- BMU
+- BJ
 
 ### Bhutan
 - Bhutan
-- BT
 - BTN
+- BT
 
-### Bolivia (Plurinational State of)
-- Bolivia (Plurinational State of)
-- BO
+### Bolivia
+- Bolivia
 - BOL
-
-### Bonaire, Sint Eustatius and Saba
-- Bonaire, Sint Eustatius and Saba
-- BQ
-- BES
+- BO
 
 ### Bosnia and Herzegovina
 - Bosnia and Herzegovina
-- BA
 - BIH
+- BA
 
 ### Botswana
 - Botswana
-- BW
 - BWA
-
-### Bouvet Island
-- Bouvet Island
-- BV
-- BVT
+- BW
 
 ### Brazil
 - Brazil
-- BR
 - BRA
+- BR
 
-### British Indian Ocean Territory
-- British Indian Ocean Territory
-- IO
-- IOT
-
-### United States Minor Outlying Islands
-- United States Minor Outlying Islands
-- UM
-- UMI
-
-### Virgin Islands (British)
-- Virgin Islands (British)
-- VG
-- VGB
-
-### Virgin Islands (U.S.)
-- Virgin Islands (U.S.)
-- VI
-- VIR
-
-### Brunei Darussalam
-- Brunei Darussalam
-- BN
+### Brunei
+- Brunei
 - BRN
+- BN
 
 ### Bulgaria
 - Bulgaria
-- BG
 - BGR
+- BG
 
 ### Burkina Faso
 - Burkina Faso
-- BF
 - BFA
+- BF
 
 ### Burundi
 - Burundi
-- BI
 - BDI
+- BI
 
 ### Cambodia
 - Cambodia
-- KH
 - KHM
+- KH
 
 ### Cameroon
 - Cameroon
-- CM
 - CMR
+- CM
 
 ### Canada
 - Canada
-- CA
 - CAN
+- CA
 
-### Cabo Verde
-- Cabo Verde
-- CV
+### Cape Verde
+- Cape Verde
 - CPV
-
-### Cayman Islands
-- Cayman Islands
-- KY
-- CYM
+- CV
 
 ### Central African Republic
 - Central African Republic
-- CF
 - CAF
+- CF
 
 ### Chad
 - Chad
-- TD
 - TCD
+- TD
 
 ### Chile
 - Chile
-- CL
 - CHL
+- CL
 
 ### China
 - China
-- CN
 - CHN
-
-### Christmas Island
-- Christmas Island
-- CX
-- CXR
-
-### Cocos (Keeling) Islands
-- Cocos (Keeling) Islands
-- CC
-- CCK
+- CN
 
 ### Colombia
 - Colombia
-- CO
 - COL
+- CO
 
 ### Comoros
 - Comoros
-- KM
 - COM
+- KM
 
 ### Congo
 - Congo
-- CG
 - COG
-
-### Congo (Democratic Republic of the)
-- Congo (Democratic Republic of the)
-- CD
-- COD
-
-### Cook Islands
-- Cook Islands
-- CK
-- COK
+- CG
 
 ### Costa Rica
 - Costa Rica
-- CR
 - CRI
+- CR
+
+### Cote d'Ivoire
+- Cote d'Ivoire
+- CIV
+- CI
 
 ### Croatia
 - Croatia
-- HR
 - HRV
+- HR
 
 ### Cuba
 - Cuba
-- CU
 - CUB
-
-### Curaçao
-- Curaçao
-- CW
-- CUW
+- CU
 
 ### Cyprus
 - Cyprus
-- CY
 - CYP
+- CY
 
 ### Czech Republic
 - Czech Republic
-- CZ
 - CZE
+- CZ
+
+### Democratic Republic of Congo
+- Democratic Republic of Congo
+- COD
+- CD
 
 ### Denmark
 - Denmark
-- DK
 - DNK
+- DK
 
 ### Djibouti
 - Djibouti
-- DJ
 - DJI
+- DJ
 
 ### Dominica
 - Dominica
-- DM
 - DMA
+- DM
 
 ### Dominican Republic
 - Dominican Republic
-- DO
 - DOM
+- DO
 
 ### Ecuador
 - Ecuador
-- EC
 - ECU
+- EC
 
 ### Egypt
 - Egypt
-- EG
 - EGY
+- EG
 
 ### El Salvador
 - El Salvador
-- SV
 - SLV
+- SV
 
 ### Equatorial Guinea
 - Equatorial Guinea
-- GQ
 - GNQ
+- GQ
 
 ### Eritrea
 - Eritrea
-- ER
 - ERI
+- ER
 
 ### Estonia
 - Estonia
-- EE
 - EST
+- EE
 
 ### Ethiopia
 - Ethiopia
-- ET
 - ETH
-
-### Falkland Islands (Malvinas)
-- Falkland Islands (Malvinas)
-- FK
-- FLK
-
-### Faroe Islands
-- Faroe Islands
-- FO
-- FRO
+- ET
 
 ### Fiji
 - Fiji
-- FJ
 - FJI
+- FJ
 
 ### Finland
 - Finland
-- FI
 - FIN
+- FI
 
 ### France
 - France
-- FR
 - FRA
-
-### French Guiana
-- French Guiana
-- GF
-- GUF
-
-### French Polynesia
-- French Polynesia
-- PF
-- PYF
-
-### French Southern Territories
-- French Southern Territories
-- TF
-- ATF
+- FR
 
 ### Gabon
 - Gabon
-- GA
 - GAB
+- GA
 
 ### Gambia
 - Gambia
-- GM
 - GMB
+- GM
 
 ### Georgia
 - Georgia
-- GE
 - GEO
+- GE
 
 ### Germany
 - Germany
-- DE
 - DEU
+- DE
 
 ### Ghana
 - Ghana
-- GH
 - GHA
-
-### Gibraltar
-- Gibraltar
-- GI
-- GIB
+- GH
 
 ### Greece
 - Greece
-- GR
 - GRC
-
-### Greenland
-- Greenland
-- GL
-- GRL
+- GR
 
 ### Grenada
 - Grenada
-- GD
 - GRD
-
-### Guadeloupe
-- Guadeloupe
-- GP
-- GLP
-
-### Guam
-- Guam
-- GU
-- GUM
+- GD
 
 ### Guatemala
 - Guatemala
-- GT
 - GTM
-
-### Guernsey
-- Guernsey
-- GG
-- GGY
+- GT
 
 ### Guinea
 - Guinea
-- GN
 - GIN
+- GN
 
 ### Guinea-Bissau
 - Guinea-Bissau
-- GW
 - GNB
+- GW
 
 ### Guyana
 - Guyana
-- GY
 - GUY
+- GY
 
 ### Haiti
 - Haiti
-- HT
 - HTI
-
-### Heard Island and McDonald Islands
-- Heard Island and McDonald Islands
-- HM
-- HMD
-
-### Holy See
-- Holy See
-- VA
-- VAT
+- HT
 
 ### Honduras
 - Honduras
-- HN
 - HND
-
-### Hong Kong
-- Hong Kong
-- HK
-- HKG
+- HN
 
 ### Hungary
 - Hungary
-- HU
 - HUN
+- HU
 
 ### Iceland
 - Iceland
-- IS
 - ISL
+- IS
 
 ### India
 - India
-- IN
 - IND
+- IN
 
 ### Indonesia
 - Indonesia
-- ID
 - IDN
+- ID
 
-### Côte d'Ivoire
-- Côte d'Ivoire
-- CI
-- CIV
-
-### Iran (Islamic Republic of)
-- Iran (Islamic Republic of)
-- IR
+### Iran
+- Iran
 - IRN
+- IR
 
 ### Iraq
 - Iraq
-- IQ
 - IRQ
+- IQ
 
 ### Ireland
 - Ireland
-- IE
 - IRL
-
-### Isle of Man
-- Isle of Man
-- IM
-- IMN
+- IE
 
 ### Israel
 - Israel
-- IL
 - ISR
+- IL
 
 ### Italy
 - Italy
-- IT
 - ITA
+- IT
 
 ### Jamaica
 - Jamaica
-- JM
 - JAM
+- JM
 
 ### Japan
 - Japan
-- JP
 - JPN
-
-### Jersey
-- Jersey
-- JE
-- JEY
+- JP
 
 ### Jordan
 - Jordan
-- JO
 - JOR
+- JO
 
 ### Kazakhstan
 - Kazakhstan
-- KZ
 - KAZ
+- KZ
 
 ### Kenya
 - Kenya
-- KE
 - KEN
-
-### Kiribati
-- Kiribati
-- KI
-- KIR
+- KE
 
 ### Kuwait
 - Kuwait
-- KW
 - KWT
+- KW
 
 ### Kyrgyzstan
 - Kyrgyzstan
-- KG
 - KGZ
+- KG
 
-### Lao People's Democratic Republic
-- Lao People's Democratic Republic
-- LA
+### Laos
+- Laos
 - LAO
+- LA
 
 ### Latvia
 - Latvia
-- LV
 - LVA
+- LV
 
 ### Lebanon
 - Lebanon
-- LB
 - LBN
+- LB
 
 ### Lesotho
 - Lesotho
-- LS
 - LSO
+- LS
 
 ### Liberia
 - Liberia
-- LR
 - LBR
+- LR
 
 ### Libya
 - Libya
-- LY
 - LBY
+- LY
 
 ### Liechtenstein
 - Liechtenstein
-- LI
 - LIE
+- LI
 
 ### Lithuania
 - Lithuania
-- LT
 - LTU
+- LT
 
 ### Luxembourg
 - Luxembourg
-- LU
 - LUX
+- LU
 
-### Macao
-- Macao
-- MO
-- MAC
-
-### Macedonia (the former Yugoslav Republic of)
-- Macedonia (the former Yugoslav Republic of)
-- MK
+### Macedonia
+- Macedonia
 - MKD
+- MK
 
 ### Madagascar
 - Madagascar
-- MG
 - MDG
+- MG
 
 ### Malawi
 - Malawi
-- MW
 - MWI
+- MW
 
 ### Malaysia
 - Malaysia
-- MY
 - MYS
+- MY
 
 ### Maldives
 - Maldives
-- MV
 - MDV
+- MV
 
 ### Mali
 - Mali
-- ML
 - MLI
+- ML
 
 ### Malta
 - Malta
-- MT
 - MLT
-
-### Marshall Islands
-- Marshall Islands
-- MH
-- MHL
-
-### Martinique
-- Martinique
-- MQ
-- MTQ
+- MT
 
 ### Mauritania
 - Mauritania
-- MR
 - MRT
+- MR
 
 ### Mauritius
 - Mauritius
-- MU
 - MUS
-
-### Mayotte
-- Mayotte
-- YT
-- MYT
+- MU
 
 ### Mexico
 - Mexico
-- MX
 - MEX
+- MX
 
-### Micronesia (Federated States of)
-- Micronesia (Federated States of)
-- FM
-- FSM
-
-### Moldova (Republic of)
-- Moldova (Republic of)
-- MD
+### Moldova
+- Moldova
 - MDA
+- MD
 
 ### Monaco
 - Monaco
-- MC
 - MCO
+- MC
 
 ### Mongolia
 - Mongolia
-- MN
 - MNG
+- MN
 
 ### Montenegro
 - Montenegro
-- ME
 - MNE
-
-### Montserrat
-- Montserrat
-- MS
-- MSR
+- ME
 
 ### Morocco
 - Morocco
-- MA
 - MAR
+- MA
 
 ### Mozambique
 - Mozambique
-- MZ
 - MOZ
+- MZ
 
 ### Myanmar
 - Myanmar
-- MM
 - MMR
+- MM
 
 ### Namibia
 - Namibia
-- NA
 - NAM
-
-### Nauru
-- Nauru
-- NR
-- NRU
+- NA
 
 ### Nepal
 - Nepal
-- NP
 - NPL
+- NP
 
 ### Netherlands
 - Netherlands
-- NL
 - NLD
-
-### New Caledonia
-- New Caledonia
-- NC
-- NCL
+- NL
 
 ### New Zealand
 - New Zealand
-- NZ
 - NZL
+- NZ
 
 ### Nicaragua
 - Nicaragua
-- NI
 - NIC
+- NI
 
 ### Niger
 - Niger
-- NE
 - NER
+- NE
 
 ### Nigeria
 - Nigeria
-- NG
 - NGA
-
-### Niue
-- Niue
-- NU
-- NIU
-
-### Norfolk Island
-- Norfolk Island
-- NF
-- NFK
-
-### Korea (Democratic People's Republic of)
-- Korea (Democratic People's Republic of)
-- KP
-- PRK
-
-### Northern Mariana Islands
-- Northern Mariana Islands
-- MP
-- MNP
+- NG
 
 ### Norway
 - Norway
-- NO
 - NOR
+- NO
 
 ### Oman
 - Oman
-- OM
 - OMN
+- OM
 
 ### Pakistan
 - Pakistan
-- PK
 - PAK
+- PK
 
-### Palau
-- Palau
-- PW
-- PLW
-
-### Palestine, State of
-- Palestine, State of
-- PS
+### Palestine
+- Palestine
 - PSE
+- PS
 
 ### Panama
 - Panama
-- PA
 - PAN
+- PA
 
 ### Papua New Guinea
 - Papua New Guinea
-- PG
 - PNG
+- PG
 
 ### Paraguay
 - Paraguay
-- PY
 - PRY
+- PY
 
 ### Peru
 - Peru
-- PE
 - PER
+- PE
 
 ### Philippines
 - Philippines
-- PH
 - PHL
-
-### Pitcairn
-- Pitcairn
-- PN
-- PCN
+- PH
 
 ### Poland
 - Poland
-- PL
 - POL
+- PL
 
 ### Portugal
 - Portugal
-- PT
 - PRT
-
-### Puerto Rico
-- Puerto Rico
-- PR
-- PRI
+- PT
 
 ### Qatar
 - Qatar
-- QA
 - QAT
-
-### Republic of Kosovo
-- Republic of Kosovo
-- XK
-- KOS
-
-### Réunion
-- Réunion
-- RE
-- REU
+- QA
 
 ### Romania
 - Romania
-- RO
 - ROU
+- RO
 
-### Russian Federation
-- Russian Federation
-- RU
+### Russia
+- Russia
 - RUS
+- RU
 
 ### Rwanda
 - Rwanda
-- RW
 - RWA
-
-### Saint Barthélemy
-- Saint Barthélemy
-- BL
-- BLM
-
-### Saint Helena, Ascension and Tristan da Cunha
-- Saint Helena, Ascension and Tristan da Cunha
-- SH
-- SHN
+- RW
 
 ### Saint Kitts and Nevis
 - Saint Kitts and Nevis
-- KN
 - KNA
+- KN
 
 ### Saint Lucia
 - Saint Lucia
-- LC
 - LCA
-
-### Saint Martin (French part)
-- Saint Martin (French part)
-- MF
-- MAF
-
-### Saint Pierre and Miquelon
-- Saint Pierre and Miquelon
-- PM
-- SPM
+- LC
 
 ### Saint Vincent and the Grenadines
 - Saint Vincent and the Grenadines
-- VC
 - VCT
-
-### Samoa
-- Samoa
-- WS
-- WSM
+- VC
 
 ### San Marino
 - San Marino
-- SM
 - SMR
+- SM
 
 ### Sao Tome and Principe
 - Sao Tome and Principe
-- ST
 - STP
+- ST
 
 ### Saudi Arabia
 - Saudi Arabia
-- SA
 - SAU
+- SA
 
 ### Senegal
 - Senegal
-- SN
 - SEN
+- SN
 
 ### Serbia
 - Serbia
-- RS
 - SRB
+- RS
 
 ### Seychelles
 - Seychelles
-- SC
 - SYC
+- SC
 
 ### Sierra Leone
 - Sierra Leone
-- SL
 - SLE
+- SL
 
 ### Singapore
 - Singapore
-- SG
 - SGP
-
-### Sint Maarten (Dutch part)
-- Sint Maarten (Dutch part)
-- SX
-- SXM
+- SG
 
 ### Slovakia
 - Slovakia
-- SK
 - SVK
+- SK
 
 ### Slovenia
 - Slovenia
-- SI
 - SVN
-
-### Solomon Islands
-- Solomon Islands
-- SB
-- SLB
+- SI
 
 ### Somalia
 - Somalia
-- SO
 - SOM
+- SO
 
 ### South Africa
 - South Africa
-- ZA
 - ZAF
+- ZA
 
-### South Georgia and the South Sandwich Islands
-- South Georgia and the South Sandwich Islands
-- GS
-- SGS
-
-### Korea (Republic of)
-- Korea (Republic of)
-- KR
+### South Korea
+- South Korea
 - KOR
+- KR
 
 ### South Sudan
 - South Sudan
-- SS
 - SSD
+- SS
 
 ### Spain
 - Spain
-- ES
 - ESP
+- ES
 
 ### Sri Lanka
 - Sri Lanka
-- LK
 - LKA
+- LK
 
 ### Sudan
 - Sudan
-- SD
 - SDN
+- SD
 
 ### Suriname
 - Suriname
-- SR
 - SUR
-
-### Svalbard and Jan Mayen
-- Svalbard and Jan Mayen
-- SJ
-- SJM
+- SR
 
 ### Swaziland
 - Swaziland
-- SZ
 - SWZ
+- SZ
 
 ### Sweden
 - Sweden
-- SE
 - SWE
+- SE
 
 ### Switzerland
 - Switzerland
-- CH
 - CHE
+- CH
 
-### Syrian Arab Republic
-- Syrian Arab Republic
-- SY
+### Syria
+- Syria
 - SYR
+- SY
 
 ### Taiwan
 - Taiwan
-- TW
 - TWN
+- TW
 
 ### Tajikistan
 - Tajikistan
-- TJ
 - TJK
+- TJ
 
-### Tanzania, United Republic of
-- Tanzania, United Republic of
-- TZ
+### Tanzania
+- Tanzania
 - TZA
+- TZ
 
 ### Thailand
 - Thailand
-- TH
 - THA
+- TH
 
-### Timor-Leste
-- Timor-Leste
-- TL
+### Timor
+- Timor
 - TLS
+- TL
 
 ### Togo
 - Togo
-- TG
 - TGO
-
-### Tokelau
-- Tokelau
-- TK
-- TKL
-
-### Tonga
-- Tonga
-- TO
-- TON
+- TG
 
 ### Trinidad and Tobago
 - Trinidad and Tobago
-- TT
 - TTO
+- TT
 
 ### Tunisia
 - Tunisia
-- TN
 - TUN
+- TN
 
 ### Turkey
 - Turkey
-- TR
 - TUR
-
-### Turkmenistan
-- Turkmenistan
-- TM
-- TKM
-
-### Turks and Caicos Islands
-- Turks and Caicos Islands
-- TC
-- TCA
-
-### Tuvalu
-- Tuvalu
-- TV
-- TUV
+- TR
 
 ### Uganda
 - Uganda
-- UG
 - UGA
+- UG
 
 ### Ukraine
 - Ukraine
-- UA
 - UKR
+- UA
 
 ### United Arab Emirates
 - United Arab Emirates
-- AE
 - ARE
+- AE
 
-### United Kingdom of Great Britain and Northern Ireland
-- United Kingdom of Great Britain and Northern Ireland
-- GB
+### United Kingdom
+- United Kingdom
 - GBR
+- GB
 
-### United States of America
-- United States of America
-- US
+### United States
+- United States
 - USA
+- US
 
 ### Uruguay
 - Uruguay
-- UY
 - URY
+- UY
 
 ### Uzbekistan
 - Uzbekistan
-- UZ
 - UZB
+- UZ
 
-### Vanuatu
-- Vanuatu
-- VU
-- VUT
+### Vatican
+- Vatican
+- VAT
+- VA
 
-### Venezuela (Bolivarian Republic of)
-- Venezuela (Bolivarian Republic of)
-- VE
+### Venezuela
+- Venezuela
 - VEN
+- VE
 
-### Viet Nam
-- Viet Nam
-- VN
+### Vietnam
+- Vietnam
 - VNM
-
-### Wallis and Futuna
-- Wallis and Futuna
-- WF
-- WLF
+- VN
 
 ### Western Sahara
 - Western Sahara
-- EH
 - ESH
+- EH
 
 ### Yemen
 - Yemen
-- YE
 - YEM
+- YE
 
 ### Zambia
 - Zambia
-- ZM
 - ZMB
+- ZM
 
 ### Zimbabwe
 - Zimbabwe
-- ZW
 - ZWE
+- ZW

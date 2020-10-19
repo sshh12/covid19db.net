@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+// import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'antd';
 import { Totals, NewStats, GenStats, CaseResponseLine } from './caseComponents';
 import Map from "../../components/map";
@@ -15,9 +15,9 @@ class CaseInstanceGBR extends Component {
     return (
       <div className='App'>
         <header className='Case-header'>
-          <LinkContainer className='Back-link' to='/cases'>
+          {/* <LinkContainer className='Back-link' to='/cases'>
             <Button variant='outline-secondary'>Go back</Button>
-          </LinkContainer>
+          </LinkContainer> */}
 
           <h1 id='page-title'> {GBRData.country.name} ({GBRData.country.codes.alpha3Code})</h1>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }} >

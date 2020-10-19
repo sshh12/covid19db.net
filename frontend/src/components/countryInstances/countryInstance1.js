@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+// import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'antd';
 import "./countryInstance.css";
 import { GeneralInfo, News, GetImage, AllNews } from './countryComponents';
@@ -12,9 +12,9 @@ export default class CountryInstanceMEX extends Component {
     return (
       <div className='App'>
         <header className='Case-header'>
-          <LinkContainer className='Back-link' to='/countries'>
+          {/* <LinkContainer className='Back-link' to='/countries'>
             <Button variant='outline-secondary'>Go back</Button>
-          </LinkContainer>
+          </LinkContainer> */}
 
           <h1 id='page-title'> {MEXData.name} ({MEXData.codes.alpha3Code})</h1>
           <div>

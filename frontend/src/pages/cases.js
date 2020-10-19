@@ -1,13 +1,63 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
-
-import USAData from "../components/caseInstances/data/USA.json";
-import GBRData from "../components/caseInstances/data/GBR.json";
-import MEXData from "../components/caseInstances/data/MEX.json";
+import axios from 'axios';
 import "../components/caseInstances/caseInstance.css";
 
 export default class Cases extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      caseData: null,
+    };
+    this.compileData = this.compileData.bind(this);
+  }
+
+  componentDidMount() {
+    // Get request to countries API for country card data
+    axios.get('case-statistics', {
+      params: {
+        attributes: "country,totals"
+      }
+    })
+      .then(res => {
+        const caseData = res.data.map((data) => {
+          var compiledCase = {
+            country: data.country,
+            totalCases: data.totals.cases,
+            totalCases: data.totals.cases,
+            totalDeaths: data.totals.deaths,
+            totalRecovered: data.totals.recovered,
+            totalActive: data.totals.active,
+            exploreCase: data.country.codes.alpha3Code,
+            exploreRisk: data.country.codes.alpha3Code,
+          };
+
+          return compiledCase;
+        });
+        this.setState({ caseData })
+        console.log(caseData);
+      })
+
+  }
+
+  compileData(data) {
+    var compiledCase = {
+      country: data.country,
+      totalCases: data.totals.cases,
+      totalCases: data.totals.cases,
+      totalDeaths: data.totals.deaths,
+      totalRecovered: data.totals.recovered,
+      totalActive: data.totals.active,
+      exploreCase: data.country.codes.alpha3Code,
+      exploreRisk: data.country.codes.alpha3Code,
+    };
+
+    return compiledCase;
+  }
+
+
   render() {
     const columns = [
       {
@@ -15,9 +65,13 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
-            <a>{country.name}</a>
-          </LinkContainer>
+          // <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
+          //   <a>{country.name}</a>
+          // </LinkContainer>
+
+          <a href={`/countries/${country.codes.alpha3Code}`}>
+            {country.name}
+          </a>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
@@ -47,58 +101,27 @@ export default class Cases extends Component {
         dataIndex: "totalActive",
         key: "totalActive",
         render: (population) => <>{population.toLocaleString()}</>,
-
         sorter: (a, b) => a.totalActive - b.totalActive,
       },
       {
         title: "Explore Cases",
-        dataIndex: "exploreRisk",
-        key: "exploreCase",
-        render: (code) => (
-          <LinkContainer to={`/cases/${code}`}>
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
-          </LinkContainer>
+          </a>
         ),
       },
       {
         title: "Explore Risks",
-        dataIndex: "exploreRisk",
-        key: "exploreRisk",
-        render: (code) => (
-          <LinkContainer to={`/risks/${code}`}>
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
-          </LinkContainer>
-        ),
-      },
-    ];
-
-    const data = [
-      {
-        key: "1",
-        country: GBRData.country,
-        totalCases: GBRData.totals.cases,
-        totalDeaths: GBRData.totals.deaths,
-        totalRecovered: GBRData.totals.recovered,
-        totalActive: GBRData.totals.active,
-        exploreRisk: GBRData.country.codes.alpha3Code,
-      },
-      {
-        key: "2",
-        country: MEXData.country,
-        totalCases: MEXData.totals.cases,
-        totalDeaths: MEXData.totals.deaths,
-        totalRecovered: MEXData.totals.recovered,
-        totalActive: MEXData.totals.active,
-        exploreRisk: MEXData.country.codes.alpha3Code,
-      },
-      {
-        key: "3",
-        country: USAData.country,
-        totalCases: USAData.totals.cases,
-        totalDeaths: USAData.totals.deaths,
-        totalRecovered: USAData.totals.recovered,
-        totalActive: USAData.totals.active,
-        exploreRisk: USAData.country.codes.alpha3Code,
+          </a>
+        )
       },
     ];
 
@@ -119,8 +142,8 @@ export default class Cases extends Component {
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
-          dataSource={data}
-          pagination={false}
+          dataSource={this.state.caseData}
+          pagination={true}
         />
         {/* </header> */}
       </div>

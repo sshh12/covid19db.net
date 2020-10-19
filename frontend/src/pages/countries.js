@@ -1,122 +1,85 @@
-import React, { Component } from "react";
-import { Button, Table } from "antd";
-import { Card, Col, Row } from "antd";
-import { LinkContainer } from "react-router-bootstrap";
-import "../components/countryInstances/countryInstance.css";
+import React, { Component, Fragment } from "react";
+import { Col, Pagination, Row } from "antd";
+import axios from 'axios';
 
-import USAData from "../components/countryInstances/data/USA.json";
-import GBRData from "../components/countryInstances/data/GBR.json";
-import MEXData from "../components/countryInstances/data/MEX.json";
-
-import { lang } from "moment";
-const { Meta } = Card;
-
-function allLanguages(myList) {
-  var str = myList[0].name;
-  for (var i = 1; i < myList.length; i++) {
-    str = str + ", " + myList[i].name;
-  }
-  return str;
-}
-
-//TODO actually format
-function format(code, languages, pop, capital) {
-  var str =
-    "Code: " +
-    code +
-    ", Population: " +
-    pop +
-    ", Capital: " +
-    capital +
-    ", languages: " +
-    languages;
-  return str;
-}
-
-function CardExtra({ code }) {
-  return (
-    <div>
-      <LinkContainer to={`/cases/${code}`}>
-        <a href="#">Cases</a>
-      </LinkContainer>{" "}
-      |{" "}
-      <LinkContainer to={`/risks/${code}`}>
-        <a href="#">Risks</a>
-      </LinkContainer>
-    </div>
-  );
-}
+import "../components/country/countryInstance.css";
+import CountryCard from "../components/country/countryCard.js";
 
 export default class Countries extends Component {
+  
+  constructor() {
+    super();
+    this.state = {
+      countriesCardData : null,
+      firstCardIndex: 0,
+      lastCardIndex: 20,
+      numPerPage: 20
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    // Get request to countries API for country card data
+    axios.get('countries', {
+      params: {
+        attributes: "codes,flag,population,capital,languages"
+      }
+    })
+    .then(res => {
+        const countriesCardData = res.data;
+        this.setState({ countriesCardData })
+      })
+  }
+
+  handleChange = (page, pageSize) => {
+    // Update pagination for current page and cards
+    console.log(page, pageSize)
+    this.setState({
+      numPerPage: pageSize,
+      firstCardIndex: (page - 1) * pageSize,
+      lastCardIndex: page * pageSize
+    });
+  }
+
+  createCountryGrid(countryCards) {
+    return countryCards;
+  }
+
   render() {
+    console.log(this.state.numPerPage)
+    console.log(this.state.firstCardIndex)
+    console.log(this.state.lastCardIndex)
+
+    const data = this.state.countriesCardData
+    
+    // Get all loaded country cards in the current view
+    const currentViewCards = data && data.length > 0 && data
+      .slice(this.state.firstCardIndex, this.state.lastCardIndex)
+      .map(cardData => <Col><CountryCard key={cardData.codes.alpha3Code} data={cardData}/></Col>)
+    
+    // Form model view if data has been loaded
+    const pagination = data 
+      ? (<Pagination
+          defaultCurrent={1} // default to first page
+          defaultPageSize={this.state.numPerPage} // default size of page
+          pageSizeOptions={['10', '20', '50', '100']}
+          onChange={this.handleChange}
+          total={data.length} //total number of countries
+        />)
+      : <div/>;
+
+      const styles = {
+        siteCardWrapper: {
+          margin: "2vh 5vw", 
+        },
+    } 
+
     return (
       <div className="App">
         <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}>Countries </h1>
-
-        <div className="site-card-wrapper" style={{ margin: "0 5vw" }}>
-          <Row gutter={16}>
-            <Col span={8}>
-              <LinkContainer to={`/countries/${GBRData.codes.alpha3Code}`}>
-                <Card
-                  extra={<CardExtra code={GBRData.codes.alpha3Code} />}
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src={GBRData.flag} />}
-                >
-                  <Meta
-                    title={GBRData.name}
-                    description={format(
-                      GBRData.codes.alpha3Code,
-                      allLanguages(GBRData.languages),
-                      GBRData.population,
-                      GBRData.capital.name
-                    )}
-                  />
-                </Card>
-              </LinkContainer>
-            </Col>
-            <Col span={8}>
-              <LinkContainer to={`/countries/${MEXData.codes.alpha3Code}`}>
-                <Card
-                  extra={<CardExtra code={MEXData.codes.alpha3Code} />}
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src={MEXData.flag} />}
-                >
-                  <Meta
-                    title={MEXData.name}
-                    description={format(
-                      MEXData.codes.alpha3Code,
-                      allLanguages(MEXData.languages),
-                      MEXData.population,
-                      MEXData.capital.name
-                    )}
-                  />
-                </Card>
-              </LinkContainer>
-            </Col>
-
-            <Col span={8}>
-              <LinkContainer to={`/countries/${USAData.codes.alpha3Code}`}>
-                <Card
-                  extra={<CardExtra code={USAData.codes.alpha3Code} />}
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src={USAData.flag} />}
-                >
-                  <Meta
-                    title={USAData.name}
-                    description={format(
-                      USAData.codes.alpha3Code,
-                      allLanguages(USAData.languages),
-                      USAData.population,
-                      USAData.capital.name
-                    )}
-                  />
-                </Card>
-              </LinkContainer>
-            </Col>
-          </Row>
+        {pagination}
+        <div className="site-card-wrapper" style={ styles.siteCardWrapper }>
+          <Row gutter={16} justify="center">{this.createCountryGrid(currentViewCards)}</Row>
         </div>
       </div>
     );

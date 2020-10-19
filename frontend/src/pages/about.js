@@ -50,9 +50,34 @@ const TOOLS = [
     desc: "For creating interactive UIs in JSX.",
   },
   {
+    name: "Antd",
+    url: "https://ant.design/",
+    desc: "A React UI library for clean composable components.",
+  },
+  {
+    name: "Nivo",
+    url: "https://nivo.rocks/",
+    desc: "A React UI library for animated and interactive charts.",
+  },
+  {
+    name: "Jest",
+    url: "https://jestjs.io/",
+    desc: "A JavaScript testing framework.",
+  },
+  {
+    name: "Axios",
+    url: "https://github.com/axios/axios",
+    desc: "For doing browser-side HTTP requests to our API.",
+  },
+  {
     name: "Flask",
     url: "https://flask.palletsprojects.com/en/1.1.x/",
     desc: "For serving our API data in a RESTful way.",
+  },
+  {
+    name: "SQLAlchemy",
+    url: "https://www.sqlalchemy.org/",
+    desc: "A Python ORM for creating and interacting with our SQL models.",
   },
   {
     name: "GCP",
@@ -69,6 +94,11 @@ const TOOLS = [
     url: "https://gitlab.com/explore",
     desc:
       "DevOps tool for issue-tracking, continuous integration, testing, and deployment.",
+  },
+  {
+    name: "Selenium",
+    url: "https://www.selenium.dev/",
+    desc: "For end-to-end automated GUI testing.",
   },
 ];
 
@@ -104,7 +134,16 @@ export default class About extends Component {
     );
     return (
       <div className="App">
-        <h1 style={{ fontWeight: '800', fontSize: '2em', marginTop: '20px', marginBottom: '20px' }}>About</h1>
+        <h1
+          style={{
+            fontWeight: "800",
+            fontSize: "2em",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          About
+        </h1>
         {/* <header className="App-header" style={{ minHeight: "10rem" }}>
           <h1> About Page </h1>
           <LinkContainer className="App-link" to="/">

@@ -34,7 +34,7 @@ export default class CountryCard extends Component {
     CardExtra({ code }) {
         return (
           <div>
-            <LinkContainer to={`/cases/${code}`}>
+            <LinkContainer to={`/case-statistics/${code}`}>
               <a href="#">Cases</a>
             </LinkContainer>{" "}
             |{" "}
@@ -71,7 +71,7 @@ export default class CountryCard extends Component {
             <Content style={{ height: 50, backgroundColor: "white" }}>
               <Row>
                 <Col span={12}>
-                  <LinkContainer to={`/cases/${codes.alpha3Code}`}><a href="#">Cases</a></LinkContainer>
+                  <LinkContainer to={`/case-statistics/${codes.alpha3Code}`}><a href="#">Cases</a></LinkContainer>
                 </Col>
                 <Col span={12}>                  
                   <LinkContainer to={`/risk-factor-statistics/${codes.alpha3Code}`}><a href="#">Risks</a></LinkContainer>

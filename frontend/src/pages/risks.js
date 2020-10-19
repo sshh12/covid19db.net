@@ -82,7 +82,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/risks/${country.codes.alpha3Code}`}>
+          <a href={`/risk-factor-statistics/${country.codes.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
         )

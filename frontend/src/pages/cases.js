@@ -74,7 +74,7 @@ export default class Cases extends Component {
           // <LinkContainer to={`/risks/${code}`}>
           //   <Button>Explore</Button>
           // </LinkContainer>
-          <a href={`/risks/${code}`}>
+          <a href={`/risk-factor-statistics/${code}`}>
             <Button>Explore</Button>
           </a>
         ),

@@ -38,7 +38,7 @@ export default class CountryCard extends Component {
               <a href="#">Cases</a>
             </LinkContainer>{" "}
             |{" "}
-            <LinkContainer to={`/risks/${code}`}>
+            <LinkContainer to={`/risk-factor-statistics/${code}`}>
               <a href="#">Risks</a>
             </LinkContainer>
           </div>
@@ -74,7 +74,7 @@ export default class CountryCard extends Component {
                   <LinkContainer to={`/cases/${codes.alpha3Code}`}><a href="#">Cases</a></LinkContainer>
                 </Col>
                 <Col span={12}>                  
-                  <LinkContainer to={`/risks/${codes.alpha3Code}`}><a href="#">Risks</a></LinkContainer>
+                  <LinkContainer to={`/risk-factor-statistics/${codes.alpha3Code}`}><a href="#">Risks</a></LinkContainer>
                 </Col>               
               </Row>
             </Content>

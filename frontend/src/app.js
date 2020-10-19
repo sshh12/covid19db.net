@@ -35,7 +35,7 @@ class App extends React.Component {
             </a>
           </Menu.Item>
           <Menu.Item>
-            <a href="/risks" rel="noopener noreferrer">
+            <a href="/risk-factor-statistics" rel="noopener noreferrer">
               Risks
             </a>
           </Menu.Item>

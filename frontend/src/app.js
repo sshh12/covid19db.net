@@ -10,7 +10,7 @@ class App extends React.Component {
       <Fragment>
         <Menu mode="horizontal">
           <Menu.Item>
-            <a href="/" rel="noopener noreferrer" style={{fontWeight: "bold", fontSize: 20}}>
+            <a href="/" rel="noopener noreferrer" style={{ fontWeight: "bold", fontSize: 20 }}>
               COVID-19 DB
             </a>
           </Menu.Item>
@@ -30,7 +30,7 @@ class App extends React.Component {
             </a>
           </Menu.Item>
           <Menu.Item>
-            <a href="/cases" rel="noopener noreferrer">
+            <a href="/case-statistics" rel="noopener noreferrer">
               Cases
             </a>
           </Menu.Item>
@@ -47,16 +47,16 @@ class App extends React.Component {
           <Menu.Item>
             {/* TODO search bar here */}
             <Form>
-              <Form.Item style={{ marginTop:'25px'}}>
+              <Form.Item style={{ marginTop: '25px' }}>
                 <Input placeholder="Search bar not ready yet ... :(" />
-                <Button type="primary">Search</Button>                 
-              </Form.Item>                
+                <Button type="primary">Search</Button>
+              </Form.Item>
             </Form>
-          </Menu.Item>  
+          </Menu.Item>
         </Menu>
         <Routes />
       </Fragment>
-      
+
     );
   }
 }

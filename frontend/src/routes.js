@@ -18,8 +18,8 @@ function Routes() {
         const countryCode = props.match.params.countryCode;
         return <CountryInstance code={countryCode} />
       }}></Route>
-      <Route exact path="/cases"><Cases /></Route>
-      <Route exact path="/cases/:countryCode" render={(props) => {
+      <Route exact path="/case-statistics"><Cases /></Route>
+      <Route exact path="/case-statistics/:countryCode" render={(props) => {
         const countryCode = props.match.params.countryCode;
         return <CaseInstance code={countryCode} />
       }}></Route>

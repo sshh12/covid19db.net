@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { About, Cases, Countries, Main, Risks, GlobalNews } from './pages/allPages'
 import { CountryInstanceGBR, CountryInstanceMEX, CountryInstanceUSA } from './components/countryInstances/allCountryInstances';
 import { CaseInstanceGBR, CaseInstanceMEX, CaseInstanceUSA } from './components/caseInstances/allCaseInstances';
-import { RiskInstanceGBR, RiskInstanceMEX, RiskInstanceUSA } from './components/riskInstances/allRiskInstances';
+import { RiskInstanceGBR, RiskInstanceMEX, RiskInstanceUSA } from './components/risks/allRiskInstances';
 
 function Routes() {
   return (

@@ -1,4 +1,3 @@
 /** 
  * Unit tests using jest
- * 
  * */ 

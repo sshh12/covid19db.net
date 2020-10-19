@@ -2,9 +2,6 @@ import React, { Component } from "react";
 // import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
 import axios from 'axios';
-import USAData from "../components/caseInstances/data/USA.json";
-import GBRData from "../components/caseInstances/data/GBR.json";
-import MEXData from "../components/caseInstances/data/MEX.json";
 import "../components/caseInstances/caseInstance.css";
 
 export default class Cases extends Component {
@@ -128,40 +125,6 @@ export default class Cases extends Component {
       },
     ];
 
-    const data = [
-      {
-        key: "1",
-        country: GBRData.country,
-        totalCases: GBRData.totals.cases,
-        totalDeaths: GBRData.totals.deaths,
-        totalRecovered: GBRData.totals.recovered,
-        totalActive: GBRData.totals.active,
-        exploreRisk: GBRData.country.codes.alpha3Code,
-      },
-      {
-        key: "2",
-        country: MEXData.country,
-        totalCases: MEXData.totals.cases,
-        totalDeaths: MEXData.totals.deaths,
-        totalRecovered: MEXData.totals.recovered,
-        totalActive: MEXData.totals.active,
-        exploreRisk: MEXData.country.codes.alpha3Code,
-      },
-      {
-        key: "3",
-        country: USAData.country,
-        totalCases: USAData.totals.cases,
-        totalDeaths: USAData.totals.deaths,
-        totalRecovered: USAData.totals.recovered,
-        totalActive: USAData.totals.active,
-        exploreRisk: USAData.country.codes.alpha3Code,
-      },
-    ];
-
-    //var caseData = this.state.caseData.map(compileData);
-
-
-
     return (
       <div className="App">
         {/* <header className="Case-header"> */}
@@ -180,7 +143,7 @@ export default class Cases extends Component {
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
           dataSource={this.state.caseData}
-          pagination={false}
+          pagination={true}
         />
         {/* </header> */}
       </div>

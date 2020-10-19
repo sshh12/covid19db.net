@@ -4,7 +4,7 @@ flask-restful
 Flask-SQLAlchemy
 psycopg2-binary
 flask-cors
-python-env
+python-dotenv
 mypy
 coverage
 black

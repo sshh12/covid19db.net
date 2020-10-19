@@ -1,13 +1,64 @@
 import React, { Component } from "react";
 // import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
-
+import axios from 'axios';
 import USAData from "../components/caseInstances/data/USA.json";
 import GBRData from "../components/caseInstances/data/GBR.json";
 import MEXData from "../components/caseInstances/data/MEX.json";
 import "../components/caseInstances/caseInstance.css";
 
 export default class Cases extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      caseData: null,
+    };
+    this.compileData = this.compileData.bind(this);
+  }
+
+  componentDidMount() {
+    // Get request to countries API for country card data
+    axios.get('case-statistics', {
+      params: {
+        attributes: "country,totals"
+      }
+    })
+      .then(res => {
+        const caseData = res.data.map((data) => {
+          var compiledCase = {
+            country: data.country,
+            totalCases: data.totals.cases,
+            totalCases: data.totals.cases,
+            totalDeaths: data.totals.deaths,
+            totalRecovered: data.totals.recovered,
+            totalActive: data.totals.active,
+            exploreRisk: data.country.codes.alpha3Code,
+          };
+
+          return compiledCase;
+        });
+        this.setState({ caseData })
+        console.log(caseData);
+      })
+
+  }
+
+  compileData(data) {
+    var compiledCase = {
+      country: data.country,
+      totalCases: data.totals.cases,
+      totalCases: data.totals.cases,
+      totalDeaths: data.totals.deaths,
+      totalRecovered: data.totals.recovered,
+      totalActive: data.totals.active,
+      exploreRisk: data.country.codes.alpha3Code,
+    };
+
+    return compiledCase;
+  }
+
+
   render() {
     const columns = [
       {
@@ -20,7 +71,7 @@ export default class Cases extends Component {
           // </LinkContainer>
 
           <a href={`/countries/${country.codes.alpha3Code}`}>
-           {country.name}
+            {country.name}
           </a>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
@@ -111,6 +162,10 @@ export default class Cases extends Component {
       },
     ];
 
+    //var caseData = this.state.caseData.map(compileData);
+
+
+
     return (
       <div className="App">
         {/* <header className="Case-header"> */}
@@ -128,7 +183,7 @@ export default class Cases extends Component {
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
-          dataSource={data}
+          dataSource={this.state.caseData}
           pagination={false}
         />
         {/* </header> */}

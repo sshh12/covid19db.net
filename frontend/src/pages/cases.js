@@ -18,13 +18,14 @@ export default class Cases extends Component {
     axios
       .get("case-statistics", {
         params: {
-          attributes: "country,totals",
+          attributes: "country,totals,new",
         },
       })
       .then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
+            newCases: data.new.cases,
             totalCases: data.totals.cases,
             totalCases: data.totals.cases,
             totalDeaths: data.totals.deaths,
@@ -66,6 +67,13 @@ export default class Cases extends Component {
           <Link to={`/countries/${country.codes.alpha3Code}`}>{country.name}</Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
+      },
+      {
+        title: "New Cases Today",
+        dataIndex: "newCases",
+        key: "newCases",
+        render: (population) => <>{population.toLocaleString()}</>,
+        sorter: (a, b) => a.newCases - b.newCases,
       },
       {
         title: "Total Cases",

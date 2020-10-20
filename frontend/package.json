@@ -14,6 +14,9 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "chromedriver": "^86.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "jest-canvas-mock": "^2.3.0",
     "jest-dom": "^4.0.0",
     "mapbox-gl": "^1.12.0",
     "react": "^16.13.1",
@@ -23,7 +26,6 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "react-test-renderer": "^16.14.0",
     "selenium": "^2.20.0",
     "selenium-webdriver": "^4.0.0-alpha.7"
   },
@@ -35,7 +37,8 @@
     "deploy:site": "gcloud app deploy",
     "deploy:api": "pushd ../backend && gcloud app deploy && popd",
     "gcp": "gcloud app browse",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,7 +56,22 @@
     ]
   },
   "devDependencies": {
-    "typescript": "^4.0.3"
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "babel-jest": "^26.6.0",
+    "jest": "^26.6.0",
+    "react-test-renderer": "^16.14.0",
+    "typescript": "^4.0.3",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/setup.js"
+    ]
   },
   "proxy": "http://localhost:5000"
 }

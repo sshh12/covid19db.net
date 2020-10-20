@@ -30,7 +30,6 @@ export default class RiskInstance extends Component {
 
   render() {
     const data = this.state.riskData
-    console.log("helllooooooo")
     console.log(this.props.code)
     if (!data) {
       return <div/>

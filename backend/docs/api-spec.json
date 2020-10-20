@@ -366,6 +366,16 @@
                                 }
                             }
                         }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -377,13 +387,13 @@
                 "type": "object",
                 "required": [
                     "name",
-                    "code"
+                    "codes"
                 ],
                 "properties": {
                     "name": {
                         "type": "string"
                     },
-                    "code": {
+                    "codes": {
                         "type": "object",
                         "required": [
                             "alpha2Code",
@@ -422,7 +432,8 @@
                     },
                     "area": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "alternateNames": {
                         "type": "array",
@@ -442,7 +453,8 @@
                             ],
                             "properties": {
                                 "iso639_1": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": true
                                 },
                                 "iso639_2": {
                                     "type": "string"
@@ -524,13 +536,16 @@
                             ],
                             "properties": {
                                 "code": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": true
                                 },
                                 "name": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": true
                                 },
                                 "symbol": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": true
                                 }
                             }
                         }
@@ -740,33 +755,41 @@
                         ],
                         "properties": {
                             "id": {
-                                "type": "string"
+                                "type": "string",
+                                "nullable": true
                             },
                             "name": {
-                                "type": "string"
+                                "type": "string",
+                                "nullable": true
                             }
                         }
                     },
                     "author": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "title": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "url": {
                         "type": "string"
                     },
                     "urlToImage": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "publishedAt": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "content": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -865,12 +888,12 @@
                         ],
                         "properties": {
                             "cases": {
-                                "type": "integer",
-                                "format": "int64"
+                                "type": "number",
+                                "format": "double"
                             },
                             "deaths": {
-                                "type": "integer",
-                                "format": "int64"
+                                "type": "number",
+                                "format": "double"
                             }
                         }
                     },
@@ -911,20 +934,20 @@
                         ],
                         "properties": {
                             "cases": {
-                                "type": "integer",
-                                "format": "int64"
+                                "type": "number",
+                                "format": "double"
                             },
                             "deaths": {
-                                "type": "integer",
-                                "format": "int64"
+                                "type": "number",
+                                "format": "double"
                             },
                             "recovered": {
-                                "type": "integer",
-                                "format": "int64"
+                                "type": "number",
+                                "format": "double"
                             },
                             "active": {
-                                "type": "integer",
-                                "format": "int64"
+                                "type": "number",
+                                "format": "double"
                             }
                         }
                     },
@@ -954,10 +977,13 @@
                                 ],
                                 "properties": {
                                     "date": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "nullable": true
                                     },
                                     "value": {
-                                        "type": "string"
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "nullable": true
                                     }
                                 }
                             },
@@ -969,10 +995,13 @@
                                 ],
                                 "properties": {
                                     "date": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "nullable": true
                                     },
                                     "value": {
-                                        "type": "string"
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "nullable": true
                                     }
                                 }
                             },
@@ -984,10 +1013,13 @@
                                 ],
                                 "properties": {
                                     "date": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "nullable": true
                                     },
                                     "value": {
-                                        "type": "string"
+                                        "type": "number",
+                                        "format": "double",
+                                        "nullable": true
                                     }
                                 }
                             },
@@ -999,10 +1031,13 @@
                                 ],
                                 "properties": {
                                     "date": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "nullable": true
                                     },
                                     "value": {
-                                        "type": "string"
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "nullable": true
                                     }
                                 }
                             }
@@ -1863,63 +1898,78 @@
                     },
                     "populationDensity": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "medianAge": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "aged65Older": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "aged70Older": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "gdpPerCapita": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "gini": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "extremePovertyRate": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "cardiovascDeathRate": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "diabetesPrevalence": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "femaleSmokers": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "maleSmokers": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "hospitalBedsPerThousand": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "lifeExpectancy": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "humanDevelopmentIndex": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "handwashingFacilities": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
                     },
                     "sources": {
                         "$ref": "#/components/schemas/Sources"
@@ -1993,10 +2043,10 @@
             "Error": {
                 "type": "object",
                 "required": [
-                    "message"
+                    "error"
                 ],
                 "properties": {
-                    "message": {
+                    "error": {
                         "type": "string"
                     }
                 }

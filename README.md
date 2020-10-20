@@ -9,15 +9,14 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - GitLab pipelines: https://gitlab.com/jrmoulckers/covid19db-net/-/pipelines
 - Website: https://covid19db.net
 - API: https://api.covid19db.net
-- Comments: Please note that there is currently an issue with refreshing whilst on an instance page. This is obviously not intended and will be addressed in the next phase.
 
 ## Members
 
 - Name: Shrivu Shankar
 - EID: ss86692
 - GitLab ID: sshh12
-- Estimated completion time: 6 hrs (phase 1)
-- Actual completion time: 7 hrs (phase 1)
+- Estimated completion time: 6 hrs (phase 1), 8 hrs (phase 2)
+- Actual completion time: 7 hrs (phase 1), 15 hrs (phase 2)
 
 ---
 
@@ -32,8 +31,8 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Vassi Gianitsos
 - EID: vg8968
 - GitLab ID: vassi_gianitsos
-- Estimated completion time: 8 hrs (phase 1)
-- Actual completion time: 9 hrs (phase 1)
+- Estimated completion time: 8 hrs (phase 1), 15 hrs (phase 2)
+- Actual completion time: 9 hrs (phase 1), 20 hrs (phase 2)
 
 ---
 

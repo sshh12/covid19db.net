@@ -2,7 +2,7 @@
 Defines the valid routes for the backend server.
 """
 from flask_restful import Resource, reqparse
-from . import api, const, models
+from . import app, api, const, models
 
 # used to parse url query parameters
 parser = reqparse.RequestParser()

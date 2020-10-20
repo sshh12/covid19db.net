@@ -69,6 +69,5 @@
     "setupFilesAfterEnv": [
       "<rootDir>/setup.js"
     ]
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

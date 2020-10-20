@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 from unittest import main, TestCase
-from src import const
-from src.routes import get_attributes, validate_attributes, validate_identifier, error_response
-from src.models import Countries, CaseStatistics, RiskFactorStatistics
+from covid_app import const
+from covid_app.routes import get_attributes, validate_attributes, validate_identifier, error_response
+from covid_app.models import Countries, CaseStatistics, RiskFactorStatistics
 
 
 class TestBackend(TestCase):

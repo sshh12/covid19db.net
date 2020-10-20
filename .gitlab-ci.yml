@@ -6,21 +6,38 @@ cache:
     - .cache/pip
     - venv/
     - frontend/node_modules
+    - vendor/
+    - .apt/
 before_script:
+  # Package Cache
+  - echo $CI_PROJECT_DIR
+  - export APT_DIR=$CI_PROJECT_DIR/.apt && export APT_STATE_LISTS=$APT_DIR/lists && export APT_CACHE_ARCHIVES=$APT_DIR/archives
+  - printf "dir::state::lists    ${APT_STATE_LISTS};\ndir::cache::archives    ${APT_CACHE_ARCHIVES};\n" > /etc/apt/apt.conf
+  - mkdir -p "${APT_STATE_LISTS}/partial" && mkdir -p "${APT_CACHE_ARCHIVES}/partial"
+  # Install Deps
   - apt-get update -qy
   - apt-get install -y nodejs npm
   - npm install -g yarn jest
+  - _timeout() { ( set +b; sleep "$1" & "${@:2}" & wait -n; r=$?; kill -9 `jobs -p`; exit $r; ) }
+  # Version Check
   - yarn --version
   - python -V
+  # Python Setup
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
+  # Install App Deps
   - pip install -r backend/requirements.txt
   - pushd frontend && yarn install && popd
-test_backend:
+test_unit:
   script:
     - python backend/test.py
-test_frontend:
-  script:
     - cd frontend
     - jest
+test_e2e:
+  script:
+    - pip install selenium==3.141.0
+    - (_timeout 30 python backend/main.py) &
+    - cd frontend
+    - (_timeout 30 yarn react) &
+    - python gui_tests.py

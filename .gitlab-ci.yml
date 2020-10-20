@@ -19,7 +19,7 @@ before_script:
   - mkdir -p "${APT_STATE_LISTS}/partial" && mkdir -p "${APT_CACHE_ARCHIVES}/partial"
   # Install Deps
   - wget https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip -O /tmp/chromedriver_linux64.zip
-  - tar -xzf /tmp/chromedriver_linux64.zip
+  - unzip /tmp/chromedriver_linux64.zip
   - ls /tmp
   - mv /tmp/chromedriver /bin/chromedriver
   - apt-get update -qy

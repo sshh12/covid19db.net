@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 // import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
-import axios from 'axios';
+import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
 
 export default class Cases extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -16,12 +15,13 @@ export default class Cases extends Component {
 
   componentDidMount() {
     // Get request to countries API for country card data
-    axios.get('case-statistics', {
-      params: {
-        attributes: "country,totals"
-      }
-    })
-      .then(res => {
+    axios
+      .get("case-statistics", {
+        params: {
+          attributes: "country,totals",
+        },
+      })
+      .then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
@@ -36,10 +36,9 @@ export default class Cases extends Component {
 
           return compiledCase;
         });
-        this.setState({ caseData })
+        this.setState({ caseData });
         console.log(caseData);
-      })
-
+      });
   }
 
   compileData(data) {
@@ -57,7 +56,6 @@ export default class Cases extends Component {
     return compiledCase;
   }
 
-
   render() {
     const columns = [
       {
@@ -69,9 +67,7 @@ export default class Cases extends Component {
           //   <a>{country.name}</a>
           // </LinkContainer>
 
-          <a href={`/countries/${country.codes.alpha3Code}`}>
-            {country.name}
-          </a>
+          <a href={`/countries/${country.codes.alpha3Code}`}>{country.name}</a>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
@@ -121,7 +117,7 @@ export default class Cases extends Component {
           <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
             <Button>Explore</Button>
           </a>
-        )
+        ),
       },
     ];
 

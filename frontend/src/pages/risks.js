@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Table } from "antd";
 import axios from "../client";
+import { Link } from "react-router-dom";
 
 export default class Risks extends Component {
   numPerPage = 10; // this number simply does not mean anything and is not used here
@@ -47,9 +48,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/countries/${country?.codes?.alpha3Code}`}>
-            {country?.name}
-          </a>
+          <Link to={`/countries/${country?.codes?.alpha3Code}`}>{country?.name}</Link>
         ),
         sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
       },
@@ -83,9 +82,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
+          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
         ),
       },
       {
@@ -93,9 +90,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
+          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
         ),
       },
     ];

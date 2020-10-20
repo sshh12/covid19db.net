@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Table, Tag, Space } from "antd";
+import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
 
@@ -62,7 +63,7 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/countries/${country.codes.alpha3Code}`}>{country.name}</a>
+          <Link to={`/countries/${country.codes.alpha3Code}`}>{country.name}</Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
@@ -99,9 +100,7 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
+          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
         ),
       },
       {
@@ -109,9 +108,7 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
+          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
         ),
       },
     ];

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
 import { Button, Row } from "antd";
 import axios from "../../client";
+import { Link } from "react-router-dom";
 
 import "./countryInstance.css";
 import { GeneralInfo, AllNews } from "./countryComponents";
@@ -53,9 +53,9 @@ export default class CountryInstance extends Component {
     return (
       <div className="App">
         <header className="Case-header">
-          <LinkContainer className="Back-link" to="/countries">
+          <Link to="/countries">
             <Button variant="outline-secondary">Go back</Button>
-          </LinkContainer>
+          </Link>
 
           <h1 id="page-title">
             {" "}

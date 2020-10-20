@@ -42,8 +42,6 @@ test_unit:
     - cd frontend
     - jest
 test_e2e:
-  variables:
-    SKIP_PREFLIGHT_CHECK: true
   script:
     - pip install selenium==3.141.0
     - (_timeout 100 python backend/main.py) &

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Col, Pagination, Row } from "antd";
 import axios from "../client";
 

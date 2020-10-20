@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import "./caseInstance.css";
 
@@ -31,7 +31,7 @@ function GenStats(props) {
   into NOVI line graph.
 */
 function compileData(data) {
-  var history = data.history;
+  var history = data;
   var confirmed = [];
   var deaths = [];
   var recovered = [];

@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Card, Col, Row, Layout} from "antd";
-import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 
 import "./countryInstance.css";
@@ -31,20 +30,6 @@ export default class CountryCard extends Component {
         return str;
     }
       
-    CardExtra({ code }) {
-        return (
-          <div>
-            <LinkContainer to={`/case-statistics/${code}`}>
-              <a href="#">Cases</a>
-            </LinkContainer>{" "}
-            |{" "}
-            <LinkContainer to={`/risk-factor-statistics/${code}`}>
-              <a href="#">Risks</a>
-            </LinkContainer>
-          </div>
-        );
-    }
-      
     render() {  
       const {capital, codes, flag, languages, name, population } = this.props.data;
         return (
@@ -71,10 +56,10 @@ export default class CountryCard extends Component {
             <Content style={{ height: 50, backgroundColor: "white" }}>
               <Row>
                 <Col span={12}>
-                  <LinkContainer to={`/case-statistics/${codes.alpha3Code}`}><a href="#">Cases</a></LinkContainer>
+                  <Link to={`/case-statistics/${codes.alpha3Code}`}>Cases</Link>
                 </Col>
                 <Col span={12}>                  
-                  <LinkContainer to={`/risk-factor-statistics/${codes.alpha3Code}`}><a href="#">Risks</a></LinkContainer>
+                  <Link to={`/risk-factor-statistics/${codes.alpha3Code}`}>Risks</Link>
                 </Col>               
               </Row>
             </Content>

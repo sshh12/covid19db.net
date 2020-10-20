@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Button, Col, Pagination, Row, Table } from "antd";
+import React, { Component } from "react";
+import { Button, Table } from "antd";
 import axios from "../client";
 
 export default class Risks extends Component {
@@ -35,14 +35,6 @@ export default class Risks extends Component {
         }
       );
   }
-
-  // handleChange = value => {
-  //   console.log(value)
-  //   this.setState({
-  //     firstEntryIndex: (value - 1) * this.numPerPage,
-  //     lastEntryIndex: value * this.numPerPage
-  //   })
-  // }
 
   handleChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
@@ -109,24 +101,6 @@ export default class Risks extends Component {
     ];
 
     const data = this.state.riskData;
-    // get all risk entries in the current view
-    // const currentView = data && data.length > 0 && data
-    //   .slice(this.state.firstEntryIndex, this.state.lastEntryIndex)
-    //   .map(riskData => <Table columns={columns} dataSource={data} onChange={this.handleChange} />);
-    //   // .map(riskData => <div key={riskData.country}>| {riskData.populationDensity} | {riskData.gini}| </div>);
-
-    // console.log(this.state.firstEntryIndex, this.state.lastEntryIndex);
-    // const risks = data
-    //   ? (<Fragment>
-    //     {currentView}
-    //     <Pagination
-    //       defaultCurrent={1} // default to first page
-    //       defaultPageSize={this.numPerPage} // default size of page
-    //       onChange={this.handleChange}
-    //       total={data.length} //total number of countries
-    //     />
-    //   </Fragment>)
-    //   : <div/>;
 
     return (
       <div className="App">

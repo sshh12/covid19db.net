@@ -18,12 +18,8 @@ before_script:
   - printf "dir::state::lists    ${APT_STATE_LISTS};\ndir::cache::archives    ${APT_CACHE_ARCHIVES};\n" > /etc/apt/apt.conf
   - mkdir -p "${APT_STATE_LISTS}/partial" && mkdir -p "${APT_CACHE_ARCHIVES}/partial"
   # Install Deps
-  - wget https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip -O /tmp/chromedriver_linux64.zip
-  - unzip /tmp/chromedriver_linux64.zip
-  - ls /tmp && ls
-  - mv chromedriver /bin/chromedriver
   - apt-get update -qy
-  - apt-get install -y nodejs npm
+  - apt-get install -y nodejs npm xvfb
   - npm install -g yarn jest newman
   - _timeout() { ( set +b; sleep "$1" & "${@:2}" & wait -n; kill -9 `jobs -p`; ) }
   # Version Check
@@ -43,7 +39,12 @@ test_unit:
     - jest
 test_e2e:
   script:
-    - pip install selenium==3.141.0
+    # Selenium
+    - wget https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip -O /tmp/chromedriver_linux64.zip
+    - unzip /tmp/chromedriver_linux64.zip
+    - mv chromedriver /bin/chromedriver
+    - pip install selenium==3.141.0 pyvirtualdisplay
+    # Start Apps & Test
     - (_timeout 100 python backend/main.py) &
     - newman run postman.tests.json -e postman.env.json
     - cd frontend

@@ -14,6 +14,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:3000")
 
 
@@ -81,4 +82,10 @@ class TestCovidDBGUI(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    try:
+        from pyvirtualdisplay import Display
+        display = Display(visible=0, size=(800, 800))  
+        display.start()
+    except Exception as e:
+        print(e)
     unittest.main()

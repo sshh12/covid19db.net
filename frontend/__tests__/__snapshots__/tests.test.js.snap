@@ -1,9 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render About 1`] = `ShallowWrapper {}`;
-
-exports[`Render Cases 1`] = `ShallowWrapper {}`;
-
 exports[`Render Components Case: Gen Stats 1`] = `ShallowWrapper {}`;
 
 exports[`Render Components Case: New Stats 1`] = `ShallowWrapper {}`;
@@ -16,16 +12,6 @@ exports[`Render Components Country: Get Image 1`] = `ShallowWrapper {}`;
 
 exports[`Render Components Country: News 1`] = `ShallowWrapper {}`;
 
-exports[`Render Components General Info 1`] = `ShallowWrapper {}`;
-
-exports[`Render Components Get Image 1`] = `ShallowWrapper {}`;
-
-exports[`Render Components News 1`] = `ShallowWrapper {}`;
-
-exports[`Render Country 1`] = `ShallowWrapper {}`;
-
-exports[`Render Global News 1`] = `ShallowWrapper {}`;
-
 exports[`Render Pages About 1`] = `ShallowWrapper {}`;
 
 exports[`Render Pages Cases 1`] = `ShallowWrapper {}`;
@@ -35,5 +21,3 @@ exports[`Render Pages Country 1`] = `ShallowWrapper {}`;
 exports[`Render Pages Global News 1`] = `ShallowWrapper {}`;
 
 exports[`Render Pages Risk 1`] = `ShallowWrapper {}`;
-
-exports[`Render Risk 1`] = `ShallowWrapper {}`;

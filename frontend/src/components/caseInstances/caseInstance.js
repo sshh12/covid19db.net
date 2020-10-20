@@ -158,7 +158,7 @@ class CaseInstance extends Component {
           </div>
           <div style={{ marginTop: "50px", height: "500px", width: "100%" }}>
             <h2 id="subtitle">Trends and Visuals</h2>
-            <CaseResponseLine data={data} />
+            <CaseResponseLine data={data.history} />
           </div>
           <div style={{ marginTop: "50px", height: "500px", width: "100%" }}>
             <h2 id="subtitle">Map</h2>

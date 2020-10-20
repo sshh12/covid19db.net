@@ -1,10 +1,26 @@
+image: python:latest
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+    - frontend/node_modules
 before_script:
-    - date
-    - uname -a
-    - printenv | sort
-
-python:
-    image: gpdowning/python
-    script:
-    - ls -al
-    - cat makefile
+  - apt-get update -qy
+  - apt-get install -y nodejs npm
+  - npm install -g yarn jest
+  - yarn --version
+  - python -V
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -r backend/requirements.txt
+  - pushd frontend && yarn install && popd
+test_backend:
+  script:
+    - python backend/test.py
+test_frontend:
+  script:
+    - cd frontend
+    - jest

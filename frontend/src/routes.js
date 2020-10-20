@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { About, Cases, Countries, Main, Risks, GlobalNews } from './pages/allPages'
-import { CaseInstanceGBR, CaseInstanceMEX, CaseInstanceUSA } from './components/caseInstances/allCaseInstances';
 import RiskInstance from './components/risks/riskInstance';
 import CountryInstance from "./components/country/countryInstance";
 import CaseInstance from "./components/caseInstances/caseInstance";
@@ -29,15 +28,6 @@ function Routes() {
         return <RiskInstance code={countryCode} />
       }}></Route>
       <Route exact path="/globalNews"><GlobalNews /></Route>
-      <Route exact path="/cases/GBR"><CaseInstanceGBR /></Route>
-      <Route exact path="/cases/MEX"><CaseInstanceMEX /></Route>
-      <Route exact path="/cases/USA"><CaseInstanceUSA /></Route>
-      {/* <Route exact path="/risks/GBR"><RiskInstanceGBR /></Route> */}
-
-      {/* 
-      <Route exact path="/risks/GBR"><RiskInstance /></Route>
-      <Route exact path="/risks/MEX"><RiskInstanceMEX /></Route>
-      <Route exact path="/risks/USA"><RiskInstanceUSA /></Route> */}
     </Switch>
   );
 }

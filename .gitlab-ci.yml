@@ -17,8 +17,8 @@ before_script:
   # Install Deps
   - apt-get update -qy
   - apt-get install -y nodejs npm
-  - npm install -g yarn jest
-  - _timeout() { ( set +b; sleep "$1" & "${@:2}" & wait -n; r=$?; kill -9 `jobs -p`; exit $r; ) }
+  - npm install -g yarn jest newman
+  - _timeout() { ( set +b; sleep "$1" & "${@:2}" & wait -n; kill -9 `jobs -p`; ) }
   # Version Check
   - yarn --version
   - python -V
@@ -35,9 +35,12 @@ test_unit:
     - cd frontend
     - jest
 test_e2e:
+  services:
+    - selenium/standalone-chrome
   script:
     - pip install selenium==3.141.0
-    - (_timeout 30 python backend/main.py) &
+    - (_timeout 100 python backend/main.py) &
+    # todo postman
     - cd frontend
-    - (_timeout 30 yarn react) &
+    - (_timeout 60 yarn react) &
     - python gui_tests.py

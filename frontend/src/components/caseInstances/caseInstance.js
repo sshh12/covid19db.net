@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Totals, NewStats, GenStats, CaseResponseLine } from "./caseComponents";
+import { Link } from "react-router-dom";
+import { Button } from 'antd';
 import Map from "../../components/map";
 import axios from "../../client";
 import "./caseInstance.css";
@@ -36,6 +38,9 @@ class CaseInstance extends Component {
     return (
       <div className="App">
         <header className="Case-header">
+          <Link to="/case-statistics">
+            <Button variant="outline-secondary">Go back to cases</Button>
+          </Link>
           <h1 id="page-title">
             {" "}
             {data.country.name} ({data.country.codes.alpha3Code})

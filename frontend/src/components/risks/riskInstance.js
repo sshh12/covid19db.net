@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Map from "../map";
 import { BigStat, DemographicFactor, HealthFactor } from "./riskComponents";
+import { Link } from "react-router-dom";
+import { Button } from 'antd';
 import axios from "../../client";
 
 import Agg from "./data/Aggregate.json";
@@ -59,6 +61,9 @@ export default class RiskInstance extends Component {
     return (
       <div className="App">
         <header className="risk-header">
+          <Link to="/risk-factor-statistics">
+            <Button variant="outline-secondary">Go back to risks</Button>
+          </Link>
           <h1 id="page-title">
             Risk Factors in {country?.name} ({country?.codes?.alpha3Code})
           </h1>

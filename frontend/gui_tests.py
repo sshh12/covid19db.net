@@ -20,7 +20,12 @@ BASE_URL = os.environ.get("BASE_URL", "http://localhost:3000")
 
 class TestCovidDBGUI(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument('--disable-extensions')
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        self.driver = webdriver.Chrome(options=options)
         # increase if pages are taking too long to load
         self.driver.implicitly_wait(3)
 

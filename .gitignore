@@ -24,3 +24,4 @@ yarn-error.log*
 node_modules
 build
 debug.log
+env_variables.yaml

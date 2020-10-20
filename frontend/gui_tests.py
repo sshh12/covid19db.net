@@ -56,7 +56,7 @@ class TestCovidDBGUI(unittest.TestCase):
         self.driver.find_elements_by_link_text("Cases")[0].click()
         expl_btn = self.driver.find_elements_by_partial_link_text("Explore")[0]
         expl_btn.click()
-        self.assertEqual(self.driver.current_url, BASE_URL + "/cases/GBR")
+        self.assertEqual(self.driver.current_url, BASE_URL + "/case-statistics/ZWE")
 
     def test_risk_explore(self):
         self.driver.get(BASE_URL)

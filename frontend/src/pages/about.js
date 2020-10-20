@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
 import { Card, Tab, Row, Col, ListGroup } from "react-bootstrap";
 
 const GITLAB_API_BASE = "https://gitlab.com/api/v4";
@@ -144,14 +143,6 @@ export default class About extends Component {
         >
           About
         </h1>
-        {/* <header className="App-header" style={{ minHeight: "10rem" }}>
-          <h1> About Page </h1>
-          <LinkContainer className="App-link" to="/">
-            <Button variant="outline-secondary">
-              Click here to go back to the main page
-            </Button>
-          </LinkContainer>
-        </header> */}
         <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
           Our COVID-19 Database site allows users to gather quick statistics on
           the coronavirus in terms of country, cases, and potential risks. This

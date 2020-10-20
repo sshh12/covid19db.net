@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
@@ -63,10 +62,6 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          // <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
-          //   <a>{country.name}</a>
-          // </LinkContainer>
-
           <a href={`/countries/${country.codes.alpha3Code}`}>{country.name}</a>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
@@ -123,7 +118,6 @@ export default class Cases extends Component {
 
     return (
       <div className="App">
-        {/* <header className="Case-header"> */}
         <h1
           style={{
             fontWeight: "800",
@@ -141,7 +135,6 @@ export default class Cases extends Component {
           dataSource={this.state.caseData}
           pagination={true}
         />
-        {/* </header> */}
       </div>
     );
   }

@@ -42,6 +42,8 @@ test_unit:
     - cd frontend
     - jest
 test_e2e:
+  variables:
+    SKIP_PREFLIGHT_CHECK: true
   services:
     - selenium/standalone-chrome
   script:

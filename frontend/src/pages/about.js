@@ -25,7 +25,7 @@ const GROUP_MEMBERS = [
     gitlab: "YashKakodkar",
     role: "Full Stack Developer",
     bio: "Junior Computer Science Major from Katy, TX",
-    unitTests: 0,
+    unitTests: 5,
   },
   {
     name: "Jeffrey Moulckers",

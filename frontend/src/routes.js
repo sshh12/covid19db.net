@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import { About, Cases, Countries, Main, Risks, GlobalNews } from './pages/allPages'
 import { CaseInstanceGBR, CaseInstanceMEX, CaseInstanceUSA } from './components/caseInstances/allCaseInstances';
-import { RiskInstanceGBR, RiskInstanceMEX, RiskInstanceUSA, RiskInstance } from './components/risks/allRiskInstances';
+import RiskInstance from './components/risks/riskInstance';
 import CountryInstance from "./components/country/countryInstance";
 import CaseInstance from "./components/caseInstances/caseInstance";
 

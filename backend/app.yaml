@@ -3,3 +3,7 @@ runtime: python37
 service: api
 includes:
   - env_variables.yaml
+handlers:
+  - url: /.*
+    script: auto
+    secure: always

@@ -9,7 +9,6 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - GitLab pipelines: https://gitlab.com/jrmoulckers/covid19db-net/-/pipelines
 - Website: https://covid19db.net
 - API: https://api.covid19db.net
-- Comments: Please note that there is currently an issue with refreshing whilst on an instance page. This is obviously not intended and will be addressed in the next phase.
 
 ## Members
 
@@ -24,8 +23,8 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Cameron Doggett
 - EID: ctd695
 - GitLab ID: camd99
-- Estimated completion time: 8 hrs (phase 1)
-- Actual completion time: 8 hrs (phase 1)
+- Estimated completion time: 8 hrs (phase 1), 18 hrs (phase 2)
+- Actual completion time: 8 hrs (phase 1), 18 hrs (phase 2)
 
 ---
 

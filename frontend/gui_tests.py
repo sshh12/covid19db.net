@@ -14,12 +14,18 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:3000")
 
 
 class TestCovidDBGUI(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument('--disable-extensions')
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        self.driver = webdriver.Chrome(options=options)
         # increase if pages are taking too long to load
         self.driver.implicitly_wait(3)
 
@@ -56,7 +62,7 @@ class TestCovidDBGUI(unittest.TestCase):
         self.driver.find_elements_by_link_text("Cases")[0].click()
         expl_btn = self.driver.find_elements_by_partial_link_text("Explore")[0]
         expl_btn.click()
-        self.assertEqual(self.driver.current_url, BASE_URL + "/cases/GBR")
+        self.assertEqual(self.driver.current_url, BASE_URL + "/case-statistics/ZWE")
 
     def test_risk_explore(self):
         self.driver.get(BASE_URL)
@@ -81,4 +87,10 @@ class TestCovidDBGUI(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    try:
+        from pyvirtualdisplay import Display
+        display = Display(visible=0, size=(800, 800))  
+        display.start()
+    except Exception as e:
+        print(e)
     unittest.main()

@@ -16,8 +16,8 @@ before_script:
   - mkdir -p "${APT_STATE_LISTS}/partial" && mkdir -p "${APT_CACHE_ARCHIVES}/partial"
   # Install Deps
   - apt-get update -qy
-  - apt-get install -y nodejs npm
-  - npm install -g yarn jest newman
+  - apt-get install -y nodejs npm google-chrome-stable
+  - npm install -g yarn jest newman chromedriver
   - _timeout() { ( set +b; sleep "$1" & "${@:2}" & wait -n; kill -9 `jobs -p`; ) }
   # Version Check
   - yarn --version

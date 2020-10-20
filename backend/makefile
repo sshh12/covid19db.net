@@ -1,5 +1,6 @@
 image_name = covid19db/backend
 container_name = "covid19db-api-server"
+test_container_name = "covid19db-api-tester"
 flask_server_port = 5000
 docker_repo = cameron99d/covid19db-backend
 path = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -39,6 +40,7 @@ docker-stop:
 docker-clean:
 	docker container prune -f
 	docker image prune -f
+	docker network prune -f
 
 docker-images:
 	docker images
@@ -47,7 +49,25 @@ docker-containers:
 	docker container ls -a
 
 format:
-	black -l 120 main.py src/*.py
+	black -l 120 main.py test.py src/*.py
 
 install-python-deps:
 	pip install -r requirements.txt
+
+tests: unit-tests postman-tests
+
+postman-tests:
+	docker network create postman-tests
+	make docker-run
+	docker network disconnect bridge $(container_name)
+	docker network connect postman-tests $(container_name)
+	docker run -it -v $(path)..:/app/test -w="/app/test"		\
+	--net postman-tests											\
+	--rm --name=$(test_container_name) $(image_name)			\
+	npx newman run Postman.json									\
+	--env-var "apiUrl=$(container_name):$(flask_server_port)"
+	make docker-stop
+	docker network rm postman-tests
+
+unit-tests:
+	python test.py

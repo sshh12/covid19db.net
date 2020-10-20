@@ -44,8 +44,6 @@ test_unit:
 test_e2e:
   variables:
     SKIP_PREFLIGHT_CHECK: true
-  services:
-    - selenium/standalone-chrome
   script:
     - pip install selenium==3.141.0
     - (_timeout 100 python backend/main.py) &

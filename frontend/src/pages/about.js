@@ -18,7 +18,7 @@ const GROUP_MEMBERS = [
     gitlab: "camd99",
     role: "Back-end Developer",
     bio: "Junior Computer Science Major from Katy, TX",
-    unitTests: 0,
+    unitTests: 34,
   },
   {
     name: "Yash Kakodkar",
@@ -39,7 +39,7 @@ const GROUP_MEMBERS = [
     gitlab: "vassi_gianitsos",
     role: "Front-end Developer",
     bio: "Senior Computer Science Major from Flower Mound, TX",
-    unitTests: 0,
+    unitTests: 17,
   },
 ].sort((a, b) => Math.random() - 0.5);
 

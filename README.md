@@ -23,8 +23,8 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Cameron Doggett
 - EID: ctd695
 - GitLab ID: camd99
-- Estimated completion time: 8 hrs (phase 1)
-- Actual completion time: 8 hrs (phase 1)
+- Estimated completion time: 8 hrs (phase 1), 18 hrs (phase 2)
+- Actual completion time: 8 hrs (phase 1), 18 hrs (phase 2)
 
 ---
 

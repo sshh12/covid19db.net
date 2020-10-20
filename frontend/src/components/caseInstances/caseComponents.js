@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import "./caseInstance.css";
 

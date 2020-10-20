@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router";
 import { NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -33,9 +33,9 @@ class HoverDropdown extends Component {
     // Conditionally add link if address is provided
     if (this.props.to) {
       component = (
-        <LinkContainer to={this.props.to} className={this.props.to}>
+        <Link to={this.props.to} className={this.props.to}>
           {component}
-        </LinkContainer>
+        </Link>
       );
     }
     return component;

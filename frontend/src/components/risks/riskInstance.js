@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import { Button } from "antd";
 import Map from "../map";
-import {
-  BigStat,
-  DemographicFactor,
-  HealthFactor,
-  CaseResponseLine,
-} from "./riskComponents";
+import { BigStat, DemographicFactor, HealthFactor } from "./riskComponents";
 import axios from "../../client";
 
 import Agg from "./data/Aggregate.json";

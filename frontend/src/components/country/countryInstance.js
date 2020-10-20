@@ -4,7 +4,7 @@ import { Button, Row } from "antd";
 import axios from "../../client";
 
 import "./countryInstance.css";
-import { GeneralInfo, News, GetImage, AllNews } from "./countryComponents";
+import { GeneralInfo, AllNews } from "./countryComponents";
 import Map from "../map";
 
 export default class CountryInstance extends Component {

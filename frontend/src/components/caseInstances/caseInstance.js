@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { LinkContainer } from 'react-router-bootstrap';
 import { Totals, NewStats, GenStats, CaseResponseLine } from "./caseComponents";
 import Map from "../../components/map";
 import axios from "../../client";
@@ -37,10 +36,6 @@ class CaseInstance extends Component {
     return (
       <div className="App">
         <header className="Case-header">
-          {/* <LinkContainer className='Back-link' to='/cases'>
-            <Button variant='outline-secondary'>Go back</Button>
-          </LinkContainer> */}
-
           <h1 id="page-title">
             {" "}
             {data.country.name} ({data.country.codes.alpha3Code})

@@ -56,7 +56,6 @@ class App extends React.Component {
         </Menu>
         <Routes />
       </Fragment>
-
     );
   }
 }

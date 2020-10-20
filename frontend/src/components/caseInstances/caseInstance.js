@@ -51,7 +51,7 @@ class CaseInstance extends Component {
             <Totals title="Total Active" data={data.totals.active} />
             <Totals title="Total Deaths" data={data.totals.deaths} />
             <Totals title="Total Recovered" data={data.totals.recovered} />
-            <Totals title="Total Tests" data={3} />
+            <Totals title="Total Tests" data={data.testing.totalTests.value} />
           </div>
           <div>
             <div id="new-stats-title-div">
@@ -63,6 +63,7 @@ class CaseInstance extends Component {
                 marginTop: "5px",
                 display: "flex",
                 justifyContent: "left",
+                flexWrap: 'wrap'
               }}
             >
               <NewStats
@@ -101,6 +102,15 @@ class CaseInstance extends Component {
                   ) / 100
                 }
               />
+              <NewStats
+                title="Tests"
+                data={data.testing.newTests.value}
+                yesterday={
+                  Math.round(
+                    (data.testing.newTestsSmoothed.value + Number.EPSILON) * 100
+                  ) / 100
+                }
+              />
             </div>
           </div>
           <div style={{ marginTop: "50px" }}>
@@ -110,6 +120,7 @@ class CaseInstance extends Component {
                 marginTop: "5px",
                 display: "flex",
                 justifyContent: "left",
+                flexWrap: 'wrap'
               }}
             >
               <GenStats
@@ -129,6 +140,15 @@ class CaseInstance extends Component {
                   ) / 100
                 }
                 description="total cases/total population"
+              />
+              <GenStats
+                title="Positivity Rate"
+                data={
+                  Math.round(
+                    (data.testing.positiveRate.value + Number.EPSILON) * 100
+                  ) / 100
+                }
+                description="posititive tests/total tests"
               />
               <GenStats
                 title="Recovery Rate"

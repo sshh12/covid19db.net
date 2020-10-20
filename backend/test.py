@@ -28,11 +28,6 @@ class TestBackend(TestCase):
         result = get_attributes(args)
         self.assertEqual(result, None)
 
-    def test_get_attributes_4(self):
-        args = {"attributes": None}
-        result = get_attributes(args)
-        self.assertEqual(result, None)
-
     # validate_attributes tests
 
     def test_validate_attributes_1(self):

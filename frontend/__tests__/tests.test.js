@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
 // import App from '../src/app'
 // import CountryInstance from '../src/components/country/countryInstance'
 // import RiskInstance from '../src/components/risks/riskInstance'
@@ -15,10 +14,11 @@ import GlobalNews from '../src/pages/globalNews'
 import CountryCard from '../src/components/country/countryCard'
 import { GeneralInfo, GetImage, News, AllNews } from '../src/components/country/countryComponents'
 
-const fakeData = {}
+// Run 'yarn test'
+const dummyData = {}
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve(fakeData),
+    json: () => Promise.resolve(dummyData),
   })
 );
 
@@ -34,31 +34,6 @@ describe('Sample Tests', () => {
   })
 
 });
-
-// describe('Model Instances (TODO)', () => {
-//   // global.URL.createObjectURL = jest.fn();
-//   test('Risk Instance Rendering Test', () => {
-//     // jest.mock('mapbox-gl/dist/mapbox-gl', () => ({
-//     //   Map: () => ({})
-//     // }));
-//     const component = renderer.create(
-//       <RiskInstance code="USA"></RiskInstance>,
-//     );
-//     let tree = component.toJSON();
-//     expect(tree).toMatchSnapshot();
-//   });
-  
-//   test('TODO', () => {
-//     expect(true).toBeTruthy();
-//   });
-// })
-
-// describe('Pages Test (TODO)', () => {
-//   test('TODO', () => {
-//     expect(true).toBeTruthy();
-//   });
-// })
-
 
 describe('Render Pages', () => {
   test('About', () => {
@@ -145,95 +120,3 @@ describe('Render Components', () => {
     expect(test).toMatchSnapshot();
   });
 })
-
-
-
-// describe('Render', () => {
-//     test('App', () => {
-//         // Render the app component
-//         const test = shallow(<App />); 
-//         expect(test).toMatchSnapshot();
-//     });
-//     test('Risk Instance', () => {
-//         // Render the Demoinstance component
-//         const test = shallow(<RiskInstance />); 
-//         expect(test).toMatchSnapshot();
-//     });
-
-//     test('Country Instance', () => {
-//         // Render the PoliceInstance component
-//         const test = shallow(<CountryInstance />); 
-//         expect(test).toMatchSnapshot();
-//     });
-
-//     test('Country Card', () => {
-//         // Render the DemoCard component
-//         const test = shallow(<CountryCard />); 
-//         expect(test).toMatchSnapshot();
-//     });
-//   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// });
-
-
-
-
-
-
-
-
-
-
-
-// // test('App', () => {
-// //   // Render the app component
-// //   const test = shallow(<App />); 
-// //   expect(test).toMatchSnapshot();
-// // });
-
-
-
-
-
-
-
-// // import React from 'react';
-// // import { render } from '@testing-library/react';
-// // // import App from './App';
-// // import ProjectInfo from '../pages/about'
-// // import ReactDOM from 'react-dom' 
-// // import { isTSAnyKeyword } from '@babel/types';
-
-
-// // it("simply renders without crashing", () =>{
-// //   const div = document.createElement("div");
-// //   ReactDOM.render(<ProjectInfo></ProjectInfo>, div)
-
-// // })
-
-// var assert = require('assert');
-// it('should return -1', function () {
-//   assert.equal([1, 2].indexOf(5), -1);
-// });

@@ -22,7 +22,7 @@ export default class RiskInstance extends Component {
   // risk-factor-statistics
   // 'sampleData.json'
   componentDidMount() {
-    axios.get(this.props.code).then(
+    axios.get("risk-factor-statistics/" + this.props.code).then(
       (res) => {
         const riskData = res.data;
         this.setState({ riskData });

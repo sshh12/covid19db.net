@@ -17,7 +17,7 @@ export default class CountryInstance extends Component {
 
   componentDidMount() {
     // Get request to countries API for country card data
-    axios.get(this.props.code).then((res) => {
+    axios.get("countries/" + this.props.code).then((res) => {
       const countryData = res.data;
       this.setState({ countryData });
     });

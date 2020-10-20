@@ -16,7 +16,7 @@ class CaseInstance extends Component {
   }
 
   componentDidMount() {
-    axios.get(this.props.code).then(
+    axios.get("case-statistics/" + this.props.code).then(
       (res) => {
         const caseData = res.data;
         this.setState({ caseData });

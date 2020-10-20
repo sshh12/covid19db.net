@@ -20,8 +20,8 @@ before_script:
   # Install Deps
   - wget https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip -O /tmp/chromedriver_linux64.zip
   - unzip /tmp/chromedriver_linux64.zip
-  - ls /tmp
-  - mv /tmp/chromedriver /bin/chromedriver
+  - ls /tmp && ls
+  - mv chromedriver /bin/chromedriver
   - apt-get update -qy
   - apt-get install -y nodejs npm
   - npm install -g yarn jest newman

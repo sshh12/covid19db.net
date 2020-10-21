@@ -49,7 +49,7 @@ docker-containers:
 	docker container ls -a
 
 format:
-	black -l 120 main.py test.py src/*.py
+	black -l 120 main.py test.py covid_app/*.py
 
 install-python-deps:
 	pip install -r requirements.txt
@@ -64,7 +64,7 @@ postman-tests:
 	docker run -it -v $(path)..:/app/test -w="/app/test"		\
 	--net postman-tests											\
 	--rm --name=$(test_container_name) $(image_name)			\
-	npx newman run Postman.json									\
+	npx newman run postman.tests.json							\
 	--env-var "apiUrl=$(container_name):$(flask_server_port)"
 	make docker-stop
 	docker network rm postman-tests

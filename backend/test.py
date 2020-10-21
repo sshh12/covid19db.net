@@ -1,4 +1,7 @@
 #!/usr/bin/python
+"""
+Unit tests for the backend.
+"""
 
 from unittest import main, TestCase
 from covid_app import const

@@ -1,30 +1,76 @@
-import React, { Component } from "react";
-import mapboxgl from "mapbox-gl";
+import React, { useRef, useEffect, useState, Fragment } from 'react';
+import mapboxgl from 'mapbox-gl';
+import { Button } from "antd";
+import ReactDOM from 'react-dom';
 
-export default class Map extends Component {
-  constructor(props) {
-    super(props);
-  }
+mapboxgl.accessToken ="pk.eyJ1Ijoic3NoaDEyIiwiYSI6ImNpcTVhNDQxYjAwM3FmaGtrYnl6czEwMGcifQ.eYETiDD8NqThLahLIBmjSQ";
 
-  componentDidMount() {
-    let { center, zoom } = this.props;
-    this.map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
+const Map = (props) => {
+  const mapContainerRef = useRef(null);
+
+  // Initialize map when component mounts
+  useEffect(() => {
+    let { center, zoom } = props;
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
       center: center,
-      zoom: zoom,
+      zoom: zoom
     });
-  }
 
-  render() {
-    let { width, height } = this.props;
-    return (
-      <div>
-        <div
-          style={{ width: width + "px", height: height + "px" }}
-          ref={(el) => (this.mapContainer = el)}
-        />
-      </div>
-    );
-  }
+    map.on('load', () => {
+      // Add a source for the state polygons.
+      map.addSource('countries', {
+        'type': 'geojson',
+        'data':'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson'
+      });
+
+      // Add a layer showing the state polygons.
+      map.addLayer({
+        'id': 'countries-layer',
+        'type': 'fill',
+        'source': 'countries',
+        'paint': {
+          'fill-color': 'rgba(0, 0, 0, 0)',
+          'fill-outline-color': 'rgba(0, 0, 0, 0)'
+        }
+      });
+
+      // When a click event occurs on a feature in the states layer, open a popup at the
+      // location of the click, with description HTML from its properties.
+      map.on('click', 'countries-layer', function (e) {
+        const placeholder = document.createElement('div');
+        ReactDOM.render(
+          <Fragment>
+            <h2>{e.features[0].properties.name}</h2>
+            <div><Button href={`/countries/${e.features[0].properties.iso_a3}`}>View Country</Button></div>
+            <Button href={`/case-statistics/${e.features[0].properties.iso_a3}`}>Cases</Button>
+            <Button href={`/risk-factor-statistics/${e.features[0].properties.iso_a3}`}>Risks</Button>            
+          </Fragment>
+,
+          placeholder
+        );
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setDOMContent(placeholder)
+          // .setHTML(e.features[0].properties.name)
+          .addTo(map);
+      });
+    });
+
+    // Clean up on unmount
+    return () => map.remove();
+  }, []);
+
+  let { width, height } = props;
+  return (
+    <div>
+      <div
+        style={{ width: width + "px", height: height + "px" }}
+        ref={mapContainerRef}
+      />
+    </div>
+  );
 }
+
+export default Map;

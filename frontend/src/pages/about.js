@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
 import { Card, Tab, Row, Col, ListGroup } from "react-bootstrap";
 
 const GITLAB_API_BASE = "https://gitlab.com/api/v4";
@@ -18,14 +17,14 @@ const GROUP_MEMBERS = [
     gitlab: "camd99",
     role: "Back-end Developer",
     bio: "Junior Computer Science Major from Katy, TX",
-    unitTests: 0,
+    unitTests: 34,
   },
   {
     name: "Yash Kakodkar",
     gitlab: "YashKakodkar",
     role: "Full Stack Developer",
     bio: "Junior Computer Science Major from Katy, TX",
-    unitTests: 0,
+    unitTests: 5,
   },
   {
     name: "Jeffrey Moulckers",
@@ -39,7 +38,7 @@ const GROUP_MEMBERS = [
     gitlab: "vassi_gianitsos",
     role: "Front-end Developer",
     bio: "Senior Computer Science Major from Flower Mound, TX",
-    unitTests: 0,
+    unitTests: 17,
   },
 ].sort((a, b) => Math.random() - 0.5);
 
@@ -144,14 +143,6 @@ export default class About extends Component {
         >
           About
         </h1>
-        {/* <header className="App-header" style={{ minHeight: "10rem" }}>
-          <h1> About Page </h1>
-          <LinkContainer className="App-link" to="/">
-            <Button variant="outline-secondary">
-              Click here to go back to the main page
-            </Button>
-          </LinkContainer>
-        </header> */}
         <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
           Our COVID-19 Database site allows users to gather quick statistics on
           the coronavirus in terms of country, cases, and potential risks. This

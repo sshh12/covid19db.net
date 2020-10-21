@@ -10,5 +10,6 @@
     "editor.tabSize": 2
   },
   "python.linting.pylintUseMinimalCheckers": false,
-  "editor.showUnused": true
+  "editor.showUnused": true,
+  "python.pythonPath": "/usr/local/bin/python3"
 }

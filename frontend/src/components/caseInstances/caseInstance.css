@@ -75,6 +75,7 @@
   padding: 10px;
   width: 237px;
   border-radius: 5px;
+  justify-content: left;
 }
 
 
@@ -82,6 +83,7 @@
   font-weight: 500;
   font-size: medium;
   color: #818181;
+  text-align: left;
 }
 
 .new-stats-data{
@@ -93,4 +95,5 @@
   font-weight: 500;
   font-size: small;
   color: #818181;
+  text-align: left;
 }

@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 import Routes from "./routes";
@@ -10,39 +11,41 @@ class App extends React.Component {
       <Fragment>
         <Menu mode="horizontal">
           <Menu.Item>
-            <a href="/" rel="noopener noreferrer" style={{ fontWeight: "bold", fontSize: 20 }}>
-              COVID-19 DB
-            </a>
+            <Link to="/">
+              <h2 style={{ fontweight: "bold", fontsize: 20 }}>
+                COVID-19 DB
+              </h2>
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <a href="/home" rel="noopener noreferrer">
+            <Link to="/home" style={{ fontweight: "bold", fontsize: 20 }}>
               Home
-            </a>
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <a href="/about" rel="noopener noreferrer">
+            <Link to="/about">
               About
-            </a>
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <a href="/countries" rel="noopener noreferrer">
+            <Link to="/countries">
               Countries
-            </a>
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <a href="/case-statistics" rel="noopener noreferrer">
+            <Link to="/case-statistics">
               Cases
-            </a>
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <a href="/risk-factor-statistics" rel="noopener noreferrer">
+            <Link to="/risk-factor-statistics">
               Risks
-            </a>
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <a href="globalNews" rel="noopener noreferrer">
+            <Link to="/globalnews">
               Global News
-            </a>
+            </Link>
           </Menu.Item>
           <Menu.Item>
             {/* TODO search bar here */}
@@ -56,7 +59,6 @@ class App extends React.Component {
         </Menu>
         <Routes />
       </Fragment>
-
     );
   }
 }

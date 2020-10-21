@@ -16,15 +16,19 @@ handlers:
     static_files: build/index.html
     secure: always
     upload: build/index.html
-  - url: /countries
+  - url: /countries(.*)
     static_files: build/index.html
     secure: always
     upload: build/index.html
-  - url: /cases
+  - url: /case-statistics(.*)
     static_files: build/index.html
     secure: always
     upload: build/index.html
-  - url: /risks
+  - url: /globalNews(.*)
+    static_files: build/index.html
+    secure: always
+    upload: build/index.html
+  - url: /risk-factor-statistics(.*)
     static_files: build/index.html
     secure: always
     upload: build/index.html

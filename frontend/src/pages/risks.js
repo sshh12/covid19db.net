@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from "react";
-import { Button, Col, Pagination, Row, Table } from "antd";
-import axios from 'axios';
+import React, { Component } from "react";
+import { Button, Table } from "antd";
+import axios from "../client";
+import { Link } from "react-router-dom";
 
 export default class Risks extends Component {
   numPerPage = 10; // this number simply does not mean anything and is not used here
@@ -10,7 +11,7 @@ export default class Risks extends Component {
     this.state = {
       riskData: [],
       firstEntryIndex: 0,
-      lastEntryIndex: this.numPerPage
+      lastEntryIndex: this.numPerPage,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -18,29 +19,26 @@ export default class Risks extends Component {
   // risk-factor-statistics
   // 'sampleData.json'
   componentDidMount() {
-    axios.get('risk-factor-statistics', {
-      params: {
-        attributes: "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities"
-      }
-    })
-      .then(res => {
-        const riskData = res.data;
-        this.setState({ riskData })
-      }, (error) => {
-        console.log("error: Promise not fulfilled")
+    axios
+      .get("risk-factor-statistics", {
+        params: {
+          attributes:
+            "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities",
+        },
       })
+      .then(
+        (res) => {
+          const riskData = res.data;
+          this.setState({ riskData });
+        },
+        (error) => {
+          console.log("error: Promise not fulfilled");
+        }
+      );
   }
 
-  // handleChange = value => {
-  //   console.log(value)
-  //   this.setState({
-  //     firstEntryIndex: (value - 1) * this.numPerPage,
-  //     lastEntryIndex: value * this.numPerPage
-  //   })
-  // }
-
   handleChange(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
+    console.log("params", pagination, filters, sorter, extra);
   }
 
   render() {
@@ -50,9 +48,7 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/countries/${country?.codes?.alpha3Code}`}>
-            {country?.name}
-          </a>
+          <Link to={`/countries/${country?.codes?.alpha3Code}`}>{country?.name}</Link>
         ),
         sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
       },
@@ -86,42 +82,20 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
-        )
+          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
+        ),
       },
       {
         title: "Explore Cases",
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
+          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
         ),
       },
     ];
 
-    const data = this.state.riskData
-    // get all risk entries in the current view
-    // const currentView = data && data.length > 0 && data
-    //   .slice(this.state.firstEntryIndex, this.state.lastEntryIndex)
-    //   .map(riskData => <Table columns={columns} dataSource={data} onChange={this.handleChange} />);
-    //   // .map(riskData => <div key={riskData.country}>| {riskData.populationDensity} | {riskData.gini}| </div>);
-
-    // console.log(this.state.firstEntryIndex, this.state.lastEntryIndex);
-    // const risks = data 
-    //   ? (<Fragment>
-    //     {currentView}
-    //     <Pagination
-    //       defaultCurrent={1} // default to first page
-    //       defaultPageSize={this.numPerPage} // default size of page
-    //       onChange={this.handleChange}
-    //       total={data.length} //total number of countries
-    //     />
-    //   </Fragment>)
-    //   : <div/>;
+    const data = this.state.riskData;
 
     return (
       <div className="App">
@@ -135,7 +109,12 @@ export default class Risks extends Component {
         >
           Risk Factors & Statistics{" "}
         </h1>
-        <Table style={{ margin: "0 5vw", outline: "1px solid lightgrey" }} columns={columns} dataSource={data} onChange={this.handleChange}></Table>
+        <Table
+          style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
+          columns={columns}
+          dataSource={data}
+          onChange={this.handleChange}
+        ></Table>
       </div>
     );
   }

@@ -22,3 +22,8 @@ app.config["RESTFUL_JSON"] = {"ensure_ascii": False}
 CORS(app)
 db = SQLAlchemy(app)
 api = Api(app)
+
+
+@app.route("/")
+def index():
+    return "api.covid19db.net"

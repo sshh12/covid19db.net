@@ -38,22 +38,3 @@
     transform: rotate(360deg);
   }
 }
-
-.totals {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin-right: 50px;
-}
-
-.totals-title{
-  font-weight: 500;
-  font-size: 1em;
-  color: #c20a0a;
-  text-align: right;
-}
-
-.totals-data{
-  font-weight: 700;
-  font-size: 2em;
-}

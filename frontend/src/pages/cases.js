@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-// import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Tag, Space } from "antd";
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
 
 export default class Cases extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -16,15 +15,17 @@ export default class Cases extends Component {
 
   componentDidMount() {
     // Get request to countries API for country card data
-    axios.get('case-statistics', {
-      params: {
-        attributes: "country,totals"
-      }
-    })
-      .then(res => {
+    axios
+      .get("case-statistics", {
+        params: {
+          attributes: "country,totals,new",
+        },
+      })
+      .then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
+            newCases: data.new.cases,
             totalCases: data.totals.cases,
             totalCases: data.totals.cases,
             totalDeaths: data.totals.deaths,
@@ -36,10 +37,9 @@ export default class Cases extends Component {
 
           return compiledCase;
         });
-        this.setState({ caseData })
+        this.setState({ caseData });
         console.log(caseData);
-      })
-
+      });
   }
 
   compileData(data) {
@@ -57,7 +57,6 @@ export default class Cases extends Component {
     return compiledCase;
   }
 
-
   render() {
     const columns = [
       {
@@ -65,15 +64,16 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          // <LinkContainer to={`/countries/${country.codes.alpha3Code}`}>
-          //   <a>{country.name}</a>
-          // </LinkContainer>
-
-          <a href={`/countries/${country.codes.alpha3Code}`}>
-            {country.name}
-          </a>
+          <Link to={`/countries/${country.codes.alpha3Code}`}>{country.name}</Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
+      },
+      {
+        title: "New Cases Today",
+        dataIndex: "newCases",
+        key: "newCases",
+        render: (population) => <>{population.toLocaleString()}</>,
+        sorter: (a, b) => a.newCases - b.newCases,
       },
       {
         title: "Total Cases",
@@ -108,9 +108,7 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
+          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
         ),
       },
       {
@@ -118,16 +116,13 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <a href={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </a>
-        )
+          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
+        ),
       },
     ];
 
     return (
       <div className="App">
-        {/* <header className="Case-header"> */}
         <h1
           style={{
             fontWeight: "800",
@@ -145,7 +140,6 @@ export default class Cases extends Component {
           dataSource={this.state.caseData}
           pagination={true}
         />
-        {/* </header> */}
       </div>
     );
   }

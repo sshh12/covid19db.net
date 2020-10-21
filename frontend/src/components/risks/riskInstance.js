@@ -12,6 +12,7 @@ export default class RiskInstance extends Component {
     super();
     this.state = {
       riskData: null,
+      caseData: null
     };
   }
   // https://api.covid19db.net/
@@ -28,15 +29,31 @@ export default class RiskInstance extends Component {
         console.log(error);
       }
     );
+
+    axios.get("case-statistics/" + this.props.code, {
+      params: {
+        attributes: "new",
+      },
+    }).then(
+      (res) => {
+        const caseData = res.data;
+        this.setState({ caseData });
+      },
+      (error) => {
+        console.log("error: promise not fulfilled");
+        console.log(error);
+      }
+    );
   }
 
   render() {
     const data = this.state.riskData;
+    const caseData = this.state.caseData;
     console.log(this.props.code);
-    if (!data) {
+    if (!data || !caseData) {
       return <div />;
     }
-    console.log(data);
+    const activeCases = caseData.new.active;
 
     const {
       country,
@@ -68,11 +85,13 @@ export default class RiskInstance extends Component {
             Risk Factors in {country?.name} ({country?.codes?.alpha3Code})
           </h1>
           <h3>{country?.name}</h3>
+          <span><h5 style={{display: "inline"}}>Risk Level: </h5><h5 style={{ display: "inline", color: `${activeCases > 500 ? "red" : "orange"}`}}>{activeCases > 500 ? "High" : "Medium"}</h5></span>
           <div
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "start",
+              marginTop: "30px"
             }}
           >
             <BigStat
@@ -93,7 +112,7 @@ export default class RiskInstance extends Component {
               avg={`$${Agg.gdpPerCapita.toLocaleString()}`}
             />
           </div>
-          <div style={{ marginTop: "80px" }}>
+          <div style={{ marginTop: "10px" }}>
             <div id="demogr-factor-title-div">
               <h2 id="subtitle">Demographic Risk Factors</h2>
             </div>

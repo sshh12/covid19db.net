@@ -20,4 +20,6 @@ exports[`Render Pages Country 1`] = `ShallowWrapper {}`;
 
 exports[`Render Pages Global News 1`] = `ShallowWrapper {}`;
 
+exports[`Render Pages Main 1`] = `ShallowWrapper {}`;
+
 exports[`Render Pages Risk 1`] = `ShallowWrapper {}`;

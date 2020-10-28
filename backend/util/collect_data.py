@@ -51,16 +51,51 @@ import requests
 from requests.exceptions import HTTPError
 import const
 from newsapi import NewsApiClient
+from newsapi.newsapi_exception import NewsAPIException
 from newsapi import const as newsapi_const
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 DATA_PATH = os.path.join(DIR_PATH, "../data")
 
+# necessary to subvert the API call limit of NewsAPI
+class NewsAPI:
+    def __init__(self, keys):
+        self.keys = copy.copy(keys)
+        self.keys_iterator = iter(keys)
+        self.client = None
+        self.__switch_keys()
+
+    def __switch_keys(self):
+        print("Switching NewsAPI keys")
+        try:
+            next_key = next(self.keys_iterator)
+            self.client = NewsApiClient(api_key=next_key)
+        except StopIteration:
+            print("Exhausted all NewsAPI keys")
+            raise
+
+    def call(self, method_name, *args, **kwargs):
+        ret = None
+        while ret is None:
+            try:
+                method = getattr(self.client, method_name)
+                response = method(*args, **kwargs)
+                ret = response
+            except NewsAPIException:
+                self.__switch_keys()
+            except AttributeError:
+                print("Bad method_name provided to NewsAPI.call()")
+                raise
+        return ret
+
+
 """
-!!!    DON'T FORGET TO REMOVE API KEY BEFORE COMMITTING    !!!
+!!!    DON'T FORGET TO REMOVE API KEYS BEFORE COMMITTING    !!!
 """
-newsapi = NewsApiClient(api_key="")
+NEWSAPI_KEYS = (None,)
+newsapi = NewsAPI(NEWSAPI_KEYS)
+NEWS_SOURCES = frozenset({source["id"] for source in newsapi.call("get_sources")["sources"]})
 
 
 def create_directories():
@@ -147,13 +182,29 @@ def build_country(country_data):
     newsapi_response = None
     # some countries can call the top headlines endpoint
     if code_2 in newsapi_const.countries:
-        newsapi_response = newsapi.get_top_headlines(country=code_2, q="covid")["articles"]
+        newsapi_response = newsapi.call("get_top_headlines", country=code_2, q="covid")["articles"]
     # the rest will have to use the everything endpoint
     else:
-        newsapi_response = newsapi.get_everything(q=("covid " + country_data["name"]))["articles"]
-    # limit to 5 articles
-    if len(newsapi_response) > 5:
-        newsapi_response = newsapi_response[:5]
+        newsapi_response = newsapi.call("get_everything", q=("covid " + country_data["name"]))["articles"]
+    # clean up response
+    if newsapi_response is not None:
+        # prune duplicate and poor quality articles
+        seen_content = set()
+        indices_to_remove = []
+        for i in range(0, len(newsapi_response)):
+            article = newsapi_response[i]
+            if article["source"]["id"] not in NEWS_SOURCES:
+                indices_to_remove += [i]
+            elif article["content"] is not None:
+                if article["content"] in seen_content:
+                    indices_to_remove += [i]
+                else:
+                    seen_content.add(article["content"])
+        for i in reversed(indices_to_remove):
+            del newsapi_response[i]
+        # limit to 5 articles
+        if len(newsapi_response) > 5:
+            newsapi_response = newsapi_response[:5]
     country_data["news"] = newsapi_response
 
     # set sources to list of data sources
@@ -324,7 +375,7 @@ def collect_global_news():
     into DATA_DIR/global_news.json
     """
     print("Collecting global COVID-19 news")
-    response = newsapi.get_top_headlines(q="covid", language="en")["articles"]
+    response = newsapi.call("get_top_headlines", q="covid", language="en")["articles"]
     global_news_path = Path(DATA_PATH) / "global_news.json"
     json.dump(response, global_news_path.open(mode="w"))
 
@@ -366,8 +417,10 @@ def populate_directories():
     print("Successfully retrieved REST Countries dataset")
     print("Creating instance files")
     cnt = 0
-    for key in owid_data.keys():
-        alpha3_code = key
+    # limited to countries for which capital data was collected
+    capital_data_path = (Path(DIR_PATH) / "../capital_data").resolve()
+    for alpha3_dir in capital_data_path.iterdir():
+        alpha3_code = alpha3_dir.name
         # special cases for KOS and WRL
         if alpha3_code == "OWID_KOS":
             alpha3_code = "KOS"
@@ -388,11 +441,11 @@ def populate_directories():
             print(alpha3_code + " does not have a COVID-19 API entry")
             continue
         # replace country name with most common name
-        country_data["name"] = owid_data[key]["location"]
+        country_data["name"] = owid_data[alpha3_code]["location"]
         print(country_data["name"] + " (" + country_data["alpha3Code"] + ")")
         country_instance = build_country(copy.deepcopy(country_data))
-        rfs_instance = build_risk_factor_statistics(country_data, owid_data[key])
-        cs_instance = build_case_statistics(country_data, case_data, owid_data[key])
+        rfs_instance = build_risk_factor_statistics(country_data, owid_data[alpha3_code])
+        cs_instance = build_case_statistics(country_data, case_data, owid_data[alpha3_code])
         # write instances to json files
         # country file
         file = open(os.path.join(DATA_PATH, "countries/" + alpha3_code + ".json"), "w")

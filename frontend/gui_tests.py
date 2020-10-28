@@ -16,15 +16,17 @@ from selenium.webdriver.common.keys import Keys
 
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:3000")
+NO_SELENIUM_WINDOW = (os.environ.get("NO_SELENIUM_WINDOW", "true").lower() == "true")
 
 
 class TestCovidDBGUI(unittest.TestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
-        options.add_argument("--disable-extensions")
-        options.add_argument("--headless")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
+        if NO_SELENIUM_WINDOW:
+            options.add_argument("--disable-extensions")
+            options.add_argument("--headless")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         # increase if pages are taking too long to load
         self.driver.implicitly_wait(3)
@@ -111,10 +113,12 @@ class TestCovidDBGUI(unittest.TestCase):
 
 if __name__ == "__main__":
     try:
+        # For linux headless only.
+        # OK to fail & ignore when running in development.
         from pyvirtualdisplay import Display
 
         display = Display(visible=0, size=(800, 800))
         display.start()
-    except Exception as e:
-        print(e)
+    except ImportError as e:
+        print('pyvirtualdisplay not found, no virtual display will be created.')
     unittest.main()

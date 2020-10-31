@@ -151,9 +151,32 @@ export default class Countries extends Component {
 
   render() {
     const data = this.state.countriesCardData;
-    // Get all loaded country cards in the current view          
-
-    const currentViewCards = this.state.currentViewCards;
+    // Get all loaded country cards in the current view
+    var currentViewCards =
+      data &&
+      data.length > 0 &&
+      data
+        .sort((a, b) => {
+          switch(this.state.sortBy){
+            case this.SORT_TYPES.NAME:
+              return a.name.localeCompare(b.name)
+            case this.SORT_TYPES.ALPHA3:
+              return a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
+            case this.SORT_TYPES.ALPHA2:
+              return a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
+            case this.SORT_TYPES.POPULATION:
+              return a.population - b.population
+            case this.SORT_TYPES.NUM_CASES:
+              return a.population - b.population
+          }
+        })
+        .slice(this.state.firstCardIndex, this.state.lastCardIndex)
+      console.log(currentViewCards)
+      currentViewCards = currentViewCards?.map((cardData) => (
+          <Col>
+            <CountryCard key={cardData.codes.alpha3Code} data={cardData} />
+          </Col>
+        ));
     // Form model view if data has been loaded
     const pagination = currentViewCards && this.state.filteredCountries ? (
       <Pagination

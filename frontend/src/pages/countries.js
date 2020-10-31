@@ -6,6 +6,14 @@ import "../components/country/countryInstance.css";
 import CountryCard from "../components/country/countryCard.js";
 
 export default class Countries extends Component {
+  SORT_TYPES = {
+    NAME: 1,
+    NUM_CASES: 2,
+    POPULATION: 3,
+    ALPHA3: 4,
+    ALPHA2: 5,
+  };
+
   constructor() {
     super();
     this.state = {
@@ -13,6 +21,7 @@ export default class Countries extends Component {
       firstCardIndex: 0,
       lastCardIndex: 20,
       numPerPage: 20,
+      sortBy: this.SORT_TYPES.NAME,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -51,26 +60,39 @@ export default class Countries extends Component {
     console.log(this.state.lastCardIndex);
 
     const data = this.state.countriesCardData;
-
     // Get all loaded country cards in the current view
-    const currentViewCards =
+    var currentViewCards =
       data &&
       data.length > 0 &&
       data
+        .sort((a, b) => {
+          switch(this.state.sortBy){
+            case this.SORT_TYPES.NAME:
+              return a.name.localeCompare(b.name)
+            case this.SORT_TYPES.ALPHA3:
+              return a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
+            case this.SORT_TYPES.ALPHA2:
+              return a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
+            case this.SORT_TYPES.POPULATION:
+              return a.population - b.population
+            case this.SORT_TYPES.NUM_CASES:
+              return a.population - b.population
+          }
+        })
         .slice(this.state.firstCardIndex, this.state.lastCardIndex)
-        .map((cardData) => (
+      console.log(currentViewCards)
+      currentViewCards = currentViewCards?.map((cardData) => (
           <Col>
             <CountryCard key={cardData.codes.alpha3Code} data={cardData} />
           </Col>
         ));
-
     // Form model view if data has been loaded
     const pagination = data ? (
       <Pagination
         defaultCurrent={1} // default to first page
         defaultPageSize={this.state.numPerPage} // default size of page
         pageSizeOptions={["10", "20", "50", "100"]}
-        onChange={this.handleChange}
+        onChange={this.changeNumDisplayed}
         total={data.length} //total number of countries
       />
     ) : (

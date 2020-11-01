@@ -36,19 +36,27 @@ export default class Main extends Component {
           <h1>Global Statistics</h1>
           <div className="totals">
             <h2 className="totals-title">Total Cases</h2>
-            <h2 className="totals-data">{data.totals.cases}</h2>
+            <h2 className="totals-data">
+              {data.totals.cases?.toLocaleString()}
+            </h2>
           </div>
           <div className="totals">
             <h2 className="totals-title">Total Deaths</h2>
-            <h2 className="totals-data">{data.totals.deaths}</h2>
+            <h2 className="totals-data">
+              {data.totals.deaths?.toLocaleString()}
+            </h2>
           </div>
           <div className="totals">
             <h2 className="totals-title">Total Recovered</h2>
-            <h2 className="totals-data">{data.totals.recovered}</h2>
+            <h2 className="totals-data">
+              {data.totals.recovered?.toLocaleString()}
+            </h2>
           </div>
           <div className="totals">
             <h2 className="totals-title">Total Active</h2>
-            <h2 className="totals-data">{data.totals.active}</h2>
+            <h2 className="totals-data">
+              {data.totals.active?.toLocaleString()}
+            </h2>
           </div>
         </div>
         <div style={{ flex: 3 }}>

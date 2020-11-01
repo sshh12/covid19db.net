@@ -24,7 +24,7 @@ export default class CountryCard extends Component {
       "Code: " +
       code +
       ", Population: " +
-      pop +
+      pop.toLocaleString() +
       ", Capital: " +
       capital +
       ", languages: " +

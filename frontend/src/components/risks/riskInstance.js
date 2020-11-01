@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Map from "../map";
 import { BigStat, DemographicFactor, HealthFactor } from "./riskComponents";
 import { Link } from "react-router-dom";
-import { Button } from 'antd';
+import { Button } from "antd";
 import axios from "../../client";
 
 import Agg from "./data/Aggregate.json";
@@ -12,7 +12,7 @@ export default class RiskInstance extends Component {
     super();
     this.state = {
       riskData: null,
-      caseData: null
+      caseData: null,
     };
   }
   // https://api.covid19db.net/
@@ -30,20 +30,22 @@ export default class RiskInstance extends Component {
       }
     );
 
-    axios.get("case-statistics/" + this.props.code, {
-      params: {
-        attributes: "new",
-      },
-    }).then(
-      (res) => {
-        const caseData = res.data;
-        this.setState({ caseData });
-      },
-      (error) => {
-        console.log("error: promise not fulfilled");
-        console.log(error);
-      }
-    );
+    axios
+      .get("case-statistics/" + this.props.code, {
+        params: {
+          attributes: "new",
+        },
+      })
+      .then(
+        (res) => {
+          const caseData = res.data;
+          this.setState({ caseData });
+        },
+        (error) => {
+          console.log("error: promise not fulfilled");
+          console.log(error);
+        }
+      );
   }
 
   render() {
@@ -85,13 +87,23 @@ export default class RiskInstance extends Component {
             Risk Factors in {country?.name} ({country?.codes?.alpha3Code})
           </h1>
           <h3>{country?.name}</h3>
-          <span><h5 style={{display: "inline"}}>Risk Level: </h5><h5 style={{ display: "inline", color: `${activeCases > 500 ? "red" : "orange"}`}}>{activeCases > 500 ? "High" : "Medium"}</h5></span>
+          <span>
+            <h5 style={{ display: "inline" }}>Risk Level: </h5>
+            <h5
+              style={{
+                display: "inline",
+                color: `${activeCases > 500 ? "red" : "orange"}`,
+              }}
+            >
+              {activeCases > 500 ? "High" : "Medium"}
+            </h5>
+          </span>
           <div
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "start",
-              marginTop: "30px"
+              marginTop: "30px",
             }}
           >
             <BigStat
@@ -109,7 +121,7 @@ export default class RiskInstance extends Component {
               prefix="$"
               data={`${gdpPerCapita?.toLocaleString()}`}
               suffix="/person"
-              avg={`$${Agg.gdpPerCapita.toLocaleString()}`}
+              avg={`$${Agg.gdpPerCapita?.toLocaleString()}`}
             />
           </div>
           <div style={{ marginTop: "10px" }}>

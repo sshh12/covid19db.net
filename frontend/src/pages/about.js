@@ -40,7 +40,7 @@ const GROUP_MEMBERS = [
     bio: "Senior Computer Science Major from Flower Mound, TX",
     unitTests: 17,
   },
-].sort((a, b) => Math.random() - 0.5);
+];
 
 const TOOLS = [
   {
@@ -232,7 +232,7 @@ function ProjectInfo() {
               <Tab.Pane eventKey="#tools" style={{ textAlign: "left" }}>
                 <ul className="list-unstyled">
                   {TOOLS.map((tool) => (
-                    <li>
+                    <li key={tool.url}>
                       <a href={tool.url}>{tool.name}</a> - {tool.desc}
                     </li>
                   ))}
@@ -247,7 +247,7 @@ function ProjectInfo() {
                 format (<code>.json</code> in this case).
                 <ul className="list-unstyled">
                   {DATA_SOURCES.map((url) => (
-                    <li>
+                    <li key={url}>
                       <a href={url}>{url}</a>
                     </li>
                   ))}

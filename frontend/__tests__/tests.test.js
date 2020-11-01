@@ -1,9 +1,26 @@
 import React from "react";
-import { shallow } from "enzyme";
+import renderer from "react-test-renderer";
+
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+let shallow = (x) => renderer.create(x).toJSON();
 
 jest.mock("mapbox-gl/dist/mapbox-gl", () => ({
   Map: () => ({}),
 }));
+
 import App from "../src/app";
 import CountryInstance from "../src/components/country/countryInstance";
 import RiskInstance from "../src/components/risks/riskInstance";
@@ -28,10 +45,9 @@ import {
   AllNews,
 } from "../src/components/country/countryComponents";
 
-const dummyData = {};
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve(dummyData),
+    json: () => Promise.resolve({}),
   })
 );
 
@@ -71,19 +87,9 @@ describe("Render Pages", () => {
 
 describe("Render Components", () => {
   // Country Components
-  test("Country: Country Card", () => {
-    // Render the Demoinstance component
-    const test = shallow(<CountryCard />);
-    expect(test).toMatchSnapshot();
-  });
   test("Country: General Info", () => {
     // Render the Demoinstance component
     const test = shallow(<GeneralInfo />);
-    expect(test).toMatchSnapshot();
-  });
-  test("Country: Get Image", () => {
-    // Render the Demoinstance component
-    const test = shallow(<GetImage />);
     expect(test).toMatchSnapshot();
   });
   test("Country: News", () => {

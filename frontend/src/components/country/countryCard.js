@@ -9,6 +9,9 @@ const { Content } = Layout;
 
 export default class CountryCard extends Component {
   allLanguages(myList) {
+    if (!myList) {
+      return "";
+    }
     var str = myList[0].name;
     for (var i = 1; i < myList.length; i++) {
       str = str + ", " + myList[i].name;
@@ -30,18 +33,12 @@ export default class CountryCard extends Component {
   }
 
   render() {
-    const {
-      capital,
-      codes,
-      flag,
-      languages,
-      name,
-      population,
-    } = this.props.data;
+    const { capital, codes, flag, languages, name, population } =
+      this.props.data || {};
     return (
       <Layout style={{ height: 360, width: 300, border: "1px grey" }}>
         <Content style={{ height: 310 }}>
-          <Link to={`/countries/${codes.alpha3Code}`}>
+          <Link to={`/countries/${codes?.alpha3Code}`}>
             <Card
               hoverable
               cover={
@@ -56,10 +53,10 @@ export default class CountryCard extends Component {
               <Meta
                 title={name}
                 description={this.format(
-                  codes.alpha3Code,
+                  codes?.alpha3Code,
                   this.allLanguages(languages),
                   population,
-                  capital.name
+                  capital?.name
                 )}
               />
             </Card>
@@ -68,10 +65,10 @@ export default class CountryCard extends Component {
         <Content style={{ height: 50, backgroundColor: "white" }}>
           <Row>
             <Col span={12}>
-              <Link to={`/case-statistics/${codes.alpha3Code}`}>Cases</Link>
+              <Link to={`/case-statistics/${codes?.alpha3Code}`}>Cases</Link>
             </Col>
             <Col span={12}>
-              <Link to={`/risk-factor-statistics/${codes.alpha3Code}`}>
+              <Link to={`/risk-factor-statistics/${codes?.alpha3Code}`}>
                 Risks
               </Link>
             </Col>

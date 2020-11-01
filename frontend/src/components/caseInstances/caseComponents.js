@@ -6,7 +6,7 @@ function Totals(props) {
   return (
     <div className="totals">
       <h2 className="totals-title">{props.title}</h2>
-      <h2 className="totals-data">{props.data.toLocaleString()}</h2>
+      <h2 className="totals-data">{props.data?.toLocaleString()}</h2>
     </div>
   );
 }
@@ -15,7 +15,7 @@ function NewStats(props) {
   return (
     <div className="new-stats">
       <h2 className="new-stats-title">{props.title}</h2>
-      <h2 className="new-stats-data">{props.data.toLocaleString()}</h2>
+      <h2 className="new-stats-data">{props.data?.toLocaleString()}</h2>
       <h2 className="new-stats-title">{props.yesterday} from yesterday</h2>
     </div>
   );

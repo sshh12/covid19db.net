@@ -37,25 +37,25 @@ export default class Main extends Component {
           <div className="totals">
             <h2 className="totals-title">Total Cases</h2>
             <h2 className="totals-data">
-              {data.totals.cases.toLocaleString()}
+              {data.totals.cases?.toLocaleString()}
             </h2>
           </div>
           <div className="totals">
             <h2 className="totals-title">Total Deaths</h2>
             <h2 className="totals-data">
-              {data.totals.deaths.toLocaleString()}
+              {data.totals.deaths?.toLocaleString()}
             </h2>
           </div>
           <div className="totals">
             <h2 className="totals-title">Total Recovered</h2>
             <h2 className="totals-data">
-              {data.totals.recovered.toLocaleString()}
+              {data.totals.recovered?.toLocaleString()}
             </h2>
           </div>
           <div className="totals">
             <h2 className="totals-title">Total Active</h2>
             <h2 className="totals-data">
-              {data.totals.active.toLocaleString()}
+              {data.totals.active?.toLocaleString()}
             </h2>
           </div>
         </div>

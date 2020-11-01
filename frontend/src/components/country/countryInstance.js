@@ -85,7 +85,7 @@ export default class CountryInstance extends Component {
             >
               <GeneralInfo
                 title="Population"
-                data={population.toLocaleString()}
+                data={population?.toLocaleString()}
               />
               <GeneralInfo title="Currency" data={currencies[0].code} />
               <GeneralInfo title="Longitude" data={location.lng} />

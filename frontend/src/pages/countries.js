@@ -9,6 +9,8 @@ const { Option, OptGroup } = Select;
 
 const { Option, OptGroup } = Select;
 
+const { Option, OptGroup } = Select;
+
 export default class Countries extends Component {
   SORT_TYPES = {
     NAME: 1,

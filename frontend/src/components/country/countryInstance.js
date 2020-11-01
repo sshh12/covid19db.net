@@ -83,7 +83,10 @@ export default class CountryInstance extends Component {
                 justifyContent: "left",
               }}
             >
-              <GeneralInfo title="Population" data={population} />
+              <GeneralInfo
+                title="Population"
+                data={population.toLocaleString()}
+              />
               <GeneralInfo title="Currency" data={currencies[0].code} />
               <GeneralInfo title="Longitude" data={location.lng} />
               <GeneralInfo title="Latitude" data={location.lat} />

@@ -34,21 +34,18 @@ export default class Main extends Component {
 
     return (
       <div className="App" style={{ display: "flex", flexDirection: "column"}}>
-        <h1 className="global-totals-title">Coronavirus is bad. Cases are rising. We're here to organize data. Please replace this crappy text.</h1>
-        <div style={{ flex: 1, alignContent:'center'}}>
-          <h1 className="global-totals-title">Global Statistics</h1>
-          <div style={{ display: "flex", flexDirection: "row", marginLeft: 50}}>
-            <TotalStats title="Total Cases" data={data.totals.cases}/>
-            <TotalStats title="Total Deaths" data={data.totals.deaths}/>
-            <TotalStats title="Total Recovered" data={data.totals.recovered}/>
-            <TotalStats title="Total Active" data={data.totals.active}/>
-          </div>
+        <h1 style={{paddingTop:20, paddingBottom: 40}} className="main-text">Coronavirus sucks. Maybe this can help :)</h1>
+        <div style={{ flex: 1, display: "flex", flexDirection: "row", justifyContent: 'center', marginTop: 5, marginBottom: 5}}>
+          <TotalStats title="Total Global Cases" data={data.totals.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/>
+          <TotalStats title="Total Global Deaths" data={data.totals.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/>
+          <TotalStats title="Total Global Recoveries" data={data.totals.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/>
+          <TotalStats title="Total Global Active" data={data.totals.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/>
         </div>
         <div style={{ flex: 3 }}>
           <Map
             center={[15, 30]}
             zoom={1.95}
-            height={window.innerHeight - 69 + (420 - 420)} // Perfect value to fit the map on the splash page... nice
+            height={window.innerHeight - 79 + (420 - 420)} // Perfect value to fit the map on the splash page... nice
             width={"100vw"}
           />
         </div>

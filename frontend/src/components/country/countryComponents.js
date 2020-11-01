@@ -25,7 +25,7 @@ function AllNews(news) {
         <Card
           hoverable
           style={{ width: 240 }}
-          cover={<img src={n.urlToImage} alt="Article image" />}
+          cover={<img src={n.urlToImage} alt="Article view" />}
           title={n.title}
         >
           <Meta title={n.author} description={n.description} />

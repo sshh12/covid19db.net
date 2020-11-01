@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 import Routes from "./routes";
@@ -9,52 +9,55 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-        <Menu mode="horizontal">
-          <Menu.Item>
+        <Menu mode="horizontal" theme="light" style={{backgroundColor:"#323776", paddingTop: 20, paddingLeft:40, paddingRight: 40, color:"white", borderBottomColor:"#323776"}}>
+          <Menu.Item className="ant-menu-horizontal">
             <Link to="/">
-              <h2 style={{ fontweight: "bold", fontsize: 20 }}>
+              <h2 style={{ fontWeight: 800, fontSize: 20, color:'white' }}>
                 COVID-19 DB
               </h2>
             </Link>
           </Menu.Item>
-          <Menu.Item>
-            <Link to="/home" style={{ fontweight: "bold", fontsize: 20 }}>
+          <Menu.Item className="ant-menu-horizontal">
+            <Link to="/home" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Home
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/about">
+            <Link to="/about" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               About
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/countries">
+            <Link to="/countries" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Countries
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/case-statistics">
+            <Link to="/case-statistics" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Cases
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/risk-factor-statistics">
+            <Link to="/risk-factor-statistics" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Risks
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/globalnews">
+            <Link to="/globalnews" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Global News
             </Link>
           </Menu.Item>
           <Menu.Item>
             {/* TODO search bar here */}
-            <Form>
-              <Form.Item style={{ marginTop: '25px' }}>
+            {/* <Form>
+              <Form.Item style={{ marginTop: '0px' }}>
                 <Input placeholder="Search bar not ready yet ... :(" />
                 <Button type="primary">Search</Button>
               </Form.Item>
-            </Form>
+            </Form> */}
+            <Link to="/search" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
+              Search
+            </Link>
           </Menu.Item>
         </Menu>
         <Routes />

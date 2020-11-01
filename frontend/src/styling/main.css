@@ -1,9 +1,10 @@
-.global-totals-title {
+.main-text {
   font-weight: 800;
-  font-size: 1.25em;
+  font-size: 1.5em;
   text-align: center;
   margin: 100;
-  background-color: aqua;
+  background-color:#323776;
+  color: white;
 }
 
 .totals {

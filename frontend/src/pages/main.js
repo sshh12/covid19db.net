@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Map from "../components/map";
 import axios from "../client";
+import {TotalStats} from './../components/mainComponents';
+import './../styling/main.css';
 
 export default class Main extends Component {
   constructor() {
@@ -71,3 +73,6 @@ export default class Main extends Component {
     );
   }
 }
+
+
+let style 

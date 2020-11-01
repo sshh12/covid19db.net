@@ -8,6 +8,12 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3NoaDEyIiwiYSI6ImNpcTVhNDQxYjAwM3FmaGtrYnl6czEwMGcifQ.eYETiDD8NqThLahLIBmjSQ";
 
+if (process.env.NODE_ENV === "production") {
+  window.console.error = () => {};
+  window.console.warn = () => {};
+  window.console.clear();
+}
+
 ReactDOM.render(
   <Router>
     <App />

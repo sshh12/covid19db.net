@@ -158,23 +158,33 @@ export default class Countries extends Component {
       data
         .sort((a, b) => {
           switch(this.state.sortBy){
-            case this.SORT_TYPES.NAME:
+            case this.SORT_TYPES.NAME_A:
               return a.name.localeCompare(b.name)
-            case this.SORT_TYPES.ALPHA3:
+            case this.SORT_TYPES.NAME_Z:
+              return b.name.localeCompare(a.name)
+            case this.SORT_TYPES.ALPHA3_A:
               return a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
-            case this.SORT_TYPES.ALPHA2:
+            case this.SORT_TYPES.ALPHA3_Z:
+              return b.codes.alpha3Code.localeCompare(a.codes.alpha3Code)
+            case this.SORT_TYPES.ALPHA2_A:
               return a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
-            case this.SORT_TYPES.POPULATION:
+            case this.SORT_TYPES.ALPHA2_Z:
+              return b.codes.alpha2Code.localeCompare(a.codes.alpha2Code)
+            case this.SORT_TYPES.POPULATION_LOW:
               return a.population - b.population
-            case this.SORT_TYPES.NUM_CASES:
+            case this.SORT_TYPES.POPULATION_HI:
+              return b.population - a.population
+            case this.SORT_TYPES.NUM_CASES_LOW:
               return a.population - b.population
+            case this.SORT_TYPES.NUM_CASES_HI:
+              return b.population - a.population
           }
         })
         .slice(this.state.firstCardIndex, this.state.lastCardIndex)
-      console.log(currentViewCards)
+
       currentViewCards = currentViewCards?.map((cardData) => (
-          <Col>
-            <CountryCard key={cardData.codes.alpha3Code} data={cardData} />
+          <Col key={cardData.codes.alpha3Code}>
+            <CountryCard data={cardData} />
           </Col>
         ));
     // Form model view if data has been loaded

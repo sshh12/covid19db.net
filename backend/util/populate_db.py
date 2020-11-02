@@ -164,6 +164,8 @@ def init_db():
     print("Dropping all tables")
     db.drop_all()
     print("Creating all tables")
+    # mappers for searching
+    db.configure_mappers()
     db.create_all()
 
 

@@ -4,8 +4,8 @@ import { Card, Col, Row } from "antd";
 import news from "../data/global-covid-news.json";
 
 const { Meta } = Card;
-const { articles } = news;
 
+// Helper function for creating a card component with article details
 function NewsCard(props) {
   const author = props.author != null ? props.author : undefined;
   return (
@@ -17,23 +17,25 @@ function NewsCard(props) {
           cover={<img src={props.img} alt="Article image" />}
           title={props.title}
         >
-          <Meta title={author} description={props.description} />
+          <Meta title={published.toLocaleString()} description={props.description} />
         </Card>
       </a>
     </Col>
   );
 }
 
+// Component class for presenting global COVID-19 news
 export default class GlobalNews extends Component {
   render() {
     const newsList = articles.map((a) => (
       <NewsCard
         key={a.url}
         title={a.title}
-        author={a.author}
+        published={a.publishedAt}
         link={a.url}
         img={a.urlToImage}
         description={a.description}
+        key={i}
       ></NewsCard>
     ));
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { Form, Button, Input } from 'antd';
 import './../styling/main.css';
 

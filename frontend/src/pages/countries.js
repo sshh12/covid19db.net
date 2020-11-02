@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Col, Pagination, Row, Select, Space } from "antd";
+import { Button, Col, Divider, Dropdown, Input, Pagination, Row, Select, Slider, Space } from "antd";
+import { DownOutlined } from '@ant-design/icons';
+
 import axios from "../client";
 
-import "../components/country/countryInstance.css";
+// import "../components/country/countryInstance.css";
 import CountryCard from "../components/country/countryCard.js";
 
 const { Option, OptGroup } = Select;
@@ -28,7 +30,7 @@ export default class Countries extends Component {
       firstCardIndex: 0,
       lastCardIndex: 20,
       numPerPage: 20,
-      sortBy: this.SORT_TYPES.NAME,
+      sortBy: this.SORT_TYPES.NAME_A,
     };
     this.changeNumDisplayed = this.changeNumDisplayed.bind(this);
     this.changeSort = this.changeSort.bind(this);
@@ -67,6 +69,11 @@ export default class Countries extends Component {
   createCountryGrid(countryCards) {
     return countryCards;
   }
+
+  handleChange(e) {
+    console.log(e.target.value);
+  }
+
 
   render() {
     const data = this.state.countriesCardData;
@@ -139,27 +146,47 @@ export default class Countries extends Component {
           Countries{" "}
         </h1>
         <Space className="country-display-header">
+          <div>Sort by:</div>
           <Select 
             style={{ width: 200, display: "inline-block", verticalAlign: "top"}} 
-            defaultValue="Sort Countries" 
+            defaultValue="Country Name" 
             onChange={this.changeSort}
             listHeight="auto"
           >  
-            <OptGroup label="Country">
-            <Option value={this.SORT_TYPES.NAME_A}>Country Name, A-Z</Option>
-            <Option value={this.SORT_TYPES.NAME_Z}>Country Name, Z-A</Option>
-              <Option value={this.SORT_TYPES.ALPHA2_A}>ISO Alpha 2 Code, A-Z</Option>
-              <Option value={this.SORT_TYPES.ALPHA2_Z}>ISO Alpha 2 Code, Z-A</Option>
-              <Option value={this.SORT_TYPES.ALPHA3_A}>ISO Alpha 3 Code, A-Z</Option>
-              <Option value={this.SORT_TYPES.ALPHA3_Z}>ISO Alpha 3 Code, Z-A</Option>
+            <OptGroup label="Name">
+              <Option value={this.SORT_TYPES.NAME_A}>Country Name</Option>
+              <Option value={this.SORT_TYPES.ALPHA2_A}>ISO Alpha 2 Code</Option>
+              <Option value={this.SORT_TYPES.ALPHA3_A}>ISO Alpha 3 Code</Option>
             </OptGroup>
             <OptGroup label="Statistics">
-            <Option value={this.SORT_TYPES.NUM_CASES_LOW}>Cases, Low-High</Option>
-            <Option value={this.SORT_TYPES.NUM_CASES_HI}>Cases, High-Low</Option>
-            <Option value={this.SORT_TYPES.POPULATION_LOW}>Population, Low-High</Option>
-            <Option value={this.SORT_TYPES.POPULATION_HI}>Population, High-Low</Option>
+              <Option value={this.SORT_TYPES.NUM_CASES_LOW}>Cases, Low-High</Option>
+              <Option value={this.SORT_TYPES.NUM_CASES_HI}>Cases, High-Low</Option>
+              <Option value={this.SORT_TYPES.POPULATION_LOW}>Population, Low-High</Option>
+              <Option value={this.SORT_TYPES.POPULATION_HI}>Population, High-Low</Option>
             </OptGroup>
           </Select>
+          <div>from</div>
+          <Input.Group>
+            <Input style={{ width: 40, textAlign: 'center' }} defaultValue="A" maxLength="1" onChange={this.handleChange}/>
+            <Input
+              style={{
+                width: 40,
+                borderLeft: 0,
+                borderRight: 0,
+                pointerEvents: 'none',
+              }}
+              placeholder="to"
+            />
+            <Input
+              style={{
+                width: 40,
+                textAlign: 'center',
+              }}
+              defaultValue="Z"
+              maxLength="1"
+            />
+          </Input.Group>
+          <Divider type="vertical" />
           {pagination}          
         </Space>
 

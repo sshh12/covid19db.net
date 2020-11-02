@@ -55,6 +55,7 @@ export default class GlobalNews extends Component {
 
     const newsList = this.state.globalNewsData.map((a, i) =>
       <NewsCard
+        key={a.url}
         title={a.title}
         published={a.publishedAt}
         link={a.url}

@@ -94,7 +94,9 @@ class Countries(db.Model):
         Retrieves all entries from the Countries table in the database, including only the given attributes.
         """
         ret = []
-        all_entries = Countries.query.options(load_only(*Countries.fix_attributes(attributes))).all()
+        all_entries = Countries.query.options(
+            load_only(*Countries.fix_attributes(attributes))
+        ).all()
         for entry in all_entries:
             ret += [entry.polished(attributes)]
         return ret
@@ -109,11 +111,23 @@ class Countries(db.Model):
         entry = None
         fixed_attr = Countries.fix_attributes(attributes)
         if id_type == const.Identifier.COUNTRY_NAME:
-            entry = Countries.query.filter_by(name=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                Countries.query.filter_by(name=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         elif id_type == const.Identifier.ALPHA2_CODE:
-            entry = Countries.query.filter_by(codes_alpha2_code=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                Countries.query.filter_by(codes_alpha2_code=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         elif id_type == const.Identifier.ALPHA3_CODE:
-            entry = Countries.query.filter_by(codes_alpha3_code=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                Countries.query.filter_by(codes_alpha3_code=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         if entry is not None:
             entry = entry.polished(attributes)
         return entry
@@ -175,7 +189,14 @@ class Countries(db.Model):
         return ret
 
     def __repr__(self):
-        return self.name + " (" + self.codes_alpha2_code + ", " + self.codes_alpha3_code + ")"
+        return (
+            self.name
+            + " ("
+            + self.codes_alpha2_code
+            + ", "
+            + self.codes_alpha3_code
+            + ")"
+        )
 
 
 class CaseStatistics(db.Model):
@@ -185,8 +206,12 @@ class CaseStatistics(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     # country
-    country_codes_alpha2_code = db.Column(db.String(2), unique=True, nullable=False)
-    country_codes_alpha3_code = db.Column(db.String(3), unique=True, nullable=False)
+    country_codes_alpha2_code = db.Column(
+        db.String(2), unique=True, nullable=False
+    )
+    country_codes_alpha3_code = db.Column(
+        db.String(3), unique=True, nullable=False
+    )
     country_name = db.Column(db.String, unique=True, nullable=False)
     # date
     date = db.Column(db.String, nullable=False)
@@ -246,7 +271,10 @@ class CaseStatistics(db.Model):
                 CaseStatistics.derivative_new_recovered,
             ],
             "history": [CaseStatistics.history],
-            "location": [CaseStatistics.location_lat, CaseStatistics.location_lng],
+            "location": [
+                CaseStatistics.location_lat,
+                CaseStatistics.location_lng,
+            ],
             "new": [
                 CaseStatistics.new_active,
                 CaseStatistics.new_cases,
@@ -288,7 +316,9 @@ class CaseStatistics(db.Model):
         Retrieves all entries from the Case Statistics table in the database, including only the given attributes.
         """
         ret = []
-        all_entries = CaseStatistics.query.options(load_only(*CaseStatistics.fix_attributes(attributes))).all()
+        all_entries = CaseStatistics.query.options(
+            load_only(*CaseStatistics.fix_attributes(attributes))
+        ).all()
         for entry in all_entries:
             ret += [entry.polished(attributes)]
         return ret
@@ -303,16 +333,24 @@ class CaseStatistics(db.Model):
         entry = None
         fixed_attr = CaseStatistics.fix_attributes(attributes)
         if id_type == const.Identifier.COUNTRY_NAME:
-            entry = CaseStatistics.query.filter_by(country_name=identifier).options(load_only(*fixed_attr)).first()
+            entry = (
+                CaseStatistics.query.filter_by(country_name=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
+            )
         elif id_type == const.Identifier.ALPHA2_CODE:
             entry = (
-                CaseStatistics.query.filter_by(country_codes_alpha2_code=identifier)
+                CaseStatistics.query.filter_by(
+                    country_codes_alpha2_code=identifier
+                )
                 .options(load_only(*fixed_attr))
                 .first()
             )
         elif id_type == const.Identifier.ALPHA3_CODE:
             entry = (
-                CaseStatistics.query.filter_by(country_codes_alpha3_code=identifier)
+                CaseStatistics.query.filter_by(
+                    country_codes_alpha3_code=identifier
+                )
                 .options(load_only(*fixed_attr))
                 .first()
             )
@@ -385,7 +423,13 @@ class CaseStatistics(db.Model):
         return ret
 
     def __repr__(self):
-        return self.country_codes_alpha3_code + " " + self.date + " " + str(self.totals_cases)
+        return (
+            self.country_codes_alpha3_code
+            + " "
+            + self.date
+            + " "
+            + str(self.totals_cases)
+        )
 
 
 class RiskFactorStatistics(db.Model):
@@ -401,8 +445,12 @@ class RiskFactorStatistics(db.Model):
     # cardiovascDeathRate
     cardiovascular_death_rate = db.Column(db.Float, nullable=True)
     # country
-    country_codes_alpha2_code = db.Column(db.String(2), unique=True, nullable=False)
-    country_codes_alpha3_code = db.Column(db.String(3), unique=True, nullable=False)
+    country_codes_alpha2_code = db.Column(
+        db.String(2), unique=True, nullable=False
+    )
+    country_codes_alpha3_code = db.Column(
+        db.String(3), unique=True, nullable=False
+    )
     country_name = db.Column(db.String, unique=True, nullable=False)
     # diabetesPrevalence
     diabetes_prevalence = db.Column(db.Float, nullable=True)
@@ -443,7 +491,9 @@ class RiskFactorStatistics(db.Model):
         attr_to_cols = {
             "aged65Older": [RiskFactorStatistics.aged_65_older],
             "aged70Older": [RiskFactorStatistics.aged_70_older],
-            "cardiovascDeathRate": [RiskFactorStatistics.cardiovascular_death_rate],
+            "cardiovascDeathRate": [
+                RiskFactorStatistics.cardiovascular_death_rate
+            ],
             "country": [
                 RiskFactorStatistics.country_name,
                 RiskFactorStatistics.country_codes_alpha2_code,
@@ -454,9 +504,15 @@ class RiskFactorStatistics(db.Model):
             "femaleSmokers": [RiskFactorStatistics.female_smokers],
             "gdpPerCapita": [RiskFactorStatistics.gdp_per_capita],
             "gini": [RiskFactorStatistics.gini],
-            "handwashingFacilities": [RiskFactorStatistics.handwashing_facilities],
-            "hospitalBedsPerThousand": [RiskFactorStatistics.hospital_beds_per_thousand],
-            "humanDevelopmentIndex": [RiskFactorStatistics.human_development_index],
+            "handwashingFacilities": [
+                RiskFactorStatistics.handwashing_facilities
+            ],
+            "hospitalBedsPerThousand": [
+                RiskFactorStatistics.hospital_beds_per_thousand
+            ],
+            "humanDevelopmentIndex": [
+                RiskFactorStatistics.human_development_index
+            ],
             "lifeExpectancy": [RiskFactorStatistics.life_expectancy],
             "location": [
                 RiskFactorStatistics.location_lat,
@@ -496,17 +552,23 @@ class RiskFactorStatistics(db.Model):
         fixed_attr = RiskFactorStatistics.fix_attributes(attributes)
         if id_type == const.Identifier.COUNTRY_NAME:
             entry = (
-                RiskFactorStatistics.query.filter_by(country_name=identifier).options(load_only(*fixed_attr)).first()
+                RiskFactorStatistics.query.filter_by(country_name=identifier)
+                .options(load_only(*fixed_attr))
+                .first()
             )
         elif id_type == const.Identifier.ALPHA2_CODE:
             entry = (
-                RiskFactorStatistics.query.filter_by(country_codes_alpha2_code=identifier)
+                RiskFactorStatistics.query.filter_by(
+                    country_codes_alpha2_code=identifier
+                )
                 .options(load_only(*fixed_attr))
                 .first()
             )
         elif id_type == const.Identifier.ALPHA3_CODE:
             entry = (
-                RiskFactorStatistics.query.filter_by(country_codes_alpha3_code=identifier)
+                RiskFactorStatistics.query.filter_by(
+                    country_codes_alpha3_code=identifier
+                )
                 .options(load_only(*fixed_attr))
                 .first()
             )
@@ -565,7 +627,13 @@ class RiskFactorStatistics(db.Model):
         return ret
 
     def __repr__(self):
-        return self.country_codes_alpha3_code + " " + str(self.gini) + " " + str(self.gdp_per_capita)
+        return (
+            self.country_codes_alpha3_code
+            + " "
+            + str(self.gini)
+            + " "
+            + str(self.gdp_per_capita)
+        )
 
 
 """

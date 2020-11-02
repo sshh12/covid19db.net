@@ -9,6 +9,7 @@ export default class Countries extends Component {
   constructor() {
     super();
     this.state = {
+      page: 1,
       countriesCardData: null,
       firstCardIndex: 0,
       lastCardIndex: 20,
@@ -33,8 +34,8 @@ export default class Countries extends Component {
 
   handleChange = (page, pageSize) => {
     // Update pagination for current page and cards
-    console.log(page, pageSize);
     this.setState({
+      page: page,
       numPerPage: pageSize,
       firstCardIndex: (page - 1) * pageSize,
       lastCardIndex: page * pageSize,
@@ -46,10 +47,6 @@ export default class Countries extends Component {
   }
 
   render() {
-    console.log(this.state.numPerPage);
-    console.log(this.state.firstCardIndex);
-    console.log(this.state.lastCardIndex);
-
     const data = this.state.countriesCardData;
 
     // Get all loaded country cards in the current view
@@ -65,10 +62,10 @@ export default class Countries extends Component {
         ));
 
     // Form model view if data has been loaded
-    const pagination = data ? (
+    const CustomPagination = data ? (
       <Pagination
-        defaultCurrent={1} // default to first page
-        defaultPageSize={this.state.numPerPage} // default size of page
+        current={this.state.page} // default to first page
+        pageSize={this.state.numPerPage} // default size of page
         pageSizeOptions={["10", "20", "50", "100"]}
         onChange={this.handleChange}
         total={data.length} //total number of countries
@@ -95,12 +92,13 @@ export default class Countries extends Component {
         >
           Countries{" "}
         </h1>
-        {pagination}
+        {CustomPagination}
         <div className="site-card-wrapper" style={styles.siteCardWrapper}>
           <Row gutter={16} justify="center">
             {this.createCountryGrid(currentViewCards)}
           </Row>
         </div>
+        {CustomPagination}
       </div>
     );
   }

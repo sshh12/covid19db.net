@@ -64,7 +64,9 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <Link to={`/countries/${country.codes.alpha3Code}`}>{country.name}</Link>
+          <Link to={`/countries/${country.codes.alpha3Code}`}>
+            {country.name}
+          </Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
@@ -108,7 +110,9 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
+          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
+            <Button>Explore</Button>
+          </Link>
         ),
       },
       {
@@ -116,7 +120,9 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}><Button>Explore</Button></Link>
+          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
+            <Button>Explore</Button>
+          </Link>
         ),
       },
     ];
@@ -138,7 +144,7 @@ export default class Cases extends Component {
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
           dataSource={this.state.caseData}
-          pagination={true}
+          pagination={{ position: ["bottomRight", "topRight"] }}
         />
       </div>
     );

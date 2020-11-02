@@ -178,7 +178,11 @@ export default class Countries extends Component {
     })
   }
 
+
   render() {
+    const data = this.state.countriesCardData;
+    // Get all loaded country cards in the current view          
+
     const currentViewCards = this.state.currentViewCards;
     // Form model view if data has been loaded
     const pagination = currentViewCards && this.state.filteredCountries ? (

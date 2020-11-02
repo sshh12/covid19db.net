@@ -5,7 +5,12 @@ Unit tests for the backend.
 
 from unittest import main, TestCase
 from covid_app import const
-from covid_app.routes import get_attributes, validate_attributes, validate_identifier, error_response
+from covid_app.routes import (
+    get_attributes,
+    validate_attributes,
+    validate_identifier,
+    error_response,
+)
 from covid_app.models import Countries, CaseStatistics, RiskFactorStatistics
 
 
@@ -35,21 +40,29 @@ class TestBackend(TestCase):
 
     def test_validate_attributes_1(self):
         attributes = frozenset({"location", "capital", "population"})
-        valid = frozenset({"location", "capital", "population", "area", "news", "timezones"})
+        valid = frozenset(
+            {"location", "capital", "population", "area", "news", "timezones"}
+        )
         self.assertTrue(validate_attributes(attributes, valid))
 
     def test_validate_attributes_2(self):
         attributes = frozenset({"location", "capital", "population"})
-        valid = frozenset({"location", "population", "area", "news", "timezones"})
+        valid = frozenset(
+            {"location", "population", "area", "news", "timezones"}
+        )
         self.assertFalse(validate_attributes(attributes, valid))
 
     def test_validate_attributes_3(self):
         attributes = frozenset({"location", "capital", "population"})
-        self.assertTrue(validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES))
+        self.assertTrue(
+            validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES)
+        )
 
     def test_validate_attributes_4(self):
         attributes = frozenset({"location", "capital", "population"})
-        self.assertFalse(validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES))
+        self.assertFalse(
+            validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES)
+        )
 
     # validate_identifier tests
 
@@ -60,7 +73,9 @@ class TestBackend(TestCase):
         self.assertIs(validate_identifier("SE"), const.Identifier.ALPHA2_CODE)
 
     def test_validate_identifier_3(self):
-        self.assertIs(validate_identifier("Sweden"), const.Identifier.COUNTRY_NAME)
+        self.assertIs(
+            validate_identifier("Sweden"), const.Identifier.COUNTRY_NAME
+        )
 
     def test_validate_identifier_4(self):
         self.assertIs(validate_identifier("SWEland"), None)
@@ -69,7 +84,9 @@ class TestBackend(TestCase):
 
     def test_error_response_1(self):
         result = error_response(200, "This isn't even an error???")
-        self.assertEqual(result, ({"error": "This isn't even an error???"}, 200))
+        self.assertEqual(
+            result, ({"error": "This isn't even an error???"}, 200)
+        )
 
     def test_error_response_2(self):
         result = error_response(404, "Resource doesn't exist")
@@ -105,7 +122,9 @@ class TestBackend(TestCase):
 
     def test_countries_retrieve_by_id_1(self):
         attributes = const.VALID_COUNTRIES_ATTRIBUTES
-        result = Countries.retrieve_by_id("USA", const.Identifier.ALPHA3_CODE, attributes)
+        result = Countries.retrieve_by_id(
+            "USA", const.Identifier.ALPHA3_CODE, attributes
+        )
         self.assertEqual(attributes, result.keys())
         self.assertEqual(result["name"], "United States")
         self.assertEqual(result["codes"]["alpha3Code"], "USA")
@@ -113,7 +132,9 @@ class TestBackend(TestCase):
 
     def test_countries_retrieve_by_id_2(self):
         attributes = const.VALID_COUNTRIES_ATTRIBUTES
-        result = Countries.retrieve_by_id("US", const.Identifier.ALPHA2_CODE, attributes)
+        result = Countries.retrieve_by_id(
+            "US", const.Identifier.ALPHA2_CODE, attributes
+        )
         self.assertEqual(attributes, result.keys())
         self.assertEqual(result["name"], "United States")
         self.assertEqual(result["codes"]["alpha3Code"], "USA")
@@ -121,7 +142,9 @@ class TestBackend(TestCase):
 
     def test_countries_retrieve_by_id_3(self):
         attributes = const.VALID_COUNTRIES_ATTRIBUTES
-        result = Countries.retrieve_by_id("United States", const.Identifier.COUNTRY_NAME, attributes)
+        result = Countries.retrieve_by_id(
+            "United States", const.Identifier.COUNTRY_NAME, attributes
+        )
         self.assertEqual(attributes, result.keys())
         self.assertEqual(result["name"], "United States")
         self.assertEqual(result["codes"]["alpha3Code"], "USA")
@@ -132,7 +155,9 @@ class TestBackend(TestCase):
         attributes.remove("location")
         attributes.remove("languages")
         attributes.remove("currencies")
-        result = Countries.retrieve_by_id("USA", const.Identifier.ALPHA3_CODE, attributes)
+        result = Countries.retrieve_by_id(
+            "USA", const.Identifier.ALPHA3_CODE, attributes
+        )
         self.assertEqual(attributes, result.keys())
         self.assertEqual(result["name"], "United States")
         self.assertEqual(result["codes"]["alpha3Code"], "USA")
@@ -140,7 +165,9 @@ class TestBackend(TestCase):
 
     def test_countries_retrieve_by_id_5(self):
         attributes = const.VALID_COUNTRIES_ATTRIBUTES
-        result = Countries.retrieve_by_id("USA", const.Identifier.ALPHA2_CODE, attributes)
+        result = Countries.retrieve_by_id(
+            "USA", const.Identifier.ALPHA2_CODE, attributes
+        )
         self.assertIs(result, None)
 
 

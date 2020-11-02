@@ -51,16 +51,53 @@ import requests
 from requests.exceptions import HTTPError
 import const
 from newsapi import NewsApiClient
+from newsapi.newsapi_exception import NewsAPIException
 from newsapi import const as newsapi_const
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 DATA_PATH = os.path.join(DIR_PATH, "../data")
 
+# necessary to subvert the API call limit of NewsAPI
+class NewsAPI:
+    def __init__(self, keys):
+        self.keys = copy.copy(keys)
+        self.keys_iterator = iter(keys)
+        self.client = None
+        self.__switch_keys()
+
+    def __switch_keys(self):
+        print("Switching NewsAPI keys")
+        try:
+            next_key = next(self.keys_iterator)
+            self.client = NewsApiClient(api_key=next_key)
+        except StopIteration:
+            print("Exhausted all NewsAPI keys")
+            raise
+
+    def call(self, method_name, *args, **kwargs):
+        ret = None
+        while ret is None:
+            try:
+                method = getattr(self.client, method_name)
+                response = method(*args, **kwargs)
+                ret = response
+            except NewsAPIException:
+                self.__switch_keys()
+            except AttributeError:
+                print("Bad method_name provided to NewsAPI.call()")
+                raise
+        return ret
+
+
 """
-!!!    DON'T FORGET TO REMOVE API KEY BEFORE COMMITTING    !!!
+!!!    DON'T FORGET TO REMOVE API KEYS BEFORE COMMITTING    !!!
 """
-newsapi = NewsApiClient(api_key="")
+NEWSAPI_KEYS = (None,)
+newsapi = NewsAPI(NEWSAPI_KEYS)
+NEWS_SOURCES = frozenset(
+    {source["id"] for source in newsapi.call("get_sources")["sources"]}
+)
 
 
 def create_directories():
@@ -72,9 +109,18 @@ def create_directories():
         os.mkdir(DATA_PATH)
     # Used to ensure that someone does not accidentally update the data when it already exists
     except FileExistsError:
-        print("Data directory already exists. Please delete it and re-run this script.")
+        print(
+            "Data directory already exists. Please delete it and re-run this script."
+        )
         raise
-    sub_dirs = frozenset({"countries", "case-statistics", "risk-factor-statistics", "images/capitals"})
+    sub_dirs = frozenset(
+        {
+            "countries",
+            "case-statistics",
+            "risk-factor-statistics",
+            "images/capitals",
+        }
+    )
     for sub_dir in sub_dirs:
         sub_dir_path = os.path.join(DATA_PATH, sub_dir)
         try:
@@ -126,7 +172,10 @@ def build_country(country_data):
     country_data.pop("cioc", None)
 
     # reorganize fields
-    country_data["codes"] = {"alpha2Code": country_data.pop("alpha2Code"), "alpha3Code": country_data.pop("alpha3Code")}
+    country_data["codes"] = {
+        "alpha2Code": country_data.pop("alpha2Code"),
+        "alpha3Code": country_data.pop("alpha3Code"),
+    }
     code = country_data["codes"]["alpha3Code"]
     code_2 = country_data["codes"]["alpha2Code"]
     # read capital data and insert into this country instance
@@ -136,10 +185,15 @@ def build_country(country_data):
     country_data["capital"] = {
         "name": country_data.pop("capital"),
         "location": {"lat": location["lat"], "lng": location["lng"]},
-        "img": const.OUR_API_URL + "/static/images/capitals/" + capital_info["image_name"],
+        "img": const.OUR_API_URL
+        + "/static/images/capitals/"
+        + capital_info["image_name"],
     }
     country_data["alternateNames"] = country_data.pop("altSpellings")
-    country_data["region"] = {"region": country_data.pop("region"), "subregion": country_data.pop("subregion")}
+    country_data["region"] = {
+        "region": country_data.pop("region"),
+        "subregion": country_data.pop("subregion"),
+    }
     latlng = country_data.pop("latlng")
     country_data["location"] = {"lat": latlng[0], "lng": latlng[1]}
 
@@ -147,13 +201,33 @@ def build_country(country_data):
     newsapi_response = None
     # some countries can call the top headlines endpoint
     if code_2 in newsapi_const.countries:
-        newsapi_response = newsapi.get_top_headlines(country=code_2, q="covid")["articles"]
+        newsapi_response = newsapi.call(
+            "get_top_headlines", country=code_2, q="covid"
+        )["articles"]
     # the rest will have to use the everything endpoint
     else:
-        newsapi_response = newsapi.get_everything(q=("covid " + country_data["name"]))["articles"]
-    # limit to 5 articles
-    if len(newsapi_response) > 5:
-        newsapi_response = newsapi_response[:5]
+        newsapi_response = newsapi.call(
+            "get_everything", q=("covid " + country_data["name"])
+        )["articles"]
+    # clean up response
+    if newsapi_response is not None:
+        # prune duplicate and poor quality articles
+        seen_content = set()
+        indices_to_remove = []
+        for i in range(0, len(newsapi_response)):
+            article = newsapi_response[i]
+            if article["source"]["id"] not in NEWS_SOURCES:
+                indices_to_remove += [i]
+            elif article["content"] is not None:
+                if article["content"] in seen_content:
+                    indices_to_remove += [i]
+                else:
+                    seen_content.add(article["content"])
+        for i in reversed(indices_to_remove):
+            del newsapi_response[i]
+        # limit to 5 articles
+        if len(newsapi_response) > 5:
+            newsapi_response = newsapi_response[:5]
     country_data["news"] = newsapi_response
 
     # set sources to list of data sources
@@ -162,13 +236,18 @@ def build_country(country_data):
             "name": "REST Countries",
             "url": const.REST_COUNTRIES_API_URL + "/alpha/" + code,
         },
-        {"name": "Google Places API", "url": "https://maps.googleapis.com/maps/api/place"},
+        {
+            "name": "Google Places API",
+            "url": "https://maps.googleapis.com/maps/api/place",
+        },
         {"name": "NewsAPI", "url": const.NEWS_API_URL},
     ]
 
     # move capital image into correct directory
     capital_img_path = capital_data_dir / capital_info["image_name"]
-    new_capital_img_path = Path(DATA_PATH) / "images/capitals" / capital_info["image_name"]
+    new_capital_img_path = (
+        Path(DATA_PATH) / "images/capitals" / capital_info["image_name"]
+    )
     os.rename(capital_img_path, new_capital_img_path)
 
     return country_data
@@ -185,10 +264,16 @@ def build_risk_factor_statistics(country_data, owid_data):
 
     # general identifier and location data
     rfs_data["country"] = {
-        "codes": {"alpha2Code": country_data["alpha2Code"], "alpha3Code": country_data["alpha3Code"]},
+        "codes": {
+            "alpha2Code": country_data["alpha2Code"],
+            "alpha3Code": country_data["alpha3Code"],
+        },
         "name": country_data["name"],
     }
-    rfs_data["location"] = {"lat": country_data["latlng"][0], "lng": country_data["latlng"][1]}
+    rfs_data["location"] = {
+        "lat": country_data["latlng"][0],
+        "lng": country_data["latlng"][1],
+    }
 
     # risk factor data
     rfs_data["populationDensity"] = get_field(owid_data, "population_density")
@@ -198,17 +283,30 @@ def build_risk_factor_statistics(country_data, owid_data):
     rfs_data["gdpPerCapita"] = get_field(owid_data, "gdp_per_capita")
     rfs_data["gini"] = get_field(country_data, "gini")
     rfs_data["extremePovertyRate"] = get_field(owid_data, "extreme_poverty")
-    rfs_data["cardiovascDeathRate"] = get_field(owid_data, "cardiovasc_death_rate")
+    rfs_data["cardiovascDeathRate"] = get_field(
+        owid_data, "cardiovasc_death_rate"
+    )
     rfs_data["diabetesPrevalence"] = get_field(owid_data, "diabetes_prevalence")
     rfs_data["femaleSmokers"] = get_field(owid_data, "female_smokers")
     rfs_data["maleSmokers"] = get_field(owid_data, "male_smokers")
-    rfs_data["hospitalBedsPerThousand"] = get_field(owid_data, "hospital_beds_per_thousand")
+    rfs_data["hospitalBedsPerThousand"] = get_field(
+        owid_data, "hospital_beds_per_thousand"
+    )
     rfs_data["lifeExpectancy"] = get_field(owid_data, "life_expectancy")
-    rfs_data["humanDevelopmentIndex"] = get_field(owid_data, "human_development_index")
-    rfs_data["handwashingFacilities"] = get_field(owid_data, "handwashing_facilities")
+    rfs_data["humanDevelopmentIndex"] = get_field(
+        owid_data, "human_development_index"
+    )
+    rfs_data["handwashingFacilities"] = get_field(
+        owid_data, "handwashing_facilities"
+    )
 
     rfs_data["sources"] = [
-        {"name": "REST Countries", "url": const.REST_COUNTRIES_API_URL + "/alpha/" + country_data["alpha3Code"]},
+        {
+            "name": "REST Countries",
+            "url": const.REST_COUNTRIES_API_URL
+            + "/alpha/"
+            + country_data["alpha3Code"],
+        },
         {"name": "OWID COVID-19 dataset", "url": const.OWID_DATASET_URL},
     ]
 
@@ -228,10 +326,16 @@ def build_case_statistics(country_data, case_data, owid_data):
     recent_reported_data = case_data[-9:]
     cs_data = dict()
     cs_data["country"] = {
-        "codes": {"alpha2Code": country_data["alpha2Code"], "alpha3Code": country_data["alpha3Code"]},
+        "codes": {
+            "alpha2Code": country_data["alpha2Code"],
+            "alpha3Code": country_data["alpha3Code"],
+        },
         "name": country_data["name"],
     }
-    cs_data["location"] = {"lat": country_data["latlng"][0], "lng": country_data["latlng"][1]}
+    cs_data["location"] = {
+        "lat": country_data["latlng"][0],
+        "lng": country_data["latlng"][1],
+    }
     cs_data["date"] = last_reported_data["Date"][:10]
     cs_data["totals"] = {
         "cases": last_reported_data["Confirmed"],
@@ -240,39 +344,54 @@ def build_case_statistics(country_data, case_data, owid_data):
         "active": last_reported_data["Active"],
     }
     cs_data["new"] = {
-        "cases": last_reported_data["Confirmed"] - recent_reported_data[-2]["Confirmed"],
-        "deaths": last_reported_data["Deaths"] - recent_reported_data[-2]["Deaths"],
-        "recovered": last_reported_data["Recovered"] - recent_reported_data[-2]["Recovered"],
-        "active": last_reported_data["Active"] - recent_reported_data[-2]["Active"],
+        "cases": last_reported_data["Confirmed"]
+        - recent_reported_data[-2]["Confirmed"],
+        "deaths": last_reported_data["Deaths"]
+        - recent_reported_data[-2]["Deaths"],
+        "recovered": last_reported_data["Recovered"]
+        - recent_reported_data[-2]["Recovered"],
+        "active": last_reported_data["Active"]
+        - recent_reported_data[-2]["Active"],
     }
     cs_data["smoothedNew"] = {
         "cases": owid_data["data"][-1]["new_cases_smoothed"],
         "deaths": owid_data["data"][-1]["new_deaths_smoothed"],
     }
     cs_data["percentages"] = {
-        "fatality": cs_data["totals"]["deaths"] / cs_data["totals"]["cases"] * 100,
+        "fatality": cs_data["totals"]["deaths"]
+        / cs_data["totals"]["cases"]
+        * 100,
         "infected": cs_data["totals"]["cases"] / total_population * 100,
-        "haveRecovered": cs_data["totals"]["recovered"] / cs_data["totals"]["cases"] * 100,
-        "active": cs_data["totals"]["active"] / cs_data["totals"]["cases"] * 100,
+        "haveRecovered": cs_data["totals"]["recovered"]
+        / cs_data["totals"]["cases"]
+        * 100,
+        "active": cs_data["totals"]["active"]
+        / cs_data["totals"]["cases"]
+        * 100,
     }
-    cs_data["derivativeNew"] = {"cases": 0, "deaths": 0, "recovered": 0, "active": 0}
+    cs_data["derivativeNew"] = {
+        "cases": 0,
+        "deaths": 0,
+        "recovered": 0,
+        "active": 0,
+    }
     # calculate 7-day rolling average of derivateNew
     for i in range(0, len(recent_reported_data) - 2):
         prev_data = recent_reported_data[i]
         cur_data = recent_reported_data[i + 1]
         next_data = recent_reported_data[i + 2]
-        cs_data["derivativeNew"]["cases"] += (next_data["Confirmed"] - cur_data["Confirmed"]) - (
-            cur_data["Confirmed"] - prev_data["Confirmed"]
-        )
-        cs_data["derivativeNew"]["deaths"] += (next_data["Deaths"] - cur_data["Deaths"]) - (
-            cur_data["Deaths"] - prev_data["Deaths"]
-        )
-        cs_data["derivativeNew"]["recovered"] += (next_data["Recovered"] - cur_data["Recovered"]) - (
-            cur_data["Recovered"] - prev_data["Recovered"]
-        )
-        cs_data["derivativeNew"]["active"] += (next_data["Active"] - cur_data["Active"]) - (
-            cur_data["Active"] - prev_data["Active"]
-        )
+        cs_data["derivativeNew"]["cases"] += (
+            next_data["Confirmed"] - cur_data["Confirmed"]
+        ) - (cur_data["Confirmed"] - prev_data["Confirmed"])
+        cs_data["derivativeNew"]["deaths"] += (
+            next_data["Deaths"] - cur_data["Deaths"]
+        ) - (cur_data["Deaths"] - prev_data["Deaths"])
+        cs_data["derivativeNew"]["recovered"] += (
+            next_data["Recovered"] - cur_data["Recovered"]
+        ) - (cur_data["Recovered"] - prev_data["Recovered"])
+        cs_data["derivativeNew"]["active"] += (
+            next_data["Active"] - cur_data["Active"]
+        ) - (cur_data["Active"] - prev_data["Active"])
     # len(recent_reported_data) - 2 is expected to be 7
     cs_data["derivativeNew"]["cases"] /= len(recent_reported_data) - 2
     cs_data["derivativeNew"]["deaths"] /= len(recent_reported_data) - 2
@@ -294,7 +413,9 @@ def build_case_statistics(country_data, case_data, owid_data):
             testing_data["totalTests"]["value"] = entry["total_tests"]
             testing_data["totalTests"]["date"] = date
         if "new_tests_smoothed" in entry:
-            testing_data["newTestsSmoothed"]["value"] = entry["new_tests_smoothed"]
+            testing_data["newTestsSmoothed"]["value"] = entry[
+                "new_tests_smoothed"
+            ]
             testing_data["newTestsSmoothed"]["date"] = date
         if "positive_rate" in entry:
             testing_data["positiveRate"]["value"] = entry["positive_rate"]
@@ -311,9 +432,19 @@ def build_case_statistics(country_data, case_data, owid_data):
         entry.pop("Lon", None)
         entry["Date"] = entry["Date"][:10]
     cs_data["sources"] = [
-        {"name": "REST Countries", "url": const.REST_COUNTRIES_API_URL + "/alpha/" + country_data["alpha3Code"]},
+        {
+            "name": "REST Countries",
+            "url": const.REST_COUNTRIES_API_URL
+            + "/alpha/"
+            + country_data["alpha3Code"],
+        },
         {"name": "OWID COVID-19 dataset", "url": const.OWID_DATASET_URL},
-        {"name": "COVID-19 API", "url": const.COVID19_API_URL + "/total/country/" + country_data["alpha3Code"]},
+        {
+            "name": "COVID-19 API",
+            "url": const.COVID19_API_URL
+            + "/total/country/"
+            + country_data["alpha3Code"],
+        },
     ]
     return cs_data
 
@@ -324,7 +455,9 @@ def collect_global_news():
     into DATA_DIR/global_news.json
     """
     print("Collecting global COVID-19 news")
-    response = newsapi.get_top_headlines(q="covid", language="en")["articles"]
+    response = newsapi.call("get_top_headlines", q="covid", language="en")[
+        "articles"
+    ]
     global_news_path = Path(DATA_PATH) / "global_news.json"
     json.dump(response, global_news_path.open(mode="w"))
 
@@ -341,13 +474,21 @@ def collect_global_stats():
         "cases": response["TotalConfirmed"],
         "deaths": response["TotalDeaths"],
         "recovered": response["TotalRecovered"],
-        "active": (response["TotalConfirmed"] - response["TotalDeaths"] - response["TotalRecovered"]),
+        "active": (
+            response["TotalConfirmed"]
+            - response["TotalDeaths"]
+            - response["TotalRecovered"]
+        ),
     }
     global_stats["new"] = {
         "cases": response["NewConfirmed"],
         "deaths": response["NewDeaths"],
         "recovered": response["NewRecovered"],
-        "active": (response["NewConfirmed"] - response["NewDeaths"] - response["NewRecovered"]),
+        "active": (
+            response["NewConfirmed"]
+            - response["NewDeaths"]
+            - response["NewRecovered"]
+        ),
     }
     global_stats_path = Path(DATA_PATH) / "global_stats.json"
     json.dump(global_stats, global_stats_path.open(mode="w"))
@@ -366,8 +507,10 @@ def populate_directories():
     print("Successfully retrieved REST Countries dataset")
     print("Creating instance files")
     cnt = 0
-    for key in owid_data.keys():
-        alpha3_code = key
+    # limited to countries for which capital data was collected
+    capital_data_path = (Path(DIR_PATH) / "../capital_data").resolve()
+    for alpha3_dir in capital_data_path.iterdir():
+        alpha3_code = alpha3_dir.name
         # special cases for KOS and WRL
         if alpha3_code == "OWID_KOS":
             alpha3_code = "KOS"
@@ -382,28 +525,45 @@ def populate_directories():
         if country_data is None:
             print(alpha3_code + " does not have a REST Countries entry")
             continue
-        case_data = get_request(const.COVID19_API_URL + "/total/country/" + alpha3_code, allow_error=True)
+        case_data = get_request(
+            const.COVID19_API_URL + "/total/country/" + alpha3_code,
+            allow_error=True,
+        )
         # continue if fail to retrieve case statistics data
         if case_data is None or len(case_data) < 9:
             print(alpha3_code + " does not have a COVID-19 API entry")
             continue
         # replace country name with most common name
-        country_data["name"] = owid_data[key]["location"]
+        country_data["name"] = owid_data[alpha3_code]["location"]
         print(country_data["name"] + " (" + country_data["alpha3Code"] + ")")
         country_instance = build_country(copy.deepcopy(country_data))
-        rfs_instance = build_risk_factor_statistics(country_data, owid_data[key])
-        cs_instance = build_case_statistics(country_data, case_data, owid_data[key])
+        rfs_instance = build_risk_factor_statistics(
+            country_data, owid_data[alpha3_code]
+        )
+        cs_instance = build_case_statistics(
+            country_data, case_data, owid_data[alpha3_code]
+        )
         # write instances to json files
         # country file
-        file = open(os.path.join(DATA_PATH, "countries/" + alpha3_code + ".json"), "w")
+        file = open(
+            os.path.join(DATA_PATH, "countries/" + alpha3_code + ".json"), "w"
+        )
         json.dump(country_instance, file, ensure_ascii=False, sort_keys=True)
         file.close()
         # risk factor statistics file
-        file = open(os.path.join(DATA_PATH, "risk-factor-statistics/") + alpha3_code + ".json", "w")
+        file = open(
+            os.path.join(DATA_PATH, "risk-factor-statistics/")
+            + alpha3_code
+            + ".json",
+            "w",
+        )
         json.dump(rfs_instance, file, ensure_ascii=False, sort_keys=True)
         file.close()
         # case statistics file
-        file = open(os.path.join(DATA_PATH, "case-statistics/") + alpha3_code + ".json", "w")
+        file = open(
+            os.path.join(DATA_PATH, "case-statistics/") + alpha3_code + ".json",
+            "w",
+        )
         json.dump(cs_instance, file, ensure_ascii=False, sort_keys=True)
         file.close()
         # sleep to avoid being rate limited

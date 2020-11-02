@@ -47,7 +47,9 @@ def create_directory():
     try:
         os.mkdir(CAPITAL_DATA_PATH)
     except FileExistsError:
-        print("Capital data directory already exists. DO NOT re-run this script if it is populated.")
+        print(
+            "Capital data directory already exists. DO NOT re-run this script if it is populated."
+        )
         raise
 
 
@@ -71,11 +73,25 @@ def iter_countries():
         input_type = "textquery"
         input_text = country_instance["capital"]["name"]
         location_bias = (
-            "point:" + str(country_instance["location"]["lat"]) + "," + str(country_instance["location"]["lng"])
+            "point:"
+            + str(country_instance["location"]["lat"])
+            + ","
+            + str(country_instance["location"]["lng"])
         )
         language = "en"
-        fields = ["formatted_address", "geometry", "icon", "name", "photos", "place_id", "plus_code", "types"]
-        response = gmaps.find_place(input_text, input_type, fields, location_bias, language)
+        fields = [
+            "formatted_address",
+            "geometry",
+            "icon",
+            "name",
+            "photos",
+            "place_id",
+            "plus_code",
+            "types",
+        ]
+        response = gmaps.find_place(
+            input_text, input_type, fields, location_bias, language
+        )
         # request capital image from Places API endpoint Places Photo
         photos = response["candidates"][0]["photos"]
         photo_name = None

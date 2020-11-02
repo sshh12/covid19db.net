@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Map from "../components/map";
 import axios from "../client";
+import {TotalStats} from './../components/mainComponents';
+import './../styling/main.css';
 
 export default class Main extends Component {
   constructor() {
@@ -31,39 +33,19 @@ export default class Main extends Component {
     }
 
     return (
-      <div className="App" style={{ display: "flex", flexDirection: "row" }}>
-        <div style={{ flex: 1 }}>
-          <h1>Global Statistics</h1>
-          <div className="totals">
-            <h2 className="totals-title">Total Cases</h2>
-            <h2 className="totals-data">
-              {data.totals.cases?.toLocaleString()}
-            </h2>
-          </div>
-          <div className="totals">
-            <h2 className="totals-title">Total Deaths</h2>
-            <h2 className="totals-data">
-              {data.totals.deaths?.toLocaleString()}
-            </h2>
-          </div>
-          <div className="totals">
-            <h2 className="totals-title">Total Recovered</h2>
-            <h2 className="totals-data">
-              {data.totals.recovered?.toLocaleString()}
-            </h2>
-          </div>
-          <div className="totals">
-            <h2 className="totals-title">Total Active</h2>
-            <h2 className="totals-data">
-              {data.totals.active?.toLocaleString()}
-            </h2>
-          </div>
+      <div className="App" style={{ display: "flex", flexDirection: "column"}}>
+        <h1 style={{paddingTop:20, paddingBottom: 40}} className="main-text">Coronavirus sucks. Maybe this can help :)</h1>
+        <div style={{ flex: 1, display: "flex", flexDirection: "row", justifyContent: 'center', marginTop: 5, marginBottom: 5}}>
+          <TotalStats title="Total Global Cases" data={data.totals.cases?.toLocaleString()}/>
+          <TotalStats title="Total Global Deaths" data={data.totals.deaths?.toLocaleString()}/>
+          <TotalStats title="Total Global Recoveries" data={data.totals.recovered?.toLocaleString()}/>
+          <TotalStats title="Total Global Active" data={data.totals.active?.toLocaleString()}/>
         </div>
         <div style={{ flex: 3 }}>
           <Map
             center={[15, 30]}
             zoom={1.95}
-            height={window.innerHeight - 69 + (420 - 420)} // Perfect value to fit the map on the splash page... nice
+            height={window.innerHeight - 79 + (420 - 420)} // Perfect value to fit the map on the splash page... nice
             width={"100vw"}
           />
         </div>
@@ -71,3 +53,6 @@ export default class Main extends Component {
     );
   }
 }
+
+
+let style 

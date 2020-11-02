@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { About, Cases, Countries, Main, Risks, GlobalNews, Search } from './pages/allPages'
+import { About, Cases, Countries, Main, Risks, GlobalNews, SiteSearch } from './pages/allPages'
 import RiskInstance from './components/risks/riskInstance';
 import CountryInstance from "./components/country/countryInstance";
 import CaseInstance from "./components/caseInstances/caseInstance";
@@ -27,8 +27,8 @@ function Routes() {
         const countryCode = props.match.params.countryCode;
         return <RiskInstance code={countryCode} />
       }}></Route>
-      <Route exact path="/globalNews"><GlobalNews /></Route>
-      <Route exact path="/search"><Search /></Route>
+      <Route exact path="/global-news"><GlobalNews /></Route>
+      <Route exact path="/search"><SiteSearch /></Route>
     </Switch>
   );
 }

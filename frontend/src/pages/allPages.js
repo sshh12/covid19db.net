@@ -4,7 +4,7 @@ import Countries from './countries';
 import Main from './main';
 import Risks from './risks';
 import GlobalNews from './globalNews';
-import Search from './search';
+import SiteSearch from './search';
 
 export {
     About,
@@ -13,5 +13,5 @@ export {
     Main,
     Risks,
     GlobalNews,
-    Search
+    SiteSearch
 }

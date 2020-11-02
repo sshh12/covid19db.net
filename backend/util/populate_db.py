@@ -10,12 +10,14 @@ import os
 import json
 from pathlib import Path
 
-BACKEND_PATH = (Path(os.path.dirname(os.path.realpath(__file__))) / "..").resolve()
+BACKEND_PATH = (
+    Path(os.path.dirname(os.path.realpath(__file__))) / ".."
+).resolve()
 sys.path.append(str(BACKEND_PATH))
 
-from src import db, secret
-from src.models import Countries, CaseStatistics, RiskFactorStatistics
-from src.models import GlobalNews, GlobalStats
+from covid_app import db
+from covid_app.models import Countries, CaseStatistics, RiskFactorStatistics
+from covid_app.models import GlobalNews, GlobalStats
 
 DATA_PATH = Path(BACKEND_PATH) / "data"
 
@@ -171,7 +173,9 @@ def populate_db():
     """
     init_db()
     print("Populating database")
-    print("Populating tables for countries, case statistics, and risk factor statistics")
+    print(
+        "Populating tables for countries, case statistics, and risk factor statistics"
+    )
     countries_dir = DATA_PATH / "countries"
     case_statistics_dir = DATA_PATH / "case-statistics"
     risk_factor_statistics_dir = DATA_PATH / "risk-factor-statistics"
@@ -180,9 +184,15 @@ def populate_db():
         file_name = country_path.name
         print(file_name[:3])
         # read instances of countries, case statistics, and risk factor statistics
-        countries_instance = json.load((countries_dir / file_name).open(mode="r"))
-        case_statistics_instance = json.load((case_statistics_dir / file_name).open(mode="r"))
-        risk_factor_statistics_instance = json.load((risk_factor_statistics_dir / file_name).open(mode="r"))
+        countries_instance = json.load(
+            (countries_dir / file_name).open(mode="r")
+        )
+        case_statistics_instance = json.load(
+            (case_statistics_dir / file_name).open(mode="r")
+        )
+        risk_factor_statistics_instance = json.load(
+            (risk_factor_statistics_dir / file_name).open(mode="r")
+        )
         # add the instances to database session
         add_countries_instance(countries_instance)
         add_case_stats_instance(case_statistics_instance)
@@ -193,8 +203,12 @@ def populate_db():
     # commit additions to database
     db.session.commit()
     print("Populating global news and global stats tables")
-    global_news_data = json.load((DATA_PATH / "global_news.json").open(mode="r"))
-    global_stats_data = json.load((DATA_PATH / "global_stats.json").open(mode="r"))
+    global_news_data = json.load(
+        (DATA_PATH / "global_news.json").open(mode="r")
+    )
+    global_stats_data = json.load(
+        (DATA_PATH / "global_stats.json").open(mode="r")
+    )
     add_global_news(global_news_data)
     add_global_stats(global_stats_data)
     print("Committing to database")

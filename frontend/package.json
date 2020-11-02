@@ -30,6 +30,7 @@
   "scripts": {
     "react": "react-scripts start",
     "flask": "cd ../backend && python main.py",
+    "snap": "jest --updateSnapshot",
     "branches": "git branch -vv -a",
     "log": "git log",
     "deploy:site": "gcloud app deploy",

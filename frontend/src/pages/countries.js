@@ -11,26 +11,26 @@ const { Option, OptGroup } = Select;
 
 export default class Countries extends Component {
   SORT_TYPES = {
-    NAME_A: 1,
-    NAME_Z: 2,
-    ALPHA3_A: 3,
-    ALPHA3_Z: 4,
-    ALPHA2_A: 5,
-    ALPHA2_Z: 6,
-    NUM_CASES_HI: 7,
-    NUM_CASES_LOW: 8,
-    POPULATION_HI: 9,
-    POPULATION_LOW: 10,
+    NAME: 1,
+    ALPHA3: 2,
+    ALPHA2: 3,
+    NUM_CASES: 4,
+    POPULATION: 5,
   };
 
   constructor() {
     super();
     this.state = {
-      countriesCardData: null,
+      countryCardsData: null,
+      filteredCountries: null,
+      currentViewCards: null,
       firstCardIndex: 0,
       lastCardIndex: 20,
       numPerPage: 20,
-      sortBy: this.SORT_TYPES.NAME_A,
+      pageNumber: 1,
+      sortBy: this.SORT_TYPES.NAME,
+      sortLowVal: 'A',
+      sortHiVal: 'Z',
     };
     this.changeNumDisplayed = this.changeNumDisplayed.bind(this);
     this.changeSort = this.changeSort.bind(this);
@@ -45,18 +45,93 @@ export default class Countries extends Component {
         },
       })
       .then((res) => {
-        const countriesCardData = res.data;
-        this.setState({ countriesCardData });
+        const countryCardsData = res.data;
+        console.log(res.data)
+        this.setState({ countryCardsData });
       });
+  }
+
+  componentDidUpdate() {
+    const data = this.state.countryCardsData;
+    var { filteredCountries } = this.state;
+    if(!data || data.length == 0) {
+      return
+    }
+    // Re-filter countries for model
+    if(!filteredCountries) {
+      // Get all loaded country cards in the current view
+      filteredCountries = 
+        data
+          .sort((a, b) => {
+            // Sort cards by chosen category, reversing if necessary
+            var reversed = this.state.sortLowVal > this.state.sortHiVal ? -1 : 1;
+            switch(this.state.sortBy){
+              case this.SORT_TYPES.NAME:
+                return reversed * a.name.localeCompare(b.name)
+              case this.SORT_TYPES.ALPHA3:
+                return reversed * a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
+              case this.SORT_TYPES.ALPHA2:
+                return reversed * a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
+              case this.SORT_TYPES.POPULATION:
+                return reversed * a.population - b.population
+              case this.SORT_TYPES.NUM_CASES:
+                return reversed * a.population - b.population
+            }
+          })
+          .filter(v => {
+            // Filter any instances outside of range
+            var lo = this.state.sortLowVal;
+            var hi = this.state.sortHiVal;
+            switch(this.state.sortBy){
+              case this.SORT_TYPES.NAME:
+                v = v.name.charAt(0).charCodeAt(0);
+                break;
+              case this.SORT_TYPES.ALPHA3:
+                v = v.codes.alpha3Code.charAt(0).charCodeAt(0);
+                break;
+              case this.SORT_TYPES.ALPHA2:
+                v = v.codes.alpha2Code.charAt(0).charCodeAt(0);
+                break;
+              case this.SORT_TYPES.POPULATION:
+                return (v.population-lo)*(v.population-hi)<=0
+              case this.SORT_TYPES.NUM_CASES:
+                return (v.population-lo)*(v.population-hi)<=0
+            }
+            lo = lo.charCodeAt(0)
+            hi = hi.charCodeAt(0)
+            return (v-lo)*(v-hi) <= 0
+          })
+          this.setState({ 
+            filteredCountries: filteredCountries,
+            pageNumber: 1,   
+            firstCardIndex: 0,
+            lastCardIndex: this.state.pageSize,
+            currentViewCards: null
+          });
+    }
+    if(!this.state.currentViewCards) {
+      const currentViewCards = filteredCountries
+        .slice(this.state.firstCardIndex, this.state.lastCardIndex)
+        .map((cardData) => (
+          <Col key={cardData.codes.alpha3Code}>
+            <CountryCard data={cardData} />
+          </Col>
+        ));
+
+      this.setState({ 
+        currentViewCards: currentViewCards,
+      })
+    }
   }
 
   changeNumDisplayed(page, pageSize) {
     // Update pagination for current page and cards
-    console.log(page, pageSize);
     this.setState({
       numPerPage: pageSize,
+      pageNumber: page,
       firstCardIndex: (page - 1) * pageSize,
       lastCardIndex: page * pageSize,
+      currentViewCards: null
     });
   };
 
@@ -74,54 +149,17 @@ export default class Countries extends Component {
     console.log(e.target.value);
   }
 
-
   render() {
-    const data = this.state.countriesCardData;
-    // Get all loaded country cards in the current view
-    var currentViewCards =
-      data &&
-      data.length > 0 &&
-      data
-        .sort((a, b) => {
-          switch(this.state.sortBy){
-            case this.SORT_TYPES.NAME_A:
-              return a.name.localeCompare(b.name)
-            case this.SORT_TYPES.NAME_Z:
-              return b.name.localeCompare(a.name)
-            case this.SORT_TYPES.ALPHA3_A:
-              return a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
-            case this.SORT_TYPES.ALPHA3_Z:
-              return b.codes.alpha3Code.localeCompare(a.codes.alpha3Code)
-            case this.SORT_TYPES.ALPHA2_A:
-              return a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
-            case this.SORT_TYPES.ALPHA2_Z:
-              return b.codes.alpha2Code.localeCompare(a.codes.alpha2Code)
-            case this.SORT_TYPES.POPULATION_LOW:
-              return a.population - b.population
-            case this.SORT_TYPES.POPULATION_HI:
-              return b.population - a.population
-            case this.SORT_TYPES.NUM_CASES_LOW:
-              return a.population - b.population
-            case this.SORT_TYPES.NUM_CASES_HI:
-              return b.population - a.population
-          }
-        })
-        .slice(this.state.firstCardIndex, this.state.lastCardIndex)
-
-      currentViewCards = currentViewCards?.map((cardData) => (
-          <Col key={cardData.codes.alpha3Code}>
-            <CountryCard data={cardData} />
-          </Col>
-        ));
+    const currentViewCards = this.state.currentViewCards;
     // Form model view if data has been loaded
-    const pagination = data ? (
+    const pagination = currentViewCards && this.state.filteredCountries ? (
       <Pagination
         style={{ display: "inline-block", verticalAlign: "top" }}
-        defaultCurrent={1} // default to first page
+        current={this.state.pageNumber} // current page number
         defaultPageSize={this.state.numPerPage} // default size of page
         pageSizeOptions={["10", "20", "50", "100"]}
         onChange={this.changeNumDisplayed}
-        total={data.length} //total number of countries
+        total={this.state.filteredCountries.length} //total number of countries
       />
     ) : (
       <div />
@@ -132,7 +170,6 @@ export default class Countries extends Component {
         margin: "2vh 5vw",
       },
     };
-
     return (
       <div className="App">
         <h1
@@ -151,23 +188,20 @@ export default class Countries extends Component {
             style={{ width: 200, display: "inline-block", verticalAlign: "top"}} 
             defaultValue="Country Name" 
             onChange={this.changeSort}
-            listHeight="auto"
           >  
             <OptGroup label="Name">
-              <Option value={this.SORT_TYPES.NAME_A}>Country Name</Option>
-              <Option value={this.SORT_TYPES.ALPHA2_A}>ISO Alpha 2 Code</Option>
-              <Option value={this.SORT_TYPES.ALPHA3_A}>ISO Alpha 3 Code</Option>
+              <Option value={this.SORT_TYPES.NAME} key="cName">Country Name</Option>
+              <Option value={this.SORT_TYPES.ALPHA2} key="iso2">ISO Alpha 2 Code</Option>
+              <Option value={this.SORT_TYPES.ALPHA3} key="iso3">ISO Alpha 3 Code</Option>
             </OptGroup>
             <OptGroup label="Statistics">
-              <Option value={this.SORT_TYPES.NUM_CASES_LOW}>Cases, Low-High</Option>
-              <Option value={this.SORT_TYPES.NUM_CASES_HI}>Cases, High-Low</Option>
-              <Option value={this.SORT_TYPES.POPULATION_LOW}>Population, Low-High</Option>
-              <Option value={this.SORT_TYPES.POPULATION_HI}>Population, High-Low</Option>
+              <Option value={this.SORT_TYPES.NUM_CASES} key="casesHi">Cases, Low-High</Option>
+              <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population, Low-High</Option>
             </OptGroup>
           </Select>
           <div>from</div>
           <Input.Group>
-            <Input style={{ width: 40, textAlign: 'center' }} defaultValue="A" maxLength="1" onChange={this.handleChange}/>
+            <Input style={{ width: 40, textAlign: 'center', textTransform: "uppercase" }} defaultValue="A" maxLength="1" onPressEnter={e => this.setState({sortLowVal: e.target.value.toUpperCase(), filteredCountries: null})}/>
             <Input
               style={{
                 width: 40,
@@ -176,14 +210,17 @@ export default class Countries extends Component {
                 pointerEvents: 'none',
               }}
               placeholder="to"
+              disabled
             />
             <Input
               style={{
                 width: 40,
                 textAlign: 'center',
+                textTransform: "uppercase"
               }}
               defaultValue="Z"
               maxLength="1"
+              onPressEnter={e => this.setState({sortHiVal: e.target.value.toUpperCase(), filteredCountries: null})}
             />
           </Input.Group>
           <Divider type="vertical" />
@@ -192,7 +229,7 @@ export default class Countries extends Component {
 
         <div className="site-card-wrapper" style={styles.siteCardWrapper}>
           <Row gutter={16} justify="center">
-            {this.createCountryGrid(currentViewCards)}
+            {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>oh no</div>}
           </Row>
         </div>
       </div>

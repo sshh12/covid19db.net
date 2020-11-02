@@ -4,6 +4,7 @@ flask-restful
 Flask-SQLAlchemy
 psycopg2-binary
 flask-cors
+SQLAlchemy-Searchable
 python-dotenv
 mypy
 coverage

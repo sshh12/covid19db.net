@@ -1,7 +1,7 @@
 """
 Entrypoint into the backend API.
 """
-from covid_app.routes import app
+from covid_app import app, routes
 
 
 if __name__ == "__main__":

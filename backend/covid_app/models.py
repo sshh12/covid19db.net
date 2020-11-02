@@ -3,6 +3,9 @@ Definitions for database models (tables).
 """
 
 from sqlalchemy.orm import load_only
+from flask_sqlalchemy import BaseQuery
+from sqlalchemy_searchable import SearchQueryMixin
+from sqlalchemy_utils.types import TSVectorType
 from . import db, const
 
 
@@ -10,6 +13,15 @@ class Countries(db.Model):
     """
     Database model representing a country.
     """
+
+    class Query(BaseQuery, SearchQueryMixin):
+        """
+        Class used to provide a search method to the Countries model
+        """
+
+        pass
+
+    query_class = Query
 
     id = db.Column(db.Integer, primary_key=True)
     # alternateNames
@@ -52,6 +64,17 @@ class Countries(db.Model):
     sources = db.Column(db.ARRAY(db.JSON), nullable=False)
     # timezones
     timezones = db.Column(db.ARRAY(db.String), nullable=False)
+    # tsvector used for searching this table
+    search_vector = db.Column(
+        TSVectorType(
+            "capital_name",
+            "codes_alpha2_code",
+            "codes_alpha3_code",
+            "name",
+            "region_region",
+            "region_subregion",
+        )
+    )
 
     @staticmethod
     def fix_attributes(attributes):
@@ -89,9 +112,29 @@ class Countries(db.Model):
         return fixed
 
     @staticmethod
+    def search(query):
+        """
+        Retrieves all entries from the Countries table in the database matching
+        the given query. Only name and codes are included in the result.
+        """
+        ret = []
+        attributes = frozenset({"name", "codes"})
+        matches = (
+            Countries.query.options(
+                load_only(*Countries.fix_attributes(attributes))
+            )
+            .search(query)
+            .all()
+        )
+        for match in matches:
+            ret += [match.polished(attributes)]
+        return ret
+
+    @staticmethod
     def retrieve_all(attributes):
         """
-        Retrieves all entries from the Countries table in the database, including only the given attributes.
+        Retrieves all entries from the Countries table in the database,
+        including only the given attributes.
         """
         ret = []
         all_entries = Countries.query.options(
@@ -105,8 +148,8 @@ class Countries(db.Model):
     def retrieve_by_id(identifier, id_type, attributes):
         """
         Retrieves the entry from the Countries table in the database corresponding
-        to the given identifier. id_type should be one of const.Identifier. Only the fields indicated
-        by attributes are included in the retrieval.
+        to the given identifier. id_type should be one of const.Identifier. Only
+        the fields indicated by attributes are included in the retrieval.
         """
         entry = None
         fixed_attr = Countries.fix_attributes(attributes)
@@ -134,7 +177,8 @@ class Countries(db.Model):
 
     def polished(self, attributes):
         """
-        Transforms this Countries database entry into a usable dict with only the given attributes.
+        Transforms this Countries database entry into a usable dict with only the
+        given attributes.
         """
         ret = dict()
         if "alternateNames" in attributes:
@@ -254,8 +298,8 @@ class CaseStatistics(db.Model):
     @staticmethod
     def fix_attributes(attributes):
         """
-        Translates the given request attributes into the corresponding columns in
-        the database.
+        Translates the given request attributes into the corresponding columns
+        in the database.
         """
         attr_to_cols = {
             "country": [
@@ -313,7 +357,8 @@ class CaseStatistics(db.Model):
     @staticmethod
     def retrieve_all(attributes):
         """
-        Retrieves all entries from the Case Statistics table in the database, including only the given attributes.
+        Retrieves all entries from the Case Statistics table in the database,
+        including only the given attributes.
         """
         ret = []
         all_entries = CaseStatistics.query.options(
@@ -326,9 +371,10 @@ class CaseStatistics(db.Model):
     @staticmethod
     def retrieve_by_id(identifier, id_type, attributes):
         """
-        Retrieves the entry from the Case Statistics table in the database corresponding
-        to the given identifier. id_type should be one of const.Identifier. Only the fields indicated
-        by attributes are included in the retrieval.
+        Retrieves the entry from the Case Statistics table in the database
+        corresponding to the given identifier. id_type should be one of
+        const.Identifier. Only the fields indicated by attributes are
+        included in the retrieval.
         """
         entry = None
         fixed_attr = CaseStatistics.fix_attributes(attributes)
@@ -360,7 +406,8 @@ class CaseStatistics(db.Model):
 
     def polished(self, attributes):
         """
-        Transforms this Case Statistics database entry into a usable dict with only the given attributes.
+        Transforms this Case Statistics database entry into a usable dict with
+        only the given attributes.
         """
         ret = dict()
         if "country" in attributes:
@@ -531,7 +578,8 @@ class RiskFactorStatistics(db.Model):
     @staticmethod
     def retrieve_all(attributes):
         """
-        Retrieves all entries from the Risk Factor Statistics table in the database, including only the given attributes.
+        Retrieves all entries from the Risk Factor Statistics table in the
+        database, including only the given attributes.
         """
         ret = []
         all_entries = RiskFactorStatistics.query.options(
@@ -544,9 +592,10 @@ class RiskFactorStatistics(db.Model):
     @staticmethod
     def retrieve_by_id(identifier, id_type, attributes):
         """
-        Retrieves the entry from the Risk Factor Statistics table in the database corresponding
-        to the given identifier. id_type should be one of const.Identifier. Only the fields indicated
-        by attributes are included in the retrieval.
+        Retrieves the entry from the Risk Factor Statistics table in the
+        database corresponding to the given identifier. id_type should be
+        one of const.Identifier. Only the fields indicated by attributes
+        are included in the retrieval.
         """
         entry = None
         fixed_attr = RiskFactorStatistics.fix_attributes(attributes)
@@ -578,7 +627,8 @@ class RiskFactorStatistics(db.Model):
 
     def polished(self, attributes):
         """
-        Transforms this Risk Factor Statistics database entry into a usable dict with only the given attributes.
+        Transforms this Risk Factor Statistics database entry into a usable dict
+        with only the given attributes.
         """
         ret = dict()
         if "aged65Older" in attributes:
@@ -637,8 +687,8 @@ class RiskFactorStatistics(db.Model):
 
 
 """
-The following "models" are just for storing global news and stats in the database
-and there should only ever be a single row per corresponding table.
+The following "models" are just for storing global news and stats in the
+database and there should only ever be a single row per corresponding table.
 """
 
 

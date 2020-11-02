@@ -84,7 +84,9 @@ class CountriesAPI:
             args = parser.parse_args()
             attributes = CountriesAPI.polish_attributes(get_attributes(args))
             # validate attributes parameter
-            if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
+            if not validate_attributes(
+                attributes, const.VALID_COUNTRIES_ATTRIBUTES
+            ):
                 return error_response(422, "Specified attributes are invalid")
 
             all_countries = models.Countries.retrieve_all(attributes)
@@ -103,10 +105,14 @@ class CountriesAPI:
             args = parser.parse_args()
             attributes = CountriesAPI.polish_attributes(get_attributes(args))
             # validate attributes parameter
-            if not validate_attributes(attributes, const.VALID_COUNTRIES_ATTRIBUTES):
+            if not validate_attributes(
+                attributes, const.VALID_COUNTRIES_ATTRIBUTES
+            ):
                 return error_response(422, "Specified attributes are invalid")
 
-            country = models.Countries.retrieve_by_id(identifier, id_type, attributes)
+            country = models.Countries.retrieve_by_id(
+                identifier, id_type, attributes
+            )
             return country
 
 
@@ -127,9 +133,13 @@ class CaseStatisticsAPI:
             Get all case statistics
             """
             args = parser.parse_args()
-            attributes = CaseStatisticsAPI.polish_attributes(get_attributes(args))
+            attributes = CaseStatisticsAPI.polish_attributes(
+                get_attributes(args)
+            )
             # validate attributes parameter
-            if not validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES):
+            if not validate_attributes(
+                attributes, const.VALID_CASE_STATS_ATTRIBUTES
+            ):
                 return error_response(422, "Specified attributes are invalid")
 
             all_case_statics = models.CaseStatistics.retrieve_all(attributes)
@@ -146,12 +156,18 @@ class CaseStatisticsAPI:
                 return error_response(422, "Bad identifier")
 
             args = parser.parse_args()
-            attributes = CaseStatisticsAPI.polish_attributes(get_attributes(args))
+            attributes = CaseStatisticsAPI.polish_attributes(
+                get_attributes(args)
+            )
             # validate attributes parameter
-            if not validate_attributes(attributes, const.VALID_CASE_STATS_ATTRIBUTES):
+            if not validate_attributes(
+                attributes, const.VALID_CASE_STATS_ATTRIBUTES
+            ):
                 return error_response(422, "Specified attributes are invalid")
 
-            case_statistic = models.CaseStatistics.retrieve_by_id(identifier, id_type, attributes)
+            case_statistic = models.CaseStatistics.retrieve_by_id(
+                identifier, id_type, attributes
+            )
             return case_statistic
 
 
@@ -172,12 +188,18 @@ class RiskFactorStatisticsAPI:
             Get all risk factor statistics
             """
             args = parser.parse_args()
-            attributes = RiskFactorStatisticsAPI.polish_attributes(get_attributes(args))
+            attributes = RiskFactorStatisticsAPI.polish_attributes(
+                get_attributes(args)
+            )
             # validate attributes parameter
-            if not validate_attributes(attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES):
+            if not validate_attributes(
+                attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES
+            ):
                 return error_response(422, "Specified attributes are invalid")
 
-            all_risk_factor_statics = models.RiskFactorStatistics.retrieve_all(attributes)
+            all_risk_factor_statics = models.RiskFactorStatistics.retrieve_all(
+                attributes
+            )
             return all_risk_factor_statics
 
     class RiskFactorStatistic(Resource):
@@ -191,12 +213,18 @@ class RiskFactorStatisticsAPI:
                 return error_response(422, "Bad identifier")
 
             args = parser.parse_args()
-            attributes = RiskFactorStatisticsAPI.polish_attributes(get_attributes(args))
+            attributes = RiskFactorStatisticsAPI.polish_attributes(
+                get_attributes(args)
+            )
             # validate attributes parameter
-            if not validate_attributes(attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES):
+            if not validate_attributes(
+                attributes, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES
+            ):
                 return error_response(422, "Specified attributes are invalid")
 
-            risk_factor_statistic = models.RiskFactorStatistics.retrieve_by_id(identifier, id_type, attributes)
+            risk_factor_statistic = models.RiskFactorStatistics.retrieve_by_id(
+                identifier, id_type, attributes
+            )
             return risk_factor_statistic
 
 
@@ -222,8 +250,15 @@ class GlobalStatsAPI:
 api.add_resource(CountriesAPI.Countries, "/countries")
 api.add_resource(CountriesAPI.Country, "/countries/<identifier>")
 api.add_resource(CaseStatisticsAPI.CaseStatistics, "/case-statistics")
-api.add_resource(CaseStatisticsAPI.CaseStatistic, "/case-statistics/<identifier>")
-api.add_resource(RiskFactorStatisticsAPI.RiskFactorStatistics, "/risk-factor-statistics")
-api.add_resource(RiskFactorStatisticsAPI.RiskFactorStatistic, "/risk-factor-statistics/<identifier>")
+api.add_resource(
+    CaseStatisticsAPI.CaseStatistic, "/case-statistics/<identifier>"
+)
+api.add_resource(
+    RiskFactorStatisticsAPI.RiskFactorStatistics, "/risk-factor-statistics"
+)
+api.add_resource(
+    RiskFactorStatisticsAPI.RiskFactorStatistic,
+    "/risk-factor-statistics/<identifier>",
+)
 api.add_resource(GlobalNewsAPI.GlobalNews, "/global-news")
 api.add_resource(GlobalStatsAPI.GlobalStats, "/global-stats")

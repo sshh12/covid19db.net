@@ -43,18 +43,11 @@ class App extends React.Component {
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/globalnews" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
+            <Link to="/global-news" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Global News
             </Link>
           </Menu.Item>
           <Menu.Item>
-            {/* TODO search bar here */}
-            {/* <Form>
-              <Form.Item style={{ marginTop: '0px' }}>
-                <Input placeholder="Search bar not ready yet ... :(" />
-                <Button type="primary">Search</Button>
-              </Form.Item>
-            </Form> */}
             <Link to="/search" style={{ fontWeight: "bold", fontsize: 20, color:'white' }}>
               Search
             </Link>

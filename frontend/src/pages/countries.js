@@ -150,43 +150,7 @@ export default class Countries extends Component {
   }
 
   render() {
-    const data = this.state.countriesCardData;
-    // Get all loaded country cards in the current view
-    var currentViewCards =
-      data &&
-      data.length > 0 &&
-      data
-        .sort((a, b) => {
-          switch(this.state.sortBy){
-            case this.SORT_TYPES.NAME_A:
-              return a.name.localeCompare(b.name)
-            case this.SORT_TYPES.NAME_Z:
-              return b.name.localeCompare(a.name)
-            case this.SORT_TYPES.ALPHA3_A:
-              return a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
-            case this.SORT_TYPES.ALPHA3_Z:
-              return b.codes.alpha3Code.localeCompare(a.codes.alpha3Code)
-            case this.SORT_TYPES.ALPHA2_A:
-              return a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
-            case this.SORT_TYPES.ALPHA2_Z:
-              return b.codes.alpha2Code.localeCompare(a.codes.alpha2Code)
-            case this.SORT_TYPES.POPULATION_LOW:
-              return a.population - b.population
-            case this.SORT_TYPES.POPULATION_HI:
-              return b.population - a.population
-            case this.SORT_TYPES.NUM_CASES_LOW:
-              return a.population - b.population
-            case this.SORT_TYPES.NUM_CASES_HI:
-              return b.population - a.population
-          }
-        })
-        .slice(this.state.firstCardIndex, this.state.lastCardIndex)
-
-      currentViewCards = currentViewCards?.map((cardData) => (
-          <Col key={cardData.codes.alpha3Code}>
-            <CountryCard data={cardData} />
-          </Col>
-        ));
+    const currentViewCards = this.state.currentViewCards;
     // Form model view if data has been loaded
     const pagination = currentViewCards && this.state.filteredCountries ? (
       <Pagination

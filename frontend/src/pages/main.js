@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Map from "../components/map";
+import InfectionsMap from "../components/infectionsMap";
 import axios from "../client";
-import {TotalStats} from './../components/mainComponents';
-import './../styling/main.css';
+import { TotalStats } from "./../components/mainComponents";
+import "./../styling/main.css";
 
 export default class Main extends Component {
   constructor() {
@@ -62,7 +62,7 @@ export default class Main extends Component {
           </div>
         </div>
         <div style={{ flex: 3 }}>
-          <Map
+          <InfectionsMap
             center={[15, 30]}
             zoom={1.95}
             height={window.innerHeight - 79 + (420 - 420)} // Perfect value to fit the map on the splash page... nice
@@ -74,5 +74,4 @@ export default class Main extends Component {
   }
 }
 
-
-let style 
+let style;

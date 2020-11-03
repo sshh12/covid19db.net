@@ -233,7 +233,7 @@ export default class Countries extends Component {
             {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>oh no</div>}
           </Row>
         </div>
-        {CustomPagination}
+        {Pagination}
       </div>
     );
   }

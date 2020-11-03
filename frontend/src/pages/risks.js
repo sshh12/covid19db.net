@@ -161,10 +161,14 @@ export default class Risks extends Component {
         sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
 
         filters: [
-          { text: '>70', value: 70 },
+          { text: '80 - 90', value: 80 },
+          { text: '70 - 80', value: 70 },
+          { text: '60 - 70', value: 60 },
+          { text: '50 - 60', value: 50 },
+          { text: '40 - 50', value: 40 },
         ],
         filteredValue: filteredInfo.lifeExpectancy || null,
-        onFilter: (value, record) => (record.lifeExpectancy > value),
+        onFilter: (value, record) => (record.lifeExpectancy > value && record.lifeExpectancy < value + 10),
         ellipsis: true,
       },
       {
@@ -173,10 +177,14 @@ export default class Risks extends Component {
         key: "humanDevelopmentIndex",
         sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
         filters: [
-          { text: '>0.500', value: 0.5 },
+          { text: '0.500 - 0.550', value: 0.500 },
+          { text: '0.450 - 0.500', value: 0.450 },
+          { text: '0.400 - 0.450', value: 0.400 },
+          { text: '0.350 - 0.400', value: 0.350 },
+          { text: '0.300 - 0.350', value: 0.300 },  
         ],
         filteredValue: filteredInfo.humanDevelopmentIndex || null,
-        onFilter: (value, record) => (record.humanDevelopmentIndex > value),
+        onFilter: (value, record) => (record.humanDevelopmentIndex > value && record.humanDevelopmentIndex < value + 0.050),
         ellipsis: true,
       },
       {
@@ -186,10 +194,13 @@ export default class Risks extends Component {
         render: (population) => <>{population?.toLocaleString()}</>,
         sorter: (a, b) => a?.populationDensity - b?.populationDensity,
         filters: [
-          { text: '>200', value: 200 },
+          { text: '15000 - 20000', value: 15000 },
+          { text: '10000 - 15000', value: 10000 },
+          { text: '5000 - 10000', value: 5000 },
+          { text: '0 - 5000', value: 0 },
         ],
         filteredValue: filteredInfo.populationDensity || null,
-        onFilter: (value, record) => (record.populationDensity > value),
+        onFilter: (value, record) => (record.populationDensity > value && record.populationDensity < value + 5000),
         ellipsis: true,
       },
       {
@@ -198,10 +209,13 @@ export default class Risks extends Component {
         key: "gini",
         sorter: (a, b) => a?.gini - b?.gini,
         filters: [
-          { text: '>50', value: 50 },
+          { text: '75 - 100', value: 75 },
+          { text: '50 - 75', value: 50 },
+          { text: '25 - 50', value: 25 },
+          { text: '0 - 25', value: 0 },
         ],
         filteredValue: filteredInfo.gini || null,
-        onFilter: (value, record) => (record.gini > value),
+        onFilter: (value, record) => (record.gini > value && record.gini < value + 25),
         ellipsis: true,
       },
       {

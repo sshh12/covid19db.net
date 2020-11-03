@@ -1,30 +1,19 @@
 import React, { Component } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
-import { Button, Select, Space, Table, Input } from "antd";
-import { SearchOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
-
-
+import { Button, Table } from "antd";
 import Search from "react-search";
 
 export default class Risks extends Component {
-  numPerPage = 10; // this number simply does not mean anything and is not used here
-
   constructor() {
     super();
     this.state = {
       riskData: [],
-      firstEntryIndex: 0,
-      lastEntryIndex: this.numPerPage,
       items: [],
       filteredInfo: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  // https://api.covid19db.net/
-  // risk-factor-statistics
-  // 'sampleData.json'
   componentDidMount() {
     axios
       .get("risk-factor-statistics", {
@@ -43,7 +32,7 @@ export default class Risks extends Component {
         }
       );
 
-// searching stuff
+      // searching stuff
       let curID = 0;
       // begin by adding pages
       let items = [
@@ -55,7 +44,7 @@ export default class Risks extends Component {
           attributes: "name,codes"
         }
       };
-
+      // api call
       axios.get("countries", options).then((res)=>{
         // sort countries by name
         res.data.sort((a, b) => {
@@ -94,50 +83,16 @@ export default class Risks extends Component {
     cb(query);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
     this.setState({
       filteredInfo: filters,
     });
   };
-
+  // clear all filters
   clearFilters = () => {
     this.setState({ filteredInfo: null });
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   render() {
     let { filteredInfo } = this.state;
@@ -239,22 +194,12 @@ export default class Risks extends Component {
         ),
       },
     ];
-
     const data = this.state.riskData;
-
     return (
       <div className="App">
-        <h1
-          style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
+        <h1 style={{ fontWeight: "800", fontSize: "2em", marginTop: "20px", marginBottom: "20px", }} >
           Risk Factors &amp; Statistics{" "}
         </h1>
-
         {/* search bar */}
         <div style={{display: "flex", justifyContent: "center"}}>
           <div style={{width: "50vw", backgroundColor: "#323776", userSelect: "none"}}>
@@ -266,8 +211,7 @@ export default class Risks extends Component {
               />
           </div>
         </div>
-
-        <>
+        {/* Table of risk data */}
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
@@ -275,7 +219,6 @@ export default class Risks extends Component {
           onChange={this.handleChange}
           pagination={{ position: ["bottomRight", "topRight"] }}
         ></Table>
-        </>
       </div>
     );
   }

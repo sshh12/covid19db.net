@@ -21,14 +21,14 @@ export default class Countries extends Component {
   constructor() {
     super();
     this.state = {
-      countryCardsData: null,
-      filteredCountries: null,
-      currentViewCards: null,
-      firstCardIndex: 0,
+      countryCardsData: null, // Raw country JSON from API request
+      filteredCountries: null, // All countries filtered/sorted per user's actions
+      currentViewCards: null, // JSX for all country cards in current page view
+      firstCardIndex: 0, 
       lastCardIndex: 20,
-      numPerPage: 20,
+      numPerPage: 20, // Number of countries displayed per page
       pageNumber: 1,
-      sortBy: this.SORT_TYPES.NAME,
+      sortBy: this.SORT_TYPES.NAME, // Parameter to manage sorting process
       sortLowVal: 'A',
       sortHiVal: 'Z',
     };
@@ -55,6 +55,7 @@ export default class Countries extends Component {
     const data = this.state.countryCardsData;
     var { filteredCountries } = this.state;
     if(!data || data.length == 0) {
+      // Do not update if no data or data is not populated
       return
     }
     // Re-filter countries for model
@@ -137,7 +138,8 @@ export default class Countries extends Component {
 
   changeSort(value) {
     this.setState({
-      sortBy: value
+      sortBy: value,
+      filteredCountries: null
     })
   }
 
@@ -170,6 +172,7 @@ export default class Countries extends Component {
         margin: "2vh 5vw",
       },
     };
+
     return (
       <div className="App">
         <h1

@@ -23,7 +23,19 @@ Table Countries {
   regional_blocs arrayjson [not null]
   sources arrayjson [not null]
   timezones arraystring [not null]
+  search_vector tsvectortype
 }
+
+Ref: Countries.codes_alpha2_code - CaseStatistics.country_codes_alpha2_code
+Ref: Countries.codes_alpha3_code - CaseStatistics.country_codes_alpha3_code
+Ref: Countries.location_lat - CaseStatistics.location_lat
+Ref: Countries.location_lng - CaseStatistics.location_lng
+Ref: Countries.name - CaseStatistics.country_name
+Ref: Countries.codes_alpha2_code - RiskFactorStatistics.country_codes_alpha2_code
+Ref: Countries.codes_alpha3_code - RiskFactorStatistics.country_codes_alpha3_code
+Ref: Countries.location_lat - RiskFactorStatistics.location_lat
+Ref: Countries.location_lng - RiskFactorStatistics.location_lng
+Ref: Countries.name - RiskFactorStatistics.country_name
 
 Table CaseStatistics {
   id integer [pk, not null]

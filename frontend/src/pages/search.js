@@ -1,15 +1,27 @@
 import React, { Component } from "react";
 import Search from "react-search";
+import { withRouter } from "react-router-dom";
 import axios from "../client";
 
-// Sitewide search bar component
-export default class SiteSearch extends Component {
+// sitewide search bar component
+class SiteSearch extends Component {
   constructor(){
     super();
     this.state = { items: [] };
   }
 
-  componentDidMount(){
+  // navigate to route upon item selection
+  onSelect(items){
+    const selected = items[0];
+    // navigate to selected item if not undefined
+    if(selected !== undefined){
+      const route = this.state.items[selected.id].route;
+      this.props.history.push(route);
+    }
+  }
+
+  // load search results asynchronously
+  getItemsAsync(query, cb){
     let curID = 0;
     // begin by adding pages
     let items = [
@@ -23,14 +35,10 @@ export default class SiteSearch extends Component {
     // retrieve necessary data from API and populate remainder
     const options = {
       params: {
-        attributes: "name,codes"
+        query: query
       }
     };
-    axios.get("countries", options).then((res)=>{
-      // sort countries by name
-      res.data.sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
+    axios.get("search", options).then((res)=>{
       // for each country, push possible results
       res.data.forEach(country => {
         const alpha3Code = country.codes.alpha3Code;
@@ -52,28 +60,15 @@ export default class SiteSearch extends Component {
         });
       });
       this.setState({ items });
+      cb(query);
     });
-  }
-
-  // navigate to route upon item selection
-  onSelect(items){
-    const selected = items[0];
-    // navigate to selected item if not undefined
-    if(selected !== undefined){
-      const route = this.state.items[selected.id].route;
-      window.open(route, "_self");
-    }
-  }
-
-  // load search results asynchronously
-  getItemsAsync(query, cb){
-    cb(query);
   }
 
   render() {
     return (
       <div className="App">
         <h1 style={{fontWeight: 800, marginTop:20, marginBottom: 20, fontSize:'2em'}}>Search</h1>
+        <h3 style={{fontWeight: 400, fontSize:"1.7em"}}>Try searching for pages, countries, and ISO 3166-1 codes.</h3>
         <div style={{display: "flex", justifyContent: "center"}}>
           <div style={{width: "50vw", backgroundColor: "#323776", userSelect: "none"}}>
             <Search items={this.state.items}
@@ -88,3 +83,5 @@ export default class SiteSearch extends Component {
     );
   }
 }
+
+export default withRouter(SiteSearch);

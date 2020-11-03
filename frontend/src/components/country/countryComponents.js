@@ -32,11 +32,11 @@ function AllNews(news) {
   }
   return news.map((n) => (
     <Col>
-      <a href={n.url}>
+      <a href={n.url} target="_blank" rel="noopener noreferrer">
         <Card
           hoverable
           style={{ width: 240 }}
-          cover={<img src={n.urlToImage} alt="Article image" />}
+          cover={<img src={n.urlToImage} alt="" />}
           title={n.title}
         >
           <Meta title={n.author} description={n.description} />

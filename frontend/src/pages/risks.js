@@ -177,6 +177,52 @@ export default class Risks extends Component {
           </div>
         </div>
 
+        {/* filtering */}
+        <Space className="country-display-header">
+          <div>Sort by:</div>
+          <Select 
+            style={{ width: 200, display: "inline-block", verticalAlign: "top"}} 
+            defaultValue="Country Name" 
+            onChange={this.changeSort}
+          >  
+            <OptGroup label="Name">
+              <Option value={this.SORT_TYPES.NAME} key="cName">Country Name</Option>
+              <Option value={this.SORT_TYPES.ALPHA2} key="iso2">ISO Alpha 2 Code</Option>
+              <Option value={this.SORT_TYPES.ALPHA3} key="iso3">ISO Alpha 3 Code</Option>
+            </OptGroup>
+            <OptGroup label="Statistics">
+              <Option value={this.SORT_TYPES.NUM_CASES} key="casesHi">Cases, Low-High</Option>
+              <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population, Low-High</Option>
+            </OptGroup>
+          </Select>
+          <div>from</div>
+          <Input.Group>
+            <Input style={{ width: 40, textAlign: 'center', textTransform: "uppercase" }} defaultValue="A" maxLength="1" onPressEnter={e => this.setState({sortLowVal: e.target.value.toUpperCase(), filteredCountries: null})}/>
+            <Input
+              style={{
+                width: 40,
+                borderLeft: 0,
+                borderRight: 0,
+                pointerEvents: 'none',
+              }}
+              placeholder="to"
+              disabled
+            />
+            <Input
+              style={{
+                width: 40,
+                textAlign: 'center',
+                textTransform: "uppercase"
+              }}
+              defaultValue="Z"
+              maxLength="1"
+              onPressEnter={e => this.setState({sortHiVal: e.target.value.toUpperCase(), filteredCountries: null})}
+            />
+          </Input.Group>
+          <Divider type="vertical" />
+          {pagination}          
+        </Space>
+
 
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}

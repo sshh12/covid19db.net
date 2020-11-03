@@ -89,10 +89,7 @@ export default class Risks extends Component {
       filteredInfo: filters,
     });
   };
-  // clear all filters
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
+
 
   render() {
     let { filteredInfo } = this.state;

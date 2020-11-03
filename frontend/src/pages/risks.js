@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
-import { Button, Divider, Input, Select, Space, Pagination, Table } from "antd";
+import { Button, Select, Space, Table, Input } from "antd";
+import { SearchOutlined } from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 
 
 import Search from "react-search";
-const { Option, OptGroup } = Select;
 
 export default class Risks extends Component {
   numPerPage = 10; // this number simply does not mean anything and is not used here
@@ -17,6 +18,7 @@ export default class Risks extends Component {
       firstEntryIndex: 0,
       lastEntryIndex: this.numPerPage,
       items: [],
+      filteredInfo: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -92,7 +94,54 @@ export default class Risks extends Component {
     cb(query);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  handleChange = (pagination, filters) => {
+    console.log('Various parameters', pagination, filters);
+    this.setState({
+      filteredInfo: filters,
+    });
+  };
+
+  clearFilters = () => {
+    this.setState({ filteredInfo: null });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   render() {
+    let { filteredInfo } = this.state;
+    filteredInfo = filteredInfo || {};
     const columns = [
       {
         title: "Country",
@@ -110,12 +159,25 @@ export default class Risks extends Component {
         dataIndex: "lifeExpectancy",
         key: "lifeExpectancy",
         sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
+
+        filters: [
+          { text: '>70', value: 70 },
+        ],
+        filteredValue: filteredInfo.lifeExpectancy || null,
+        onFilter: (value, record) => (record.lifeExpectancy > value),
+        ellipsis: true,
       },
       {
         title: "Human Development Index",
         dataIndex: "humanDevelopmentIndex",
         key: "humanDevelopmentIndex",
         sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
+        filters: [
+          { text: '>0.500', value: 0.5 },
+        ],
+        filteredValue: filteredInfo.humanDevelopmentIndex || null,
+        onFilter: (value, record) => (record.humanDevelopmentIndex > value),
+        ellipsis: true,
       },
       {
         title: "Population Density",
@@ -123,12 +185,24 @@ export default class Risks extends Component {
         key: "populationDensity",
         render: (population) => <>{population?.toLocaleString()}</>,
         sorter: (a, b) => a?.populationDensity - b?.populationDensity,
+        filters: [
+          { text: '>200', value: 200 },
+        ],
+        filteredValue: filteredInfo.populationDensity || null,
+        onFilter: (value, record) => (record.populationDensity > value),
+        ellipsis: true,
       },
       {
         title: "Gini",
         dataIndex: "gini",
         key: "gini",
         sorter: (a, b) => a?.gini - b?.gini,
+        filters: [
+          { text: '>50', value: 50 },
+        ],
+        filteredValue: filteredInfo.gini || null,
+        onFilter: (value, record) => (record.gini > value),
+        ellipsis: true,
       },
       {
         title: "Explore Risks",
@@ -179,6 +253,7 @@ export default class Risks extends Component {
           </div>
         </div>
 
+        <>
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
@@ -186,6 +261,7 @@ export default class Risks extends Component {
           onChange={this.handleChange}
           pagination={{ position: ["bottomRight", "topRight"] }}
         ></Table>
+        </>
       </div>
     );
   }

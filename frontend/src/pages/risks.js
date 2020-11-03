@@ -40,7 +40,35 @@ export default class Risks extends Component {
       );
 
 // searching stuff
+      let curID = 0;
+      // begin by adding pages
+      let items = [
+        {id: curID++, value: "Risks", route: "/risk-factor-statistics"},
+      ];
+      // retrieve necessary data from API and populate remainder
+      const options = {
+        params: {
+          attributes: "name,codes"
+        }
+      };
 
+      axios.get("countries", options).then((res)=>{
+        // sort countries by name
+        res.data.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+        // for each country, push possible results
+        res.data.forEach(country => {
+          const alpha3Code = country.codes.alpha3Code;
+          const identifier = `${country.name} (${country.codes.alpha2Code}, ${country.codes.alpha3Code})`;
+          items.push({
+            id: curID++,
+            value: "Risks for " + identifier,
+            route: `/risk-factor-statistics/${alpha3Code}`
+          });
+        });
+        this.setState({ items });
+      });
   }
 
   handleChange(pagination, filters, sorter, extra) {

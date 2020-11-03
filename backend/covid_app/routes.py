@@ -2,7 +2,7 @@
 Defines the valid routes for the backend server.
 """
 from flask_restful import Resource, reqparse
-from . import app, api, const, models
+from . import api, const, models
 
 # used to parse url query parameters
 parser = reqparse.RequestParser()
@@ -11,6 +11,11 @@ parser.add_argument(
     type=str,
     help="Specifies which attributes to include in the response. If multiple \
     attributes are specified, they should be delimited with commas.",
+)
+parser.add_argument(
+    "query",
+    type=str,
+    help="Search query to perform when using the search endpoint.",
 )
 
 
@@ -246,6 +251,21 @@ class GlobalStatsAPI:
             return models.GlobalStats.retrieve()
 
 
+class SearchAPI:
+    class Search(Resource):
+        def get(self):
+            """
+            Perform a search on the database and return country identifiers that
+            correspond to the matches
+            """
+            args = parser.parse_args()
+            # read query parameter
+            query = args["query"]
+            if query is None:
+                return error_response(422, "Query parameter not provided")
+            return models.Countries.search(query)
+
+
 # adds all of the available endpoints to the given api object.
 api.add_resource(CountriesAPI.Countries, "/countries")
 api.add_resource(CountriesAPI.Country, "/countries/<identifier>")
@@ -262,3 +282,4 @@ api.add_resource(
 )
 api.add_resource(GlobalNewsAPI.GlobalNews, "/global-news")
 api.add_resource(GlobalStatsAPI.GlobalStats, "/global-stats")
+api.add_resource(SearchAPI.Search, "/search")

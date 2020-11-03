@@ -3,6 +3,8 @@ import { Button, Table } from "antd";
 import axios from "../client";
 import { Link } from "react-router-dom";
 
+import Search from "react-search";
+
 export default class Risks extends Component {
   numPerPage = 10; // this number simply does not mean anything and is not used here
 
@@ -12,6 +14,7 @@ export default class Risks extends Component {
       riskData: [],
       firstEntryIndex: 0,
       lastEntryIndex: this.numPerPage,
+      items: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -35,10 +38,28 @@ export default class Risks extends Component {
           console.log("error: Promise not fulfilled");
         }
       );
+
+// searching stuff
+
   }
 
   handleChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
+  }
+
+  // navigate to route upon item selection
+  onSelect(items){
+    const selected = items[0];
+    // navigate to selected item if not undefined
+    if(selected !== undefined){
+      const route = this.state.items[selected.id].route;
+      window.open(route, "_self");
+    }
+  }
+
+  // load search results asynchronously
+  getItemsAsync(query, cb){
+    cb(query);
   }
 
   render() {
@@ -115,6 +136,20 @@ export default class Risks extends Component {
         >
           Risk Factors &amp; Statistics{" "}
         </h1>
+
+        {/* search bar */}
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <div style={{width: "50vw", backgroundColor: "#323776", userSelect: "none"}}>
+            <Search items={this.state.items}
+                    placeholder="Search for Risks"
+                    onItemsChanged={this.onSelect.bind(this)}
+                    getItemsAsync={this.getItemsAsync.bind(this)}
+                    NotFoundPlaceholder="No results match this query"
+              />
+          </div>
+        </div>
+
+
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}

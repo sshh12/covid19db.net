@@ -11,6 +11,7 @@ mapboxgl.accessToken =
 if (process.env.NODE_ENV === "production") {
   window.console.error = () => {};
   window.console.warn = () => {};
+  window.console.trace = () => {};
   window.console.clear();
 }
 

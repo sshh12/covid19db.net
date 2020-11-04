@@ -159,6 +159,23 @@ Retireve an instance of risk factor statistics. See the `identifier` parameter.
     - Specifies the instance to select based on the relevant country.
     - See below for a full list of valid identifiers.
 
+## Search Endpoints
+
+### GET
+
+Perform a search query.
+
+- `/search`
+
+### Parameters
+
+#### Query parameters
+
+- `query`
+    - **Query parameter**
+    - **REQUIRED**
+    - Specifies the query to perform the search with.
+
 ## Global News Endpoints
 
 ### GET

@@ -379,6 +379,70 @@
                     }
                 }
             }
+        },
+        "/search": {
+            "summary": "Searching",
+            "get": {
+                "summary": "Perform a search with a given query",
+                "operationId": "getSearch",
+                "tags": [
+                    "search"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response includes country identifiers associated with the given terms of the query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "name",
+                                            "codes"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "codes": {
+                                                "type": "object",
+                                                "required": [
+                                                    "alpha2Code",
+                                                    "alpha3Code"
+                                                ],
+                                                "properties": {
+                                                    "alpha2Code": {
+                                                        "type": "string"
+                                                    },
+                                                    "alpha3Code": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -2168,6 +2232,15 @@
                     }
                 }
             },
+            "query": {
+                "name": "query",
+                "in": "query",
+                "description": "Query to use in a search.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
             "countryID": {
                 "name": "identifier",
                 "in": "path",
@@ -2776,6 +2849,10 @@
         {
             "name": "global-stats",
             "description": "Global statistics for the COVID-19 pandemic"
+        },
+        {
+            "name": "search",
+            "description": "Searching"
         }
     ]
 }

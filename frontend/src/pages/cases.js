@@ -116,7 +116,7 @@ export default class Cases extends Component {
           const currValue = e.target.value;
           this.setState({searchValue:currValue});
           const filteredData = caseData.filter(entry =>
-            entry.country.name.includes(currValue)
+            entry.country.name.toLowerCase().includes(currValue)
           );
           this.setState({dataSource:filteredData});
         }}

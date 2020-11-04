@@ -79,6 +79,34 @@ export default class Cases extends Component {
       30000: 10000,
       40000: 200000
     };
+    let totalCasesFilterMappings = {
+      0: 5000,
+      5000: 15000,
+      20000: 80000,
+      100000: 400000,
+      500000: 10000000
+    };
+    let totalDeathsFilterMappings = {
+      0: 5000,
+      5000: 5000,
+      10000: 15000,
+      25000: 25000,
+      50000: 300000
+    };
+    let totalRecoveredFilterMappings = {
+      0: 5000,
+      5000: 15000,
+      20000: 80000,
+      100000: 400000,
+      500000: 10000000
+    };
+    let totalActiveFilterMappings = {
+      0: 5000,
+      5000: 15000,
+      20000: 30000,
+      50000: 150000,
+      200000: 10000000
+    };
     const columns = [
       {
         title: "Country",
@@ -122,7 +150,7 @@ export default class Cases extends Component {
           { text: '0 - 5,000', value: 0 },
         ], 
         filteredValue: filteredInfo.totalCases || null,
-        onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + 10),
+        onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + totalCasesFilterMappings[value]),
         ellipsis: true
       },
       {
@@ -139,7 +167,7 @@ export default class Cases extends Component {
           { text: '0 - 5,000', value: 0 },
         ], 
         filteredValue: filteredInfo.totalDeaths || null,
-        onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + 10),
+        onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + totalDeathsFilterMappings[value]),
         ellipsis: true
       },
       {
@@ -156,7 +184,7 @@ export default class Cases extends Component {
           { text: '0 - 5,000', value: 0 },
         ], 
         filteredValue: filteredInfo.totalRecovered || null,
-        onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + 10),
+        onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + totalRecoveredFilterMappings[value]),
         ellipsis: true
       },
       {
@@ -173,7 +201,7 @@ export default class Cases extends Component {
           { text: '0 - 5,000', value: 0 },
         ], 
         filteredValue: filteredInfo.totalActive || null,
-        onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + 10),
+        onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + totalActiveFilterMappings[value]),
         ellipsis: true
       },
       {

@@ -106,9 +106,18 @@ export default class Cases extends Component {
     
     const columns = [
       {
-        title:         <Input
+        title:         
+      <Input
         placeholder="Search"
-
+        value={searchValue}
+        onChange={e => {
+          const currValue = e.target.value;
+          this.setState({searchValue:currValue});
+          const filteredData = caseData.filter(entry =>
+            entry.country.name.includes(currValue)
+          );
+          this.setState({caseData:filteredData});
+        }}
       />,
         children: [
           {

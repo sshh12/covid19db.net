@@ -42,8 +42,7 @@ class CaseInstance extends Component {
             <Button variant="outline-secondary">Go back to cases</Button>
           </Link>
           <h1 id="page-title">
-            {" "}
-            {data.country.name} ({data.country.codes.alpha3Code})
+            Cases in {data.country.name} ({data.country.codes.alpha3Code})
           </h1>
           <div
             style={{
@@ -52,15 +51,35 @@ class CaseInstance extends Component {
               justifyContent: "start",
             }}
           >
-            <Totals title="Total Cases" data={data.totals.cases} />
-            <Totals title="Total Active" data={data.totals.active} />
-            <Totals title="Total Deaths" data={data.totals.deaths} />
-            <Totals title="Total Recovered" data={data.totals.recovered} />
-            <Totals title="Total Tests" data={data.testing.totalTests.value} />
+            <Totals
+              title="Total Cases"
+              data={data.totals.cases}
+              description="Total number of confirmed cases"
+            />
+            <Totals
+              title="Total Active"
+              data={data.totals.active}
+              description="Total number of active cases"
+            />
+            <Totals
+              title="Total Deaths"
+              data={data.totals.deaths}
+              description="Total number of deaths"
+            />
+            <Totals
+              title="Total Recovered"
+              data={data.totals.recovered}
+              description="Total number of recoveries"
+            />
+            <Totals
+              title="Total Tests"
+              data={data.testing.totalTests.value}
+              description="Total number of tests"
+            />
           </div>
           <div>
             <div id="new-stats-title-div">
-              <h2 id="subtitle">Today's Stats</h2>
+              <h2 id="subtitle">Recent Statistics</h2>
               <h2 id="new-stats-date">{data.date}</h2>
             </div>
             <div
@@ -79,6 +98,7 @@ class CaseInstance extends Component {
                     (data.derivativeNew.cases + Number.EPSILON) * 100
                   ) / 100
                 }
+                description="Number of new confirmed cases"
               />
               <NewStats
                 title="Active"
@@ -88,6 +108,7 @@ class CaseInstance extends Component {
                     (data.derivativeNew.active + Number.EPSILON) * 100
                   ) / 100
                 }
+                description="Number of new active cases"
               />
               <NewStats
                 title="Deaths"
@@ -97,6 +118,7 @@ class CaseInstance extends Component {
                     (data.derivativeNew.deaths + Number.EPSILON) * 100
                   ) / 100
                 }
+                description="Number of new deaths"
               />
               <NewStats
                 title="Recovered"
@@ -106,6 +128,7 @@ class CaseInstance extends Component {
                     (data.derivativeNew.recovered + Number.EPSILON) * 100
                   ) / 100
                 }
+                description="Number of new recoveries"
               />
               <NewStats
                 title="Tests"
@@ -115,11 +138,12 @@ class CaseInstance extends Component {
                     (data.testing.newTestsSmoothed.value + Number.EPSILON) * 100
                   ) / 100
                 }
+                description="Number of new tests"
               />
             </div>
           </div>
           <div style={{ marginTop: "50px" }}>
-            <h2 id="subtitle">General Stats</h2>
+            <h2 id="subtitle">General Statistics</h2>
             <div
               style={{
                 marginTop: "5px",
@@ -135,7 +159,7 @@ class CaseInstance extends Component {
                     (data.percentages.fatality + Number.EPSILON) * 100
                   ) / 100
                 }
-                description="total deaths/total cases"
+                description="Total deaths/total cases * 100"
               />
               <GenStats
                 title="Infection Rate"
@@ -144,7 +168,7 @@ class CaseInstance extends Component {
                     (data.percentages.infected + Number.EPSILON) * 100
                   ) / 100
                 }
-                description="total cases/total population"
+                description="Total cases/total population * 100"
               />
               <GenStats
                 title="Positivity Rate"
@@ -153,16 +177,16 @@ class CaseInstance extends Component {
                     (data.testing.positiveRate.value + Number.EPSILON) * 100
                   ) / 100
                 }
-                description="posititive tests/total tests"
+                description="Posititive tests/total tests * 100"
               />
               <GenStats
-                title="Recovery Rate"
+                title="Recovery Percentage"
                 data={
                   Math.round(
                     (data.percentages.haveRecovered + Number.EPSILON) * 100
                   ) / 100
                 }
-                description="total recovered/total cases"
+                description="Total recovered/total cases * 100"
               />
               <GenStats
                 title="Active Rate"
@@ -170,7 +194,7 @@ class CaseInstance extends Component {
                   Math.round((data.percentages.active + Number.EPSILON) * 100) /
                   100
                 }
-                description="total active/total cases"
+                description="Total active/total cases * 100"
               />
             </div>
           </div>

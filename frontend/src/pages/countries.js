@@ -7,10 +7,6 @@ import RangeInputFilter from "../components/rangeFilterInput";
 
 const { Option, OptGroup } = Select;
 
-const { Option, OptGroup } = Select;
-
-const { Option, OptGroup } = Select;
-
 export default class Countries extends Component {
   SORT_TYPES = {
     NAME: 1,
@@ -181,9 +177,7 @@ export default class Countries extends Component {
   }
 
   render() {
-    const data = this.state.countriesCardData;
     // Get all loaded country cards in the current view          
-
     const currentViewCards = this.state.currentViewCards;
     // Form model view if data has been loaded
     const pagination = currentViewCards && this.state.filteredCountries ? (

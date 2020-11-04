@@ -59,13 +59,12 @@ export default class Cases extends Component {
     
     const columns = [
       {
-        title:    
-          <SearchBar 
-            searchValue={searchValue}
-            data={caseData}
-            setDataSource={this.setDataSource}     
-            setSearchValue={this.setSearchValue}
-          />,
+        title: <SearchBar 
+                  searchValue={searchValue}
+                  data={caseData}
+                  setDataSource={this.setDataSource}     
+                  setSearchValue={this.setSearchValue}
+               />,
         children: [
           {
             title: "Country",

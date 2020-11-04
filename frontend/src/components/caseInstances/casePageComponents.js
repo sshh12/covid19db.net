@@ -1,8 +1,6 @@
 import React from "react";
-import { Button, Table, Tag, Space, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Input } from "antd";
 import Highlighter from "react-highlight-words";
-
 
 function HighlighterText(props) {
   return(
@@ -14,7 +12,6 @@ function HighlighterText(props) {
     /> 
   );
 }
-
 
 function SearchBar(props) {
   return(
@@ -36,7 +33,6 @@ function SearchBar(props) {
     />
   );
 }
-
 
 export {
   HighlighterText,

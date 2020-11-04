@@ -3,8 +3,8 @@ import { Button, Table, Tag, Space, Input } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
+import Highlighter from "react-highlight-words";
 import {
-  newCaseFilterMappings,
   totalActiveFilterMappings,
   totalCasesFilterMappings,
   totalDeathsFilterMappings,
@@ -130,18 +130,39 @@ export default class Cases extends Component {
             title: "Country",
             dataIndex: "country",
             key: "country",
-            render: (country) => (
-              <Link to={`/countries/${country.codes.alpha3Code}`}>
-                {country.name}
-              </Link>
-            ),
+            render: (country) =>  
+              searchValue != '' ?  (
+                <Link to={`/countries/${country.codes.alpha3Code}`}>
+                  <Highlighter
+                  highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={country ? country.name.toString() : ''}
+                  /> 
+                </Link>
+                
+              ):( 
+                <Link to={`/countries/${country.codes.alpha3Code}`}>
+                  {country.name}
+                </Link>
+              ),
             sorter: (a, b) => a.country.name.localeCompare(b.country.name),
           },
           {
             title: "Total Cases",
             dataIndex: "totalCases",
             key: "totalCases",
-            render: (population) => <>{population.toLocaleString()}</>,
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text.toLocaleString()}</>
+              ),
             sorter: (a, b) => a.totalCases - b.totalCases,
             filters: [
               { text: '500,000+', value: 500000 },
@@ -158,7 +179,17 @@ export default class Cases extends Component {
             title: "Total Deaths",
             dataIndex: "totalDeaths",
             key: "totalDeaths",
-            render: (population) => <>{population.toLocaleString()}</>,
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text.toLocaleString()}</>
+              ),
             sorter: (a, b) => a.totalDeaths - b.totalDeaths,
             filters: [
               { text: '50,000+', value: 50000 },
@@ -175,7 +206,17 @@ export default class Cases extends Component {
             title: "Total Recovered",
             dataIndex: "totalRecovered",
             key: "totalRecovered",
-            render: (population) => <>{population.toLocaleString()}</>,
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text.toLocaleString()}</>
+              ),
             sorter: (a, b) => a.totalRecovered - b.totalRecovered,
             filters: [
               { text: '500,000+', value: 500000 },
@@ -192,7 +233,17 @@ export default class Cases extends Component {
             title: "Total Active",
             dataIndex: "totalActive",
             key: "totalActive",
-            render: (population) => <>{population.toLocaleString()}</>,
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text.toLocaleString()}</>
+              ),
             sorter: (a, b) => a.totalActive - b.totalActive,
             filters: [
               { text: '200,000+', value: 200000 },

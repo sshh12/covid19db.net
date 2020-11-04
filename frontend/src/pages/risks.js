@@ -1,28 +1,21 @@
 import React, { Component } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
-import { Button, Table } from "antd";
-import Search from "react-search";
-import { Input, Space } from 'antd';
+import { Button, Table, Input } from "antd";
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
 
 export default class Risks extends Component {
   constructor() {
     super();
     this.state = {
       riskData: [],
-      items: [],
       filteredInfo: null,
       dataSource: null,
-
       searchValue: null,
-
-      // searchText: '',
-      // searchedColumn: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  // Api call here
   componentDidMount() {
     axios
       .get("risk-factor-statistics", {
@@ -41,49 +34,11 @@ export default class Risks extends Component {
           console.log("error: Promise not fulfilled");
         }
       );
-      // this.setState({ riskData });
-      // this.setState({dataSource: riskData});
-
-      // searching stuff
-      let curID = 0;
-      // begin by adding pages
-      let items = [
-        {id: curID++, value: "Risks", route: "/risk-factor-statistics"},
-      ];
-      // retrieve necessary data from API and populate remainder
-      const options = {
-        params: {
-          attributes: "name,codes"
-        }
-      };
-      // api call
-      axios.get("countries", options).then((res)=>{
-        // sort countries by name
-        res.data.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
-        // for each country, push possible results
-        res.data.forEach(country => {
-          const alpha3Code = country.codes.alpha3Code;
-          const identifier = `${country.name} (${country.codes.alpha2Code}, ${country.codes.alpha3Code})`;
-          items.push({
-            id: curID++,
-            value: "Risks for " + identifier,
-            route: `/risk-factor-statistics/${alpha3Code}`
-          });
-        });
-        this.setState({ items });
-      });
   }
-
-  // handleChange(pagination, filters, sorter, extra) {
-  //   console.log("params", pagination, filters, sorter, extra);
-  // }
 
   // navigate to route upon item selection
   onSelect(items){
     const selected = items[0];
-    // navigate to selected item if not undefined
     if(selected !== undefined){
       const route = this.state.items[selected.id].route;
       window.open(route, "_self");
@@ -94,81 +49,6 @@ export default class Risks extends Component {
   getItemsAsync(query, cb){
     cb(query);
   }
-
-  // handleChange = (pagination, filters) => {
-  //   console.log('Various parameters', pagination, filters);
-  //   this.setState({
-  //     filteredInfo: filters,
-  //   });
-  // };
-
-
-  // getColumnSearchProps = dataIndex => ({
-  //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-  //     <div style={{ padding: 8 }}>
-  //       <Input
-  //         ref={node => {
-  //           this.searchInput = node;
-  //         }}
-  //         placeholder={`Search ${dataIndex}`}
-  //         value={selectedKeys[0]}
-  //         onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-  //         onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-  //         style={{ width: 188, marginBottom: 8, display: 'block' }}
-  //       />
-  //       <Space>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-  //           icon={<SearchOutlined />}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Search
-  //         </Button>
-  //         <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-  //           Reset
-  //         </Button>
-  //       </Space>
-  //     </div>
-  //   ),
-  //   filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-  //   onFilter: (value, record) =>
-  //     record[dataIndex]
-  //       ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-  //       : '',
-  //   onFilterDropdownVisibleChange: visible => {
-  //     if (visible) {
-  //       setTimeout(() => this.searchInput.select(), 100);
-  //     }
-  //   },
-  //   render: text =>
-  //     this.state.searchedColumn === dataIndex ? (
-  //       <Highlighter
-  //         highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-  //         searchWords={[this.state.searchText]}
-  //         autoEscape
-  //         textToHighlight={text ? text.toString() : ''}
-  //       />
-  //     ) : (
-  //       text
-  //     ),
-  // });
-
-  // handleSearch = (selectedKeys, confirm, dataIndex) => {
-  //   confirm();
-  //   this.setState({
-  //     searchText: selectedKeys[0],
-  //     searchedColumn: dataIndex,
-  //   });
-  // };
-
-  // handleReset = clearFilters => {
-  //   clearFilters();
-  //   this.setState({ searchText: '' });
-  // };
-
-
 
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
@@ -187,16 +67,10 @@ export default class Risks extends Component {
     this.setState({searchValue:value});
   }
 
-
-
-
-
-
   render() {
     let { filteredInfo, searchValue, riskData } = this.state;
     filteredInfo = filteredInfo || {};
     const columns = [
-
       {
         title:         
         <Input
@@ -231,7 +105,6 @@ export default class Risks extends Component {
               </Link>
             ),
             sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
-            // TODO countries search
           },
           {
             title: "Life Expectancy",
@@ -249,7 +122,6 @@ export default class Risks extends Component {
                 <>{text?.toLocaleString()}</>
               ),
             sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
-
             filters: [
               { text: '80 - 90', value: 80 },
               { text: '70 - 80', value: 70 },
@@ -260,7 +132,6 @@ export default class Risks extends Component {
             filteredValue: filteredInfo.lifeExpectancy || null,
             onFilter: (value, record) => (record.lifeExpectancy > value && record.lifeExpectancy < value + 10),
             ellipsis: true,
-            // ...this.getColumnSearchProps('lifeExpectancy'),
           },
           {
             title: "HDI",
@@ -288,7 +159,6 @@ export default class Risks extends Component {
             filteredValue: filteredInfo.humanDevelopmentIndex || null,
             onFilter: (value, record) => (record.humanDevelopmentIndex > value && record.humanDevelopmentIndex < value + 0.050),
             ellipsis: true,
-            // ...this.getColumnSearchProps('humanDevelopmentIndex'),
           },
           {
             title: "Population Density",
@@ -316,7 +186,6 @@ export default class Risks extends Component {
             filteredValue: filteredInfo.populationDensity || null,
             onFilter: (value, record) => (record.populationDensity > value && record.populationDensity < value + 5000),
             ellipsis: true,
-            // ...this.getColumnSearchProps('populationDensity'),
           },
           {
             title: "Gini",
@@ -343,7 +212,6 @@ export default class Risks extends Component {
             filteredValue: filteredInfo.gini || null,
             onFilter: (value, record) => (record.gini > value && record.gini < value + 25),
             ellipsis: true,
-            // ...this.getColumnSearchProps('gini'),
           },
           {
             title: "Explore Risks",
@@ -374,19 +242,7 @@ export default class Risks extends Component {
         <h1 style={{ fontWeight: "800", fontSize: "2em", marginTop: "20px", marginBottom: "20px", }} >
           Risk Factors &amp; Statistics{" "}
         </h1>
-        {/* search bar */}
-        {/* <div style={{display: "flex", justifyContent: "center"}}>
-          <div style={{width: "50vw", backgroundColor: "#323776", userSelect: "none"}}>
-            <Search items={this.state.items}
-                    placeholder="Search for Risks"
-                    onItemsChanged={this.onSelect.bind(this)}
-                    getItemsAsync={this.getItemsAsync.bind(this)}
-                    NotFoundPlaceholder="No results match this query"
-              />
-          </div>
-        </div> */}
         <Button onClick={this.clearFilters}>Clear filters</Button>
-
         {/* Table of risk data */}
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}

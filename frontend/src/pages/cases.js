@@ -54,20 +54,6 @@ export default class Cases extends Component {
       });
   }
 
-  compileData(data) {
-    var compiledCase = {
-      country: data.country,
-      totalCases: data.totals.cases,
-      totalCases: data.totals.cases,
-      totalDeaths: data.totals.deaths,
-      totalRecovered: data.totals.recovered,
-      totalActive: data.totals.active,
-      exploreCase: data.country.codes.alpha3Code,
-      exploreRisk: data.country.codes.alpha3Code,
-    };
-
-    return compiledCase;
-  }
 
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
@@ -102,29 +88,28 @@ export default class Cases extends Component {
   // );
 
   render() {
-    let { sortedInfo, filteredInfo, caseData, searchValue } = this.state;
-    sortedInfo = sortedInfo || {};
+    let { filteredInfo, caseData, searchValue } = this.state;
     filteredInfo = filteredInfo || {};
     
     const columns = [
       {
         title:         
-      <Input
-        placeholder="Search"
-        value={searchValue}
-        onChange={e => {
-          const currValue = e.target.value;
-          this.setState({searchValue:currValue});
-          const filteredData = caseData.filter(entry =>
-            entry.country.name.toLowerCase().includes(currValue) ||
-            entry.totalCases.toString().includes(currValue) ||
-            entry.totalDeaths.toString().includes(currValue) ||
-            entry.totalRecovered.toString().includes(currValue) ||
-            entry.totalActive.toString().includes(currValue)
-          );
-          this.setState({dataSource:filteredData});
-        }}
-      />,
+          <Input
+            placeholder="Search"
+            value={searchValue}
+            onChange={e => {
+              const currValue = e.target.value;
+              this.setState({searchValue:currValue});
+              const filteredData = caseData.filter(entry =>
+                entry.country.name.toLowerCase().includes(currValue) ||
+                entry.totalCases.toString().includes(currValue) ||
+                entry.totalDeaths.toString().includes(currValue) ||
+                entry.totalRecovered.toString().includes(currValue) ||
+                entry.totalActive.toString().includes(currValue)
+              );
+              this.setState({dataSource:filteredData});
+            }}
+          />,
         children: [
           {
             title: "Country",

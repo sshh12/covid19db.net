@@ -124,7 +124,7 @@ export default class Risks extends Component {
         ellipsis: true,
       },
       {
-        title: "Human Development Index",
+        title: "HDI",
         dataIndex: "humanDevelopmentIndex",
         key: "humanDevelopmentIndex",
         sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,

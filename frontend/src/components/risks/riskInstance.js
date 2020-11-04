@@ -110,11 +110,13 @@ export default class RiskInstance extends Component {
               title="Human Development Index"
               data={humanDevelopmentIndex?.toFixed(3)}
               avg={Agg.humanDevelopmentIndex.toFixed(3)}
+              description="Indicator of level of human development (larger values imply more development)"
             />
             <BigStat
-              title="Gini Index"
+              title="GINI"
               data={gini?.toFixed(1)}
               avg={Agg.gini.toFixed(1)}
+              description="Coefficient which measures the level of wealth inequality (larger values imply more inequality)"
             />
             <BigStat
               title="GDP Per Capita"
@@ -122,6 +124,7 @@ export default class RiskInstance extends Component {
               data={`${gdpPerCapita?.toLocaleString()}`}
               suffix="/person"
               avg={`$${Agg.gdpPerCapita?.toLocaleString()}`}
+              description="Gross domestic product at purchasing power parity"
             />
           </div>
           <div style={{ marginTop: "10px" }}>
@@ -139,24 +142,28 @@ export default class RiskInstance extends Component {
               <DemographicFactor
                 title="Population Density"
                 data={populationDensity?.toFixed(3)}
-                suffix="people/sq.mi."
+                suffix="people/sq.km."
                 avg={Agg.populationDensity.toFixed(3)}
+                description="Number of people per square kilometer"
               />
               <DemographicFactor
                 title="Median Age"
                 data={medianAge?.toFixed(3)}
                 suffix="yrs."
                 avg={Agg.medianAge.toFixed(3)}
+                description="The median age of the population"
               />
               <DemographicFactor
                 title="Age 65 and Older"
                 data={`${aged65Older?.toFixed(3)}%`}
                 avg={`${Agg.aged65Older.toFixed(3)} %`}
+                description="Percentage of population that is 65 or older"
               />
               <DemographicFactor
                 title="Age 70 and Older"
                 data={`${aged70Older?.toFixed(3)}%`}
                 avg={`${Agg.aged70Older.toFixed(3)} %`}
+                description="Percentage of population that is 70 or older"
               />
             </div>
           </div>
@@ -175,47 +182,55 @@ export default class RiskInstance extends Component {
                 data={lifeExpectancy?.toFixed(2)}
                 suffix="yrs."
                 avg={`${Agg.lifeExpectancy.toFixed(2)}`}
+                description="Life expectancy at birth"
               />
               <HealthFactor
                 title="Extreme Poverty Rate"
                 data={`${extremePovertyRate?.toFixed(1)}%`}
                 avg={`${Agg.extremePovertyRate.toFixed(1)}%`}
+                description="Percentage of population living in extreme poverty"
               />
               <HealthFactor
                 title="Hospital Beds Per Thousand"
                 data={hospitalBedsPerThousand?.toFixed(3)}
                 avg={Agg.hospitalBedsPerThousand.toFixed(3)}
                 suffix="/thousand"
+                description="Number of hospital beds per 1,000 people"
               />
               <HealthFactor
                 title="Cardiovascular Death Rate"
                 data={cardiovascDeathRate?.toFixed(3)}
                 avg={Agg.cardiovascDeathRate.toFixed(3)}
                 suffix="/100,000"
+                description="Annual number of deaths per 100,000 people resulting from cardiovascular disease"
               />
               <HealthFactor
                 title="Diabetes Prevlaence"
                 data={`${diabetesPrevalence?.toFixed(3)}%`}
                 avg={`${Agg.diabetesPrevalence.toFixed(3)}%`}
                 suffix=" of adults"
+                description="Percentage of population which has diabetes"
               />
               <HealthFactor
                 title="Female Smokers"
                 data={`${femaleSmokers?.toFixed(1)}%`}
                 avg={`${Agg.femaleSmokers.toFixed(1)}%`}
                 suffix="of adults"
+                description="Percentage of women who smoke"
               />
               <HealthFactor
                 title="Male Smokers"
                 data={`${maleSmokers?.toFixed(1)}%`}
                 avg={`${Agg.maleSmokers.toFixed(1)}%`}
                 suffix="of adults"
+                description="Percentage of men who smoke"
               />
               <HealthFactor
                 title="Handwashing Facilities"
                 data={`${handwashingFacilities?.toFixed(3)}%`}
                 avg={`${Agg.handwashingFacilities?.toFixed(3)}%`}
                 suffix=" access"
+                description="Percentage of the population with access to basic handwashing facilities"
               />
             </div>
           </div>

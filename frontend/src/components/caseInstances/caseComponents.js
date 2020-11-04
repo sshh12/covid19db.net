@@ -1,33 +1,42 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
+import { Tooltip } from "antd";
 import "./caseInstance.css";
 
+// component used to display totals (cases, deaths, active, etc.)
 function Totals(props) {
   return (
-    <div className="totals">
-      <h2 className="totals-title">{props.title}</h2>
-      <h2 className="totals-data">{props.data?.toLocaleString()}</h2>
-    </div>
+    <Tooltip title={props.description} color="#323776">
+      <div className="totals">
+        <h2 className="totals-title">{props.title}</h2>
+        <h2 className="totals-data">{props.data?.toLocaleString()}</h2>
+      </div>
+    </Tooltip>
   );
 }
 
+// component used to display daily new stats (cases, deaths, etc.)
 function NewStats(props) {
   return (
-    <div className="new-stats">
-      <h2 className="new-stats-title">{props.title}</h2>
-      <h2 className="new-stats-data">{props.data?.toLocaleString()}</h2>
-      <h2 className="new-stats-title">{props.yesterday} from yesterday</h2>
-    </div>
+    <Tooltip title={props.description} color="#323776">
+      <div className="new-stats">
+        <h2 className="new-stats-title">{props.title}</h2>
+        <h2 className="new-stats-data">{props.data?.toLocaleString()}</h2>
+        <h2 className="new-stats-title">{props.yesterday} from yesterday</h2>
+      </div>
+    </Tooltip>
   );
 }
 
+// component used to display various other COVID-19 statistics
 function GenStats(props) {
   return (
-    <div className="new-stats">
-      <h2 className="new-stats-title">{props.title}</h2>
-      <h2 className="new-stats-data">{props.data}%</h2>
-      <h2 className="gen-stats-description">{props.description}</h2>
-    </div>
+    <Tooltip title={props.description} color="#323776">
+      <div className="new-stats">
+        <h2 className="new-stats-title">{props.title}</h2>
+        <h2 className="new-stats-data">{props.data}%</h2>
+      </div>
+    </Tooltip>
   );
 }
 

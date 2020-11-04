@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Button, Col, Divider, Dropdown, Input, Pagination, Row, Select, Slider, Space } from "antd";
-import { DownOutlined } from '@ant-design/icons';
-
+import { Col, Divider, Pagination, Row, Select, Space } from "antd";
 import axios from "../client";
 
-// import "../components/country/countryInstance.css";
 import CountryCard from "../components/country/countryCard.js";
+import RangeInputFilter from "../components/rangeFilterInput";
 
 const { Option, OptGroup } = Select;
 
@@ -21,19 +19,20 @@ export default class Countries extends Component {
   constructor() {
     super();
     this.state = {
-      countryCardsData: null,
-      filteredCountries: null,
-      currentViewCards: null,
-      firstCardIndex: 0,
+      countryCardsData: null, // Raw country JSON from API request
+      filteredCountries: null, // All countries filtered/sorted per user's actions
+      currentViewCards: null, // JSX for all country cards in current page view
+      firstCardIndex: 0, 
       lastCardIndex: 20,
-      numPerPage: 20,
+      numPerPage: 20, // Number of countries displayed per page
       pageNumber: 1,
-      sortBy: this.SORT_TYPES.NAME,
+      sortBy: this.SORT_TYPES.NAME, // Parameter to manage sorting process
       sortLowVal: 'A',
       sortHiVal: 'Z',
     };
     this.changeNumDisplayed = this.changeNumDisplayed.bind(this);
     this.changeSort = this.changeSort.bind(this);
+    this.handleUpdateRange = this.handleUpdateRange.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +54,7 @@ export default class Countries extends Component {
     const data = this.state.countryCardsData;
     var { filteredCountries } = this.state;
     if(!data || data.length == 0) {
+      // Do not update if no data or data is not populated
       return
     }
     // Re-filter countries for model
@@ -82,6 +82,7 @@ export default class Countries extends Component {
             // Filter any instances outside of range
             var lo = this.state.sortLowVal;
             var hi = this.state.sortHiVal;
+            const filterNone = (lo == -1 && hi == -1)
             switch(this.state.sortBy){
               case this.SORT_TYPES.NAME:
                 v = v.name.charAt(0).charCodeAt(0);
@@ -92,10 +93,11 @@ export default class Countries extends Component {
               case this.SORT_TYPES.ALPHA2:
                 v = v.codes.alpha2Code.charAt(0).charCodeAt(0);
                 break;
+              // Numerical cases: default to no filter and return entire range
               case this.SORT_TYPES.POPULATION:
-                return (v.population-lo)*(v.population-hi)<=0
+                return filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0
               case this.SORT_TYPES.NUM_CASES:
-                return (v.population-lo)*(v.population-hi)<=0
+                return filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0
             }
             lo = lo.charCodeAt(0)
             hi = hi.charCodeAt(0)
@@ -105,7 +107,7 @@ export default class Countries extends Component {
             filteredCountries: filteredCountries,
             pageNumber: 1,   
             firstCardIndex: 0,
-            lastCardIndex: this.state.pageSize,
+            lastCardIndex: this.state.numPerPage,
             currentViewCards: null
           });
     }
@@ -124,21 +126,41 @@ export default class Countries extends Component {
     }
   }
 
-  changeNumDisplayed(page, pageSize) {
+  changeNumDisplayed(page, numPerPage) {
     // Update pagination for current page and cards
     this.setState({
-      page: page,
-      numPerPage: pageSize,
+      numPerPage,
       pageNumber: page,
-      firstCardIndex: (page - 1) * pageSize,
-      lastCardIndex: page * pageSize,
+      firstCardIndex: (page - 1) * numPerPage,
+      lastCardIndex: page * numPerPage,
       currentViewCards: null
     });
   };
 
   changeSort(value) {
+    if(value == this.state.sortBy) {
+      return
+    }
+
+    var sortLowVal, sortHiVal
+    switch(value){
+      case this.SORT_TYPES.NAME:
+      case this.SORT_TYPES.ALPHA3:
+      case this.SORT_TYPES.ALPHA2:
+        sortLowVal = 'A';
+        sortHiVal = 'Z';
+        break;
+      case this.SORT_TYPES.POPULATION:
+      case this.SORT_TYPES.NUM_CASES:
+        // Numerical range: no initial range
+        sortLowVal = -1
+        sortHiVal = 1000000000
+    }
     this.setState({
-      sortBy: value
+      sortBy: value,
+      filteredCountries: null,
+      sortLowVal,
+      sortHiVal
     })
   }
 
@@ -146,18 +168,23 @@ export default class Countries extends Component {
     return countryCards;
   }
 
-  handleChange(e) {
-    console.log(e.target.value);
+  // Update hi or low value for range
+  handleUpdateRange(target, value) {
+    this.setState({ 
+      [target]: value, 
+      filteredCountries: null
+    })
   }
 
   render() {
+    // Get all loaded country cards in the current view          
     const currentViewCards = this.state.currentViewCards;
     // Form model view if data has been loaded
     const pagination = currentViewCards && this.state.filteredCountries ? (
       <Pagination
         style={{ display: "inline-block", verticalAlign: "top" }}
         current={this.state.pageNumber} // current page number
-        defaultPageSize={this.state.numPerPage} // default size of page
+        pageSize={this.state.numPerPage} // default size of page
         pageSizeOptions={["10", "20", "50", "100"]}
         onChange={this.changeNumDisplayed}
         total={this.state.filteredCountries.length} //total number of countries
@@ -165,6 +192,37 @@ export default class Countries extends Component {
     ) : (
       <div />
     );
+      console.log(this.state.sortBy, this.SORT_TYPES.NUM_CASES)
+    const gridControl = (
+      <Space className="country-display-header">
+        <div>Sort by:</div>
+        <Select 
+          style={{ width: 200, display: "inline-block", verticalAlign: "top"}} 
+          value={this.state.sortBy} 
+          onChange={this.changeSort}
+        >  
+          <OptGroup label="Name">
+            <Option value={this.SORT_TYPES.NAME} key="cName">Country Name</Option>
+            <Option value={this.SORT_TYPES.ALPHA2} key="iso2">ISO Alpha 2 Code</Option>
+            <Option value={this.SORT_TYPES.ALPHA3} key="iso3">ISO Alpha 3 Code</Option>
+          </OptGroup>
+          <OptGroup label="Statistics">
+            <Option value={this.SORT_TYPES.NUM_CASES} key="casesHi">Cases, Low-High</Option>
+            <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population, Low-High</Option>
+          </OptGroup>
+        </Select>
+        <RangeInputFilter 
+          style={{ textAlign: 'center' }} 
+          type={this.state.sortBy > this.SORT_TYPES.ALPHA3 ? "numeric" : "alpha"}
+          active={this.state.sortLowVal != -1} 
+          rangeLo={this.state.sortLowVal}
+          rangeHi={this.state.sortHiVal}
+          onChange={this.handleUpdateRange}
+        />
+        <Divider type="vertical" />
+        {pagination}          
+      </Space>
+    )
 
     const styles = {
       siteCardWrapper: {
@@ -183,57 +241,13 @@ export default class Countries extends Component {
         >
           Countries{" "}
         </h1>
-        <Space className="country-display-header">
-          <div>Sort by:</div>
-          <Select 
-            style={{ width: 200, display: "inline-block", verticalAlign: "top"}} 
-            defaultValue="Country Name" 
-            onChange={this.changeSort}
-          >  
-            <OptGroup label="Name">
-              <Option value={this.SORT_TYPES.NAME} key="cName">Country Name</Option>
-              <Option value={this.SORT_TYPES.ALPHA2} key="iso2">ISO Alpha 2 Code</Option>
-              <Option value={this.SORT_TYPES.ALPHA3} key="iso3">ISO Alpha 3 Code</Option>
-            </OptGroup>
-            <OptGroup label="Statistics">
-              <Option value={this.SORT_TYPES.NUM_CASES} key="casesHi">Cases, Low-High</Option>
-              <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population, Low-High</Option>
-            </OptGroup>
-          </Select>
-          <div>from</div>
-          <Input.Group>
-            <Input style={{ width: 40, textAlign: 'center', textTransform: "uppercase" }} defaultValue="A" maxLength="1" onPressEnter={e => this.setState({sortLowVal: e.target.value.toUpperCase(), filteredCountries: null})}/>
-            <Input
-              style={{
-                width: 40,
-                borderLeft: 0,
-                borderRight: 0,
-                pointerEvents: 'none',
-              }}
-              placeholder="to"
-              disabled
-            />
-            <Input
-              style={{
-                width: 40,
-                textAlign: 'center',
-                textTransform: "uppercase"
-              }}
-              defaultValue="Z"
-              maxLength="1"
-              onPressEnter={e => this.setState({sortHiVal: e.target.value.toUpperCase(), filteredCountries: null})}
-            />
-          </Input.Group>
-          <Divider type="vertical" />
-          {pagination}          
-        </Space>
-
+        {gridControl}
         <div className="site-card-wrapper" style={styles.siteCardWrapper}>
           <Row gutter={16} justify="center">
-            {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>oh no</div>}
+            {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>No country matches found...</div>}
           </Row>
         </div>
-        {Pagination}
+        {gridControl}
       </div>
     );
   }

@@ -3,6 +3,9 @@ import axios from "../client";
 import { Link } from "react-router-dom";
 import { Button, Table } from "antd";
 import Search from "react-search";
+import { Input, Space } from 'antd';
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
 
 export default class Risks extends Component {
   constructor() {
@@ -11,6 +14,9 @@ export default class Risks extends Component {
       riskData: [],
       items: [],
       filteredInfo: null,
+
+      searchText: '',
+      searchedColumn: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -91,6 +97,89 @@ export default class Risks extends Component {
   };
 
 
+
+
+
+
+  getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={node => {
+            this.searchInput = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+        : '',
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => this.searchInput.select(), 100);
+      }
+    },
+    render: text =>
+      this.state.searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[this.state.searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    this.setState({
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex,
+    });
+  };
+
+  handleReset = clearFilters => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   render() {
     let { filteredInfo } = this.state;
     filteredInfo = filteredInfo || {};
@@ -105,6 +194,7 @@ export default class Risks extends Component {
           </Link>
         ),
         sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
+// TODO countries search
       },
       {
         title: "Life Expectancy",
@@ -122,6 +212,7 @@ export default class Risks extends Component {
         filteredValue: filteredInfo.lifeExpectancy || null,
         onFilter: (value, record) => (record.lifeExpectancy > value && record.lifeExpectancy < value + 10),
         ellipsis: true,
+        // ...this.getColumnSearchProps('lifeExpectancy'),
       },
       {
         title: "HDI",
@@ -138,6 +229,7 @@ export default class Risks extends Component {
         filteredValue: filteredInfo.humanDevelopmentIndex || null,
         onFilter: (value, record) => (record.humanDevelopmentIndex > value && record.humanDevelopmentIndex < value + 0.050),
         ellipsis: true,
+        // ...this.getColumnSearchProps('humanDevelopmentIndex'),
       },
       {
         title: "Population Density",
@@ -154,6 +246,7 @@ export default class Risks extends Component {
         filteredValue: filteredInfo.populationDensity || null,
         onFilter: (value, record) => (record.populationDensity > value && record.populationDensity < value + 5000),
         ellipsis: true,
+        // ...this.getColumnSearchProps('populationDensity'),
       },
       {
         title: "Gini",
@@ -169,6 +262,7 @@ export default class Risks extends Component {
         filteredValue: filteredInfo.gini || null,
         onFilter: (value, record) => (record.gini > value && record.gini < value + 25),
         ellipsis: true,
+        // ...this.getColumnSearchProps('gini'),
       },
       {
         title: "Explore Risks",

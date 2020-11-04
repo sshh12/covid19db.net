@@ -2,56 +2,42 @@ import React, { Component, Fragment } from "react";
 import { Button, Input, InputNumber, Space } from "antd";
 
 class RangeFilterInput extends Component {
-    state = {
-        numericalRange: false
-    }
     
     render() {
-        const lowRangeSelection = this.props.alphaRange ? (
+        const alpha = this.props.type == "alpha";
+        const lowRangeSelection = alpha ? (
             <Input 
-                style={{ width: 40, textAlign: 'center', textTransform: "uppercase", pattern: "[A-Z]" }} 
-                defaultValue={this.props.rangeLo}
+                style={{ width: 40, textAlign: 'center', textTransform: "uppercase"}} 
+                value={this.props.rangeLo}
                 maxLength={this.props.maxInputLength || undefined} 
-                onPressEnter={e => this.props.onPressEnter('sortLowVal', e.target.value.replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
+                onChange={e => this.props.onChange('sortLowVal', e.target.value.toUpperCase().replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
             />
         ) : (
             <InputNumber
-                style={{ textAlign: 'center' }} 
+                style={{ width: "17ch", textAlign: 'center' }} 
                 formatter={v => v.replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
-                defaultValue={this.props.rangeLo} 
-                onPressEnter={e => this.props.onPressEnter('sortLowVal', parseInt(e.target.value.replace(/\D/g,'')))} // Parse as number on enter and re-filter
+                value={this.props.rangeLo} 
+                onChange={e => this.props.onChange('sortLowVal', parseInt(e.target.value.replace(/\D/g,'')))} // Parse as number on enter and re-filter
             />
         )
-        const hiRangeSelection = this.props.alphaRange ? (
+        const hiRangeSelection = alpha ? (
             <Input 
                 style={{ width: 40, textAlign: 'center', textTransform: "uppercase" }} 
-                defaultValue={this.props.rangeHi} 
+                value={this.props.rangeHi} 
                 maxLength={this.props.maxInputLength || undefined} 
-                onPressEnter={e => this.props.onPressEnter('sortHiVal', e.target.value.replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
+                onChange={e => this.props.onChange('sortHiVal', e.target.value.toUpperCase().replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
             />
         ) : (
             <InputNumber
-                style={{ textAlign: 'center' }} 
-                formatter={v => v.replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
-                defaultValue={this.props.rangeHi} 
-                onPressEnter={e => this.props.onPressEnter('sortHiVal', parseInt(e.target.value.replace(/\D/g,'')))} // Parse as number on enter and re-filter
+                style={{ width: "17ch", textAlign: 'center' }} 
+                formatter={v => v.toString().replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
+                value={this.props.rangeHi} 
+                onChange={e => this.props.onChange('sortHiVal', parseInt(e.toString().replace(/\D/g,'')))} // Parse as number on enter and re-filter
             />
         );
         var rangeInput = <div></div>;
-        if(this.props.alphaRange || this.state.numericalRange) {
-            if (this.state.numericalRange) {
-                rangeInput = (
-                    <Fragment>
-                        {lowRangeSelection}
-                        <Input
-                            style={{ width: 40, borderLeft: 0, borderRight: 0, pointerEvents: 'none' }}
-                            placeholder="to"
-                            disabled
-                        />
-                        {hiRangeSelection}  
-                    </Fragment>
-                )
-            } else {
+        if(this.props.active) {
+            if(alpha){
                 rangeInput = (
                     <Space className="range-component">
                         <div>{this.props.rangeKeyword}</div>
@@ -65,10 +51,23 @@ class RangeFilterInput extends Component {
                             {hiRangeSelection}
                         </Input.Group>
                     </Space>
-                )                
+                )                     
+            }
+            else {
+                rangeInput = (
+                    <Fragment>
+                        {lowRangeSelection}
+                        <Input
+                            style={{ width: 40, borderLeft: 0, borderRight: 0, pointerEvents: 'none' }}
+                            placeholder="to"
+                            disabled
+                        />
+                        {hiRangeSelection}  
+                    </Fragment>
+                )
             }
         } else {
-            rangeInput = (<Button type="text" onClick={() => { this.setState({ numericalRange: true }) }}>Set Range</Button>)
+            rangeInput = (<Button type="text" onClick={() => this.props.onChange('sortLowVal', 0)}>Set Range</Button>)
         }
         return rangeInput;
     }
@@ -79,7 +78,8 @@ RangeFilterInput.defaultProps = {
     rangeLo: 'A',
     rangeHi: 'Z',
     maxInputLength: 1,
-    alphaRange: true
+    active: true,
+    type: 'alpha'
 }
 
 export default RangeFilterInput;

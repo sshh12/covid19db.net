@@ -10,14 +10,14 @@ class RangeFilterInput extends Component {
                 style={{ width: 40, textAlign: 'center', textTransform: "uppercase"}} 
                 value={this.props.rangeLo}
                 maxLength={this.props.maxInputLength || undefined} 
-                onChange={e => this.props.onChange('sortLowVal', e.target.value.toUpperCase().replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
+                onChange={e => this.props.onChange('sortLowVal', e.target.value?.toUpperCase().replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
             />
         ) : (
             <InputNumber
                 style={{ width: "17ch", textAlign: 'center' }} 
                 formatter={v => v.toString().replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
                 value={this.props.rangeLo} 
-                onChange={e => this.props.onChange('sortLowVal', parseInt(e.toString().replace(/\D/g,'')))} // Parse as number on enter and re-filter
+                onChange={e => this.props.onChange('sortLowVal', parseInt(e?.toString().replace(/\D/g,'')))} // Parse as number on enter and re-filter
             />
         )
         const hiRangeSelection = alpha ? (
@@ -25,14 +25,14 @@ class RangeFilterInput extends Component {
                 style={{ width: 40, textAlign: 'center', textTransform: "uppercase" }} 
                 value={this.props.rangeHi} 
                 maxLength={this.props.maxInputLength || undefined} 
-                onChange={e => this.props.onChange('sortHiVal', e.target.value.toUpperCase().replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
+                onChange={e => this.props.onChange('sortHiVal', e.target.value?.toUpperCase().replace(/[^A-Z]/g,''))} // Parse as letter and re-filter
             />
         ) : (
             <InputNumber
                 style={{ width: "17ch", textAlign: 'center' }} 
                 formatter={v => v.toString().replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
                 value={this.props.rangeHi} 
-                onChange={e => this.props.onChange('sortHiVal', parseInt(e.toString().replace(/\D/g,'')))} // Parse as number on enter and re-filter
+                onChange={e => this.props.onChange('sortHiVal', parseInt(e?.toString().replace(/\D/g,'')))} // Parse as number on enter and re-filter
             />
         );
         var rangeInput = <div></div>;

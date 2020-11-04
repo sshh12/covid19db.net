@@ -10,8 +10,8 @@ const { Option, OptGroup } = Select;
 export default class Countries extends Component {
   SORT_TYPES = {
     NAME: 1,
-    ALPHA3: 2,
-    ALPHA2: 3,
+    ALPHA2: 2,
+    ALPHA3: 3,
     NUM_CASES: 4,
     POPULATION: 5,
   };
@@ -68,10 +68,10 @@ export default class Countries extends Component {
             switch(this.state.sortBy){
               case this.SORT_TYPES.NAME:
                 return reversed * a.name.localeCompare(b.name)
-              case this.SORT_TYPES.ALPHA3:
-                return reversed * a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
               case this.SORT_TYPES.ALPHA2:
                 return reversed * a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
+              case this.SORT_TYPES.ALPHA3:
+                return reversed * a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
               case this.SORT_TYPES.POPULATION:
                 return reversed * (a.population - b.population)
               case this.SORT_TYPES.NUM_CASES:
@@ -87,11 +87,11 @@ export default class Countries extends Component {
               case this.SORT_TYPES.NAME:
                 v = v.name.charAt(0).charCodeAt(0);
                 break;
-              case this.SORT_TYPES.ALPHA3:
-                v = v.codes.alpha3Code.charAt(0).charCodeAt(0);
-                break;
               case this.SORT_TYPES.ALPHA2:
                 v = v.codes.alpha2Code.charAt(0).charCodeAt(0);
+                break;
+              case this.SORT_TYPES.ALPHA3:
+                v = v.codes.alpha3Code.charAt(0).charCodeAt(0);
                 break;
               // Numerical cases: default to no filter and return entire range
               case this.SORT_TYPES.POPULATION:
@@ -143,8 +143,8 @@ export default class Countries extends Component {
     var sortLowVal, sortHiVal
     switch(value){
       case this.SORT_TYPES.NAME:
-      case this.SORT_TYPES.ALPHA3:
       case this.SORT_TYPES.ALPHA2:
+      case this.SORT_TYPES.ALPHA3:
         sortLowVal = 'A';
         sortHiVal = 'Z';
         break;
@@ -178,8 +178,7 @@ export default class Countries extends Component {
     // Get all loaded country cards in the current view          
     const { currentViewCards, filteredCountries } = this.state;
     // Form model view if data has been loaded
-    console.log(filteredCountries)
-    const pagination = currentViewCards?.length!=0 && filteredCountries && filteredCountries.length!=0 ? (
+    const pagination = currentViewCards && filteredCountries ? (
       <Pagination
         style={{ display: "inline-block", verticalAlign: "top" }}
         current={this.state.pageNumber} // current page number
@@ -193,7 +192,7 @@ export default class Countries extends Component {
       />
     ) : <div />;
 
-    const gridControl = filteredCountries ? (
+    const gridControl = (
       <Space className="country-display-header">
         <div>Sort by:</div>
         <Select 
@@ -222,7 +221,7 @@ export default class Countries extends Component {
         <Divider type="vertical" />
         {pagination}          
       </Space>
-    ) : <div />;
+    );
 
     return (
       <div className="App">

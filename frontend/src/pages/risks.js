@@ -14,9 +14,12 @@ export default class Risks extends Component {
       riskData: [],
       items: [],
       filteredInfo: null,
+      dataSource: null,
 
-      searchText: '',
-      searchedColumn: '',
+      searchValue: null,
+
+      // searchText: '',
+      // searchedColumn: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -32,11 +35,14 @@ export default class Risks extends Component {
         (res) => {
           const riskData = res.data;
           this.setState({ riskData });
+          this.setState({dataSource: riskData});
         },
         (error) => {
           console.log("error: Promise not fulfilled");
         }
       );
+      // this.setState({ riskData });
+      // this.setState({dataSource: riskData});
 
       // searching stuff
       let curID = 0;
@@ -70,9 +76,9 @@ export default class Risks extends Component {
       });
   }
 
-  handleChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
-  }
+  // handleChange(pagination, filters, sorter, extra) {
+  //   console.log("params", pagination, filters, sorter, extra);
+  // }
 
   // navigate to route upon item selection
   onSelect(items){
@@ -89,91 +95,97 @@ export default class Risks extends Component {
     cb(query);
   }
 
+  // handleChange = (pagination, filters) => {
+  //   console.log('Various parameters', pagination, filters);
+  //   this.setState({
+  //     filteredInfo: filters,
+  //   });
+  // };
+
+
+  // getColumnSearchProps = dataIndex => ({
+  //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+  //     <div style={{ padding: 8 }}>
+  //       <Input
+  //         ref={node => {
+  //           this.searchInput = node;
+  //         }}
+  //         placeholder={`Search ${dataIndex}`}
+  //         value={selectedKeys[0]}
+  //         onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+  //         onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+  //         style={{ width: 188, marginBottom: 8, display: 'block' }}
+  //       />
+  //       <Space>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+  //           icon={<SearchOutlined />}
+  //           size="small"
+  //           style={{ width: 90 }}
+  //         >
+  //           Search
+  //         </Button>
+  //         <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+  //           Reset
+  //         </Button>
+  //       </Space>
+  //     </div>
+  //   ),
+  //   filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+  //   onFilter: (value, record) =>
+  //     record[dataIndex]
+  //       ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+  //       : '',
+  //   onFilterDropdownVisibleChange: visible => {
+  //     if (visible) {
+  //       setTimeout(() => this.searchInput.select(), 100);
+  //     }
+  //   },
+  //   render: text =>
+  //     this.state.searchedColumn === dataIndex ? (
+  //       <Highlighter
+  //         highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+  //         searchWords={[this.state.searchText]}
+  //         autoEscape
+  //         textToHighlight={text ? text.toString() : ''}
+  //       />
+  //     ) : (
+  //       text
+  //     ),
+  // });
+
+  // handleSearch = (selectedKeys, confirm, dataIndex) => {
+  //   confirm();
+  //   this.setState({
+  //     searchText: selectedKeys[0],
+  //     searchedColumn: dataIndex,
+  //   });
+  // };
+
+  // handleReset = clearFilters => {
+  //   clearFilters();
+  //   this.setState({ searchText: '' });
+  // };
+
+
+
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
-    this.setState({
-      filteredInfo: filters,
-    });
+    this.setState({ filteredInfo: filters });
   };
 
-
-
-
-
-
-  getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={node => {
-            this.searchInput = node;
-          }}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-    onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-        : '',
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => this.searchInput.select(), 100);
-      }
-    },
-    render: text =>
-      this.state.searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[this.state.searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
-  });
-
-  handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    this.setState({
-      searchText: selectedKeys[0],
-      searchedColumn: dataIndex,
-    });
+  clearFilters = () => {
+    this.setState({ filteredInfo: null });
   };
 
-  handleReset = clearFilters => {
-    clearFilters();
-    this.setState({ searchText: '' });
-  };
+  setDataSource = (dataSource) => {
+    this.setState({dataSource:dataSource});
+  }
 
-
-
-
-
-
-
-
-
+  setSearchValue = (value) => {
+    this.setState({searchValue:value});
+  }
 
 
 
@@ -181,109 +193,131 @@ export default class Risks extends Component {
 
 
   render() {
-    let { filteredInfo } = this.state;
+    let { filteredInfo, searchValue, riskData } = this.state;
     filteredInfo = filteredInfo || {};
     const columns = [
-      {
-        title: "Country",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/countries/${country?.codes?.alpha3Code}`}>
-            {country?.name}
-          </Link>
-        ),
-        sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
-// TODO countries search
-      },
-      {
-        title: "Life Expectancy",
-        dataIndex: "lifeExpectancy",
-        key: "lifeExpectancy",
-        sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
 
-        filters: [
-          { text: '80 - 90', value: 80 },
-          { text: '70 - 80', value: 70 },
-          { text: '60 - 70', value: 60 },
-          { text: '50 - 60', value: 50 },
-          { text: '40 - 50', value: 40 },
-        ],
-        filteredValue: filteredInfo.lifeExpectancy || null,
-        onFilter: (value, record) => (record.lifeExpectancy > value && record.lifeExpectancy < value + 10),
-        ellipsis: true,
-        // ...this.getColumnSearchProps('lifeExpectancy'),
-      },
       {
-        title: "HDI",
-        dataIndex: "humanDevelopmentIndex",
-        key: "humanDevelopmentIndex",
-        sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
-        filters: [
-          { text: '0.500 - 0.550', value: 0.500 },
-          { text: '0.450 - 0.500', value: 0.450 },
-          { text: '0.400 - 0.450', value: 0.400 },
-          { text: '0.350 - 0.400', value: 0.350 },
-          { text: '0.300 - 0.350', value: 0.300 },  
-        ],
-        filteredValue: filteredInfo.humanDevelopmentIndex || null,
-        onFilter: (value, record) => (record.humanDevelopmentIndex > value && record.humanDevelopmentIndex < value + 0.050),
-        ellipsis: true,
-        // ...this.getColumnSearchProps('humanDevelopmentIndex'),
-      },
-      {
-        title: "Population Density",
-        dataIndex: "populationDensity",
-        key: "populationDensity",
-        render: (population) => <>{population?.toLocaleString()}</>,
-        sorter: (a, b) => a?.populationDensity - b?.populationDensity,
-        filters: [
-          { text: '15000 - 20000', value: 15000 },
-          { text: '10000 - 15000', value: 10000 },
-          { text: '5000 - 10000', value: 5000 },
-          { text: '0 - 5000', value: 0 },
-        ],
-        filteredValue: filteredInfo.populationDensity || null,
-        onFilter: (value, record) => (record.populationDensity > value && record.populationDensity < value + 5000),
-        ellipsis: true,
-        // ...this.getColumnSearchProps('populationDensity'),
-      },
-      {
-        title: "Gini",
-        dataIndex: "gini",
-        key: "gini",
-        sorter: (a, b) => a?.gini - b?.gini,
-        filters: [
-          { text: '75 - 100', value: 75 },
-          { text: '50 - 75', value: 50 },
-          { text: '25 - 50', value: 25 },
-          { text: '0 - 25', value: 0 },
-        ],
-        filteredValue: filteredInfo.gini || null,
-        onFilter: (value, record) => (record.gini > value && record.gini < value + 25),
-        ellipsis: true,
-        // ...this.getColumnSearchProps('gini'),
-      },
-      {
-        title: "Explore Risks",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </Link>
-        ),
-      },
-      {
-        title: "Explore Cases",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </Link>
-        ),
-      },
+        title:         
+        <Input
+          placeholder="Search"
+          value={searchValue}
+          onChange={e => {
+            const currValue = e.target.value;
+            this.setState({searchValue:currValue});
+            const filteredData = riskData.filter(entry =>
+              entry?.country?.name?.toLowerCase().includes(currValue) ||
+              entry?.lifeExpectancy?.toString().includes(currValue) ||
+              entry?.humanDevelopmentIndex?.toString().includes(currValue) ||
+              entry?.populationDensity?.toString().includes(currValue) ||
+              entry?.gini?.toString().includes(currValue)
+            );
+            this.setState({dataSource:filteredData});
+          }}
+        />,
+        children: [
+          {
+            title: "Country",
+            dataIndex: "country",
+            key: "country",
+            render: (country) => (
+              <Link to={`/countries/${country?.codes?.alpha3Code}`}>
+                {country?.name}
+              </Link>
+            ),
+            sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
+            // TODO countries search
+          },
+          {
+            title: "Life Expectancy",
+            dataIndex: "lifeExpectancy",
+            key: "lifeExpectancy",
+            sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
+
+            filters: [
+              { text: '80 - 90', value: 80 },
+              { text: '70 - 80', value: 70 },
+              { text: '60 - 70', value: 60 },
+              { text: '50 - 60', value: 50 },
+              { text: '40 - 50', value: 40 },
+            ],
+            filteredValue: filteredInfo.lifeExpectancy || null,
+            onFilter: (value, record) => (record.lifeExpectancy > value && record.lifeExpectancy < value + 10),
+            ellipsis: true,
+            // ...this.getColumnSearchProps('lifeExpectancy'),
+          },
+          {
+            title: "HDI",
+            dataIndex: "humanDevelopmentIndex",
+            key: "humanDevelopmentIndex",
+            sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
+            filters: [
+              { text: '0.500 - 0.550', value: 0.500 },
+              { text: '0.450 - 0.500', value: 0.450 },
+              { text: '0.400 - 0.450', value: 0.400 },
+              { text: '0.350 - 0.400', value: 0.350 },
+              { text: '0.300 - 0.350', value: 0.300 },  
+            ],
+            filteredValue: filteredInfo.humanDevelopmentIndex || null,
+            onFilter: (value, record) => (record.humanDevelopmentIndex > value && record.humanDevelopmentIndex < value + 0.050),
+            ellipsis: true,
+            // ...this.getColumnSearchProps('humanDevelopmentIndex'),
+          },
+          {
+            title: "Population Density",
+            dataIndex: "populationDensity",
+            key: "populationDensity",
+            render: (population) => <>{population?.toLocaleString()}</>,
+            sorter: (a, b) => a?.populationDensity - b?.populationDensity,
+            filters: [
+              { text: '15000 - 20000', value: 15000 },
+              { text: '10000 - 15000', value: 10000 },
+              { text: '5000 - 10000', value: 5000 },
+              { text: '0 - 5000', value: 0 },
+            ],
+            filteredValue: filteredInfo.populationDensity || null,
+            onFilter: (value, record) => (record.populationDensity > value && record.populationDensity < value + 5000),
+            ellipsis: true,
+            // ...this.getColumnSearchProps('populationDensity'),
+          },
+          {
+            title: "Gini",
+            dataIndex: "gini",
+            key: "gini",
+            sorter: (a, b) => a?.gini - b?.gini,
+            filters: [
+              { text: '75 - 100', value: 75 },
+              { text: '50 - 75', value: 50 },
+              { text: '25 - 50', value: 25 },
+              { text: '0 - 25', value: 0 },
+            ],
+            filteredValue: filteredInfo.gini || null,
+            onFilter: (value, record) => (record.gini > value && record.gini < value + 25),
+            ellipsis: true,
+            // ...this.getColumnSearchProps('gini'),
+          },
+          {
+            title: "Explore Risks",
+            dataIndex: "country",
+            key: "country",
+            render: (country) => (
+              <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
+                <Button>Explore</Button>
+              </Link>
+            ),
+          },
+          {
+            title: "Explore Cases",
+            dataIndex: "country",
+            key: "country",
+            render: (country) => (
+              <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
+                <Button>Explore</Button>
+              </Link>
+            ),
+          },
+        ]
+      }
     ];
     const data = this.state.riskData;
     return (
@@ -292,7 +326,7 @@ export default class Risks extends Component {
           Risk Factors &amp; Statistics{" "}
         </h1>
         {/* search bar */}
-        <div style={{display: "flex", justifyContent: "center"}}>
+        {/* <div style={{display: "flex", justifyContent: "center"}}>
           <div style={{width: "50vw", backgroundColor: "#323776", userSelect: "none"}}>
             <Search items={this.state.items}
                     placeholder="Search for Risks"
@@ -301,12 +335,14 @@ export default class Risks extends Component {
                     NotFoundPlaceholder="No results match this query"
               />
           </div>
-        </div>
+        </div> */}
+        <Button onClick={this.clearFilters}>Clear filters</Button>
+
         {/* Table of risk data */}
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
-          dataSource={data}
+          dataSource={this.state.dataSource}
           onChange={this.handleChange}
           pagination={{ position: ["bottomRight", "topRight"] }}
         ></Table>

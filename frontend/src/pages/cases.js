@@ -95,6 +95,7 @@ export default class Cases extends Component {
         title: "New Cases Today",
         dataIndex: "newCases",
         key: "newCases",
+        render: (population) => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.newCases - b.newCases,
         filters: [
           { text: '40,000+', value: 40000 },
@@ -113,6 +114,16 @@ export default class Cases extends Component {
         key: "totalCases",
         render: (population) => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalCases - b.totalCases,
+        filters: [
+          { text: '500,000+', value: 500000 },
+          { text: '100,000 - 500,000', value: 100000 },
+          { text: '20,000 - 100,000', value: 20000 },
+          { text: '5,000 - 20,000', value: 5000 },
+          { text: '0 - 5,000', value: 0 },
+        ], 
+        filteredValue: filteredInfo.totalCases || null,
+        onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + 10),
+        ellipsis: true
       },
       {
         title: "Total Deaths",
@@ -120,6 +131,16 @@ export default class Cases extends Component {
         key: "totalDeaths",
         render: (population) => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalDeaths - b.totalDeaths,
+        filters: [
+          { text: '50,000+', value: 50000 },
+          { text: '25,000 - 50,000', value: 25000 },
+          { text: '10,000 - 25,000', value: 10000 },
+          { text: '5,000 - 10,000', value: 5000 },
+          { text: '0 - 5,000', value: 0 },
+        ], 
+        filteredValue: filteredInfo.totalDeaths || null,
+        onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + 10),
+        ellipsis: true
       },
       {
         title: "Total Recovered",
@@ -127,6 +148,16 @@ export default class Cases extends Component {
         key: "totalRecovered",
         render: (population) => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalRecovered - b.totalRecovered,
+        filters: [
+          { text: '500,000+', value: 500000 },
+          { text: '100,000 - 500,000', value: 100000 },
+          { text: '20,000 - 100,000', value: 20000 },
+          { text: '5,000 - 20,000', value: 5000 },
+          { text: '0 - 5,000', value: 0 },
+        ], 
+        filteredValue: filteredInfo.totalRecovered || null,
+        onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + 10),
+        ellipsis: true
       },
       {
         title: "Total Active",
@@ -134,6 +165,16 @@ export default class Cases extends Component {
         key: "totalActive",
         render: (population) => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.totalActive - b.totalActive,
+        filters: [
+          { text: '200,000+', value: 200000 },
+          { text: '50,000 - 200,000', value: 50000 },
+          { text: '20,000 - 50,000', value: 20000 },
+          { text: '5,000 - 20,000', value: 5000 },
+          { text: '0 - 5,000', value: 0 },
+        ], 
+        filteredValue: filteredInfo.totalActive || null,
+        onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + 10),
+        ellipsis: true
       },
       {
         title: "Explore Cases",

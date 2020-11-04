@@ -222,7 +222,12 @@ export default class Risks extends Component {
             key: "country",
             render: (country) => (
               <Link to={`/countries/${country?.codes?.alpha3Code}`}>
-                {country?.name}
+                <Highlighter
+                  highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={country ? country?.name.toString() : ''}
+                  /> 
               </Link>
             ),
             sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
@@ -232,6 +237,17 @@ export default class Risks extends Component {
             title: "Life Expectancy",
             dataIndex: "lifeExpectancy",
             key: "lifeExpectancy",
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text?.toLocaleString()}</>
+              ),
             sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
 
             filters: [
@@ -250,6 +266,17 @@ export default class Risks extends Component {
             title: "HDI",
             dataIndex: "humanDevelopmentIndex",
             key: "humanDevelopmentIndex",
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text?.toLocaleString()}</>
+              ),
             sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
             filters: [
               { text: '0.500 - 0.550', value: 0.500 },
@@ -269,6 +296,17 @@ export default class Risks extends Component {
             key: "populationDensity",
             render: (population) => <>{population?.toLocaleString()}</>,
             sorter: (a, b) => a?.populationDensity - b?.populationDensity,
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text?.toLocaleString()}</>
+              ),
             filters: [
               { text: '15000 - 20000', value: 15000 },
               { text: '10000 - 15000', value: 10000 },
@@ -285,6 +323,17 @@ export default class Risks extends Component {
             dataIndex: "gini",
             key: "gini",
             sorter: (a, b) => a?.gini - b?.gini,
+            render: (text) =>  
+              searchValue != '' ?  (
+                <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[searchValue]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+                /> 
+              ):( 
+                <>{text?.toLocaleString()}</>
+              ),
             filters: [
               { text: '75 - 100', value: 75 },
               { text: '50 - 75', value: 50 },

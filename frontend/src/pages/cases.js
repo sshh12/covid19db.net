@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Button, Table, Tag, Space, Input } from "antd";
+import { Button, Table} from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
-import Highlighter from "react-highlight-words";
 import {filterData} from './../components/caseInstances/caseModelData.js';
-import {HighlighterText} from './../components/caseInstances/casePageComponents';
+import {HighlighterText, SearchBar} from './../components/caseInstances/casePageComponents';
 
 export default class Cases extends Component {
   constructor() {
@@ -21,13 +20,11 @@ export default class Cases extends Component {
 
   componentDidMount() {
     // Get request to countries API for country card data
-    axios
-      .get("case-statistics", {
+    axios.get("case-statistics", {
         params: {
           attributes: "country,totals,new",
         },
-      })
-      .then((res) => {
+      }).then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
@@ -45,42 +42,16 @@ export default class Cases extends Component {
         });
         this.setState({ caseData });
         this.setState({dataSource: caseData});
-        //console.log(caseData);
       });
   }
-
 
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
     this.setState({ filteredInfo: filters });
   };
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
-  setDataSource = (dataSource) => {
-    this.setState({dataSource:dataSource});
-  }
-
-  setSearchValue = (value) => {
-    this.setState({searchValue:value});
-  }
-
-  // const FilterByNameInput = (
-  //   <Input
-  //     placeholder="Search Name"
-  //     value={value}
-  //     onChange={e => {
-  //       const currValue = e.target.value;
-  //       setValue(currValue);
-  //       const filteredData = data.filter(entry =>
-  //         entry.name.includes(currValue)
-  //       );
-  //       setDataSource(filteredData);
-  //     }}
-  //   />
-  // );
+  clearFilters = () => {this.setState({ filteredInfo: null });};
+  setDataSource = (dataSource) => {this.setState({dataSource:dataSource});}
+  setSearchValue = (value) => {this.setState({searchValue:value});}
 
   render() {
     let { filteredInfo, caseData, searchValue } = this.state;
@@ -88,22 +59,12 @@ export default class Cases extends Component {
     
     const columns = [
       {
-        title:         
-          <Input
-            placeholder="Search"
-            value={searchValue}
-            onChange={e => {
-              const currValue = e.target.value;
-              this.setState({searchValue:currValue});
-              const filteredData = caseData.filter(entry =>
-                entry.country.name.toLowerCase().includes(currValue) ||
-                entry.totalCases.toString().includes(currValue) ||
-                entry.totalDeaths.toString().includes(currValue) ||
-                entry.totalRecovered.toString().includes(currValue) ||
-                entry.totalActive.toString().includes(currValue)
-              );
-              this.setState({dataSource:filteredData});
-            }}
+        title:    
+          <SearchBar 
+            searchValue={searchValue}
+            data={caseData}
+            setDataSource={this.setDataSource}     
+            setSearchValue={this.setSearchValue}
           />,
         children: [
           {
@@ -111,39 +72,21 @@ export default class Cases extends Component {
             dataIndex: "country",
             key: "country",
             render: (country) =>  
-              searchValue != '' ?  (
-                <Link to={`/countries/${country.codes.alpha3Code}`}>
-                  <Highlighter
-                  highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={country ? country.name.toString() : ''}
-                  /> 
-                </Link>
-                
-              ):( 
-                <Link to={`/countries/${country.codes.alpha3Code}`}>
-                  {country.name}
-                </Link>
-              ),
+              <Link to={`/countries/${country.codes.alpha3Code}`}>
+                {searchValue != '' 
+                  ? <HighlighterText text={country.name} searchValue={searchValue} />
+                  : country.name
+                }
+              </Link>,
             sorter: (a, b) => a.country.name.localeCompare(b.country.name),
           },
           {
             title: "Total Cases",
             dataIndex: "totalCases",
             key: "totalCases",
-            render: (text) =>  
-              searchValue != '' ?  (
-                // <Highlighter
-                // highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                // searchWords={[searchValue]}
-                // autoEscape
-                // textToHighlight={text ? text.toString() : ''}
-                // /> 
-                <HighlighterText text={text} searchValue={searchValue} />
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalCases - b.totalCases,
             filters: filterData.totalCasesFilterRanges,
             filteredValue: filteredInfo.totalCases || null,
@@ -154,17 +97,9 @@ export default class Cases extends Component {
             title: "Total Deaths",
             dataIndex: "totalDeaths",
             key: "totalDeaths",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalDeaths - b.totalDeaths,
             filters: filterData.totalDeathsFilterRanges,
             filteredValue: filteredInfo.totalDeaths || null,
@@ -175,17 +110,9 @@ export default class Cases extends Component {
             title: "Total Recovered",
             dataIndex: "totalRecovered",
             key: "totalRecovered",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalRecovered - b.totalRecovered,
             filters: filterData.totalRecoveredFilterRanges, 
             filteredValue: filteredInfo.totalRecovered || null,
@@ -196,17 +123,9 @@ export default class Cases extends Component {
             title: "Total Active",
             dataIndex: "totalActive",
             key: "totalActive",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalActive - b.totalActive,
             filters: filterData.totalActiveFilterRanges, 
             filteredValue: filteredInfo.totalActive || null,

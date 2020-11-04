@@ -68,11 +68,12 @@ export default class Cases extends Component {
 
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
-    this.setState({
-      filteredInfo: filters,
-    });
+    this.setState({ filteredInfo: filters });
   };
 
+  clearFilters = () => {
+    this.setState({ filteredInfo: null });
+  };
 
 
   render() {
@@ -195,6 +196,7 @@ export default class Cases extends Component {
           {" "}
           Cases{" "}
         </h1>
+        <Button onClick={this.clearFilters}>Clear filters</Button>
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}

@@ -13,17 +13,10 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    axios.get("global-stats").then(
-      (res) => {
-        const globalData = res.data;
-        console.log(globalData);
-        this.setState({ globalData });
-      },
-      (error) => {
-        console.log("error: promise not fulfilled");
-        console.log(error);
-      }
-    );
+    axios.get("global-stats").then((res) => {
+      const globalData = res.data;
+      this.setState({ globalData });
+    });
   }
 
   render() {

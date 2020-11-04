@@ -25,7 +25,6 @@ export default class CountryInstance extends Component {
 
   render() {
     const data = this.state.countryData;
-    console.log(this.props.code);
     if (!data) {
       return <div />;
     }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Totals, NewStats, GenStats, CaseResponseLine } from "./caseComponents";
 import { Link } from "react-router-dom";
-import { Button } from 'antd';
+import { Button } from "antd";
 import Map from "../../components/map";
 import axios from "../../client";
 import "./caseInstance.css";
@@ -15,16 +15,10 @@ class CaseInstance extends Component {
   }
 
   componentDidMount() {
-    axios.get("case-statistics/" + this.props.code).then(
-      (res) => {
-        const caseData = res.data;
-        this.setState({ caseData });
-      },
-      (error) => {
-        console.log("error: promise not fulfilled");
-        console.log(error);
-      }
-    );
+    axios.get("case-statistics/" + this.props.code).then((res) => {
+      const caseData = res.data;
+      this.setState({ caseData });
+    });
   }
 
   render() {
@@ -33,7 +27,6 @@ class CaseInstance extends Component {
     if (!data) {
       return <div />;
     }
-    console.log(data);
 
     return (
       <div className="App">
@@ -87,7 +80,7 @@ class CaseInstance extends Component {
                 marginTop: "5px",
                 display: "flex",
                 justifyContent: "left",
-                flexWrap: 'wrap'
+                flexWrap: "wrap",
               }}
             >
               <NewStats
@@ -149,7 +142,7 @@ class CaseInstance extends Component {
                 marginTop: "5px",
                 display: "flex",
                 justifyContent: "left",
-                flexWrap: 'wrap'
+                flexWrap: "wrap",
               }}
             >
               <GenStats

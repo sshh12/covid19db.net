@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
 import { Button, Table, Input } from "antd";
-import Highlighter from 'react-highlight-words';
+import Highlighter from "react-highlight-words";
 
 export default class Risks extends Component {
   constructor() {
@@ -24,34 +24,28 @@ export default class Risks extends Component {
             "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities",
         },
       })
-      .then(
-        (res) => {
-          const riskData = res.data;
-          this.setState({ riskData });
-          this.setState({dataSource: riskData});
-        },
-        (error) => {
-          console.log("error: Promise not fulfilled");
-        }
-      );
+      .then((res) => {
+        const riskData = res.data;
+        this.setState({ riskData });
+        this.setState({ dataSource: riskData });
+      });
   }
 
   // navigate to route upon item selection
-  onSelect(items){
+  onSelect(items) {
     const selected = items[0];
-    if(selected !== undefined){
+    if (selected !== undefined) {
       const route = this.state.items[selected.id].route;
       window.open(route, "_self");
     }
   }
 
   // load search results asynchronously
-  getItemsAsync(query, cb){
+  getItemsAsync(query, cb) {
     cb(query);
   }
 
   handleChange = (pagination, filters) => {
-    console.log('Various parameters', pagination, filters);
     this.setState({ filteredInfo: filters });
   };
 
@@ -60,35 +54,39 @@ export default class Risks extends Component {
   };
 
   setDataSource = (dataSource) => {
-    this.setState({dataSource:dataSource});
-  }
+    this.setState({ dataSource: dataSource });
+  };
 
   setSearchValue = (value) => {
-    this.setState({searchValue:value});
-  }
+    this.setState({ searchValue: value });
+  };
 
   render() {
     let { filteredInfo, searchValue, riskData } = this.state;
     filteredInfo = filteredInfo || {};
     const columns = [
       {
-        title:         
-        <Input
-          placeholder="Search"
-          value={searchValue}
-          onChange={e => {
-            const currValue = e.target.value;
-            this.setState({searchValue:currValue});
-            const filteredData = riskData.filter(entry =>
-              entry?.country?.name?.toLowerCase().includes(currValue) ||
-              entry?.lifeExpectancy?.toString().includes(currValue) ||
-              entry?.humanDevelopmentIndex?.toString().includes(currValue) ||
-              entry?.populationDensity?.toString().includes(currValue) ||
-              entry?.gini?.toString().includes(currValue)
-            );
-            this.setState({dataSource:filteredData});
-          }}
-        />,
+        title: (
+          <Input
+            placeholder="Search"
+            value={searchValue}
+            onChange={(e) => {
+              const currValue = e.target.value;
+              this.setState({ searchValue: currValue });
+              const filteredData = riskData.filter(
+                (entry) =>
+                  entry?.country?.name?.toLowerCase().includes(currValue) ||
+                  entry?.lifeExpectancy?.toString().includes(currValue) ||
+                  entry?.humanDevelopmentIndex
+                    ?.toString()
+                    .includes(currValue) ||
+                  entry?.populationDensity?.toString().includes(currValue) ||
+                  entry?.gini?.toString().includes(currValue)
+              );
+              this.setState({ dataSource: filteredData });
+            }}
+          />
+        ),
         children: [
           {
             title: "Country",
@@ -97,11 +95,11 @@ export default class Risks extends Component {
             render: (country) => (
               <Link to={`/countries/${country?.codes?.alpha3Code}`}>
                 <Highlighter
-                  highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
                   searchWords={[searchValue]}
                   autoEscape
-                  textToHighlight={country ? country?.name.toString() : ''}
-                  /> 
+                  textToHighlight={country ? country?.name.toString() : ""}
+                />
               </Link>
             ),
             sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
@@ -110,54 +108,59 @@ export default class Risks extends Component {
             title: "Life Expectancy",
             dataIndex: "lifeExpectancy",
             key: "lifeExpectancy",
-            render: (text) =>  
-              searchValue != '' ?  (
+            render: (text) =>
+              searchValue != "" ? (
                 <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
                 <>{text?.toLocaleString()}</>
               ),
             sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
             filters: [
-              { text: '80 - 90', value: 80 },
-              { text: '70 - 80', value: 70 },
-              { text: '60 - 70', value: 60 },
-              { text: '50 - 60', value: 50 },
-              { text: '40 - 50', value: 40 },
+              { text: "80 - 90", value: 80 },
+              { text: "70 - 80", value: 70 },
+              { text: "60 - 70", value: 60 },
+              { text: "50 - 60", value: 50 },
+              { text: "40 - 50", value: 40 },
             ],
             filteredValue: filteredInfo.lifeExpectancy || null,
-            onFilter: (value, record) => (record.lifeExpectancy > value && record.lifeExpectancy < value + 10),
+            onFilter: (value, record) =>
+              record.lifeExpectancy > value &&
+              record.lifeExpectancy < value + 10,
             ellipsis: true,
           },
           {
             title: "HDI",
             dataIndex: "humanDevelopmentIndex",
             key: "humanDevelopmentIndex",
-            render: (text) =>  
-              searchValue != '' ?  (
+            render: (text) =>
+              searchValue != "" ? (
                 <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
                 <>{text?.toLocaleString()}</>
               ),
-            sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
+            sorter: (a, b) =>
+              a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
             filters: [
-              { text: '0.500 - 0.550', value: 0.500 },
-              { text: '0.450 - 0.500', value: 0.450 },
-              { text: '0.400 - 0.450', value: 0.400 },
-              { text: '0.350 - 0.400', value: 0.350 },
-              { text: '0.300 - 0.350', value: 0.300 },  
+              { text: "0.500 - 0.550", value: 0.5 },
+              { text: "0.450 - 0.500", value: 0.45 },
+              { text: "0.400 - 0.450", value: 0.4 },
+              { text: "0.350 - 0.400", value: 0.35 },
+              { text: "0.300 - 0.350", value: 0.3 },
             ],
             filteredValue: filteredInfo.humanDevelopmentIndex || null,
-            onFilter: (value, record) => (record.humanDevelopmentIndex > value && record.humanDevelopmentIndex < value + 0.050),
+            onFilter: (value, record) =>
+              record.humanDevelopmentIndex > value &&
+              record.humanDevelopmentIndex < value + 0.05,
             ellipsis: true,
           },
           {
@@ -166,25 +169,27 @@ export default class Risks extends Component {
             key: "populationDensity",
             render: (population) => <>{population?.toLocaleString()}</>,
             sorter: (a, b) => a?.populationDensity - b?.populationDensity,
-            render: (text) =>  
-              searchValue != '' ?  (
+            render: (text) =>
+              searchValue != "" ? (
                 <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
                 <>{text?.toLocaleString()}</>
               ),
             filters: [
-              { text: '15000 - 20000', value: 15000 },
-              { text: '10000 - 15000', value: 10000 },
-              { text: '5000 - 10000', value: 5000 },
-              { text: '0 - 5000', value: 0 },
+              { text: "15000 - 20000", value: 15000 },
+              { text: "10000 - 15000", value: 10000 },
+              { text: "5000 - 10000", value: 5000 },
+              { text: "0 - 5000", value: 0 },
             ],
             filteredValue: filteredInfo.populationDensity || null,
-            onFilter: (value, record) => (record.populationDensity > value && record.populationDensity < value + 5000),
+            onFilter: (value, record) =>
+              record.populationDensity > value &&
+              record.populationDensity < value + 5000,
             ellipsis: true,
           },
           {
@@ -192,25 +197,26 @@ export default class Risks extends Component {
             dataIndex: "gini",
             key: "gini",
             sorter: (a, b) => a?.gini - b?.gini,
-            render: (text) =>  
-              searchValue != '' ?  (
+            render: (text) =>
+              searchValue != "" ? (
                 <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
                 <>{text?.toLocaleString()}</>
               ),
             filters: [
-              { text: '75 - 100', value: 75 },
-              { text: '50 - 75', value: 50 },
-              { text: '25 - 50', value: 25 },
-              { text: '0 - 25', value: 0 },
+              { text: "75 - 100", value: 75 },
+              { text: "50 - 75", value: 50 },
+              { text: "25 - 50", value: 25 },
+              { text: "0 - 25", value: 0 },
             ],
             filteredValue: filteredInfo.gini || null,
-            onFilter: (value, record) => (record.gini > value && record.gini < value + 25),
+            onFilter: (value, record) =>
+              record.gini > value && record.gini < value + 25,
             ellipsis: true,
           },
           {
@@ -218,7 +224,9 @@ export default class Risks extends Component {
             dataIndex: "country",
             key: "country",
             render: (country) => (
-              <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
+              <Link
+                to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}
+              >
                 <Button>Explore</Button>
               </Link>
             ),
@@ -233,13 +241,20 @@ export default class Risks extends Component {
               </Link>
             ),
           },
-        ]
-      }
+        ],
+      },
     ];
     const data = this.state.riskData;
     return (
       <div className="App">
-        <h1 style={{ fontWeight: "800", fontSize: "2em", marginTop: "20px", marginBottom: "20px", }} >
+        <h1
+          style={{
+            fontWeight: "800",
+            fontSize: "2em",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
           Risk Factors &amp; Statistics{" "}
         </h1>
         <Button onClick={this.clearFilters}>Clear filters</Button>

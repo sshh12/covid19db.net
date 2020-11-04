@@ -16,8 +16,11 @@ BACKEND_PATH = (
 sys.path.append(str(BACKEND_PATH))
 
 from covid_app import db
-from covid_app.models import Countries, CaseStatistics, RiskFactorStatistics
-from covid_app.models import GlobalNews, GlobalStats
+from covid_app.models.countries import Countries
+from covid_app.models.case_statistics import CaseStatistics
+from covid_app.models.risk_factor_statistics import RiskFactorStatistics
+from covid_app.models.global_news import GlobalNews
+from covid_app.models.global_stats import GlobalStats
 
 DATA_PATH = Path(BACKEND_PATH) / "data"
 

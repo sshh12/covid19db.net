@@ -49,7 +49,9 @@ docker-containers:
 	docker container ls -a
 
 format:
-	black -l 80 main.py test.py covid_app/*.py util/*.py
+	black -l 80 main.py test.py covid_app/*.py util/*.py \
+	covid_app/models/*.py covid_app/routes/*.py			 \
+	covid_app/const/*.py covid_app/const/identifiers/*.py
 
 install-python-deps:
 	pip install -r requirements.txt

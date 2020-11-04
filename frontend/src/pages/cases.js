@@ -9,6 +9,8 @@ export default class Cases extends Component {
     super();
     this.state = {
       caseData: null,
+      filteredInfo: null,
+      sortedInfo: null,
     };
     this.compileData = this.compileData.bind(this);
   }
@@ -57,7 +59,26 @@ export default class Cases extends Component {
     return compiledCase;
   }
 
+  handleChange = (pagination, filters) => {
+    console.log('Various parameters', pagination, filters);
+    this.setState({
+      filteredInfo: filters,
+    });
+  };
+
+
+
   render() {
+    let { sortedInfo, filteredInfo } = this.state;
+    sortedInfo = sortedInfo || {};
+    filteredInfo = filteredInfo || {};
+    let newCaseFilterMappings = {
+      0: 10000,
+      10000: 10000,
+      20000: 10000,
+      30000: 10000,
+      40000: 200000
+    };
     const columns = [
       {
         title: "Country",
@@ -74,8 +95,17 @@ export default class Cases extends Component {
         title: "New Cases Today",
         dataIndex: "newCases",
         key: "newCases",
-        render: (population) => <>{population.toLocaleString()}</>,
         sorter: (a, b) => a.newCases - b.newCases,
+        filters: [
+          { text: '40,000+', value: 40000 },
+          { text: '30,000 - 40,000', value: 30000 },
+          { text: '20,000 - 30,000', value: 20000 },
+          { text: '10,000 - 20,000', value: 10000 },
+          { text: '0 - 10,000', value: 0 },
+        ], 
+        filteredValue: filteredInfo.newCases || null,
+        onFilter: (value, record) => (record.newCases > value && record.newCases < value + newCaseFilterMappings[value]),
+        ellipsis: true
       },
       {
         title: "Total Cases",
@@ -144,6 +174,7 @@ export default class Cases extends Component {
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
           dataSource={this.state.caseData}
+          onChange={this.handleChange}
           pagination={{ position: ["bottomRight", "topRight"] }}
         />
       </div>

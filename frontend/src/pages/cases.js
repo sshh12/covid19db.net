@@ -4,12 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
 import Highlighter from "react-highlight-words";
-import {
-  totalActiveFilterMappings,
-  totalCasesFilterMappings,
-  totalDeathsFilterMappings,
-  totalRecoveredFilterMappings,
-} from './../components/caseInstances/caseModelData.js';
+import {filterData} from './../components/caseInstances/caseModelData.js';
+import {HighlighterText} from './../components/caseInstances/casePageComponents';
 
 export default class Cases extends Component {
   constructor() {
@@ -21,7 +17,6 @@ export default class Cases extends Component {
       sortedInfo: null,
       searchValue: null
     };
-    this.compileData = this.compileData.bind(this);
   }
 
   componentDidMount() {
@@ -139,25 +134,20 @@ export default class Cases extends Component {
             key: "totalCases",
             render: (text) =>  
               searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
+                // <Highlighter
+                // highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                // searchWords={[searchValue]}
+                // autoEscape
+                // textToHighlight={text ? text.toString() : ''}
+                // /> 
+                <HighlighterText text={text} searchValue={searchValue} />
               ):( 
                 <>{text.toLocaleString()}</>
               ),
             sorter: (a, b) => a.totalCases - b.totalCases,
-            filters: [
-              { text: '500,000+', value: 500000 },
-              { text: '100,000 - 500,000', value: 100000 },
-              { text: '20,000 - 100,000', value: 20000 },
-              { text: '5,000 - 20,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalCasesFilterRanges,
             filteredValue: filteredInfo.totalCases || null,
-            onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + totalCasesFilterMappings[value]),
+            onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + filterData.totalCasesFilterMappings[value]),
             ellipsis: true
           },
           {
@@ -176,15 +166,9 @@ export default class Cases extends Component {
                 <>{text.toLocaleString()}</>
               ),
             sorter: (a, b) => a.totalDeaths - b.totalDeaths,
-            filters: [
-              { text: '50,000+', value: 50000 },
-              { text: '25,000 - 50,000', value: 25000 },
-              { text: '10,000 - 25,000', value: 10000 },
-              { text: '5,000 - 10,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalDeathsFilterRanges,
             filteredValue: filteredInfo.totalDeaths || null,
-            onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + totalDeathsFilterMappings[value]),
+            onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + filterData.totalDeathsFilterMappings[value]),
             ellipsis: true
           },
           {
@@ -203,15 +187,9 @@ export default class Cases extends Component {
                 <>{text.toLocaleString()}</>
               ),
             sorter: (a, b) => a.totalRecovered - b.totalRecovered,
-            filters: [
-              { text: '500,000+', value: 500000 },
-              { text: '100,000 - 500,000', value: 100000 },
-              { text: '20,000 - 100,000', value: 20000 },
-              { text: '5,000 - 20,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalRecoveredFilterRanges, 
             filteredValue: filteredInfo.totalRecovered || null,
-            onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + totalRecoveredFilterMappings[value]),
+            onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + filterData.totalRecoveredFilterMappings[value]),
             ellipsis: true
           },
           {
@@ -230,15 +208,9 @@ export default class Cases extends Component {
                 <>{text.toLocaleString()}</>
               ),
             sorter: (a, b) => a.totalActive - b.totalActive,
-            filters: [
-              { text: '200,000+', value: 200000 },
-              { text: '50,000 - 200,000', value: 50000 },
-              { text: '20,000 - 50,000', value: 20000 },
-              { text: '5,000 - 20,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalActiveFilterRanges, 
             filteredValue: filteredInfo.totalActive || null,
-            onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + totalActiveFilterMappings[value]),
+            onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + filterData.totalActiveFilterMappings[value]),
             ellipsis: true
           },
           {
@@ -267,16 +239,8 @@ export default class Cases extends Component {
 
     return (
       <div className="App">
-        <h1
-          style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          {" "}
-          Cases{" "}
+        <h1 style={{fontWeight: "800",fontSize: "2em",marginTop: "20px",marginBottom: "20px"}}>
+          {" "}Cases{" "}
         </h1>
         <Button onClick={this.clearFilters}>Clear filters</Button>
         <Table

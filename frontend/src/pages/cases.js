@@ -106,7 +106,10 @@ export default class Cases extends Component {
     
     const columns = [
       {
-        title: "Search",
+        title:         <Input
+        placeholder="Search"
+
+      />,
         children: [
           {
             title: "Country",

@@ -93,23 +93,6 @@ export default class Cases extends Component {
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
       },
       {
-        title: "New Cases Today",
-        dataIndex: "newCases",
-        key: "newCases",
-        render: (population) => <>{population.toLocaleString()}</>,
-        sorter: (a, b) => a.newCases - b.newCases,
-        filters: [
-          { text: '40,000+', value: 40000 },
-          { text: '30,000 - 40,000', value: 30000 },
-          { text: '20,000 - 30,000', value: 20000 },
-          { text: '10,000 - 20,000', value: 10000 },
-          { text: '0 - 10,000', value: 0 },
-        ], 
-        filteredValue: filteredInfo.newCases || null,
-        onFilter: (value, record) => (record.newCases > value && record.newCases < value + newCaseFilterMappings[value]),
-        ellipsis: true
-      },
-      {
         title: "Total Cases",
         dataIndex: "totalCases",
         key: "totalCases",

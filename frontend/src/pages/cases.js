@@ -3,6 +3,13 @@ import { Button, Table, Tag, Space } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
+import {
+  newCaseFilterMappings,
+  totalActiveFilterMappings,
+  totalCasesFilterMappings,
+  totalDeathsFilterMappings,
+  totalRecoveredFilterMappings,
+} from './../components/caseInstances/caseModelData.js';
 
 export default class Cases extends Component {
   constructor() {
@@ -72,41 +79,7 @@ export default class Cases extends Component {
     let { sortedInfo, filteredInfo } = this.state;
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
-    let newCaseFilterMappings = {
-      0: 10000,
-      10000: 10000,
-      20000: 10000,
-      30000: 10000,
-      40000: 200000
-    };
-    let totalCasesFilterMappings = {
-      0: 5000,
-      5000: 15000,
-      20000: 80000,
-      100000: 400000,
-      500000: 10000000
-    };
-    let totalDeathsFilterMappings = {
-      0: 5000,
-      5000: 5000,
-      10000: 15000,
-      25000: 25000,
-      50000: 300000
-    };
-    let totalRecoveredFilterMappings = {
-      0: 5000,
-      5000: 15000,
-      20000: 80000,
-      100000: 400000,
-      500000: 10000000
-    };
-    let totalActiveFilterMappings = {
-      0: 5000,
-      5000: 15000,
-      20000: 30000,
-      50000: 150000,
-      200000: 10000000
-    };
+    
     const columns = [
       {
         title: "Country",

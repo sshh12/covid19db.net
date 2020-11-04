@@ -15,6 +15,7 @@ export default class Cases extends Component {
   constructor() {
     super();
     this.state = {
+      dataSource: null,
       caseData: null,
       filteredInfo: null,
       sortedInfo: null,
@@ -48,7 +49,8 @@ export default class Cases extends Component {
           return compiledCase;
         });
         this.setState({ caseData });
-        console.log(caseData);
+        this.setState({dataSource: caseData});
+        //console.log(caseData);
       });
   }
 
@@ -77,7 +79,7 @@ export default class Cases extends Component {
   };
 
   setDataSource = (dataSource) => {
-    this.setState({caseData:dataSource});
+    this.setState({dataSource:dataSource});
   }
 
   setSearchValue = (value) => {
@@ -116,7 +118,7 @@ export default class Cases extends Component {
           const filteredData = caseData.filter(entry =>
             entry.country.name.includes(currValue)
           );
-          this.setState({caseData:filteredData});
+          this.setState({dataSource:filteredData});
         }}
       />,
         children: [
@@ -240,7 +242,7 @@ export default class Cases extends Component {
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
-          dataSource={this.state.caseData}
+          dataSource={this.state.dataSource}
           onChange={this.handleChange}
           pagination={{ position: ["bottomRight", "topRight"] }}
         />

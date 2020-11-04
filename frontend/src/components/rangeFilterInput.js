@@ -15,9 +15,9 @@ class RangeFilterInput extends Component {
         ) : (
             <InputNumber
                 style={{ width: "17ch", textAlign: 'center' }} 
-                formatter={v => v.replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
+                formatter={v => v.toString().replace(/\D/g,'').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} // Force comma delimited number input
                 value={this.props.rangeLo} 
-                onChange={e => this.props.onChange('sortLowVal', parseInt(e.target.value.replace(/\D/g,'')))} // Parse as number on enter and re-filter
+                onChange={e => this.props.onChange('sortLowVal', parseInt(e.toString().replace(/\D/g,'')))} // Parse as number on enter and re-filter
             />
         )
         const hiRangeSelection = alpha ? (

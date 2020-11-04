@@ -73,9 +73,9 @@ export default class Countries extends Component {
               case this.SORT_TYPES.ALPHA2:
                 return reversed * a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
               case this.SORT_TYPES.POPULATION:
-                return reversed * a.population - b.population
+                return reversed * (a.population - b.population)
               case this.SORT_TYPES.NUM_CASES:
-                return reversed * a.population - b.population
+                return reversed * (a.population - b.population)
             }
           })
           .filter(v => {
@@ -120,9 +120,7 @@ export default class Countries extends Component {
           </Col>
         ));
 
-      this.setState({ 
-        currentViewCards: currentViewCards,
-      })
+      this.setState({ currentViewCards: currentViewCards })
     }
   }
 
@@ -178,22 +176,24 @@ export default class Countries extends Component {
 
   render() {
     // Get all loaded country cards in the current view          
-    const currentViewCards = this.state.currentViewCards;
+    const { currentViewCards, filteredCountries } = this.state;
     // Form model view if data has been loaded
-    const pagination = currentViewCards && this.state.filteredCountries ? (
+    console.log(filteredCountries)
+    const pagination = currentViewCards?.length!=0 && filteredCountries && filteredCountries.length!=0 ? (
       <Pagination
         style={{ display: "inline-block", verticalAlign: "top" }}
         current={this.state.pageNumber} // current page number
         pageSize={this.state.numPerPage} // default size of page
         pageSizeOptions={["10", "20", "50", "100"]}
         onChange={this.changeNumDisplayed}
-        total={this.state.filteredCountries.length} //total number of countries
+        total={filteredCountries.length} //total number of countries
+        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+        showSizeChanger
+        showQuickJumper      
       />
-    ) : (
-      <div />
-    );
-      console.log(this.state.sortBy, this.SORT_TYPES.NUM_CASES)
-    const gridControl = (
+    ) : <div />;
+
+    const gridControl = filteredCountries ? (
       <Space className="country-display-header">
         <div>Sort by:</div>
         <Select 
@@ -222,32 +222,20 @@ export default class Countries extends Component {
         <Divider type="vertical" />
         {pagination}          
       </Space>
-    )
+    ) : <div />;
 
-    const styles = {
-      siteCardWrapper: {
-        margin: "2vh 5vw",
-      },
-    };
     return (
       <div className="App">
-        <h1
-          style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          Countries{" "}
-        </h1>
-        {gridControl}
-        <div className="site-card-wrapper" style={styles.siteCardWrapper}>
-          <Row gutter={16} justify="center">
-            {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>No country matches found...</div>}
-          </Row>
+        <h1 style={{ fontWeight: "800", fontSize: "2em", marginTop: "20px", marginBottom: "20px" }}>Countries{" "}</h1>
+        <div className="country-grid-wrapper" style={{ margin: "0 2vw", outline: "1px solid lightgrey", padding: 25 }}>
+          {gridControl}
+          <div className="site-card-wrapper" style={{ margin: "2vh 5vw" }}>
+            <Row gutter={16} justify="center">
+              {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>No country matches found...</div>}
+            </Row>
+          </div>
+          {gridControl}          
         </div>
-        {gridControl}
       </div>
     );
   }

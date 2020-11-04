@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Divider, Pagination, Row, Select, Space } from "antd";
+import { Col, Divider, Input, Pagination, Row, Select, Space } from "antd";
 import axios from "../client";
 
 import CountryCard from "../components/country/countryCard.js";
@@ -26,6 +26,7 @@ export default class Countries extends Component {
       lastCardIndex: 20,
       numPerPage: 20, // Number of countries displayed per page
       pageNumber: 1,
+      searchValue: '',
       sortBy: this.SORT_TYPES.NAME, // Parameter to manage sorting process
       sortLowVal: 'A',
       sortHiVal: 'Z',
@@ -40,7 +41,7 @@ export default class Countries extends Component {
     axios
       .get("countries", {
         params: {
-          attributes: "codes,flag,population,capital,languages",
+          attributes: "codes,flag,population,capital",
         },
       })
       .then((res) => {
@@ -52,6 +53,7 @@ export default class Countries extends Component {
 
   componentDidUpdate() {
     const data = this.state.countryCardsData;
+    console.log(this.state.searchValue)
     var { filteredCountries } = this.state;
     if(!data || data.length == 0) {
       // Do not update if no data or data is not populated
@@ -79,6 +81,15 @@ export default class Countries extends Component {
             }
           })
           .filter(v => {
+            const { searchValue } = this.state;
+            const { name, codes, population, capital } = v
+            const searchText = 
+              `
+                ${name.toString().toLowerCase()} 
+                Code: ${codes.alpha3Code.toString().toLowerCase()} 
+                Population: ${population.toLocaleString()} 
+                Capital: ${capital?.name.toString().toLowerCase()}
+              `;
             // Filter any instances outside of range
             var lo = this.state.sortLowVal;
             var hi = this.state.sortHiVal;
@@ -95,13 +106,12 @@ export default class Countries extends Component {
                 break;
               // Numerical cases: default to no filter and return entire range
               case this.SORT_TYPES.POPULATION:
-                return filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0
               case this.SORT_TYPES.NUM_CASES:
-                return filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0
+                return (filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0) && searchText.includes(searchValue)
             }
             lo = lo.charCodeAt(0)
             hi = hi.charCodeAt(0)
-            return (v-lo)*(v-hi) <= 0
+            return ((v-lo)*(v-hi) <= 0) && searchText.includes(searchValue)
           })
           this.setState({ 
             filteredCountries: filteredCountries,
@@ -110,13 +120,14 @@ export default class Countries extends Component {
             lastCardIndex: this.state.numPerPage,
             currentViewCards: null
           });
+          console.log(filteredCountries)
     }
     if(!this.state.currentViewCards) {
       const currentViewCards = filteredCountries
         .slice(this.state.firstCardIndex, this.state.lastCardIndex)
         .map((cardData) => (
           <Col key={cardData.codes.alpha3Code}>
-            <CountryCard data={cardData} />
+            <CountryCard data={cardData} searchValue={this.state.searchValue}/>
           </Col>
         ));
 
@@ -176,7 +187,7 @@ export default class Countries extends Component {
 
   render() {
     // Get all loaded country cards in the current view          
-    const { currentViewCards, filteredCountries } = this.state;
+    const { currentViewCards, filteredCountries, searchValue } = this.state;
     // Form model view if data has been loaded
     const pagination = currentViewCards && filteredCountries ? (
       <Pagination
@@ -206,8 +217,8 @@ export default class Countries extends Component {
             <Option value={this.SORT_TYPES.ALPHA3} key="iso3">ISO Alpha 3 Code</Option>
           </OptGroup>
           <OptGroup label="Statistics">
-            <Option value={this.SORT_TYPES.NUM_CASES} key="casesHi">Cases, Low-High</Option>
-            <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population, Low-High</Option>
+            <Option value={this.SORT_TYPES.NUM_CASES} key="casesHi">Cases</Option>
+            <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population</Option>
           </OptGroup>
         </Select>
         <RangeInputFilter 
@@ -226,6 +237,18 @@ export default class Countries extends Component {
     return (
       <div className="App">
         <h1 style={{ fontWeight: "800", fontSize: "2em", marginTop: "20px", marginBottom: "20px" }}>Countries{" "}</h1>
+        <Input
+          style={{ width: "50vw" }}
+          placeholder="Search"
+          value={searchValue}
+          onChange={e => {
+            const currValue = e.target.value;
+            this.setState({
+              searchValue: currValue,
+              filteredCountries: null,
+            });
+          }}
+        />
         <div className="country-grid-wrapper" style={{ margin: "0 2vw", outline: "1px solid lightgrey", padding: 25 }}>
           {gridControl}
           <div className="site-card-wrapper" style={{ margin: "2vh 5vw" }}>

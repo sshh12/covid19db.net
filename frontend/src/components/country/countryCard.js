@@ -1,40 +1,36 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Card, Col, Row, Layout } from "antd";
 import { Link } from "react-router-dom";
-
+import Highlight from "../highlight";
 import "./countryInstance.css";
 
 const { Meta } = Card;
 const { Content } = Layout;
 
 export default class CountryCard extends Component {
-  allLanguages(myList) {
-    if (!myList) {
-      return "";
-    }
-    var str = myList[0].name;
-    for (var i = 1; i < myList.length; i++) {
-      str = str + ", " + myList[i].name;
-    }
-    return str;
-  }
-
-  format(code, languages, pop, capital) {
-    var str =
-      "Code: " +
-      code +
-      ", Population: " +
-      pop.toLocaleString() +
-      ", Capital: " +
-      capital +
-      ", languages: " +
-      languages;
-    return str;
+  format(code, pop, capital) {
+    code = `Code: ${code}\n`;
+    pop = `Population: ${pop.toLocaleString()}\n`;
+    capital = `Capital: ${capital}\n`;
+    const { searchValue } = this.props;
+    return this.props.searchValue != '' ? 
+      (
+        <Fragment>
+          <div><Highlight searchValue={searchValue} text={code}/></div>
+          <div><Highlight searchValue={searchValue} text={pop}/></div>
+          <div><Highlight searchValue={searchValue} text={capital}/></div>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <div>{code}</div>
+          <div>{pop}</div>
+          <div>{capital}</div>
+        </Fragment>
+      );
   }
 
   render() {
-    const { capital, codes, flag, languages, name, population } =
-      this.props.data || {};
+    const { capital, codes, flag, name, population } = this.props.data || {};
     return (
       <Layout style={{ height: 360, width: 300, border: "1px grey" }}>
         <Content style={{ height: 310 }}>
@@ -51,10 +47,9 @@ export default class CountryCard extends Component {
               style={{ height: 310 }}
             >
               <Meta
-                title={name}
+                title={this.props.searchValue != '' ? (<Highlight searchValue={this.props.searchValue} text={name}/>) : name}
                 description={this.format(
                   codes?.alpha3Code,
-                  this.allLanguages(languages),
                   population,
                   capital?.name
                 )}

@@ -6,6 +6,8 @@ import axios from "../client";
 
 // import "../components/country/countryInstance.css";
 import CountryCard from "../components/country/countryCard.js";
+import RangeInputFilter from "../components/rangeFilterInput";
+import { TouchPitchHandler } from "mapbox-gl";
 
 const { Option, OptGroup } = Select;
 
@@ -34,6 +36,7 @@ export default class Countries extends Component {
     };
     this.changeNumDisplayed = this.changeNumDisplayed.bind(this);
     this.changeSort = this.changeSort.bind(this);
+    this.handleUpdateRange = this.handleUpdateRange.bind(this);
   }
 
   componentDidMount() {
@@ -83,6 +86,7 @@ export default class Countries extends Component {
             // Filter any instances outside of range
             var lo = this.state.sortLowVal;
             var hi = this.state.sortHiVal;
+            const filterNone = (lo == -1 && hi == -1)
             switch(this.state.sortBy){
               case this.SORT_TYPES.NAME:
                 v = v.name.charAt(0).charCodeAt(0);
@@ -93,10 +97,11 @@ export default class Countries extends Component {
               case this.SORT_TYPES.ALPHA2:
                 v = v.codes.alpha2Code.charAt(0).charCodeAt(0);
                 break;
+              // Numerical cases: default to no filter and return entire range
               case this.SORT_TYPES.POPULATION:
-                return (v.population-lo)*(v.population-hi)<=0
+                return filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0
               case this.SORT_TYPES.NUM_CASES:
-                return (v.population-lo)*(v.population-hi)<=0
+                return filterNone ? v.population : (v.population-lo)*(v.population-hi)<=0
             }
             lo = lo.charCodeAt(0)
             hi = hi.charCodeAt(0)
@@ -137,9 +142,30 @@ export default class Countries extends Component {
   };
 
   changeSort(value) {
+    if(value == this.state.sortBy) {
+      return
+    }
+
+    var sortLowVal, sortHiVal
+    switch(value){
+      case this.SORT_TYPES.NAME:
+      case this.SORT_TYPES.ALPHA3:
+      case this.SORT_TYPES.ALPHA2:
+        sortLowVal = 'A';
+        sortHiVal = 'Z';
+        break;
+      case this.SORT_TYPES.POPULATION:
+      case this.SORT_TYPES.NUM_CASES:
+        // Numerical range: no initial range
+        sortLowVal = -1
+        sortHiVal = -1
+    }
+    console.log(sortLowVal, sortHiVal)
     this.setState({
       sortBy: value,
-      filteredCountries: null
+      filteredCountries: null,
+      sortLowVal,
+      sortHiVal
     })
   }
 
@@ -151,7 +177,17 @@ export default class Countries extends Component {
     console.log(e.target.value);
   }
 
+  // Update hi or low value for range
+  handleUpdateRange(target, value) {
+    this.setState({ 
+      [target]: value, 
+      filteredCountries: null
+    })
+  }
+
   render() {
+    
+    console.log(this.state.numPerPage) 
     const currentViewCards = this.state.currentViewCards;
     // Form model view if data has been loaded
     const pagination = currentViewCards && this.state.filteredCountries ? (
@@ -172,7 +208,6 @@ export default class Countries extends Component {
         margin: "2vh 5vw",
       },
     };
-
     return (
       <div className="App">
         <h1
@@ -202,37 +237,19 @@ export default class Countries extends Component {
               <Option value={this.SORT_TYPES.POPULATION} key="popHi">Population, Low-High</Option>
             </OptGroup>
           </Select>
-          <div>from</div>
-          <Input.Group>
-            <Input style={{ width: 40, textAlign: 'center', textTransform: "uppercase" }} defaultValue="A" maxLength="1" onPressEnter={e => this.setState({sortLowVal: e.target.value.toUpperCase(), filteredCountries: null})}/>
-            <Input
-              style={{
-                width: 40,
-                borderLeft: 0,
-                borderRight: 0,
-                pointerEvents: 'none',
-              }}
-              placeholder="to"
-              disabled
-            />
-            <Input
-              style={{
-                width: 40,
-                textAlign: 'center',
-                textTransform: "uppercase"
-              }}
-              defaultValue="Z"
-              maxLength="1"
-              onPressEnter={e => this.setState({sortHiVal: e.target.value.toUpperCase(), filteredCountries: null})}
-            />
-          </Input.Group>
+          <RangeInputFilter 
+            style={{ textAlign: 'center' }} 
+            alphaRange={this.state.sortBy == this.SORT_TYPES.NAME || this.state.sortBy == this.SORT_TYPES.ALPHA2 || this.state.sortBy == this.SORT_TYPES.ALPHA3} 
+            rangeLo={this.state.sortLowVal}
+            rangeHi={this.state.sortHiVal}
+            onPressEnter={this.handleUpdateRange}
+          />
           <Divider type="vertical" />
           {pagination}          
         </Space>
-
         <div className="site-card-wrapper" style={styles.siteCardWrapper}>
           <Row gutter={16} justify="center">
-            {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>oh no</div>}
+            {currentViewCards?.length!=0 ? this.createCountryGrid(currentViewCards) : <div>No country matches found...</div>}
           </Row>
         </div>
       </div>

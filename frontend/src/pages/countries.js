@@ -7,6 +7,8 @@ import RangeInputFilter from "../components/rangeFilterInput";
 
 const { Option, OptGroup } = Select;
 
+const { Option, OptGroup } = Select;
+
 export default class Countries extends Component {
   SORT_TYPES = {
     NAME: 1,
@@ -103,7 +105,6 @@ export default class Countries extends Component {
             hi = hi.charCodeAt(0)
             return (v-lo)*(v-hi) <= 0
           })
-          console.log(this.state.numPerPage)
           this.setState({ 
             filteredCountries: filteredCountries,
             pageNumber: 1,   
@@ -229,8 +230,6 @@ export default class Countries extends Component {
         margin: "2vh 5vw",
       },
     };
-
-    console.log(this.state)
     return (
       <div className="App">
         <h1

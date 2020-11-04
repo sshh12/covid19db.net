@@ -872,6 +872,108 @@
 			],
 			"description": "Global statistics for the COVID-19 pandemic",
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "Perform a search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "022393c8-c413-4184-934d-5e1e3e4c931a",
+								"exec": [
+									"pm.test(\"Expected status and response type\", function(){",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Check for expected number of elements\", function(){",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.be.eq(3);",
+									"});",
+									"",
+									"pm.test(\"Check for correct number of included attributes\", function(){",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.length; ++i){",
+									"        pm.expect(Object.keys(jsonData[i]).length).to.be.eq(2);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Validate properties of elements\", function(){",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.length; ++i){",
+									"        var result = jsonData[i];",
+									"        pm.expect(result).to.have.property(\"name\");",
+									"        pm.expect(result).to.have.property(\"codes\");",
+									"        pm.expect(result.codes).to.have.property(\"alpha3Code\");",
+									"        pm.expect(result.codes).to.have.property(\"alpha2Code\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/search?query=United",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "United"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Perform a search no query",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfed98e9-4d0c-42ba-8964-2f838528e476",
+								"exec": [
+									"pm.test(\"Expected status and response type\", function(){",
+									"    pm.response.to.have.status(422);",
+									"    pm.response.to.be.json;",
+									"    pm.expect(pm.response.json()).to.have.property(\"error\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/search",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Tests for the search endpoint.",
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [

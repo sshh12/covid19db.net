@@ -111,10 +111,25 @@ const InfectionsMap = (props) => {
           .addTo(map);
       });
 
-      axios.get("case-statistics").then((res) => {
-        for (let cases of res.data) {
-          addCircleToMap(map, cases.location, cases.totals.active / 5000);
-          console.log(cases.totals.active);
+      const options = {
+        params:{
+          attributes: "location,totals"
+        }
+      };
+      axios.get("case-statistics", options).then((res) => {
+        // get average number of active cases
+        let avgActive = 0;
+        for(let i = 0; i < res.data.length; ++i){
+          const cases = res.data[i];
+          avgActive += cases.totals.active;
+        }
+        avgActive /= res.data.length;
+        for (const cases of res.data) {
+          // only draw circle for countries with total active greater
+          // than the average
+          if(cases.totals.active > avgActive){
+            addCircleToMap(map, cases.location, cases.totals.active / 5000);
+          }
         }
       });
     });

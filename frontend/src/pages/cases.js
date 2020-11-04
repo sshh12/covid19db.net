@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import { Button, Table, Tag, Space, Input } from "antd";
+import { Button, Table} from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
-import Highlighter from "react-highlight-words";
-import {
-  totalActiveFilterMappings,
-  totalCasesFilterMappings,
-  totalDeathsFilterMappings,
-  totalRecoveredFilterMappings,
-} from './../components/caseInstances/caseModelData.js';
+import {filterData} from './../components/caseInstances/caseModelData.js';
+import {HighlighterText, SearchBar} from './../components/caseInstances/casePageComponents';
 
 export default class Cases extends Component {
   constructor() {
@@ -21,18 +16,15 @@ export default class Cases extends Component {
       sortedInfo: null,
       searchValue: null
     };
-    this.compileData = this.compileData.bind(this);
   }
 
   componentDidMount() {
     // Get request to countries API for country card data
-    axios
-      .get("case-statistics", {
+    axios.get("case-statistics", {
         params: {
           attributes: "country,totals,new",
         },
-      })
-      .then((res) => {
+      }).then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
@@ -50,210 +42,93 @@ export default class Cases extends Component {
         });
         this.setState({ caseData });
         this.setState({dataSource: caseData});
-        //console.log(caseData);
       });
-  }
-
-  compileData(data) {
-    var compiledCase = {
-      country: data.country,
-      totalCases: data.totals.cases,
-      totalCases: data.totals.cases,
-      totalDeaths: data.totals.deaths,
-      totalRecovered: data.totals.recovered,
-      totalActive: data.totals.active,
-      exploreCase: data.country.codes.alpha3Code,
-      exploreRisk: data.country.codes.alpha3Code,
-    };
-
-    return compiledCase;
   }
 
   handleChange = (pagination, filters) => {
     console.log('Various parameters', pagination, filters);
     this.setState({ filteredInfo: filters });
   };
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
-  setDataSource = (dataSource) => {
-    this.setState({dataSource:dataSource});
-  }
-
-  setSearchValue = (value) => {
-    this.setState({searchValue:value});
-  }
-
-  // const FilterByNameInput = (
-  //   <Input
-  //     placeholder="Search Name"
-  //     value={value}
-  //     onChange={e => {
-  //       const currValue = e.target.value;
-  //       setValue(currValue);
-  //       const filteredData = data.filter(entry =>
-  //         entry.name.includes(currValue)
-  //       );
-  //       setDataSource(filteredData);
-  //     }}
-  //   />
-  // );
+  clearFilters = () => {this.setState({ filteredInfo: null });};
+  setDataSource = (dataSource) => {this.setState({dataSource:dataSource});}
+  setSearchValue = (value) => {this.setState({searchValue:value});}
 
   render() {
-    let { sortedInfo, filteredInfo, caseData, searchValue } = this.state;
-    sortedInfo = sortedInfo || {};
+    let { filteredInfo, caseData, searchValue } = this.state;
     filteredInfo = filteredInfo || {};
     
     const columns = [
       {
-        title:         
-      <Input
-        placeholder="Search"
-        value={searchValue}
-        onChange={e => {
-          const currValue = e.target.value;
-          this.setState({searchValue:currValue});
-          const filteredData = caseData.filter(entry =>
-            entry.country.name.toLowerCase().includes(currValue) ||
-            entry.totalCases.toString().includes(currValue) ||
-            entry.totalDeaths.toString().includes(currValue) ||
-            entry.totalRecovered.toString().includes(currValue) ||
-            entry.totalActive.toString().includes(currValue)
-          );
-          this.setState({dataSource:filteredData});
-        }}
-      />,
+        title: <SearchBar 
+                  searchValue={searchValue}
+                  data={caseData}
+                  setDataSource={this.setDataSource}     
+                  setSearchValue={this.setSearchValue}
+               />,
         children: [
           {
             title: "Country",
             dataIndex: "country",
             key: "country",
             render: (country) =>  
-              searchValue != '' ?  (
-                <Link to={`/countries/${country.codes.alpha3Code}`}>
-                  <Highlighter
-                  highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={country ? country.name.toString() : ''}
-                  /> 
-                </Link>
-                
-              ):( 
-                <Link to={`/countries/${country.codes.alpha3Code}`}>
-                  {country.name}
-                </Link>
-              ),
+              <Link to={`/countries/${country.codes.alpha3Code}`}>
+                {searchValue != '' 
+                  ? <HighlighterText text={country.name} searchValue={searchValue} />
+                  : country.name
+                }
+              </Link>,
             sorter: (a, b) => a.country.name.localeCompare(b.country.name),
           },
           {
             title: "Total Cases",
             dataIndex: "totalCases",
             key: "totalCases",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalCases - b.totalCases,
-            filters: [
-              { text: '500,000+', value: 500000 },
-              { text: '100,000 - 500,000', value: 100000 },
-              { text: '20,000 - 100,000', value: 20000 },
-              { text: '5,000 - 20,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalCasesFilterRanges,
             filteredValue: filteredInfo.totalCases || null,
-            onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + totalCasesFilterMappings[value]),
+            onFilter: (value, record) => (record.totalCases > value && record.totalCases < value + filterData.totalCasesFilterMappings[value]),
             ellipsis: true
           },
           {
             title: "Total Deaths",
             dataIndex: "totalDeaths",
             key: "totalDeaths",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalDeaths - b.totalDeaths,
-            filters: [
-              { text: '50,000+', value: 50000 },
-              { text: '25,000 - 50,000', value: 25000 },
-              { text: '10,000 - 25,000', value: 10000 },
-              { text: '5,000 - 10,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalDeathsFilterRanges,
             filteredValue: filteredInfo.totalDeaths || null,
-            onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + totalDeathsFilterMappings[value]),
+            onFilter: (value, record) => (record.totalDeaths > value && record.totalDeaths < value + filterData.totalDeathsFilterMappings[value]),
             ellipsis: true
           },
           {
             title: "Total Recovered",
             dataIndex: "totalRecovered",
             key: "totalRecovered",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalRecovered - b.totalRecovered,
-            filters: [
-              { text: '500,000+', value: 500000 },
-              { text: '100,000 - 500,000', value: 100000 },
-              { text: '20,000 - 100,000', value: 20000 },
-              { text: '5,000 - 20,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalRecoveredFilterRanges, 
             filteredValue: filteredInfo.totalRecovered || null,
-            onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + totalRecoveredFilterMappings[value]),
+            onFilter: (value, record) => (record.totalRecovered > value && record.totalRecovered < value + filterData.totalRecoveredFilterMappings[value]),
             ellipsis: true
           },
           {
             title: "Total Active",
             dataIndex: "totalActive",
             key: "totalActive",
-            render: (text) =>  
-              searchValue != '' ?  (
-                <Highlighter
-                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                searchWords={[searchValue]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ''}
-                /> 
-              ):( 
-                <>{text.toLocaleString()}</>
-              ),
+            render: (text) => searchValue != '' 
+              ? <HighlighterText text={text} searchValue={searchValue} />
+              : <>{text.toLocaleString()}</>,
             sorter: (a, b) => a.totalActive - b.totalActive,
-            filters: [
-              { text: '200,000+', value: 200000 },
-              { text: '50,000 - 200,000', value: 50000 },
-              { text: '20,000 - 50,000', value: 20000 },
-              { text: '5,000 - 20,000', value: 5000 },
-              { text: '0 - 5,000', value: 0 },
-            ], 
+            filters: filterData.totalActiveFilterRanges, 
             filteredValue: filteredInfo.totalActive || null,
-            onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + totalActiveFilterMappings[value]),
+            onFilter: (value, record) => (record.totalActive > value && record.totalActive < value + filterData.totalActiveFilterMappings[value]),
             ellipsis: true
           },
           {
@@ -282,16 +157,8 @@ export default class Cases extends Component {
 
     return (
       <div className="App">
-        <h1
-          style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          {" "}
-          Cases{" "}
+        <h1 style={{fontWeight: "800",fontSize: "2em",marginTop: "20px",marginBottom: "20px"}}>
+          {" "}Cases{" "}
         </h1>
         <Button onClick={this.clearFilters}>Clear filters</Button>
         <Table

@@ -73,7 +73,7 @@ class TestCovidDBGUI(unittest.TestCase):
         self.driver.find_elements_by_link_text("Cases")[0].click()
         self.driver.find_elements_by_partial_link_text("Explore")[0].click()
         country_name = self.driver.find_elements_by_tag_name("h1")[0]
-        self.assertEqual(country_name.get_attribute("textContent"), " Zimbabwe (ZWE)")
+        self.assertEqual(country_name.get_attribute("textContent"), "Cases in Zimbabwe (ZWE)")
 
     def test_cases_table_sort(self):
         self.driver.find_elements_by_link_text("Cases")[0].click()

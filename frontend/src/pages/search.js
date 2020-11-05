@@ -16,15 +16,28 @@ class SiteSearch extends Component {
     let curID = 0;
 
     let items = [
-      { id: curID++, value: { text: "Home", route: "/home" } },
-      { id: curID++, value: { text: "About", route: "/about" } },
-      { id: curID++, value: { text: "Countries", route: "/countries" } },
-      { id: curID++, value: { text: "Cases", route: "/case-statistics" } },
+      { id: curID++, type: "Page", value: { text: "Home", route: "/home" } },
+      { id: curID++, type: "Page", value: { text: "About", route: "/about" } },
       {
         id: curID++,
+        type: "Page",
+        value: { text: "Countries", route: "/countries" },
+      },
+      {
+        id: curID++,
+        type: "Page",
+        value: { text: "Cases", route: "/case-statistics" },
+      },
+      {
+        id: curID++,
+        type: "Page",
         value: { text: "Risks", route: "/risk-factor-statistics" },
       },
-      { id: curID++, value: { text: "Global News", route: "/global-news" } },
+      {
+        id: curID++,
+        type: "Page",
+        value: { text: "Global News", route: "/global-news" },
+      },
     ];
 
     const options = {
@@ -70,7 +83,7 @@ class SiteSearch extends Component {
             title: "Type",
             dataIndex: "type",
             key: "type",
-            render: (text) => <>{text.toLocaleString()}</>,
+            render: (text) => <>{text}</>,
           },
           {
             title: "Name",

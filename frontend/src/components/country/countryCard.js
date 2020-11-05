@@ -10,33 +10,43 @@ const { Content } = Layout;
 export default class CountryCard extends Component {
   format(alpha3Code, alpha2Code, cases, pop, capital, region) {
     const code = `Code: ${alpha3Code}, ${alpha2Code}\n`;
-    cases = `Cases: ${ cases?cases.toLocaleString():"unknown"}\n`
+    cases = `Cases: ${cases ? cases.toLocaleString() : "unknown"}\n`;
     pop = `Population: ${pop.toLocaleString()}\n`;
     capital = `Capital: ${capital}\n`;
     region = `Region: ${region.subregion}\n`;
     const { searchValue } = this.props;
-    return this.props.searchValue != '' ? 
-      (
-        <Fragment>
-          <div><Highlight searchValue={searchValue} text={code}/></div>
-          <div><Highlight searchValue={searchValue} text={cases}/></div>
-          <div><Highlight searchValue={searchValue} text={pop}/></div>
-          <div><Highlight searchValue={searchValue} text={capital}/></div>
-          <div><Highlight searchValue={searchValue} text={region}/></div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          <div>{code}</div>
-          <div>{cases}</div>
-          <div>{pop}</div>
-          <div>{capital}</div>
-          <div>{region}</div>
-        </Fragment>
-      );
+    return this.props.searchValue != "" ? (
+      <Fragment>
+        <div>
+          <Highlight searchValue={searchValue} text={code} />
+        </div>
+        <div>
+          <Highlight searchValue={searchValue} text={cases} />
+        </div>
+        <div>
+          <Highlight searchValue={searchValue} text={pop} />
+        </div>
+        <div>
+          <Highlight searchValue={searchValue} text={capital} />
+        </div>
+        <div>
+          <Highlight searchValue={searchValue} text={region} />
+        </div>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <div>{code}</div>
+        <div>{cases}</div>
+        <div>{pop}</div>
+        <div>{capital}</div>
+        <div>{region}</div>
+      </Fragment>
+    );
   }
 
   render() {
-    const { capital, cases, codes, flag, name, population, region } = this.props.data || {};
+    const { capital, cases, codes, flag, name, population, region } =
+      this.props.data || {};
     return (
       <Layout style={{ height: 390, width: 300, border: "1px grey" }}>
         <Content style={{ height: 340 }}>
@@ -53,9 +63,16 @@ export default class CountryCard extends Component {
               style={{ height: 340 }}
             >
               <Meta
-                title={this.props.searchValue != '' 
-                  ? (<Highlight searchValue={this.props.searchValue} text={name}/>) 
-                  : name}
+                title={
+                  this.props.searchValue != "" ? (
+                    <Highlight
+                      searchValue={this.props.searchValue}
+                      text={name}
+                    />
+                  ) : (
+                    name
+                  )
+                }
                 description={this.format(
                   codes?.alpha3Code,
                   codes?.alpha2Code,

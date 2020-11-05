@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Totals, NewStats, GenStats, CaseResponseLine } from "./caseComponents";
 import { Link } from "react-router-dom";
-import { Button } from 'antd';
+import { Button } from "antd";
 import Map from "../../components/map";
 import axios from "../../client";
 import "./caseInstance.css";
@@ -87,7 +87,7 @@ class CaseInstance extends Component {
                 marginTop: "5px",
                 display: "flex",
                 justifyContent: "left",
-                flexWrap: 'wrap'
+                flexWrap: "wrap",
               }}
             >
               <NewStats
@@ -149,7 +149,7 @@ class CaseInstance extends Component {
                 marginTop: "5px",
                 display: "flex",
                 justifyContent: "left",
-                flexWrap: 'wrap'
+                flexWrap: "wrap",
               }}
             >
               <GenStats

@@ -3,30 +3,31 @@ import { Input } from "antd";
 import Highlighter from "react-highlight-words";
 
 function HighlighterText(props) {
-  return(
+  return (
     <Highlighter
-      highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+      highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
       searchWords={[props.searchValue]}
       autoEscape
-      textToHighlight={props.text ? props.text.toString() : ''}
-    /> 
+      textToHighlight={props.text ? props.text.toString() : ""}
+    />
   );
 }
 
 function SearchBar(props) {
-  return(
+  return (
     <Input
       placeholder="Search"
       value={props.searchValue}
-      onChange={e => {
+      onChange={(e) => {
         const currValue = e.target.value;
         props.setSearchValue(currValue);
-        const filteredData = props.data.filter(entry =>
-          entry.country.name.toLowerCase().includes(currValue) ||
-          entry.totalCases.toString().includes(currValue) ||
-          entry.totalDeaths.toString().includes(currValue) ||
-          entry.totalRecovered.toString().includes(currValue) ||
-          entry.totalActive.toString().includes(currValue)
+        const filteredData = props.data.filter(
+          (entry) =>
+            entry.country.name.toLowerCase().includes(currValue) ||
+            entry.totalCases.toString().includes(currValue) ||
+            entry.totalDeaths.toString().includes(currValue) ||
+            entry.totalRecovered.toString().includes(currValue) ||
+            entry.totalActive.toString().includes(currValue)
         );
         props.setDataSource(filteredData);
       }}
@@ -34,7 +35,4 @@ function SearchBar(props) {
   );
 }
 
-export {
-  HighlighterText,
-  SearchBar
-};
+export { HighlighterText, SearchBar };

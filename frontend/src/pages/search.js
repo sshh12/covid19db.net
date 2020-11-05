@@ -81,12 +81,7 @@ class SiteSearch extends Component {
         title: "Results",
         dataIndex: "type",
         key: "type",
-        render: (text) =>
-          query != "" ? (
-            <HighlighterText text={text} searchValue={query} />
-          ) : (
-            <>{text}</>
-          ),
+        render: (text) => <>{text}</>,
         width: 250,
       },
       {

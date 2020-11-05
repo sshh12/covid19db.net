@@ -16,25 +16,7 @@ function HighlighterText(props) {
 
 //Searchbar component to add in table header specific for search page
 function SearchBar(props) {
-  return (
-    <Input
-      style={props.style}
-      placeholder="Try searching for countries, ISO codes, models, or pages"
-      value={props.searchValue}
-      onChange={(e) => {
-        var currValue = e.target.value;
-        props.setSearchValue(currValue);
-        currValue = currValue.toLowerCase();
-        //Filter data based on current query and update data accordingly
-        const filteredData = props.data.filter(
-          (entry) =>
-            entry.value.text.toLowerCase().includes(currValue) ||
-            entry.type.toLowerCase().includes(currValue)
-        );
-        props.setDataSource(filteredData);
-      }}
-    />
-  );
+  return <Input placeholder={props.placeholder} onChange={props.onChange} />;
 }
 
 export { HighlighterText, SearchBar };

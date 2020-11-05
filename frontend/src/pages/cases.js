@@ -51,7 +51,6 @@ export default class Cases extends Component {
   }
 
   handleChange = (pagination, filters) => {
-    console.log("Various parameters", pagination, filters);
     this.setState({ filteredInfo: filters });
   };
   clearFilters = () => {

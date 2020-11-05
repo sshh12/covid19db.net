@@ -44,7 +44,6 @@ export default class Countries extends Component {
       })
       .then((res) => {
         const countryCardsData = res.data;
-        console.log(countryCardsData);
         this.setState({ countryCardsData });
       });
   }
@@ -59,7 +58,6 @@ export default class Countries extends Component {
       .then((res) => {
         const caseStats = res.data;
         const { countryCardsData } = this.state;
-        console.log(caseStats);
         const dataWithCases = countryCardsData?.map((data) => {
           data.cases = caseStats.find(
             (c) => c.country.codes.alpha3Code == data.codes.alpha3Code

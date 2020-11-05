@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import Search from "react-search";
 import { withRouter } from "react-router-dom";
 import axios from "../client";
+import Highlight from "react-highlighter";
 
 // sitewide search bar component
 class SiteSearch extends Component {
   constructor() {
     super();
-    this.state = { items: [] };
+    this.state = { items: [], query: "" };
+  }
+
+  getQuery(query) {
+    this.setState({ query: query });
   }
 
   // navigate to route upon item selection
@@ -16,7 +21,8 @@ class SiteSearch extends Component {
     // navigate to selected item if not undefined
     if (selected !== undefined) {
       const route = this.state.items[selected.id].route;
-      this.props.history.push(route);
+      // Hack to avoid react-search race condition
+      setTimeout(() => this.props.history.push(route), 600);
     }
   }
 
@@ -94,6 +100,7 @@ class SiteSearch extends Component {
               onItemsChanged={this.onSelect.bind(this)}
               getItemsAsync={this.getItemsAsync.bind(this)}
               NotFoundPlaceholder="No results match this query"
+              // onKeyChange={this.getQuery.bind(this)}
             />
           </div>
         </div>

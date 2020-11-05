@@ -1,23 +1,21 @@
 import React, { Component } from "react";
-import { Button, Table } from "antd";
 import axios from "../client";
 import { Link } from "react-router-dom";
+import { Button, Table, Input } from "antd";
+import Highlighter from "react-highlight-words";
 
 export default class Risks extends Component {
-  numPerPage = 10; // this number simply does not mean anything and is not used here
-
   constructor() {
     super();
     this.state = {
       riskData: [],
-      firstEntryIndex: 0,
-      lastEntryIndex: this.numPerPage,
+      filteredInfo: null,
+      dataSource: null,
+      searchValue: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  // https://api.covid19db.net/
-  // risk-factor-statistics
-  // 'sampleData.json'
+  // Api call here
   componentDidMount() {
     axios
       .get("risk-factor-statistics", {
@@ -26,83 +24,227 @@ export default class Risks extends Component {
             "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities",
         },
       })
-      .then(
-        (res) => {
-          const riskData = res.data;
-          this.setState({ riskData });
-        },
-        (error) => {
-          console.log("error: Promise not fulfilled");
-        }
-      );
+      .then((res) => {
+        const riskData = res.data;
+        this.setState({ riskData });
+        this.setState({ dataSource: riskData });
+      });
   }
 
-  handleChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
+  // navigate to route upon item selection
+  onSelect(items) {
+    const selected = items[0];
+    if (selected !== undefined) {
+      const route = this.state.items[selected.id].route;
+      window.open(route, "_self");
+    }
   }
+
+  // load search results asynchronously
+  getItemsAsync(query, cb) {
+    cb(query);
+  }
+
+  handleChange = (pagination, filters) => {
+    this.setState({ filteredInfo: filters });
+  };
+
+  clearFilters = () => {
+    this.setState({ filteredInfo: null });
+  };
+
+  setDataSource = (dataSource) => {
+    this.setState({ dataSource: dataSource });
+  };
+
+  setSearchValue = (value) => {
+    this.setState({ searchValue: value });
+  };
 
   render() {
+    let { filteredInfo, searchValue, riskData } = this.state;
+    filteredInfo = filteredInfo || {};
     const columns = [
       {
-        title: "Country",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/countries/${country?.codes?.alpha3Code}`}>
-            {country?.name}
-          </Link>
+        title: (
+          <Input
+            placeholder="Search"
+            value={searchValue}
+            onChange={(e) => {
+              const currValue = e.target.value;
+              this.setState({ searchValue: currValue });
+              const filteredData = riskData.filter(
+                (entry) =>
+                  entry?.country?.name?.toLowerCase().includes(currValue) ||
+                  entry?.lifeExpectancy?.toString().includes(currValue) ||
+                  entry?.humanDevelopmentIndex
+                    ?.toString()
+                    .includes(currValue) ||
+                  entry?.populationDensity?.toString().includes(currValue) ||
+                  entry?.gini?.toString().includes(currValue)
+              );
+              this.setState({ dataSource: filteredData });
+            }}
+          />
         ),
-        sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
-      },
-      {
-        title: "Life Expectancy",
-        dataIndex: "lifeExpectancy",
-        key: "lifeExpectancy",
-        sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
-      },
-      {
-        title: "Human Development Index",
-        dataIndex: "humanDevelopmentIndex",
-        key: "humanDevelopmentIndex",
-        sorter: (a, b) => a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
-      },
-      {
-        title: "Population Density",
-        dataIndex: "populationDensity",
-        key: "populationDensity",
-        render: (population) => <>{population?.toLocaleString()}</>,
-        sorter: (a, b) => a?.populationDensity - b?.populationDensity,
-      },
-      {
-        title: "Gini",
-        dataIndex: "gini",
-        key: "gini",
-        sorter: (a, b) => a?.gini - b?.gini,
-      },
-      {
-        title: "Explore Risks",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </Link>
-        ),
-      },
-      {
-        title: "Explore Cases",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </Link>
-        ),
+        children: [
+          {
+            title: "Country",
+            dataIndex: "country",
+            key: "country",
+            render: (country) => (
+              <Link to={`/countries/${country?.codes?.alpha3Code}`}>
+                <Highlighter
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={country ? country?.name.toString() : ""}
+                />
+              </Link>
+            ),
+            sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),
+          },
+          {
+            title: "Life Expectancy",
+            dataIndex: "lifeExpectancy",
+            key: "lifeExpectancy",
+            render: (text) =>
+              searchValue != "" ? (
+                <Highlighter
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
+                <>{text?.toLocaleString()}</>
+              ),
+            sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
+            filters: [
+              { text: "80 - 90", value: 80 },
+              { text: "70 - 80", value: 70 },
+              { text: "60 - 70", value: 60 },
+              { text: "50 - 60", value: 50 },
+              { text: "40 - 50", value: 40 },
+            ],
+            filteredValue: filteredInfo.lifeExpectancy || null,
+            onFilter: (value, record) =>
+              record.lifeExpectancy > value &&
+              record.lifeExpectancy < value + 10,
+            ellipsis: true,
+          },
+          {
+            title: "HDI",
+            dataIndex: "humanDevelopmentIndex",
+            key: "humanDevelopmentIndex",
+            render: (text) =>
+              searchValue != "" ? (
+                <Highlighter
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
+                <>{text?.toLocaleString()}</>
+              ),
+            sorter: (a, b) =>
+              a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
+            filters: [
+              { text: "0.500 - 0.550", value: 0.5 },
+              { text: "0.450 - 0.500", value: 0.45 },
+              { text: "0.400 - 0.450", value: 0.4 },
+              { text: "0.350 - 0.400", value: 0.35 },
+              { text: "0.300 - 0.350", value: 0.3 },
+            ],
+            filteredValue: filteredInfo.humanDevelopmentIndex || null,
+            onFilter: (value, record) =>
+              record.humanDevelopmentIndex > value &&
+              record.humanDevelopmentIndex < value + 0.05,
+            ellipsis: true,
+          },
+          {
+            title: "Population Density",
+            dataIndex: "populationDensity",
+            key: "populationDensity",
+            render: (population) => <>{population?.toLocaleString()}</>,
+            sorter: (a, b) => a?.populationDensity - b?.populationDensity,
+            render: (text) =>
+              searchValue != "" ? (
+                <Highlighter
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
+                <>{text?.toLocaleString()}</>
+              ),
+            filters: [
+              { text: "15000 - 20000", value: 15000 },
+              { text: "10000 - 15000", value: 10000 },
+              { text: "5000 - 10000", value: 5000 },
+              { text: "0 - 5000", value: 0 },
+            ],
+            filteredValue: filteredInfo.populationDensity || null,
+            onFilter: (value, record) =>
+              record.populationDensity > value &&
+              record.populationDensity < value + 5000,
+            ellipsis: true,
+          },
+          {
+            title: "Gini",
+            dataIndex: "gini",
+            key: "gini",
+            sorter: (a, b) => a?.gini - b?.gini,
+            render: (text) =>
+              searchValue != "" ? (
+                <Highlighter
+                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+                  searchWords={[searchValue]}
+                  autoEscape
+                  textToHighlight={text ? text.toString() : ""}
+                />
+              ) : (
+                <>{text?.toLocaleString()}</>
+              ),
+            filters: [
+              { text: "75 - 100", value: 75 },
+              { text: "50 - 75", value: 50 },
+              { text: "25 - 50", value: 25 },
+              { text: "0 - 25", value: 0 },
+            ],
+            filteredValue: filteredInfo.gini || null,
+            onFilter: (value, record) =>
+              record.gini > value && record.gini < value + 25,
+            ellipsis: true,
+          },
+          {
+            title: "Explore Risks",
+            dataIndex: "country",
+            key: "country",
+            render: (country) => (
+              <Link
+                to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}
+              >
+                <Button>Explore</Button>
+              </Link>
+            ),
+          },
+          {
+            title: "Explore Cases",
+            dataIndex: "country",
+            key: "country",
+            render: (country) => (
+              <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
+                <Button>Explore</Button>
+              </Link>
+            ),
+          },
+        ],
       },
     ];
-
     const data = this.state.riskData;
-
     return (
       <div className="App">
         <h1
@@ -115,10 +257,12 @@ export default class Risks extends Component {
         >
           Risk Factors &amp; Statistics{" "}
         </h1>
+        <Button onClick={this.clearFilters}>Clear filters</Button>
+        {/* Table of risk data */}
         <Table
           style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
           columns={columns}
-          dataSource={data}
+          dataSource={this.state.dataSource}
           onChange={this.handleChange}
           pagination={{ position: ["bottomRight", "topRight"] }}
         ></Table>

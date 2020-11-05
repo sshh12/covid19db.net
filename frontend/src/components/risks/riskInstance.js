@@ -19,16 +19,10 @@ export default class RiskInstance extends Component {
   // risk-factor-statistics
   // 'sampleData.json'
   componentDidMount() {
-    axios.get("risk-factor-statistics/" + this.props.code).then(
-      (res) => {
-        const riskData = res.data;
-        this.setState({ riskData });
-      },
-      (error) => {
-        console.log("error: promise not fulfilled");
-        console.log(error);
-      }
-    );
+    axios.get("risk-factor-statistics/" + this.props.code).then((res) => {
+      const riskData = res.data;
+      this.setState({ riskData });
+    });
 
     axios
       .get("case-statistics/" + this.props.code, {
@@ -36,22 +30,15 @@ export default class RiskInstance extends Component {
           attributes: "new",
         },
       })
-      .then(
-        (res) => {
-          const caseData = res.data;
-          this.setState({ caseData });
-        },
-        (error) => {
-          console.log("error: promise not fulfilled");
-          console.log(error);
-        }
-      );
+      .then((res) => {
+        const caseData = res.data;
+        this.setState({ caseData });
+      });
   }
 
   render() {
     const data = this.state.riskData;
     const caseData = this.state.caseData;
-    console.log(this.props.code);
     if (!data || !caseData) {
       return <div />;
     }

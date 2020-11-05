@@ -71,18 +71,7 @@ class SiteSearch extends Component {
             title: "Name",
             dataIndex: "value",
             key: "value",
-            render: (value) => (
-              <Link to={`/countries/${country.codes.alpha3Code}`}>
-                {searchValue != "" ? (
-                  <HighlighterText
-                    text={country.name}
-                    searchValue={searchValue}
-                  />
-                ) : (
-                  country.name
-                )}
-              </Link>
-            ),
+            render: (value) => <Link to={route}>{value}</Link>,
           },
         ],
       },

@@ -18,20 +18,8 @@ function HighlighterText(props) {
 function SearchBar(props) {
   return (
     <Input
-      placeholder="Try searching for countries, ISO codes, models, or pages"
-      value={props.searchValue}
-      onChange={(e) => {
-        const currValue = e.target.value;
-        props.setSearchValue(currValue);
-
-        //Filter data based on current query and update data accordingly
-        const filteredData = props.data.filter(
-          (entry) =>
-            entry.value.text.toLowerCase().includes(currValue) ||
-            entry.type.toLowerCase().includes(currValue)
-        );
-        props.setDataSource(filteredData);
-      }}
+      placeholder={props.placeholder}
+      onChange={props.onChange}
     />
   );
 }

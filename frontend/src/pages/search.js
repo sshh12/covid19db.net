@@ -8,11 +8,13 @@ import { Table } from "antd";
 class SiteSearch extends Component {
   constructor() {
     super();
-    this.state = { items: null, query: null, dataSource: null };
+    this.state = { query: null, dataSource: null };
   }
 
-  componentDidMount() {
-    //Add basic static pages into data
+  onChange(e){
+    // get user typed query from search bar change
+    const query = e.target.value;
+    // add and filter basic static pages into data
     let items = [
       { type: "Page", value: { text: "Home", route: "/home" } },
       { type: "Page", value: { text: "About", route: "/about" } },
@@ -32,20 +34,21 @@ class SiteSearch extends Component {
         type: "Page",
         value: { text: "Global News", route: "/global-news" },
       },
-    ];
-
+    ].filter((entry) =>
+      entry.value.text.toLowerCase().includes(query.toLowerCase()) ||
+      entry.type.toLowerCase().includes(query.toLowerCase())
+    );
     const options = {
       params: {
-        attributes: "name,codes",
+        query: query
       },
     };
-
-    // Use api to get rest of all the model and instance data
-    // Push each country with a country, case-statistic, and risk-factor instance
-    axios.get("countries", options).then((res) => {
+    // send request to API search endpoint to populate items with relevant data
+    axios.get("search", options).then((res) => {
       res.data.forEach((country) => {
         const alpha3Code = country.codes.alpha3Code;
-        const identifier = `${country.name} (${country.codes.alpha2Code}, ${country.codes.alpha3Code})`;
+        const identifier = `${country.name} (${country.codes.alpha2Code}, \
+          ${country.codes.alpha3Code})`;
         items.push({
           type: "Country",
           value: { text: identifier, route: `/countries/${alpha3Code}` },
@@ -62,33 +65,22 @@ class SiteSearch extends Component {
           },
         });
       });
-      this.setState({ items });
+      // set state
       this.setState({ dataSource: items });
+      this.setState({ query: query });
     });
   }
 
-  // Callback function to set table datasource
-  setDataSource = (dataSource) => {
-    this.setState({ dataSource: dataSource });
-  };
-
-  // Callback function to set current search query
-  setQuery = (value) => {
-    this.setState({ query: value });
-  };
-
   render() {
-    let { items, query, dataSource } = this.state;
+    let { query, dataSource } = this.state;
 
     // Setup columns of table (type and name of type with link to page)
     let columns = [
       {
         title: (
           <SearchBar
-            searchValue={query}
-            data={items}
-            setDataSource={this.setDataSource}
-            setSearchValue={this.setQuery}
+            placeholder="Try searching for countries, ISO codes, pages, capitals, or regions"
+            onChange={this.onChange.bind(this)}
           />
         ),
         children: [

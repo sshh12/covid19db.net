@@ -80,13 +80,13 @@ class SiteSearch extends Component {
         title: "Search by country name, code, model type, or a page",
         children: [
           {
-            title: "Type",
+            title: "Results",
             dataIndex: "type",
             key: "type",
             render: (text) => <>{text}</>,
           },
           {
-            title: "Name",
+            title: "",
             dataIndex: "value",
             key: "value",
             render: (value) => <Link to={value.route}>{value.text}</Link>,
@@ -107,22 +107,21 @@ class SiteSearch extends Component {
         >
           Search
         </h1>
-        <h3 style={{ fontWeight: 400, fontSize: "1.7em" }}>
-          Try searching for pages, countries, and ISO 3166-1 codes.
-        </h3>
+
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div
             style={{
-              width: "50vw",
+              width: "75vw",
               backgroundColor: "#323776",
               userSelect: "none",
+              marginBottom: 20,
             }}
           >
             <Table
-              style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
+              style={{ margin: "0 0vw", outline: "1px solid lightgrey" }}
               columns={columns}
               dataSource={this.state.dataSource}
-              pagination={{ position: ["bottomRight", "topRight"] }}
+              pagination={{ position: ["bottomRight"] }}
             />
           </div>
         </div>

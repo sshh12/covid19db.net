@@ -22,9 +22,9 @@ function SearchBar(props) {
       placeholder="Try searching for countries, ISO codes, models, or pages"
       value={props.searchValue}
       onChange={(e) => {
-        const currValue = e.target.value;
+        var currValue = e.target.value;
         props.setSearchValue(currValue);
-
+        currValue = currValue.toLowerCase();
         //Filter data based on current query and update data accordingly
         const filteredData = props.data.filter(
           (entry) =>

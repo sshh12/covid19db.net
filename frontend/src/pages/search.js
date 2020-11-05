@@ -74,12 +74,26 @@ class SiteSearch extends Component {
     });
   }
 
+  setDataSource = (dataSource) => {
+    this.setState({ dataSource: dataSource });
+  };
+  setQuery = (value) => {
+    this.setState({ query: value });
+  };
+
   render() {
     let { items, query, dataSource } = this.state;
 
     let columns = [
       {
-        title: <SearchBar searchValue={query} data={items} />,
+        title: (
+          <SearchBar
+            searchValue={query}
+            data={items}
+            setDataSource={this.setDataSource}
+            setSearchValue={this.setQuery}
+          />
+        ),
         children: [
           {
             title: "Results",

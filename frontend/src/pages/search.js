@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Search from "react-search";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
 import Highlight from "react-highlighter";
 import { Button, Table } from "antd";
@@ -13,13 +13,18 @@ class SiteSearch extends Component {
   }
 
   componentDidMount() {
+    let curID = 0;
+
     let items = [
-      { id: curID++, value: "Home", route: "/home" },
-      { id: curID++, value: "About", route: "/about" },
-      { id: curID++, value: "Countries", route: "/countries" },
-      { id: curID++, value: "Cases", route: "/case-statistics" },
-      { id: curID++, value: "Risks", route: "/risk-factor-statistics" },
-      { id: curID++, value: "Global News", route: "/global-news" },
+      { id: curID++, value: { text: "Home", route: "/home" } },
+      { id: curID++, value: { text: "About", route: "/about" } },
+      { id: curID++, value: { text: "Countries", route: "/countries" } },
+      { id: curID++, value: { text: "Cases", route: "/case-statistics" } },
+      {
+        id: curID++,
+        value: { text: "Risks", route: "/risk-factor-statistics" },
+      },
+      { id: curID++, value: { text: "Global News", route: "/global-news" } },
     ];
 
     const options = {
@@ -35,20 +40,20 @@ class SiteSearch extends Component {
         items.push({
           id: curID++,
           type: "Country",
-          value: identifier,
-          route: `/countries/${alpha3Code}`,
+          value: { text: identifier, route: `/countries/${alpha3Code}` },
         });
         items.push({
           id: curID++,
           type: "Case Statistic",
-          value: identifier,
-          route: `/case-statistics/${alpha3Code}`,
+          value: { text: identifier, route: `/case-statistics/${alpha3Code}` },
         });
         items.push({
           id: curID++,
           type: "Risk Factor Statistic",
-          value: identifier,
-          route: `/risk-factor-statistics/${alpha3Code}`,
+          value: {
+            text: identifier,
+            route: `/risk-factor-statistics/${alpha3Code}`,
+          },
         });
       });
       this.setState({ items });
@@ -71,7 +76,7 @@ class SiteSearch extends Component {
             title: "Name",
             dataIndex: "value",
             key: "value",
-            render: (value) => <Link to={route}>{value}</Link>,
+            render: (value) => <Link to={value.route}>{value.text}</Link>,
           },
         ],
       },
@@ -100,13 +105,11 @@ class SiteSearch extends Component {
               userSelect: "none",
             }}
           >
-            <Search
-              items={this.state.items}
-              placeholder=""
-              onItemsChanged={this.onSelect.bind(this)}
-              getItemsAsync={this.getItemsAsync.bind(this)}
-              NotFoundPlaceholder="No results match this query"
-              onKeyChange={this.getQuery.bind(this)}
+            <Table
+              style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
+              columns={columns}
+              dataSource={this.state.dataSource}
+              pagination={{ position: ["bottomRight", "topRight"] }}
             />
           </div>
         </div>

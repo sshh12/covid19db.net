@@ -16,7 +16,7 @@ function HighlighterText(props) {
 function SearchBar(props) {
   return (
     <Input
-      placeholder="Search by country name, code, model type, or a page"
+      placeholder="Try searching for countries, ISO codes, models, or pages"
       value={props.searchValue}
       onChange={(e) => {
         const currValue = e.target.value;

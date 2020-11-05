@@ -105,6 +105,7 @@ class SiteSearch extends Component {
               ) : (
                 <>{text}</>
               ),
+            width: 250,
           },
           {
             title: "",

@@ -129,6 +129,7 @@ class SiteSearch extends Component {
             Search
           </h1>
           <SearchBar
+            style={{ width: "75vw" }}
             placeholder="Try searching for countries, ISO codes, pages, capitals, or regions"
             onChange={this.onChange.bind(this)}
           />

@@ -16,7 +16,13 @@ function HighlighterText(props) {
 
 //Searchbar component to add in table header specific for search page
 function SearchBar(props) {
-  return <Input placeholder={props.placeholder} onChange={props.onChange} />;
+  return (
+    <Input
+      style={props.style}
+      placeholder={props.placeholder}
+      onChange={props.onChange}
+    />
+  );
 }
 
 export { HighlighterText, SearchBar };

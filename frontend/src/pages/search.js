@@ -133,21 +133,6 @@ class SiteSearch extends Component {
             placeholder="Try searching for countries, ISO codes, pages, capitals, or regions"
             onChange={this.onChange.bind(this)}
           />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 20,
-              width: "25vw",
-            }}
-          >
-            <Button>All</Button>
-            <Button>Countries</Button>
-            <Button>Cases</Button>
-            <Button>Risks</Button>
-          </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div

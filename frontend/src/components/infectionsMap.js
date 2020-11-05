@@ -112,14 +112,14 @@ const InfectionsMap = (props) => {
       });
 
       const options = {
-        params:{
-          attributes: "location,totals"
-        }
+        params: {
+          attributes: "location,totals",
+        },
       };
       axios.get("case-statistics", options).then((res) => {
         // get average number of active cases
         let avgActive = 0;
-        for(let i = 0; i < res.data.length; ++i){
+        for (let i = 0; i < res.data.length; ++i) {
           const cases = res.data[i];
           avgActive += cases.totals.active;
         }
@@ -127,7 +127,7 @@ const InfectionsMap = (props) => {
         for (const cases of res.data) {
           // only draw circle for countries with total active greater
           // than the average
-          if(cases.totals.active > avgActive){
+          if (cases.totals.active > avgActive) {
             addCircleToMap(map, cases.location, cases.totals.active / 5000);
           }
         }

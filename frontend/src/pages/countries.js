@@ -1,21 +1,17 @@
 import React, { Component } from "react";
-import { Col, Divider, Input, Pagination, Row, Select, Space } from "antd";
+import { Col, Divider, Input, Pagination, Row, Space } from "antd";
 import axios from "../client";
 
 import CountryCard from "../components/country/countryCard.js";
-import RangeInputFilter from "../components/rangeFilterInput";
-
-const { Option, OptGroup } = Select;
+import {
+  CountryCardView,
+  CountryGridControl,
+  CountryPagination,
+  CountrySortSelection,
+  SORT_TYPES,
+} from "../components/country/countryModelComponents.js";
 
 export default class Countries extends Component {
-  SORT_TYPES = {
-    NAME: 1,
-    ALPHA2: 2,
-    ALPHA3: 3,
-    NUM_CASES: 4,
-    POPULATION: 5,
-  };
-
   constructor() {
     super();
     this.state = {
@@ -27,7 +23,7 @@ export default class Countries extends Component {
       numPerPage: 20, // Number of countries displayed per page
       pageNumber: 1,
       searchValue: "",
-      sortBy: this.SORT_TYPES.NAME, // Parameter to manage sorting process
+      sortBy: SORT_TYPES.NAME, // Parameter to manage sorting process
       sortLowVal: "A",
       sortHiVal: "Z",
       casesRetrieved: false,
@@ -96,19 +92,19 @@ export default class Countries extends Component {
           // Sort cards by chosen category, reversing if necessary
           var reversed = this.state.sortLowVal > this.state.sortHiVal ? -1 : 1;
           switch (this.state.sortBy) {
-            case this.SORT_TYPES.NAME:
+            case SORT_TYPES.NAME:
               return reversed * a.name.localeCompare(b.name);
-            case this.SORT_TYPES.ALPHA2:
+            case SORT_TYPES.ALPHA2:
               return (
                 reversed * a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
               );
-            case this.SORT_TYPES.ALPHA3:
+            case SORT_TYPES.ALPHA3:
               return (
                 reversed * a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
               );
-            case this.SORT_TYPES.NUM_CASES:
+            case SORT_TYPES.NUM_CASES:
               return reversed * (a.cases - b.cases);
-            case this.SORT_TYPES.POPULATION:
+            case SORT_TYPES.POPULATION:
               return reversed * (a.population - b.population);
           }
         })
@@ -125,34 +121,36 @@ export default class Countries extends Component {
                 Region: ${region?.region?.toString().toLowerCase()}
               `;
           // Filter any instances outside of range
-          var lo = this.state.sortLowVal;
-          var hi = this.state.sortHiVal;
-          const filterNone = lo == -1 && hi == -1;
+          var { sortLowVal, sortHiVal } = this.state;
+          const filterNone = sortLowVal == -1 && sortHiVal == -1;
           switch (this.state.sortBy) {
-            case this.SORT_TYPES.NAME:
+            case SORT_TYPES.NAME:
               v = name.charAt(0).charCodeAt(0);
               break;
-            case this.SORT_TYPES.ALPHA2:
+            case SORT_TYPES.ALPHA2:
               v = codes.alpha2Code.charAt(0).charCodeAt(0);
               break;
-            case this.SORT_TYPES.ALPHA3:
+            case SORT_TYPES.ALPHA3:
               v = codes.alpha3Code.charAt(0).charCodeAt(0);
               break;
             // Numerical cases: default to no filter and return entire range
-            case this.SORT_TYPES.NUM_CASES:
+            case SORT_TYPES.NUM_CASES:
               return filterNone
                 ? cases
-                : (cases - lo) * (cases - hi) <= 0 &&
+                : (cases - sortLowVal) * (cases - sortHiVal) <= 0 &&
                     searchText.includes(searchValue);
-            case this.SORT_TYPES.POPULATION:
+            case SORT_TYPES.POPULATION:
               return filterNone
                 ? population
-                : (population - lo) * (population - hi) <= 0 &&
+                : (population - sortLowVal) * (population - sortHiVal) <= 0 &&
                     searchText.includes(searchValue);
           }
-          lo = lo.charCodeAt(0);
-          hi = hi.charCodeAt(0);
-          return (v - lo) * (v - hi) <= 0 && searchText.includes(searchValue);
+          sortLowVal = sortLowVal.charCodeAt(0);
+          sortHiVal = sortHiVal.charCodeAt(0);
+          return (
+            (v - sortLowVal) * (v - sortHiVal) <= 0 &&
+            searchText.includes(searchValue)
+          );
         });
       this.setState({
         filteredCountries: filteredCountries,
@@ -186,24 +184,22 @@ export default class Countries extends Component {
   }
 
   changeSort(value) {
-    if (value == this.state.sortBy) {
-      return;
-    }
+    if (value == this.state.sortBy) return;
 
     var sortLowVal, sortHiVal;
     switch (value) {
-      case this.SORT_TYPES.NAME:
-      case this.SORT_TYPES.ALPHA2:
-      case this.SORT_TYPES.ALPHA3:
+      case SORT_TYPES.NAME:
+      case SORT_TYPES.ALPHA2:
+      case SORT_TYPES.ALPHA3:
         sortLowVal = "A";
         sortHiVal = "Z";
         break;
-      case this.SORT_TYPES.NUM_CASES:
+      case SORT_TYPES.NUM_CASES:
         // Numerical range: begin with max range
         sortLowVal = 20000000;
         sortHiVal = -1;
         break;
-      case this.SORT_TYPES.POPULATION:
+      case SORT_TYPES.POPULATION:
         // Numerical range: begin with max range
         sortLowVal = 2000000000;
         sortHiVal = -1;
@@ -233,66 +229,30 @@ export default class Countries extends Component {
     // Get all loaded country cards in the current view
     const { currentViewCards, filteredCountries, searchValue } = this.state;
     // Form model view if data has been loaded
-    const pagination =
-      currentViewCards && filteredCountries ? (
-        <Pagination
-          style={{ display: "inline-block", verticalAlign: "top" }}
-          current={this.state.pageNumber} // current page number
-          pageSize={this.state.numPerPage} // default size of page
-          pageSizeOptions={["10", "20", "50", "100"]}
-          onChange={this.changeNumDisplayed}
-          total={filteredCountries.length} //total number of countries
-          showTotal={(total, range) =>
-            `${range[0]}-${range[1]} of ${total} items`
-          }
-          showSizeChanger
-          showQuickJumper
-        />
-      ) : (
-        <div />
-      );
-
+    const pagination = (
+      <CountryPagination
+        display={currentViewCards && filteredCountries}
+        numCountries={filteredCountries?.length}
+        pageNumber={this.state.pageNumber}
+        numPerPage={this.state.numPerPage}
+        onChange={this.changeNumDisplayed}
+      />
+    );
+    const countrySortSelection = (
+      <CountrySortSelection
+        sortBy={this.state.sortBy}
+        onChange={this.changeSort}
+      />
+    );
     const gridControl = (
-      <Space className="country-display-header">
-        <div>Sort by:</div>
-        <Select
-          style={{ width: 200, display: "inline-block", verticalAlign: "top" }}
-          value={this.state.sortBy}
-          onChange={this.changeSort}
-        >
-          <OptGroup label="Name">
-            <Option value={this.SORT_TYPES.NAME} key="cName">
-              Country Name
-            </Option>
-            <Option value={this.SORT_TYPES.ALPHA2} key="iso2">
-              ISO Alpha 2 Code
-            </Option>
-            <Option value={this.SORT_TYPES.ALPHA3} key="iso3">
-              ISO Alpha 3 Code
-            </Option>
-          </OptGroup>
-          <OptGroup label="Statistics">
-            <Option value={this.SORT_TYPES.NUM_CASES} key="cases">
-              Total Cases
-            </Option>
-            <Option value={this.SORT_TYPES.POPULATION} key="population">
-              Population
-            </Option>
-          </OptGroup>
-        </Select>
-        <RangeInputFilter
-          style={{ textAlign: "center" }}
-          type={
-            this.state.sortBy > this.SORT_TYPES.ALPHA3 ? "numeric" : "alpha"
-          }
-          active={this.state.sortHiVal != -1}
-          rangeLo={this.state.sortLowVal}
-          rangeHi={this.state.sortHiVal}
-          onChange={this.handleUpdateRange}
-        />
-        <Divider type="vertical" />
-        {pagination}
-      </Space>
+      <CountryGridControl
+        selectSort={countrySortSelection}
+        sortBy={this.state.sortBy}
+        sortHiVal={this.state.sortHiVal}
+        sortLowVal={this.state.sortLowVal}
+        onChange={this.handleUpdateRange}
+        pagination={pagination}
+      />
     );
 
     return (
@@ -306,10 +266,7 @@ export default class Countries extends Component {
           value={searchValue}
           onChange={(e) => {
             const currValue = e.target.value;
-            this.setState({
-              searchValue: currValue,
-              filteredCountries: null,
-            });
+            this.setState({ searchValue: currValue, filteredCountries: null });
           }}
         />
         <div
@@ -321,15 +278,10 @@ export default class Countries extends Component {
           }}
         >
           {gridControl}
-          <div className="site-card-wrapper" style={{ margin: "2vh 5vw" }}>
-            <Row gutter={16} justify="center">
-              {currentViewCards?.length != 0 ? (
-                this.createCountryGrid(currentViewCards)
-              ) : (
-                <div>No country matches found...</div>
-              )}
-            </Row>
-          </div>
+          <CountryCardView
+            gutter={16}
+            countryGrid={this.createCountryGrid(currentViewCards)}
+          />
           {gridControl}
         </div>
       </div>

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Search from "react-search";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
-import Highlight from "react-highlighter";
-import { Button, Table } from "antd";
+import { SearchBar } from "./../components/searchComponents";
+import { Table } from "antd";
 
 // sitewide search bar component
 class SiteSearch extends Component {
@@ -75,9 +75,11 @@ class SiteSearch extends Component {
   }
 
   render() {
+    let { items, query, dataSource } = this.state;
+
     let columns = [
       {
-        title: "Search by country name, code, model type, or a page",
+        title: <SearchBar searchValue={query} data={items} />,
         children: [
           {
             title: "Results",

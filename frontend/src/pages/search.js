@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Search from "react-search";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
 import { HighlighterText, SearchBar } from "./../components/searchComponents";
@@ -13,29 +12,23 @@ class SiteSearch extends Component {
   }
 
   componentDidMount() {
-    let curID = 0;
-
     //Add basic static pages into data
     let items = [
-      { id: curID++, type: "Page", value: { text: "Home", route: "/home" } },
-      { id: curID++, type: "Page", value: { text: "About", route: "/about" } },
+      { type: "Page", value: { text: "Home", route: "/home" } },
+      { type: "Page", value: { text: "About", route: "/about" } },
       {
-        id: curID++,
         type: "Page",
         value: { text: "Countries", route: "/countries" },
       },
       {
-        id: curID++,
         type: "Page",
         value: { text: "Cases", route: "/case-statistics" },
       },
       {
-        id: curID++,
         type: "Page",
         value: { text: "Risks", route: "/risk-factor-statistics" },
       },
       {
-        id: curID++,
         type: "Page",
         value: { text: "Global News", route: "/global-news" },
       },
@@ -54,17 +47,14 @@ class SiteSearch extends Component {
         const alpha3Code = country.codes.alpha3Code;
         const identifier = `${country.name} (${country.codes.alpha2Code}, ${country.codes.alpha3Code})`;
         items.push({
-          id: curID++,
           type: "Country",
           value: { text: identifier, route: `/countries/${alpha3Code}` },
         });
         items.push({
-          id: curID++,
           type: "Case Statistic",
           value: { text: identifier, route: `/case-statistics/${alpha3Code}` },
         });
         items.push({
-          id: curID++,
           type: "Risk Factor Statistic",
           value: {
             text: identifier,

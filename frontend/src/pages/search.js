@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Search from "react-search";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
-import { SearchBar } from "./../components/searchComponents";
+import { HighlighterText, SearchBar } from "./../components/searchComponents";
 import { Table } from "antd";
 
 // sitewide search bar component
@@ -99,13 +99,26 @@ class SiteSearch extends Component {
             title: "Results",
             dataIndex: "type",
             key: "type",
-            render: (text) => <>{text}</>,
+            render: (text) =>
+              query != "" ? (
+                <HighlighterText text={text} searchValue={query} />
+              ) : (
+                <>{text}</>
+              ),
           },
           {
             title: "",
             dataIndex: "value",
             key: "value",
-            render: (value) => <Link to={value.route}>{value.text}</Link>,
+            render: (value) => (
+              <Link to={value.route}>
+                {query != "" ? (
+                  <HighlighterText text={value.text} searchValue={query} />
+                ) : (
+                  value.text
+                )}
+              </Link>
+            ),
           },
         ],
       },

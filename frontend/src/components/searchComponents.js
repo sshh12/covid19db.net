@@ -2,6 +2,17 @@ import React from "react";
 import { Input } from "antd";
 import Highlighter from "react-highlight-words";
 
+function HighlighterText(props) {
+  return (
+    <Highlighter
+      highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+      searchWords={[props.searchValue]}
+      autoEscape
+      textToHighlight={props.text ? props.text.toString() : ""}
+    />
+  );
+}
+
 function SearchBar(props) {
   return (
     <Input
@@ -21,4 +32,4 @@ function SearchBar(props) {
   );
 }
 
-export { SearchBar };
+export { HighlighterText, SearchBar };

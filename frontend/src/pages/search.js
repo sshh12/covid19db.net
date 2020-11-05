@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
 import { HighlighterText, SearchBar } from "./../components/searchComponents";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 
 // sitewide search bar component
 class SiteSearch extends Component {
@@ -83,64 +83,86 @@ class SiteSearch extends Component {
     // Setup columns of table (type and name of type with link to page)
     let columns = [
       {
-        title: (
-          <SearchBar
-            searchValue={query}
-            data={items}
-            setDataSource={this.setDataSource}
-            setSearchValue={this.setQuery}
-          />
+        title: "Results",
+        dataIndex: "type",
+        key: "type",
+        render: (text) =>
+          query != "" ? (
+            <HighlighterText text={text} searchValue={query} />
+          ) : (
+            <>{text}</>
+          ),
+        width: 250,
+      },
+      {
+        title: "",
+        dataIndex: "value",
+        key: "value",
+        render: (value) => (
+          <Link to={value.route}>
+            {query != "" ? (
+              <HighlighterText text={value.text} searchValue={query} />
+            ) : (
+              value.text
+            )}
+          </Link>
         ),
-        children: [
-          {
-            title: "Results",
-            dataIndex: "type",
-            key: "type",
-            render: (text) =>
-              query != "" ? (
-                <HighlighterText text={text} searchValue={query} />
-              ) : (
-                <>{text}</>
-              ),
-            width: 250,
-          },
-          {
-            title: "",
-            dataIndex: "value",
-            key: "value",
-            render: (value) => (
-              <Link to={value.route}>
-                {query != "" ? (
-                  <HighlighterText text={value.text} searchValue={query} />
-                ) : (
-                  value.text
-                )}
-              </Link>
-            ),
-          },
-        ],
       },
     ];
 
     return (
       <div className="App">
-        <h1
+        <div
           style={{
-            fontWeight: 800,
-            marginTop: 20,
-            marginBottom: 20,
-            fontSize: "2em",
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "#323776",
+            paddingBottom: 40,
+            paddingTop: 20,
+            alignItems: "center",
           }}
         >
-          Search
-        </h1>
-
+          <h1
+            style={{
+              fontWeight: 800,
+              marginTop: 0,
+              marginBottom: 20,
+              fontSize: "2em",
+              color: "white",
+            }}
+          >
+            Search
+          </h1>
+          <SearchBar
+            style={{ width: "75vw" }}
+            searchValue={query}
+            data={items}
+            setDataSource={this.setDataSource}
+            setSearchValue={this.setQuery}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 20,
+              width: "25vw",
+            }}
+          >
+            <Button>All</Button>
+            <Button>Countries</Button>
+            <Button>Cases</Button>
+            <Button>Risks</Button>
+          </div>
+        </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div
             style={{
               width: "75vw",
               backgroundColor: "#323776",
               userSelect: "none",
+              marginTop: 40,
               marginBottom: 20,
             }}
           >
@@ -149,6 +171,7 @@ class SiteSearch extends Component {
               columns={columns}
               dataSource={dataSource}
               pagination={{ position: ["bottomRight"] }}
+              showHeader={false}
             />
           </div>
         </div>

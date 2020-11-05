@@ -2,6 +2,7 @@ import React from "react";
 import { Input } from "antd";
 import Highlighter from "react-highlight-words";
 
+//Component to highlight text
 function HighlighterText(props) {
   return (
     <Highlighter
@@ -13,6 +14,7 @@ function HighlighterText(props) {
   );
 }
 
+//Searchbar component to add in table header specific for search page
 function SearchBar(props) {
   return (
     <Input
@@ -21,6 +23,8 @@ function SearchBar(props) {
       onChange={(e) => {
         const currValue = e.target.value;
         props.setSearchValue(currValue);
+
+        //Filter data based on current query and update data accordingly
         const filteredData = props.data.filter(
           (entry) =>
             entry.value.text.toLowerCase().includes(currValue) ||

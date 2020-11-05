@@ -15,6 +15,7 @@ class SiteSearch extends Component {
   componentDidMount() {
     let curID = 0;
 
+    //Add basic static pages into data
     let items = [
       { id: curID++, type: "Page", value: { text: "Home", route: "/home" } },
       { id: curID++, type: "Page", value: { text: "About", route: "/about" } },
@@ -46,6 +47,8 @@ class SiteSearch extends Component {
       },
     };
 
+    // Use api to get rest of all the model and instance data
+    // Push each country with a country, case-statistic, and risk-factor instance
     axios.get("countries", options).then((res) => {
       res.data.forEach((country) => {
         const alpha3Code = country.codes.alpha3Code;
@@ -74,9 +77,12 @@ class SiteSearch extends Component {
     });
   }
 
+  // Callback function to set table datasource
   setDataSource = (dataSource) => {
     this.setState({ dataSource: dataSource });
   };
+
+  // Callback function to set current search query
   setQuery = (value) => {
     this.setState({ query: value });
   };
@@ -84,6 +90,7 @@ class SiteSearch extends Component {
   render() {
     let { items, query, dataSource } = this.state;
 
+    // Setup columns of table (type and name of type with link to page)
     let columns = [
       {
         title: (
@@ -150,7 +157,7 @@ class SiteSearch extends Component {
             <Table
               style={{ margin: "0 0vw", outline: "1px solid lightgrey" }}
               columns={columns}
-              dataSource={this.state.dataSource}
+              dataSource={dataSource}
               pagination={{ position: ["bottomRight"] }}
             />
           </div>

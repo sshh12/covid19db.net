@@ -3,33 +3,16 @@ import Search from "react-search";
 import { withRouter } from "react-router-dom";
 import axios from "../client";
 import Highlight from "react-highlighter";
+import { Button, Table } from "antd";
 
 // sitewide search bar component
 class SiteSearch extends Component {
   constructor() {
     super();
-    this.state = { items: [], query: "" };
+    this.state = { items: null, query: null, dataSource: null };
   }
 
-  getQuery(query) {
-    this.setState({ query: query });
-  }
-
-  // navigate to route upon item selection
-  onSelect(items) {
-    const selected = items[0];
-    // navigate to selected item if not undefined
-    if (selected !== undefined) {
-      const route = this.state.items[selected.id].route;
-      // Hack to avoid react-search race condition
-      setTimeout(() => this.props.history.push(route), 600);
-    }
-  }
-
-  // load search results asynchronously
-  getItemsAsync(query, cb) {
-    let curID = 0;
-    // begin by adding pages
+  componentDidMount() {
     let items = [
       { id: curID++, value: "Home", route: "/home" },
       { id: curID++, value: "About", route: "/about" },
@@ -38,39 +21,73 @@ class SiteSearch extends Component {
       { id: curID++, value: "Risks", route: "/risk-factor-statistics" },
       { id: curID++, value: "Global News", route: "/global-news" },
     ];
-    // retrieve necessary data from API and populate remainder
+
     const options = {
       params: {
-        query: query,
+        attributes: "name,codes",
       },
     };
-    axios.get("search", options).then((res) => {
-      // for each country, push possible results
+
+    axios.get("countries", options).then((res) => {
       res.data.forEach((country) => {
         const alpha3Code = country.codes.alpha3Code;
         const identifier = `${country.name} (${country.codes.alpha2Code}, ${country.codes.alpha3Code})`;
         items.push({
           id: curID++,
-          value: "Country Info for " + identifier,
+          type: "Country",
+          value: identifier,
           route: `/countries/${alpha3Code}`,
         });
         items.push({
           id: curID++,
-          value: "Cases for " + identifier,
+          type: "Case Statistic",
+          value: identifier,
           route: `/case-statistics/${alpha3Code}`,
         });
         items.push({
           id: curID++,
-          value: "Risks for " + identifier,
+          type: "Risk Factor Statistic",
+          value: identifier,
           route: `/risk-factor-statistics/${alpha3Code}`,
         });
       });
       this.setState({ items });
-      cb(query);
+      this.setState({ dataSource: items });
     });
   }
 
   render() {
+    let columns = [
+      {
+        title: "Search by country name, code, model type, or a page",
+        children: [
+          {
+            title: "Type",
+            dataIndex: "type",
+            key: "type",
+            render: (text) => <>{text.toLocaleString()}</>,
+          },
+          {
+            title: "Name",
+            dataIndex: "value",
+            key: "value",
+            render: (value) => (
+              <Link to={`/countries/${country.codes.alpha3Code}`}>
+                {searchValue != "" ? (
+                  <HighlighterText
+                    text={country.name}
+                    searchValue={searchValue}
+                  />
+                ) : (
+                  country.name
+                )}
+              </Link>
+            ),
+          },
+        ],
+      },
+    ];
+
     return (
       <div className="App">
         <h1

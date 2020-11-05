@@ -1,106 +1,150 @@
 import React, { Component } from "react";
-import Search from "react-search";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
-import Highlight from "react-highlighter";
+import { HighlighterText, SearchBar } from "./../components/searchComponents";
+import { Button, Table } from "antd";
 
 // sitewide search bar component
 class SiteSearch extends Component {
   constructor() {
     super();
-    this.state = { items: [], query: "" };
+    this.state = { query: null, dataSource: null };
   }
 
-  getQuery(query) {
-    this.setState({ query: query });
-  }
-
-  // navigate to route upon item selection
-  onSelect(items) {
-    const selected = items[0];
-    // navigate to selected item if not undefined
-    if (selected !== undefined) {
-      const route = this.state.items[selected.id].route;
-      // Hack to avoid react-search race condition
-      setTimeout(() => this.props.history.push(route), 600);
-    }
-  }
-
-  // load search results asynchronously
-  getItemsAsync(query, cb) {
-    let curID = 0;
-    // begin by adding pages
+  onChange(e) {
+    // get user typed query from search bar change
+    const query = e.target.value;
+    // add and filter basic static pages into data
     let items = [
-      { id: curID++, value: "Home", route: "/home" },
-      { id: curID++, value: "About", route: "/about" },
-      { id: curID++, value: "Countries", route: "/countries" },
-      { id: curID++, value: "Cases", route: "/case-statistics" },
-      { id: curID++, value: "Risks", route: "/risk-factor-statistics" },
-      { id: curID++, value: "Global News", route: "/global-news" },
-    ];
-    // retrieve necessary data from API and populate remainder
+      { type: "Page", value: { text: "Home", route: "/home" } },
+      { type: "Page", value: { text: "About", route: "/about" } },
+      {
+        type: "Page",
+        value: { text: "Countries", route: "/countries" },
+      },
+      {
+        type: "Page",
+        value: { text: "Cases", route: "/case-statistics" },
+      },
+      {
+        type: "Page",
+        value: { text: "Risks", route: "/risk-factor-statistics" },
+      },
+      {
+        type: "Page",
+        value: { text: "Global News", route: "/global-news" },
+      },
+    ].filter(
+      (entry) =>
+        entry.value.text.toLowerCase().includes(query.toLowerCase()) ||
+        entry.type.toLowerCase().includes(query.toLowerCase())
+    );
     const options = {
       params: {
         query: query,
       },
     };
+    // send request to API search endpoint to populate items with relevant data
     axios.get("search", options).then((res) => {
-      // for each country, push possible results
       res.data.forEach((country) => {
         const alpha3Code = country.codes.alpha3Code;
-        const identifier = `${country.name} (${country.codes.alpha2Code}, ${country.codes.alpha3Code})`;
+        const identifier = `${country.name} (${country.codes.alpha2Code}, \
+          ${country.codes.alpha3Code})`;
         items.push({
-          id: curID++,
-          value: "Country Info for " + identifier,
-          route: `/countries/${alpha3Code}`,
+          type: "Country",
+          value: { text: identifier, route: `/countries/${alpha3Code}` },
         });
         items.push({
-          id: curID++,
-          value: "Cases for " + identifier,
-          route: `/case-statistics/${alpha3Code}`,
+          type: "Case Statistic",
+          value: { text: identifier, route: `/case-statistics/${alpha3Code}` },
         });
         items.push({
-          id: curID++,
-          value: "Risks for " + identifier,
-          route: `/risk-factor-statistics/${alpha3Code}`,
+          type: "Risk Factor Statistic",
+          value: {
+            text: identifier,
+            route: `/risk-factor-statistics/${alpha3Code}`,
+          },
         });
       });
-      this.setState({ items });
-      cb(query);
+      // set state
+      this.setState({ dataSource: items });
+      this.setState({ query: query });
     });
   }
 
   render() {
+    let { query, dataSource } = this.state;
+
+    // Setup columns of table (type and name of type with link to page)
+    let columns = [
+      {
+        title: "Results",
+        dataIndex: "type",
+        key: "type",
+        render: (text) => <>{text}</>,
+        width: 250,
+      },
+      {
+        title: "",
+        dataIndex: "value",
+        key: "value",
+        render: (value) => (
+          <Link to={value.route}>
+            {query != "" ? (
+              <HighlighterText text={value.text} searchValue={query} />
+            ) : (
+              value.text
+            )}
+          </Link>
+        ),
+      },
+    ];
+
     return (
       <div className="App">
-        <h1
+        <div
           style={{
-            fontWeight: 800,
-            marginTop: 20,
-            marginBottom: 20,
-            fontSize: "2em",
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "#323776",
+            paddingBottom: 40,
+            paddingTop: 20,
+            alignItems: "center",
           }}
         >
-          Search
-        </h1>
-        <h3 style={{ fontWeight: 400, fontSize: "1.7em" }}>
-          Try searching for pages, countries, and ISO 3166-1 codes.
-        </h3>
+          <h1
+            style={{
+              fontWeight: 800,
+              marginTop: 0,
+              marginBottom: 20,
+              fontSize: "2em",
+              color: "white",
+            }}
+          >
+            Search
+          </h1>
+          <SearchBar
+            style={{ width: "75vw" }}
+            placeholder="Try searching for countries, ISO codes, pages, capitals, or regions"
+            onChange={this.onChange.bind(this)}
+          />
+        </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div
             style={{
-              width: "50vw",
+              width: "75vw",
               backgroundColor: "#323776",
               userSelect: "none",
+              marginTop: 40,
+              marginBottom: 20,
             }}
           >
-            <Search
-              items={this.state.items}
-              placeholder=""
-              onItemsChanged={this.onSelect.bind(this)}
-              getItemsAsync={this.getItemsAsync.bind(this)}
-              NotFoundPlaceholder="No results match this query"
-              // onKeyChange={this.getQuery.bind(this)}
+            <Table
+              style={{ margin: "0 0vw", outline: "1px solid lightgrey" }}
+              columns={columns}
+              dataSource={dataSource}
+              pagination={{ position: ["bottomRight"] }}
+              showHeader={false}
             />
           </div>
         </div>

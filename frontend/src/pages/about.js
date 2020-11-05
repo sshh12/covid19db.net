@@ -10,7 +10,7 @@ const GROUP_MEMBERS = [
     gitlab: "sshh12",
     role: "Full Stack Developer",
     bio: "Junior Computer Science Major from Houston, TX",
-    unitTests: 0,
+    unitTests: 8,
   },
   {
     name: "Cameron Doggett",

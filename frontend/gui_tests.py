@@ -53,15 +53,15 @@ class TestCovidDBGUI(unittest.TestCase):
 
     def test_country_select(self):
         self.driver.find_elements_by_link_text("Countries")[0].click()
-        sig_btn = self.driver.find_elements_by_partial_link_text("Singapore")[0]
+        sig_btn = self.driver.find_elements_by_partial_link_text("Algeria")[0]
         sig_btn.click()
-        self.assertEqual(self.driver.current_url, BASE_URL + "/countries/SGP")
+        self.assertEqual(self.driver.current_url, BASE_URL + "/countries/DZA")
 
     def test_country_instance_explore(self):
         self.driver.find_elements_by_link_text("Countries")[0].click()
-        self.driver.find_elements_by_partial_link_text("Singapore")[0].click()
+        self.driver.find_elements_by_partial_link_text("Algeria")[0].click()
         country_name = self.driver.find_elements_by_tag_name("h1")[0]
-        self.assertEqual(country_name.get_attribute("textContent"), " Singapore (SGP)")
+        self.assertEqual(country_name.get_attribute("textContent"), " Algeria (DZA)")
 
     def test_cases_explore(self):
         self.driver.find_elements_by_link_text("Cases")[0].click()

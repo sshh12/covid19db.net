@@ -21,7 +21,8 @@ class SiteSearch extends Component {
     // navigate to selected item if not undefined
     if (selected !== undefined) {
       const route = this.state.items[selected.id].route;
-      this.props.history.push(route);
+      // Hack to avoid react-search race condition
+      setTimeout(() => this.props.history.push(route), 600);
     }
   }
 

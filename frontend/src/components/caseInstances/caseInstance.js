@@ -15,16 +15,10 @@ class CaseInstance extends Component {
   }
 
   componentDidMount() {
-    axios.get("case-statistics/" + this.props.code).then(
-      (res) => {
-        const caseData = res.data;
-        this.setState({ caseData });
-      },
-      (error) => {
-        console.log("error: promise not fulfilled");
-        console.log(error);
-      }
-    );
+    axios.get("case-statistics/" + this.props.code).then((res) => {
+      const caseData = res.data;
+      this.setState({ caseData });
+    });
   }
 
   render() {
@@ -33,7 +27,6 @@ class CaseInstance extends Component {
     if (!data) {
       return <div />;
     }
-    console.log(data);
 
     return (
       <div className="App">

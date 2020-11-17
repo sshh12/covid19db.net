@@ -18,7 +18,6 @@ export default function VisualizationB() {
   if (cases.length == 0) {
     return <p>Loading...</p>;
   }
-  console.log(cases);
   let data = {
     root: {
       name: "Deaths",

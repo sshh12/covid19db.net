@@ -1,5 +1,6 @@
 import React from "react";
 import VisualizationA from "./../components/vis/visA";
+import VisualizationB from "./../components/vis/visB";
 import { Card, Col, Row } from "antd";
 
 export default function Visualizations() {
@@ -15,12 +16,20 @@ export default function Visualizations() {
       >
         Visualizations
       </h1>
-      <Row>
+      <Row justify="center">
         <Col>
-          <Card hoverable style={{ height: "500px", width: "600px" }}>
+          <Card hoverable style={{ height: "520px", width: "600px" }}>
             <h4>Cases vs Population (Log Scale)</h4>
-            <div style={{ height: "450px", width: "550px" }}>
+            <div style={{ height: "440px", width: "560px" }}>
               <VisualizationA />
+            </div>
+          </Card>
+        </Col>
+        <Col>
+          <Card hoverable style={{ height: "520px", width: "600px" }}>
+            <h4>Deaths By Country (Top 20)</h4>
+            <div style={{ height: "440px", width: "560px" }}>
+              <VisualizationB />
             </div>
           </Card>
         </Col>

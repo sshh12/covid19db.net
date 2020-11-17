@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 import Routes from "./routes";
 import { Menu, Form, Input, Button } from "antd";
+import Visualizations from "./pages/vis";
 
 class App extends React.Component {
   render() {
@@ -74,6 +75,14 @@ class App extends React.Component {
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
             >
               Global News
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link
+              to="/vis"
+              style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
+            >
+              Visualizations
             </Link>
           </Menu.Item>
           <Menu.Item>

@@ -1565,6 +1565,19 @@
     lodash "^4.17.11"
     react-motion "^0.5.2"
 
+"@nivo/circle-packing@0.62.0":
+  version "0.62.0"
+  resolved "https://registry.yarnpkg.com/@nivo/circle-packing/-/circle-packing-0.62.0.tgz#e881b2dd26125c4c91c09a621ea7341b47fee651"
+  integrity sha512-re1bLI7nCd3ZYLIJxRFJdW6amwncGmMDTerwvOoEV+ykT7NwculUQyETJ4rOrvHlcFW5HoHfRc6FRf6cdBEsCg==
+  dependencies:
+    "@nivo/colors" "0.62.0"
+    "@nivo/core" "0.62.0"
+    "@nivo/tooltip" "0.62.0"
+    d3-hierarchy "^1.1.8"
+    lodash "^4.17.11"
+    react-motion "^0.5.2"
+    recompose "^0.30.0"
+
 "@nivo/colors@0.62.0":
   version "0.62.0"
   resolved "https://registry.yarnpkg.com/@nivo/colors/-/colors-0.62.0.tgz#e67f1d4b7fa9ae18472509331bcdd98fd619e594"

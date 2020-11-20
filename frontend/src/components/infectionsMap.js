@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
 import mapboxgl from "mapbox-gl";
-import axios from "../client";
 import { Button } from "antd";
 import ReactDOM from "react-dom";
 import geoData from "../data/countriesMapData.json";

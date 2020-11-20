@@ -20,6 +20,7 @@ const GROUP_MEMBERS = [
     role: "Back-end Developer",
     bio: "Junior Computer Science Major from Katy, TX",
     unitTests: 34,
+    url: "https://www.linkedin.com/in/cameron-doggett-186761164/",
   },
   {
     name: "Yash Kakodkar",
@@ -27,6 +28,7 @@ const GROUP_MEMBERS = [
     role: "Full Stack Developer",
     bio: "Junior Computer Science Major from Katy, TX",
     unitTests: 5,
+    url: "https://www.linkedin.com/in/yashkakodkar/",
   },
   {
     name: "Jeffrey Moulckers",
@@ -35,6 +37,7 @@ const GROUP_MEMBERS = [
     bio: "Junior Computer Science/Spanish Dual Major from Austin, TX",
     lead: true,
     unitTests: 0,
+    url: "https://www.linkedin.com/in/jeffreymoulckers/",
   },
   {
     name: "Vassi Gianitsos",
@@ -42,6 +45,7 @@ const GROUP_MEMBERS = [
     role: "Front-end Developer",
     bio: "Senior Computer Science Major from Flower Mound, TX",
     unitTests: 17,
+    url: "https://www.linkedin.com/in/vassi-gianitsos-a3881b167/",
   },
 ];
 

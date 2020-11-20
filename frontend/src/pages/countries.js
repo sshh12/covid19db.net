@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Divider, Input, Pagination, Row, Space } from "antd";
+import { Col, Input} from "antd";
 import axios from "../client";
 
 import CountryCard from "../components/country/countryCard.js";

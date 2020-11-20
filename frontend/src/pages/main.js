@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import InfectionsMap from "../components/infectionsMap";
 import axios from "../client";
-import { TotalStats } from "./../components/mainComponents";
+import TotalStats from "./../components/mainComponents";
 import "./../styling/main.css";
 
 export default class Main extends Component {

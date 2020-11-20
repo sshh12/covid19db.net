@@ -10,4 +10,4 @@ function TotalStats(props) {
   );
 }
 
-export { TotalStats };
+export default TotalStats;

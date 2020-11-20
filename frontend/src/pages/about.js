@@ -32,6 +32,7 @@ const GROUP_MEMBERS = [
     gitlab: "jrmoulckers",
     role: "Full Stack Developer",
     bio: "Junior Computer Science/Spanish Dual Major from Austin, TX",
+    lead: true,
     unitTests: 0,
   },
   {
@@ -197,7 +198,7 @@ export default function About() {
                 <Card.Text>
                   {person.bio}
                   <hr />
-                  <b>Role</b> {person.role}
+                  <b>Role</b> {person.role} {person.lead && <b>(Team Lead)</b>}
                   <hr />
                   {loaded ? (
                     <>

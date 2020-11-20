@@ -3,6 +3,7 @@ import mapboxgl from "mapbox-gl";
 import axios from "../client";
 import { Button } from "antd";
 import ReactDOM from "react-dom";
+import geoData from "../data/countriesMapData.json"
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3NoaDEyIiwiYSI6ImNpcTVhNDQxYjAwM3FmaGtrYnl6czEwMGcifQ.eYETiDD8NqThLahLIBmjSQ";
@@ -65,8 +66,7 @@ const InfectionsMap = (props) => {
       // Add a source for the state polygons.
       map.addSource("countries", {
         type: "geojson",
-        data:
-          "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson",
+        data: geoData,
       });
 
       // Add a layer showing the state polygons.
@@ -84,27 +84,37 @@ const InfectionsMap = (props) => {
       // location of the click, with description HTML from its properties.
       map.on("click", "countries-layer", function (e) {
         const placeholder = document.createElement("div");
-        ReactDOM.render(
-          <Fragment>
-            <h2>{e.features[0].properties.name}</h2>
-            <div>
-              <Button href={`/countries/${e.features[0].properties.iso_a3}`}>
-                View Country
+        if(e.features[0].properties.iso_a3 !== "null"){
+          ReactDOM.render(
+            <Fragment>
+              <h2>{e.features[0].properties.name}</h2>
+              <div>
+                <Button href={`/countries/${e.features[0].properties.iso_a3}`}>
+                  View Country
+                </Button>
+              </div>
+              <Button
+                href={`/case-statistics/${e.features[0].properties.iso_a3}`}
+              >
+                Cases
               </Button>
-            </div>
-            <Button
-              href={`/case-statistics/${e.features[0].properties.iso_a3}`}
-            >
-              Cases
-            </Button>
-            <Button
-              href={`/risk-factor-statistics/${e.features[0].properties.iso_a3}`}
-            >
-              Risks
-            </Button>
-          </Fragment>,
-          placeholder
-        );
+              <Button
+                href={`/risk-factor-statistics/${e.features[0].properties.iso_a3}`}
+              >
+                Risks
+              </Button>
+            </Fragment>,
+            placeholder
+          );
+        }
+        else{
+          ReactDOM.render(
+            <Fragment>
+              <h2>{e.features[0].properties.name}</h2>
+            </Fragment>,
+            placeholder
+          );
+        }
         new mapboxgl.Popup()
           .setLngLat(e.lngLat)
           .setDOMContent(placeholder)

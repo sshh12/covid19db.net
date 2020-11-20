@@ -11,6 +11,7 @@ const GROUP_MEMBERS = [
     gitlab: "sshh12",
     role: "Full Stack Developer",
     bio: "Junior Computer Science Major from Houston, TX",
+    url: "https://www.linkedin.com/in/shrivushankar/",
     unitTests: 8,
   },
   {
@@ -49,64 +50,75 @@ const TOOLS = [
     name: "React",
     url: "https://reactjs.org/",
     desc: "For creating interactive UIs in JSX.",
+    logo: "/icons/react.png",
   },
   {
     name: "Antd",
     url: "https://ant.design/",
     desc: "A React UI library for clean composable components.",
+    logo: "/icons/antd.png",
   },
   {
     name: "Nivo",
     url: "https://nivo.rocks/",
     desc: "A React UI library for animated and interactive charts.",
+    logo: "/icons/nivo.png",
   },
   {
     name: "Jest",
     url: "https://jestjs.io/",
     desc: "A JavaScript testing framework.",
+    logo: "/icons/jest.jpg",
   },
   {
     name: "Axios",
     url: "https://github.com/axios/axios",
     desc: "For doing browser-side HTTP requests to our API.",
+    logo: "/icons/axios.png",
   },
   {
     name: "Flask",
     url: "https://flask.palletsprojects.com/en/1.1.x/",
     desc: "For serving our API data in a RESTful way.",
+    logo: "/icons/flask.png",
   },
   {
     name: "SQLAlchemy",
     url: "https://www.sqlalchemy.org/",
     desc: "A Python ORM for creating and interacting with our SQL models.",
+    logo: "/icons/sqla.png",
   },
   {
     name: "GCP",
     url: "https://cloud.google.com",
     desc: "For hosting our site on the cloud.",
+    logo: "/icons/gcp.png",
   },
   {
     name: "Postman",
     url: "https://www.postman.com",
     desc: "For building and testing API's.",
+    logo: "/icons/postman.png",
   },
   {
     name: "GitLab",
     url: "https://gitlab.com/explore",
     desc:
       "DevOps tool for issue-tracking, continuous integration, testing, and deployment.",
+    logo: "/icons/gitlab.png",
   },
   {
     name: "Selenium",
     url: "https://www.selenium.dev/",
     desc: "For end-to-end automated GUI testing.",
+    logo: "/icons/selenium.png",
   },
 ];
 
 const DATA_SOURCES = [
-  "https://api.covid19api.com/",
-  "https://restcountries.eu/",
-  "https://newsapi.org/",
+  "https://api.covid19api.com",
+  "https://restcountries.eu",
+  "https://newsapi.org",
   "https://covid.ourworldindata.org/data/owid-covid-data.json",
 ];
 
@@ -165,11 +177,11 @@ export default function About() {
         )}
         <br />
         <a href="https://gitlab.com/jrmoulckers/covid19db-net">
-          gitlab.com/jrmoulckers/covid19db-net
+          <img src="/icons/gitlab.png" width={"100rem"} height={"100rem"} />
         </a>
         <br />
         <a href="https://documenter.getpostman.com/view/12799044/TVKJxuP4">
-          Postman Docs
+          <img src="/icons/postman.png" width={"100rem"} height={"100rem"} />
         </a>
       </div>
       <hr />
@@ -192,9 +204,13 @@ export default function About() {
                 display: "inline-block",
               }}
             >
-              <Card.Img variant="top" src={`/imgs/${person.gitlab}.jpg`} />
+              <a href={person.url}>
+                <Card.Img variant="top" src={`/imgs/${person.gitlab}.jpg`} />
+              </a>
               <Card.Body>
-                <Card.Title>{person.name}</Card.Title>
+                <Card.Title>
+                  <a href={person.url}>{person.name}</a>
+                </Card.Title>
                 <Card.Text>
                   {person.bio}
                   <hr />

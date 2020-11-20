@@ -24,7 +24,16 @@ export default function ProjectInfo({ tools, dataSources }) {
                 <ul className="list-unstyled">
                   {tools.map((tool) => (
                     <li key={tool.url}>
-                      <a href={tool.url}>{tool.name}</a> - {tool.desc}
+                      <a href={tool.url}>
+                        <img
+                          style={{ marginRight: "10px" }}
+                          src={tool.logo}
+                          width={"100rem"}
+                          height={"100rem"}
+                        />
+                        {tool.name}
+                      </a>{" "}
+                      - {tool.desc}
                     </li>
                   ))}
                 </ul>
@@ -39,7 +48,15 @@ export default function ProjectInfo({ tools, dataSources }) {
                 <ul className="list-unstyled">
                   {dataSources.map((url) => (
                     <li key={url}>
-                      <a href={url}>{url}</a>
+                      <a href={url}>
+                        <img
+                          style={{ marginRight: "10px" }}
+                          src={"/icons/server.png"}
+                          width={"100rem"}
+                          height={"100rem"}
+                        />
+                        {url.replace("https://", "")}
+                      </a>
                     </li>
                   ))}
                 </ul>

@@ -17,11 +17,17 @@ const cityParams = [
 
 export default function ProviderVisualizationA() {
   let [cities, setCities] = useState([]);
+  let [tmpMessage, setTmpMessage] = useState("Loading...");
   useEffect(() => {
     fetch(
-      "https://cors-anywhere.herokuapp.com/http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/city"
+      "http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/city"
     )
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if(!resp.ok){
+          throw Error(resp.statusText);
+        }
+        return resp.json();
+      })
       .then((data) =>
         setCities(
           data.map((row) => {
@@ -32,10 +38,13 @@ export default function ProviderVisualizationA() {
             return obj;
           })
         )
-      );
+      )
+      .catch((error) => {
+        setTmpMessage(`${error.message} (provider API error)`);
+      });
   }, []);
   if (cities.length == 0) {
-    return <p>Loading...</p>;
+    return <p>{tmpMessage}</p>;
   }
   let dataByRegion = {};
   for (let city of cities) {

@@ -4,6 +4,7 @@ import VisualizationB from "./../components/vis/visB";
 import VisualizationC from "./../components/vis/visC";
 import ProviderVisualizationA from "./../components/vis/provVisA";
 import ProviderVisualizationB from "./../components/vis/provVisB";
+import ProviderVisualizationC from "./../components/vis/provVisC";
 import { Card, Col, Row } from "antd";
 
 export default function Visualizations() {
@@ -30,7 +31,7 @@ export default function Visualizations() {
         </Col>
         <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
-            <h4>Deaths By Country (Top 20)</h4>
+            <h4>Deaths by Country (Top 20)</h4>
             <div style={{ height: "440px", width: "560px" }}>
               <VisualizationB />
             </div>
@@ -46,9 +47,17 @@ export default function Visualizations() {
         </Col>
       </Row>
       <hr />
-      <div style={{ textAlign: "center", padding: "10px" }}>
-        <h4>Provider</h4>
-        <a href="https://collegesearch.me">collegesearch.me</a>
+      <div style={{ textAlign: "center"}}>
+        <h1
+          style={{
+            fontWeight: "800",
+            fontSize: "2em",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          <a href="https://collegesearch.me" target="_blank" rel="noopener noreferrer">Provider</a> Visualizations
+        </h1>
       </div>
       <Row justify="center">
         <Col>
@@ -61,20 +70,20 @@ export default function Visualizations() {
         </Col>
         <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
-            <h4>Average Restaurant Price Level By State</h4>
+            <h4>Average Restaurant Price Level by State</h4>
             <div style={{ height: "440px", width: "560px" }}>
               <ProviderVisualizationB />
             </div>
           </Card>
         </Col>
-        {/* <Col>
+        <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
-            <h4>Share of Global Cases</h4>
+            <h4>Average Percentage of Full-Time College Enrollment by State</h4>
             <div style={{ height: "440px", width: "560px" }}>
-              <VisualizationC />
+              <ProviderVisualizationC />
             </div>
           </Card>
-        </Col> */}
+        </Col>
       </Row>
     </div>
   );

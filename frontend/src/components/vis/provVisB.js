@@ -16,11 +16,17 @@ const restaurantParams = [
 
 export default function ProviderVisualizationB() {
   let [restaurants, setRestaurants] = useState([]);
+  let [tmpMessage, setTmpMessage] = useState("Loading...");
   useEffect(() => {
     fetch(
-      "https://cors-anywhere.herokuapp.com/http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/restaurant"
+      "http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/restaurant"
     )
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if(!resp.ok){
+          throw Error(resp.statusText);
+        }
+        return resp.json();
+      })
       .then((data) =>
         setRestaurants(
           data.map((row) => {
@@ -31,10 +37,13 @@ export default function ProviderVisualizationB() {
             return obj;
           })
         )
-      );
+      )
+      .catch((error) => {
+        setTmpMessage(`${error.message} (provider API error)`);
+      });
   }, []);
   if (restaurants.length == 0) {
-    return <p>Loading...</p>;
+    return <p>{tmpMessage}</p>;
   }
   let dataByRegion = {};
   for (let rest of restaurants) {

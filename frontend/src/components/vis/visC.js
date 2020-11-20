@@ -46,6 +46,27 @@ export default function VisualizationC() {
     id: "Other",
     value: totalGlobalCases - sumAccountedCases,
   });
+  // function to generate a custom tooltip for a pie graph slice
+  const customTooltip = (node) => {
+    const percentage = roundToPlace(node.value / totalGlobalCases * 100, 3);
+    return (
+      <div>
+        <div
+          style = {{
+            float: "left",
+            width: 13,
+            height: 13,
+            margin: 5,
+            backgroundColor: node.color
+          }}
+        ></div>
+        <strong>
+          {node.id}
+        </strong>
+        {`: ${node.value.toLocaleString()} cases (${percentage}% of global total)`}
+      </div>
+    );
+  }
   return (
     <ResponsivePie
       data={data}
@@ -56,6 +77,7 @@ export default function VisualizationC() {
       margin={{ top: 30, right: 0, left: 0, bottom: 30 }}
       cornerRadius={2}
       borderWidth={1}
+      tooltip={customTooltip}
     />
   );
 }

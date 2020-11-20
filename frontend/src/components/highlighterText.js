@@ -1,8 +1,6 @@
 import React from "react";
-import { Input } from "antd";
 import Highlighter from "react-highlight-words";
 
-//Component to highlight text
 function HighlighterText(props) {
   return (
     <Highlighter
@@ -14,15 +12,4 @@ function HighlighterText(props) {
   );
 }
 
-//Searchbar component to add in table header specific for search page
-function SearchBar(props) {
-  return (
-    <Input
-      style={props.style}
-      placeholder={props.placeholder}
-      onChange={props.onChange}
-    />
-  );
-}
-
-export { HighlighterText, SearchBar };
+export default HighlighterText;

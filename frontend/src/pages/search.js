@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
-import { HighlighterText, SearchBar } from "./../components/searchComponents";
-import { Button, Table } from "antd";
+import HighlighterText from "./../components/highlighterText";
+import SearchBar from "./../components/searchBar";
+import { Table } from "antd";
 
 // sitewide search bar component
 class SiteSearch extends Component {

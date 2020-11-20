@@ -3,11 +3,9 @@ import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
-import { filterData } from "./../components/caseInstances/caseModelData.js";
-import {
-  HighlighterText,
-  SearchBar,
-} from "./../components/caseInstances/casePageComponents";
+import filterData from "../components/caseInstances/caseModelData.js";
+import HighlighterText from "../components/highlighterText";
+import SearchBar from "../components/searchBar";
 
 export default class Cases extends Component {
   constructor() {

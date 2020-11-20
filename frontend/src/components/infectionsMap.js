@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import axios from "../client";
 import { Button } from "antd";
 import ReactDOM from "react-dom";
-import geoData from "../data/countriesMapData.json"
+import geoData from "../data/countriesMapData.json";
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3NoaDEyIiwiYSI6ImNpcTVhNDQxYjAwM3FmaGtrYnl6czEwMGcifQ.eYETiDD8NqThLahLIBmjSQ";
@@ -54,7 +54,7 @@ const InfectionsMap = (props) => {
 
   // Initialize map when component mounts
   useEffect(() => {
-    let { center, zoom } = props;
+    let { center, zoom, caseStats } = props;
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
@@ -84,7 +84,7 @@ const InfectionsMap = (props) => {
       // location of the click, with description HTML from its properties.
       map.on("click", "countries-layer", function (e) {
         const placeholder = document.createElement("div");
-        if(e.features[0].properties.iso_a3 !== "null"){
+        if (e.features[0].properties.iso_a3 !== "null") {
           ReactDOM.render(
             <Fragment>
               <h2>{e.features[0].properties.name}</h2>
@@ -106,8 +106,7 @@ const InfectionsMap = (props) => {
             </Fragment>,
             placeholder
           );
-        }
-        else{
+        } else {
           ReactDOM.render(
             <Fragment>
               <h2>{e.features[0].properties.name}</h2>
@@ -121,27 +120,19 @@ const InfectionsMap = (props) => {
           .addTo(map);
       });
 
-      const options = {
-        params: {
-          attributes: "location,totals",
-        },
-      };
-      axios.get("case-statistics", options).then((res) => {
-        // get average number of active cases
-        let avgActive = 0;
-        for (let i = 0; i < res.data.length; ++i) {
-          const cases = res.data[i];
-          avgActive += cases.totals.active;
+      let avgActive = 0;
+      for (let i = 0; i < caseStats.length; ++i) {
+        const cases = caseStats[i];
+        avgActive += cases.totals.active;
+      }
+      avgActive /= caseStats.length;
+      for (const cases of caseStats) {
+        // only draw circle for countries with total active greater
+        // than the average
+        if (cases.totals.active > avgActive) {
+          addCircleToMap(map, cases.location, cases.totals.active / 5000);
         }
-        avgActive /= res.data.length;
-        for (const cases of res.data) {
-          // only draw circle for countries with total active greater
-          // than the average
-          if (cases.totals.active > avgActive) {
-            addCircleToMap(map, cases.location, cases.totals.active / 5000);
-          }
-        }
-      });
+      }
     });
 
     // Clean up on unmount

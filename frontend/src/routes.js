@@ -9,6 +9,7 @@ import {
   Risks,
   GlobalNews,
   SiteSearch,
+  Visualizations,
 } from "./pages/allPages";
 import RiskInstance from "./components/risks/riskInstance";
 import CountryInstance from "./components/country/countryInstance";
@@ -61,6 +62,9 @@ function Routes() {
       ></Route>
       <Route exact path="/global-news">
         <GlobalNews />
+      </Route>
+      <Route exact path="/vis">
+        <Visualizations />
       </Route>
       <Route exact path="/search">
         <SiteSearch />

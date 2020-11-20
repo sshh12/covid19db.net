@@ -64,4 +64,4 @@ const filterData = {
   ],
 };
 
-export { filterData };
+export default filterData;

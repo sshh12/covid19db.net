@@ -6,6 +6,7 @@ function SearchBar(props) {
   return (
     <Input
       style={props.style}
+      allowClear
       placeholder={props.placeholder}
       defaultValue={props.defaultValue}
       onChange={(e) => props.onChange(e.target.value)}

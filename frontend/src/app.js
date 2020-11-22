@@ -17,7 +17,7 @@ class App extends React.Component {
           theme="light"
           style={{
             backgroundColor: "#323776",
-            paddingTop: 15,
+            paddingTop: 7.5,
             paddingLeft: 40,
             paddingRight: 40,
             color: "white",
@@ -93,7 +93,7 @@ class App extends React.Component {
               Visualizations
             </Link>
           </Menu.Item>
-          <Menu.Item style={{ paddingBottom: 17.5 }}>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/search"
               style={{
@@ -106,17 +106,25 @@ class App extends React.Component {
               Search
             </Link>
           </Menu.Item>
-          <Menu.Item style={{ paddingBottom: 0 }}>
-            <Search
-              placeholder="Search"
-              defaultValue=""
-              allowClear
-              onSearch={(value) => {
-                console.log(value);
-                this.props.history.push("/search", { query: value });
-              }}
-              style={{ width: 200 }}
-            />
+          <Menu.Item style={{}}>
+            <Form
+              ref={this.formRef}
+              style={{ backgroundColor: "red", marginBottom: -10 }}
+            >
+              <Form.Item name="search" style={{ backgroundColor: "yellow" }}>
+                <Search
+                  placeholder="Search"
+                  defaultValue=""
+                  allowClear
+                  onSearch={(value) => {
+                    console.log(value);
+                    this.props.history.push("/search", { query: value });
+                    this.formRef.current.resetFields();
+                  }}
+                  style={{ width: 200, backgroundColor: "blue" }}
+                />
+              </Form.Item>
+            </Form>
           </Menu.Item>
         </Menu>
         <Routes />

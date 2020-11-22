@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Card, Col, Row, Layout } from "antd";
 import { Link } from "react-router-dom";
-import Highlight from "../highlight";
+import Highlight from "../search/highlight";
 import "./countryInstance.css";
 
 const { Meta } = Card;

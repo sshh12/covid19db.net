@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
-import HighlighterText from "./../components/highlighterText";
+import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/siteSearchBar";
 import { Table } from "antd";
 

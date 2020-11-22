@@ -7,7 +7,8 @@ function SearchBar(props) {
     <Input
       style={props.style}
       placeholder={props.placeholder}
-      onChange={props.onChange}
+      defaultValue={props.defaultValue}
+      onChange={(e) => props.onChange(e.target.value)}
     />
   );
 }

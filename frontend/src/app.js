@@ -8,6 +8,7 @@ import Visualizations from "./pages/vis";
 const { Search } = Input;
 
 class App extends React.Component {
+  formRef = React.createRef();
   render() {
     return (
       <Fragment>
@@ -92,7 +93,7 @@ class App extends React.Component {
               Visualizations
             </Link>
           </Menu.Item>
-          <Menu.Item style={{ paddingBottom: 7.5 }}>
+          <Menu.Item style={{ paddingBottom: 17.5 }}>
             <Link
               to="/search"
               style={{
@@ -107,11 +108,12 @@ class App extends React.Component {
           </Menu.Item>
           <Menu.Item style={{ paddingBottom: 0 }}>
             <Search
-              placeholder=""
+              placeholder="Search"
+              defaultValue=""
               allowClear
               onSearch={(value) => {
                 console.log(value);
-                this.props.history.push("/search");
+                this.props.history.push("/search", { query: value });
               }}
               style={{ width: 200 }}
             />

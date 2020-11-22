@@ -9,12 +9,19 @@ import { Table } from "antd";
 class SiteSearch extends Component {
   constructor(props) {
     super(props);
-    this.state = { query: null, dataSource: null };
+    this.state = {
+      query: this.props.history.location.state.query,
+      dataSource: null,
+    };
+  }
+
+  componentDidMount() {
+    this.onChange(this.state.query);
   }
 
   onChange(e) {
     // get user typed query from search bar change
-    const query = e.target.value;
+    const query = e; //.target.value;
     // add and filter basic static pages into data
     let items = [
       { type: "Page", value: { text: "Home", route: "/home" } },
@@ -127,6 +134,7 @@ class SiteSearch extends Component {
           <SearchBar
             style={{ width: "75vw" }}
             placeholder="Try searching for countries, ISO codes, pages, capitals, or regions"
+            defaultValue={this.state.query}
             onChange={this.onChange.bind(this)}
           />
         </div>

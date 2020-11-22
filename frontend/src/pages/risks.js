@@ -101,14 +101,9 @@ export default class Risks extends Component {
             key: "lifeExpectancy",
             render: (text) =>
               searchValue != "" ? (
-                <Highlighter
-                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={text ? text.toString() : ""}
-                />
+                <HighlighterText text={text} searchValue={searchValue} />
               ) : (
-                <>{text?.toLocaleString()}</>
+                <>{text.toLocaleString()}</>
               ),
             sorter: (a, b) => a?.lifeExpectancy - b?.lifeExpectancy,
             filters: [
@@ -130,14 +125,9 @@ export default class Risks extends Component {
             key: "humanDevelopmentIndex",
             render: (text) =>
               searchValue != "" ? (
-                <Highlighter
-                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={text ? text.toString() : ""}
-                />
+                <HighlighterText text={text} searchValue={searchValue} />
               ) : (
-                <>{text?.toLocaleString()}</>
+                <>{text.toLocaleString()}</>
               ),
             sorter: (a, b) =>
               a?.humanDevelopmentIndex - b?.humanDevelopmentIndex,
@@ -162,14 +152,9 @@ export default class Risks extends Component {
             sorter: (a, b) => a?.populationDensity - b?.populationDensity,
             render: (text) =>
               searchValue != "" ? (
-                <Highlighter
-                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={text ? text.toString() : ""}
-                />
+                <HighlighterText text={text} searchValue={searchValue} />
               ) : (
-                <>{text?.toLocaleString()}</>
+                <>{text.toLocaleString()}</>
               ),
             filters: [
               { text: "15000 - 20000", value: 15000 },
@@ -190,14 +175,9 @@ export default class Risks extends Component {
             sorter: (a, b) => a?.gini - b?.gini,
             render: (text) =>
               searchValue != "" ? (
-                <Highlighter
-                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={text ? text.toString() : ""}
-                />
+                <HighlighterText text={text} searchValue={searchValue} />
               ) : (
-                <>{text?.toLocaleString()}</>
+                <>{text.toLocaleString()}</>
               ),
             filters: [
               { text: "75 - 100", value: 75 },

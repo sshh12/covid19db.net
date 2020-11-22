@@ -88,7 +88,6 @@ export default class RiskInstance extends Component {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "start",
-                // marginTop: "30px",
                 flexWrap: "wrap",
               }}
             >
@@ -114,7 +113,7 @@ export default class RiskInstance extends Component {
               />
             </div>
           </div>
-          <div style={{ marginTop: "50px" }}>
+          <div style={{ marginTop: "30px" }}>
             <div id="demogr-factor-title-div">
               <h2 id="subtitle">Demographic Risk Factors</h2>
             </div>

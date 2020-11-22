@@ -14,7 +14,7 @@ function BigStat(props) {
           <h2 className="big-stat-suffix"> {props.suffix}</h2>
         </h2>
         <h2 className="compare-avg">
-          vs. average: {props.avg} {props.suffix}
+          vs. avg: {props.avg} {props.suffix}
         </h2>
       </div>
     </Tooltip>

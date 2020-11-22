@@ -4,7 +4,6 @@ import { BigStat, DemographicFactor, HealthFactor } from "./riskComponents";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import axios from "../../client";
-
 import Agg from "./data/Aggregate.json";
 
 export default class RiskInstance extends Component {
@@ -15,9 +14,7 @@ export default class RiskInstance extends Component {
       caseData: null,
     };
   }
-  // https://api.covid19db.net/
-  // risk-factor-statistics
-  // 'sampleData.json'
+
   componentDidMount() {
     axios.get("risk-factor-statistics/" + this.props.code).then((res) => {
       const riskData = res.data;
@@ -114,7 +111,7 @@ export default class RiskInstance extends Component {
               description="Gross domestic product at purchasing power parity"
             />
           </div>
-          <div style={{ marginTop: "10px" }}>
+          <div style={{ marginTop: "50px" }}>
             <div id="demogr-factor-title-div">
               <h2 id="subtitle">Demographic Risk Factors</h2>
             </div>

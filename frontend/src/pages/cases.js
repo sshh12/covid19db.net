@@ -5,7 +5,7 @@ import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
 import filterData from "../components/caseInstances/caseModelData.js";
 import HighlighterText from "../components/highlighterText";
-import SearchBar from "../components/searchBar";
+import SearchBar from "../components/search/caseSearchBar";
 
 export default class Cases extends Component {
   constructor() {

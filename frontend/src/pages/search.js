@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "../client";
 import HighlighterText from "./../components/highlighterText";
-import SearchBar from "./../components/searchBar";
+import SearchBar from "../components/search/siteSearchBar";
 import { Table } from "antd";
 
 // sitewide search bar component

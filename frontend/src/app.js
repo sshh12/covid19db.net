@@ -1,10 +1,11 @@
 import React, { Fragment } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 import Routes from "./routes";
 import { Menu, Form, Input, Button } from "antd";
 import Visualizations from "./pages/vis";
+const { Search } = Input;
 
 class App extends React.Component {
   render() {
@@ -15,21 +16,27 @@ class App extends React.Component {
           theme="light"
           style={{
             backgroundColor: "#323776",
-            paddingTop: 20,
+            paddingTop: 15,
             paddingLeft: 40,
             paddingRight: 40,
             color: "white",
             borderBottomColor: "#323776",
           }}
         >
-          <Menu.Item className="ant-menu-horizontal">
+          <Menu.Item
+            style={{ paddingBottom: 7.5 }}
+            className="ant-menu-horizontal"
+          >
             <Link to="/">
               <h2 style={{ fontWeight: 800, fontSize: 20, color: "white" }}>
                 COVID-19 DB
               </h2>
             </Link>
           </Menu.Item>
-          <Menu.Item className="ant-menu-horizontal">
+          <Menu.Item
+            style={{ paddingBottom: 7.5 }}
+            className="ant-menu-horizontal"
+          >
             <Link
               to="/home"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -37,7 +44,7 @@ class App extends React.Component {
               Home
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/about"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -45,7 +52,7 @@ class App extends React.Component {
               About
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/countries"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -53,7 +60,7 @@ class App extends React.Component {
               Countries
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/case-statistics"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -61,7 +68,7 @@ class App extends React.Component {
               Cases
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/risk-factor-statistics"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -69,7 +76,7 @@ class App extends React.Component {
               Risks
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/global-news"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -77,7 +84,7 @@ class App extends React.Component {
               Global News
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/vis"
               style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
@@ -85,13 +92,29 @@ class App extends React.Component {
               Visualizations
             </Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
             <Link
               to="/search"
-              style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
+              style={{
+                fontWeight: "bold",
+                fontsize: 20,
+                color: "white",
+                marginBottom: 20,
+              }}
             >
               Search
             </Link>
+          </Menu.Item>
+          <Menu.Item style={{ paddingBottom: 0 }}>
+            <Search
+              placeholder=""
+              allowClear
+              onSearch={(value) => {
+                console.log(value);
+                this.props.history.push("/search");
+              }}
+              style={{ width: 200 }}
+            />
           </Menu.Item>
         </Menu>
         <Routes />
@@ -100,4 +123,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

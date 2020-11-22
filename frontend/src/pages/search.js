@@ -7,8 +7,8 @@ import { Table } from "antd";
 
 // sitewide search bar component
 class SiteSearch extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { query: null, dataSource: null };
   }
 

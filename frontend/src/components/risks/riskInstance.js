@@ -127,28 +127,28 @@ export default class RiskInstance extends Component {
             >
               <DemographicFactor
                 title="Population Density"
-                data={populationDensity?.toFixed(3)}
+                data={populationDensity?.toFixed(1)}
                 suffix="people/sq.km."
-                avg={Agg.populationDensity.toFixed(3)}
+                avg={Agg.populationDensity.toFixed(1)}
                 description="Number of people per square kilometer"
               />
               <DemographicFactor
                 title="Median Age"
-                data={medianAge?.toFixed(3)}
+                data={medianAge?.toFixed(1)}
                 suffix="yrs."
-                avg={Agg.medianAge.toFixed(3)}
+                avg={Agg.medianAge.toFixed(1)}
                 description="The median age of the population"
               />
               <DemographicFactor
                 title="Age 65 and Older"
-                data={`${aged65Older?.toFixed(3)}%`}
-                avg={`${Agg.aged65Older.toFixed(3)} %`}
+                data={`${aged65Older?.toFixed(1)}%`}
+                avg={`${Agg.aged65Older.toFixed(1)} %`}
                 description="Percentage of population that is 65 or older"
               />
               <DemographicFactor
                 title="Age 70 and Older"
-                data={`${aged70Older?.toFixed(3)}%`}
-                avg={`${Agg.aged70Older.toFixed(3)} %`}
+                data={`${aged70Older?.toFixed(1)}%`}
+                avg={`${Agg.aged70Older.toFixed(1)} %`}
                 description="Percentage of population that is 70 or older"
               />
             </div>
@@ -165,9 +165,9 @@ export default class RiskInstance extends Component {
             >
               <HealthFactor
                 title="Life Expectancy"
-                data={lifeExpectancy?.toFixed(2)}
+                data={lifeExpectancy?.toFixed(1)}
                 suffix="yrs."
-                avg={`${Agg.lifeExpectancy.toFixed(2)}`}
+                avg={`${Agg.lifeExpectancy.toFixed(1)}`}
                 description="Life expectancy at birth"
               />
               <HealthFactor
@@ -178,22 +178,22 @@ export default class RiskInstance extends Component {
               />
               <HealthFactor
                 title="Hospital Beds Per Thousand"
-                data={hospitalBedsPerThousand?.toFixed(3)}
-                avg={Agg.hospitalBedsPerThousand.toFixed(3)}
+                data={hospitalBedsPerThousand?.toFixed(1)}
+                avg={Agg.hospitalBedsPerThousand.toFixed(1)}
                 suffix="/thousand"
                 description="Number of hospital beds per 1,000 people"
               />
               <HealthFactor
                 title="Cardiovascular Death Rate"
-                data={cardiovascDeathRate?.toFixed(3)}
-                avg={Agg.cardiovascDeathRate.toFixed(3)}
+                data={cardiovascDeathRate?.toFixed(1)}
+                avg={Agg.cardiovascDeathRate.toFixed(1)}
                 suffix="/100,000"
                 description="Annual number of deaths per 100,000 people resulting from cardiovascular disease"
               />
               <HealthFactor
                 title="Diabetes Prevlaence"
-                data={`${diabetesPrevalence?.toFixed(3)}%`}
-                avg={`${Agg.diabetesPrevalence.toFixed(3)}%`}
+                data={`${diabetesPrevalence?.toFixed(1)}%`}
+                avg={`${Agg.diabetesPrevalence.toFixed(1)}%`}
                 suffix=" of adults"
                 description="Percentage of population which has diabetes"
               />
@@ -213,8 +213,8 @@ export default class RiskInstance extends Component {
               />
               <HealthFactor
                 title="Handwashing Facilities"
-                data={`${handwashingFacilities?.toFixed(3)}%`}
-                avg={`${Agg.handwashingFacilities?.toFixed(3)}%`}
+                data={`${handwashingFacilities?.toFixed(1)}%`}
+                avg={`${Agg.handwashingFacilities?.toFixed(1)}%`}
                 suffix=" access"
                 description="Percentage of the population with access to basic handwashing facilities"
               />

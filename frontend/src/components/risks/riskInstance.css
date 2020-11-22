@@ -22,24 +22,6 @@
   font-size: 1.25em;
 }
 
-/* .big-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin-right: 50px;
-}
-
-.big-stat-title{
-  font-weight: 500;
-  font-size: medium;
-  color: #a0a0a0;
-}
-
-.big-stat-data{
-  font-weight: 700;
-  font-size: 1em;
-} */
-
 #demogr-factor-title-div {
   display: flex;
   flex-direction: row;
@@ -56,16 +38,6 @@
   text-align: left;
 }
 
-#demogr-factor-date {
-  background-color: rgb(200, 240, 255);
-  color: rgb(0, 69, 173);
-  font-weight: 500;
-  font-size: 14px;
-  margin-left: 10px;
-  padding: 3px;
-  border-radius: 5px;
-}
-
 .demogr-factor, .health-factor, .big-stat {
   flex: 1;
   background-color: #eeeeee;
@@ -78,7 +50,6 @@
   max-width: 300px;
   border-radius: 5px;
 }
-
 
 .demogr-factor-title, .health-factor-title, .big-stat-title {
   font-weight: 500;

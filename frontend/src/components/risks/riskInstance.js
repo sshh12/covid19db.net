@@ -82,34 +82,37 @@ export default class RiskInstance extends Component {
               {activeCases > 500 ? "High" : "Medium"}
             </h5>
           </span>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "start",
-              marginTop: "30px",
-            }}
-          >
-            <BigStat
-              title="Human Development Index"
-              data={humanDevelopmentIndex?.toFixed(3)}
-              avg={Agg.humanDevelopmentIndex.toFixed(3)}
-              description="Indicator of level of human development (larger values imply more development)"
-            />
-            <BigStat
-              title="GINI"
-              data={gini?.toFixed(1)}
-              avg={Agg.gini.toFixed(1)}
-              description="Coefficient which measures the level of wealth inequality (larger values imply more inequality)"
-            />
-            <BigStat
-              title="GDP Per Capita"
-              prefix="$"
-              data={`${gdpPerCapita?.toLocaleString()}`}
-              suffix="/person"
-              avg={`$${Agg.gdpPerCapita?.toLocaleString()}`}
-              description="Gross domestic product at purchasing power parity"
-            />
+          <div style={{marginTop: "50px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "start",
+                // marginTop: "30px",
+                flexWrap: "wrap",
+              }}
+            >
+              <BigStat
+                title="Human Development Index"
+                data={humanDevelopmentIndex?.toFixed(3)}
+                avg={Agg.humanDevelopmentIndex.toFixed(3)}
+                description="Indicator of level of human development (larger values imply more development)"
+              />
+              <BigStat
+                title="GINI"
+                data={gini?.toFixed(1)}
+                avg={Agg.gini.toFixed(1)}
+                description="Coefficient which measures the level of wealth inequality (larger values imply more inequality)"
+              />
+              <BigStat
+                title="GDP Per Capita"
+                prefix="$"
+                data={`${gdpPerCapita?.toLocaleString()}`}
+                suffix="/person"
+                avg={`$${Agg.gdpPerCapita?.toLocaleString()}`}
+                description="Gross domestic product at purchasing power parity"
+              />
+            </div>
           </div>
           <div style={{ marginTop: "50px" }}>
             <div id="demogr-factor-title-div">

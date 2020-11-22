@@ -6,7 +6,7 @@ import "../riskInstance.css";
 function DemographicFactor(props) {
   return (
     <Tooltip title={props.description} color="#323776">
-      <div className="demogr-factor" style={{ flex: "none" }}>
+      <div className="demogr-factor" style={{ flex: "none", marginBottom: "20px" }}>
         <h2 className="demogr-factor-title">{props.title}</h2>
         <h2 className="demogr-factor-data">
           {props.prefix}

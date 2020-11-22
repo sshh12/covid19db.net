@@ -22,7 +22,7 @@
   font-size: 1.25em;
 }
 
-.big-stat {
+/* .big-stat {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -38,7 +38,7 @@
 .big-stat-data{
   font-weight: 700;
   font-size: 1em;
-}
+} */
 
 #demogr-factor-title-div {
   display: flex;
@@ -66,7 +66,7 @@
   border-radius: 5px;
 }
 
-.demogr-factor, .health-factor {
+.demogr-factor, .health-factor, .big-stat {
   flex: 1;
   background-color: #eeeeee;
   display: flex;
@@ -80,7 +80,7 @@
 }
 
 
-.demogr-factor-title, .health-factor-title {
+.demogr-factor-title, .health-factor-title, .big-stat-title {
   font-weight: 500;
   font-size: medium;
   color: #818181;
@@ -93,7 +93,7 @@
   display: inline;
 }
 
-.demogr-factor-data, .health-factor-data {
+.demogr-factor-data, .health-factor-data, .big-stat-data {
   font-weight: 700;
   font-size: 1em;
 }

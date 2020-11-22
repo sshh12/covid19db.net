@@ -3,6 +3,8 @@ import axios from "../client";
 import { Link } from "react-router-dom";
 import { Button, Table, Input } from "antd";
 import Highlighter from "react-highlight-words";
+import SearchBar from "../components/search/risksSearchBar";
+import HighlighterText from "../components/search/highlighterText";
 
 export default class Risks extends Component {
   constructor() {
@@ -67,24 +69,11 @@ export default class Risks extends Component {
     const columns = [
       {
         title: (
-          <Input
-            placeholder="Search"
-            value={searchValue}
-            onChange={(e) => {
-              const currValue = e.target.value;
-              this.setState({ searchValue: currValue });
-              const filteredData = riskData.filter(
-                (entry) =>
-                  entry?.country?.name?.toLowerCase().includes(currValue) ||
-                  entry?.lifeExpectancy?.toString().includes(currValue) ||
-                  entry?.humanDevelopmentIndex
-                    ?.toString()
-                    .includes(currValue) ||
-                  entry?.populationDensity?.toString().includes(currValue) ||
-                  entry?.gini?.toString().includes(currValue)
-              );
-              this.setState({ dataSource: filteredData });
-            }}
+          <SearchBar
+            searchValue={searchValue}
+            data={riskData}
+            setDataSource={this.setDataSource}
+            setSearchValue={this.setSearchValue}
           />
         ),
         children: [
@@ -94,12 +83,14 @@ export default class Risks extends Component {
             key: "country",
             render: (country) => (
               <Link to={`/countries/${country?.codes?.alpha3Code}`}>
-                <Highlighter
-                  highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-                  searchWords={[searchValue]}
-                  autoEscape
-                  textToHighlight={country ? country?.name.toString() : ""}
-                />
+                {searchValue != "" ? (
+                  <HighlighterText
+                    text={country.name}
+                    searchValue={searchValue}
+                  />
+                ) : (
+                  country.name
+                )}
               </Link>
             ),
             sorter: (a, b) => a.country?.name?.localeCompare(b.country?.name),

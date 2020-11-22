@@ -93,20 +93,7 @@ class App extends React.Component {
               Visualizations
             </Link>
           </Menu.Item>
-          <Menu.Item style={{ paddingBottom: 7.5 }}>
-            <Link
-              to="/search"
-              style={{
-                fontWeight: "bold",
-                fontsize: 20,
-                color: "white",
-                marginBottom: 20,
-              }}
-            >
-              Search
-            </Link>
-          </Menu.Item>
-          <Menu.Item style={{}}>
+          <Menu.Item>
             <Form
               ref={this.formRef}
               style={{ backgroundColor: "red", marginBottom: -10 }}

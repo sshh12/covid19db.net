@@ -150,7 +150,6 @@ export default class Countries extends Component {
         sortHiVal = -1;
         break;
     }
-    console.log(sortLowVal);
     this.setState({
       sortBy: value,
       filteredCountries: null,

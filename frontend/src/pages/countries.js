@@ -12,7 +12,7 @@ import {
 import {
   filterCountries,
   SORT_TYPES,
-} from "../components/country/countryUtils";
+} from "../components/country/filterCountries";
 import StandardSpinner from "../components/standardSpinner";
 
 export default class Countries extends Component {

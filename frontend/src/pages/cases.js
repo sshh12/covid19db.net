@@ -67,156 +67,193 @@ export default class Cases extends Component {
 
     const columns = [
       {
-        title: (
-          <SearchBar
-            searchValue={searchValue}
-            data={caseData}
-            setDataSource={this.setDataSource}
-            setSearchValue={this.setSearchValue}
-          />
+        title: "Country",
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <Link to={`/countries/${country.codes.alpha3Code}`}>
+            {searchValue != "" ? (
+              <HighlighterText text={country.name} searchValue={searchValue} />
+            ) : (
+              country.name
+            )}
+          </Link>
         ),
-        children: [
-          {
-            title: "Country",
-            dataIndex: "country",
-            key: "country",
-            render: (country) => (
-              <Link to={`/countries/${country.codes.alpha3Code}`}>
-                {searchValue != "" ? (
-                  <HighlighterText
-                    text={country.name}
-                    searchValue={searchValue}
-                  />
-                ) : (
-                  country.name
-                )}
-              </Link>
-            ),
-            sorter: (a, b) => a.country.name.localeCompare(b.country.name),
-          },
-          {
-            title: "Total Cases",
-            dataIndex: "totalCases",
-            key: "totalCases",
-            render: (text) =>
-              searchValue != "" ? (
-                <HighlighterText text={text} searchValue={searchValue} />
-              ) : (
-                <>{text.toLocaleString()}</>
-              ),
-            sorter: (a, b) => a.totalCases - b.totalCases,
-            filters: filterData.totalCasesFilterRanges,
-            filteredValue: filteredInfo.totalCases || null,
-            onFilter: (value, record) =>
-              record.totalCases > value &&
-              record.totalCases <
-                value + filterData.totalCasesFilterMappings[value],
-            ellipsis: true,
-          },
-          {
-            title: "Total Deaths",
-            dataIndex: "totalDeaths",
-            key: "totalDeaths",
-            render: (text) =>
-              searchValue != "" ? (
-                <HighlighterText text={text} searchValue={searchValue} />
-              ) : (
-                <>{text.toLocaleString()}</>
-              ),
-            sorter: (a, b) => a.totalDeaths - b.totalDeaths,
-            filters: filterData.totalDeathsFilterRanges,
-            filteredValue: filteredInfo.totalDeaths || null,
-            onFilter: (value, record) =>
-              record.totalDeaths > value &&
-              record.totalDeaths <
-                value + filterData.totalDeathsFilterMappings[value],
-            ellipsis: true,
-          },
-          {
-            title: "Total Recovered",
-            dataIndex: "totalRecovered",
-            key: "totalRecovered",
-            render: (text) =>
-              searchValue != "" ? (
-                <HighlighterText text={text} searchValue={searchValue} />
-              ) : (
-                <>{text.toLocaleString()}</>
-              ),
-            sorter: (a, b) => a.totalRecovered - b.totalRecovered,
-            filters: filterData.totalRecoveredFilterRanges,
-            filteredValue: filteredInfo.totalRecovered || null,
-            onFilter: (value, record) =>
-              record.totalRecovered > value &&
-              record.totalRecovered <
-                value + filterData.totalRecoveredFilterMappings[value],
-            ellipsis: true,
-          },
-          {
-            title: "Total Active",
-            dataIndex: "totalActive",
-            key: "totalActive",
-            render: (text) =>
-              searchValue != "" ? (
-                <HighlighterText text={text} searchValue={searchValue} />
-              ) : (
-                <>{text.toLocaleString()}</>
-              ),
-            sorter: (a, b) => a.totalActive - b.totalActive,
-            filters: filterData.totalActiveFilterRanges,
-            filteredValue: filteredInfo.totalActive || null,
-            onFilter: (value, record) =>
-              record.totalActive > value &&
-              record.totalActive <
-                value + filterData.totalActiveFilterMappings[value],
-            ellipsis: true,
-          },
-          {
-            title: "Explore Cases",
-            dataIndex: "country",
-            key: "country",
-            render: (country) => (
-              <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
-                <Button>Explore</Button>
-              </Link>
-            ),
-          },
-          {
-            title: "Explore Risks",
-            dataIndex: "country",
-            key: "country",
-            render: (country) => (
-              <Link
-                to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}
-              >
-                <Button>Explore</Button>
-              </Link>
-            ),
-          },
-        ],
+        sorter: (a, b) => a.country.name.localeCompare(b.country.name),
+      },
+      {
+        title: "Cases",
+        dataIndex: "totalCases",
+        key: "totalCases",
+        render: (text) =>
+          searchValue != "" ? (
+            <HighlighterText text={text} searchValue={searchValue} />
+          ) : (
+            <>{text.toLocaleString()}</>
+          ),
+        sorter: (a, b) => a.totalCases - b.totalCases,
+        filters: filterData.totalCasesFilterRanges,
+        filteredValue: filteredInfo.totalCases || null,
+        onFilter: (value, record) =>
+          record.totalCases > value &&
+          record.totalCases <
+            value + filterData.totalCasesFilterMappings[value],
+        ellipsis: true,
+      },
+      {
+        title: "Deaths",
+        dataIndex: "totalDeaths",
+        key: "totalDeaths",
+        render: (text) =>
+          searchValue != "" ? (
+            <HighlighterText text={text} searchValue={searchValue} />
+          ) : (
+            <>{text.toLocaleString()}</>
+          ),
+        sorter: (a, b) => a.totalDeaths - b.totalDeaths,
+        filters: filterData.totalDeathsFilterRanges,
+        filteredValue: filteredInfo.totalDeaths || null,
+        onFilter: (value, record) =>
+          record.totalDeaths > value &&
+          record.totalDeaths <
+            value + filterData.totalDeathsFilterMappings[value],
+        ellipsis: true,
+      },
+      {
+        title: "Recovered",
+        dataIndex: "totalRecovered",
+        key: "totalRecovered",
+        render: (text) =>
+          searchValue != "" ? (
+            <HighlighterText text={text} searchValue={searchValue} />
+          ) : (
+            <>{text.toLocaleString()}</>
+          ),
+        sorter: (a, b) => a.totalRecovered - b.totalRecovered,
+        filters: filterData.totalRecoveredFilterRanges,
+        filteredValue: filteredInfo.totalRecovered || null,
+        onFilter: (value, record) =>
+          record.totalRecovered > value &&
+          record.totalRecovered <
+            value + filterData.totalRecoveredFilterMappings[value],
+        ellipsis: true,
+      },
+      {
+        title: "Active",
+        dataIndex: "totalActive",
+        key: "totalActive",
+        render: (text) =>
+          searchValue != "" ? (
+            <HighlighterText text={text} searchValue={searchValue} />
+          ) : (
+            <>{text.toLocaleString()}</>
+          ),
+        sorter: (a, b) => a.totalActive - b.totalActive,
+        filters: filterData.totalActiveFilterRanges,
+        filteredValue: filteredInfo.totalActive || null,
+        onFilter: (value, record) =>
+          record.totalActive > value &&
+          record.totalActive <
+            value + filterData.totalActiveFilterMappings[value],
+        ellipsis: true,
+      },
+      {
+        title: "Explore Cases",
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
+            <Button>Explore</Button>
+          </Link>
+        ),
+        width: 130,
+        align: "center",
+      },
+      {
+        title: "Explore Risks",
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
+            <Button>Explore</Button>
+          </Link>
+        ),
+        width: 130,
+        align: "center",
       },
     ];
 
     return (
       <div className="App">
-        <h1
+        <div
           style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
+            backgroundColor: "#323776",
+            justifyContent: "center",
+            display: "flex",
           }}
         >
-          {" "}
-          Cases{" "}
-        </h1>
-        <Button onClick={this.clearFilters}>Clear filters</Button>
-        <Table
-          style={{ margin: "0 5vw", outline: "1px solid lightgrey" }}
-          columns={columns}
-          dataSource={this.state.dataSource}
-          onChange={this.handleChange}
-          pagination={{ position: ["bottomRight", "topRight"] }}
-        />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              paddingBottom: 40,
+              paddingTop: 20,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "75vw",
+            }}
+          >
+            <h1
+              style={{
+                fontWeight: 800,
+                marginBottom: 20,
+                fontSize: "2em",
+                color: "white",
+              }}
+            >
+              Cases
+            </h1>
+            <p style={{ color: "white", fontSize: "1.1em", marginBottom: 20 }}>
+              The table below displays the total statistics for cases in each
+              country. Click the 'Explore Cases' button to see more information.
+            </p>
+            <SearchBar
+              style={{ width: "100vw", paddingBottom: 100 }}
+              searchValue={searchValue}
+              data={caseData}
+              setDataSource={this.setDataSource}
+              setSearchValue={this.setSearchValue}
+            />
+            <div style={{ paddingTop: 10, alignSelf: "start" }}>
+              <Button onClick={this.clearFilters}>Clear filters</Button>
+            </div>
+          </div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              width: "75vw",
+              //backgroundColor: "#323776",
+              userSelect: "none",
+              marginTop: 40,
+              marginBottom: 20,
+            }}
+          >
+            <Table
+              style={{
+                width: "75vw",
+                marginTop: 40,
+                marginBottom: 20,
+                margin: "0 0vw",
+                outline: "1px solid lightgrey",
+              }}
+              columns={columns}
+              dataSource={this.state.dataSource}
+              onChange={this.handleChange}
+              pagination={{ position: ["bottomRight", "topRight"] }}
+            />
+          </div>
+        </div>
       </div>
     );
   }

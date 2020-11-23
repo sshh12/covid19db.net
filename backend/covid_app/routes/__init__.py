@@ -42,11 +42,12 @@ def validate_identifier(identifier):
     return None
 
 
-def get_attributes(args):
+def get_attributes(args, required, default):
     """
     Retrieves the attributes argument from args (if it exists) and transforms
-    it into a frozenset. Returns the created frozenset or None if attributes
-    was not specified by the client.
+    it into a set. Returns the created set with the given attributes in required
+    always included, or returns the attributes specified by default if the
+    client did not specify the attributes query parameter.
     """
     ret = None
     if args["attributes"] is not None:
@@ -55,6 +56,12 @@ def get_attributes(args):
             ret = frozenset({attributes_str})
         else:
             ret = frozenset(attributes_str.split(","))
+    # append elements of required if ret not none
+    if ret is not None and len(required) > 0:
+        ret = frozenset({*ret, *required})
+    # otherwise if ret is none, make ret a copy of default
+    elif ret is None:
+        ret = frozenset(default)
     return ret
 
 

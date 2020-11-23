@@ -17,19 +17,27 @@ class TestRoutes(TestCase):
     def test_get_attributes_1(self):
         attributes = "location,capital,population"
         args = {"attributes": attributes}
-        result = get_attributes(args)
-        self.assertEqual(result, {"location", "capital", "population"})
+        result = get_attributes(
+            args, {"name", "codes"}, const.VALID_COUNTRIES_ATTRIBUTES
+        )
+        self.assertEqual(
+            result, {"location", "capital", "population", "name", "codes"}
+        )
 
     def test_get_attributes_2(self):
         attributes = "location"
         args = {"attributes": attributes}
-        result = get_attributes(args)
-        self.assertEqual(result, {"location"})
+        result = get_attributes(
+            args,
+            {"name", "location", "codes"},
+            const.VALID_COUNTRIES_ATTRIBUTES,
+        )
+        self.assertEqual(result, {"location", "name", "codes"})
 
     def test_get_attributes_3(self):
         args = {"attributes": None}
-        result = get_attributes(args)
-        self.assertEqual(result, None)
+        result = get_attributes(args, {}, const.VALID_COUNTRIES_ATTRIBUTES)
+        self.assertEqual(result, const.VALID_COUNTRIES_ATTRIBUTES)
 
     # validate_attributes tests
 

@@ -65,7 +65,7 @@ export default class RiskInstance extends Component {
       <div className="App">
         <header className="risk-header">
           <Link to="/risk-factor-statistics">
-            <Button variant="outline-secondary">Go back to Risk Factors</Button>
+            <Button variant="outline-secondary">Go back to risks</Button>
           </Link>
           <h1 id="page-title">
             Risk Factors for {country?.name} ({country?.codes?.alpha3Code})

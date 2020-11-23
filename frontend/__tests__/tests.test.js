@@ -24,7 +24,7 @@ jest.mock("mapbox-gl/dist/mapbox-gl", () => ({
 import App from "../src/app";
 import CountryInstance from "../src/components/country/countryInstance";
 import RiskInstance from "../src/components/risks/riskInstance";
-import CaseInstance from "../src/components/caseInstances/caseInstance";
+import CaseInstance from "../src/components/cases/caseInstance";
 import Main from "../src/pages/main";
 import About from "../src/pages/about";
 import Risk from "../src/pages/risks";
@@ -35,7 +35,7 @@ import {
   NewStats,
   GenStats,
   CaseResponseLine,
-} from "../src/components/caseInstances/caseComponents";
+} from "../src/components/cases/caseComponents";
 import GlobalNews from "../src/pages/globalNews";
 import CountryCard from "../src/components/country/countryCard";
 import {

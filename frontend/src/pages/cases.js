@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
-import "../components/caseInstances/caseInstance.css";
-import filterData from "../components/caseInstances/caseModelData.js";
+import "../components/cases/caseInstance.css";
+import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/casesSearchBar";
 
@@ -162,30 +162,6 @@ export default class Cases extends Component {
         ellipsis: true,
         align: "right",
       },
-      // {
-      //   title: "Explore Cases",
-      //   dataIndex: "country",
-      //   key: "country",
-      //   render: (country) => (
-      //     <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
-      //       <Button>Explore</Button>
-      //     </Link>
-      //   ),
-      //   width: 130,
-      //   align: "center",
-      // },
-      // {
-      //   title: "Explore Risks",
-      //   dataIndex: "country",
-      //   key: "country",
-      //   render: (country) => (
-      //     <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-      //       <Button>Explore</Button>
-      //     </Link>
-      //   ),
-      //   width: 130,
-      //   align: "center",
-      // },
     ];
 
     return (
@@ -219,8 +195,8 @@ export default class Cases extends Component {
               Cases
             </h1>
             <p style={{ color: "white", fontSize: "1.1em", marginBottom: 20 }}>
-              The table below displays the total statistics for cases in each
-              country. Click the 'Explore Cases' button to see more information.
+              The table below displays the total case statistics in each
+              country. Click a country's name to see more information.
             </p>
             <SearchBar
               style={{ width: "100vw", paddingBottom: 100 }}

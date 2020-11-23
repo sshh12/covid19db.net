@@ -68,7 +68,7 @@ export default class RiskInstance extends Component {
             <Button variant="outline-secondary">Go back to Risk Factors</Button>
           </Link>
           <h1 id="page-title">
-            Risk Factors in {country?.name} ({country?.codes?.alpha3Code})
+            Risk Factors for {country?.name} ({country?.codes?.alpha3Code})
           </h1>
           <h3>{country?.name}</h3>
           <span>

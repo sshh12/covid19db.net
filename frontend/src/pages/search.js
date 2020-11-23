@@ -59,15 +59,15 @@ class SiteSearch extends Component {
         const identifier = `${country.name} (${country.codes.alpha2Code}, \
           ${country.codes.alpha3Code})`;
         items.push({
-          type: "Country",
+          type: "Countries",
           value: { text: identifier, route: `/countries/${alpha3Code}` },
         });
         items.push({
-          type: "Case Statistic",
+          type: "Case Statistics",
           value: { text: identifier, route: `/case-statistics/${alpha3Code}` },
         });
         items.push({
-          type: "Risk Factor Statistic",
+          type: "Risk Factor Statistics",
           value: {
             text: identifier,
             route: `/risk-factor-statistics/${alpha3Code}`,

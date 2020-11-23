@@ -6,6 +6,7 @@ import "../components/cases/caseInstance.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/casesSearchBar";
+import StandardSpinner from "../components/standardSpinner";
 
 export default class Cases extends Component {
   constructor() {
@@ -164,7 +165,7 @@ export default class Cases extends Component {
       },
     ];
 
-    return (
+    return this.state.dataSource ? (
       <div className="App">
         <div
           style={{
@@ -232,6 +233,8 @@ export default class Cases extends Component {
           </div>
         </div>
       </div>
+    ) : (
+        <StandardSpinner />
     );
   }
 }

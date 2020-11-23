@@ -53,7 +53,7 @@ export default class CountryInstance extends Component {
       <div className="App">
         <header className="Case-header">
           <Link to="/countries">
-            <Button variant="outline-secondary">Go back to countries</Button>
+            <Button variant="outline-secondary">Go back to Countries</Button>
           </Link>
 
           <h1 id="page-title">

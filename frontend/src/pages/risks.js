@@ -226,7 +226,7 @@ export default class Risks extends Component {
             marginBottom: "20px",
           }}
         >
-          Risk Factors &amp; Statistics{" "}
+          Risk Factors
         </h1>
         <Button onClick={this.clearFilters}>Clear filters</Button>
         {/* Table of risk data */}

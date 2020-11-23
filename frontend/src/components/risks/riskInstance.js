@@ -82,7 +82,7 @@ export default class RiskInstance extends Component {
               {activeCases > 500 ? "High" : "Medium"}
             </h5>
           </span>
-          <div style={{marginTop: "50px" }}>
+          <div style={{ marginTop: "50px" }}>
             <div
               style={{
                 display: "flex",
@@ -219,6 +219,18 @@ export default class RiskInstance extends Component {
                 description="Percentage of the population with access to basic handwashing facilities"
               />
             </div>
+          </div>
+          <div style={{ marginTop: "50px" }}>
+            <h2 id="subtitle">Links</h2>
+            <Link
+              to={`/countries/${country.codes.alpha3Code}`}
+              style={{ marginRight: 10 }}
+            >
+              <Button variant="outline-secondary">{`Country Information for ${country.name}`}</Button>
+            </Link>
+            <Link to={`/case-statistics/${country.codes.alpha3Code}`}>
+              <Button variant="outline-secondary">{`Case Statistics for ${country.name}`}</Button>
+            </Link>
           </div>
           {/* media / visual */}
           <div style={{ marginTop: "1vh" }}>

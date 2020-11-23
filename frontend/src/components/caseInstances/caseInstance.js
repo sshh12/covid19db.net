@@ -170,7 +170,7 @@ class CaseInstance extends Component {
                     (data.testing.positiveRate.value + Number.EPSILON) * 100
                   ) / 100
                 }
-                description="Posititive tests/total tests * 100"
+                description="Positive tests/total tests * 100"
               />
               <GenStats
                 title="Recovery Percentage"
@@ -190,6 +190,20 @@ class CaseInstance extends Component {
                 description="Total active/total cases * 100"
               />
             </div>
+          </div>
+          <div style={{ marginTop: "50px" }}>
+            <h2 id="subtitle">Links</h2>
+            <Link
+              to={`/countries/${data.country.codes.alpha3Code}`}
+              style={{ marginRight: 10 }}
+            >
+              <Button variant="outline-secondary">{`Country Information for ${data.country.name}`}</Button>
+            </Link>
+            <Link
+              to={`/risk-factor-statistics/${data.country.codes.alpha3Code}`}
+            >
+              <Button variant="outline-secondary">{`Risk Factors for ${data.country.name}`}</Button>
+            </Link>
           </div>
           <div style={{ marginTop: "50px", height: "500px", width: "100%" }}>
             <h2 id="subtitle">Trends and Visuals</h2>

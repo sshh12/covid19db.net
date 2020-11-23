@@ -120,10 +120,22 @@ const TOOLS = [
 ];
 
 const DATA_SOURCES = [
-  "https://api.covid19api.com",
-  "https://restcountries.eu",
-  "https://newsapi.org",
-  "https://covid.ourworldindata.org/data/owid-covid-data.json",
+  {
+    name: "COVID-19 API",
+    url: "https://api.covid19api.com",
+  },
+  {
+    name: "REST Countries",
+    url: "https://restcountries.eu",
+  },
+  {
+    name: "NewsAPI",
+    url: "https://newsapi.org",
+  },
+  {
+    name: "OWID COVID-19 Dataset",
+    url: "https://covid.ourworldindata.org/data/owid-covid-data.json",
+  },
 ];
 
 export default function About() {

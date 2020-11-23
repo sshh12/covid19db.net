@@ -1,6 +1,6 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
-import "../caseInstance.css";
+import "../../../styling/caseInstance.css";
 
 /* 
   Method to transform given historical case data into format needed to pass

@@ -3,7 +3,8 @@ import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
 import { Collapse } from "react-collapse";
 import axios from "../client";
-import "../components/cases/caseInstance.css";
+import "../styling/caseInstance.css";
+import "../styling/case.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/casesSearchBar";
@@ -252,7 +253,9 @@ export default class Cases extends Component {
             <div
               style={{ paddingTop: 10, alignSelf: "start", display: "flex" }}
             >
-              <Button onClick={this.clearFilters}>Clear filters</Button>
+              <Button style={{ marginRight: 10 }} onClick={this.clearFilters}>
+                Clear filters
+              </Button>
               <Button
                 onClick={() => {
                   this.setState({
@@ -262,18 +265,31 @@ export default class Cases extends Component {
                   });
                 }}
               >
-                Show comparisons ({this.state.comparisons})
+                {this.state.showComparisons ? "Hide" : "Show"} comparisons (
+                {this.state.comparisons})
               </Button>
             </div>
-            <Collapse isOpened={this.state.showComparisons}>
-              <div style={{ display: "flex" }}>
-                {caseData?.map((c) => {
-                  if (c.compare.value) {
-                    return <CaseComparison country={c} />;
-                  }
-                })}
-              </div>
-            </Collapse>
+            <div style={{ alignSelf: "start" }}>
+              <Collapse isOpened={this.state.showComparisons}>
+                <h2 style={{ paddingTop: 20 }} className="compare-title">
+                  Comparisons
+                </h2>
+                <div
+                  style={{
+                    display: "flex",
+                    paddingTop: 0,
+                    alignContent: "start",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  {caseData?.map((c) => {
+                    if (c.compare.value) {
+                      return <CaseComparison country={c} />;
+                    }
+                  })}
+                </div>
+              </Collapse>
+            </div>
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>

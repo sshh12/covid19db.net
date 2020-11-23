@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Input } from "antd";
+import { Col, Input, Spin } from "antd";
 import axios from "../client";
 import CountryCard from "../components/country/countryCard.js";
 import {
@@ -8,8 +8,12 @@ import {
   CountryPagination,
   CountrySortSelection,
   CountryComparison,
-  SORT_TYPES,
 } from "../components/country/countryModelComponents.js";
+import {
+  filterCountries,
+  SORT_TYPES,
+} from "../components/country/countryUtils";
+import StandardSpinner from "../components/standardSpinner";
 
 export default class Countries extends Component {
   constructor() {
@@ -86,73 +90,15 @@ export default class Countries extends Component {
     // Re-filter countries for model
     if (!filteredCountries) {
       // Get all loaded country cards in the current view
-      filteredCountries = data
-        .sort((a, b) => {
-          // Sort cards by chosen category, reversing if necessary
-          var reversed = this.state.sortLowVal > this.state.sortHiVal ? -1 : 1;
-          switch (this.state.sortBy) {
-            case SORT_TYPES.NAME:
-              return reversed * a.name.localeCompare(b.name);
-            case SORT_TYPES.ALPHA2:
-              return (
-                reversed * a.codes.alpha2Code.localeCompare(b.codes.alpha2Code)
-              );
-            case SORT_TYPES.ALPHA3:
-              return (
-                reversed * a.codes.alpha3Code.localeCompare(b.codes.alpha3Code)
-              );
-            case SORT_TYPES.NUM_CASES:
-              return reversed * (a.cases - b.cases);
-            case SORT_TYPES.POPULATION:
-              return reversed * (a.population - b.population);
-          }
-        })
-        .filter((v) => {
-          const { searchValue } = this.state;
-          const { name, cases, codes, population, capital, region } = v;
-          const searchText = `
-                ${name.toString().toLowerCase()} 
-                Code: ${codes.alpha3Code.toString().toLowerCase()}, 
-                ${codes.alpha3Code.toString().toLowerCase()} 
-                Cases: ${cases?.toLocaleString()}
-                Population: ${population.toLocaleString()} 
-                Capital: ${capital?.name.toString().toLowerCase()}
-                Region: ${region?.region?.toString().toLowerCase()}
-              `;
-          // Filter any instances outside of range
-          var { sortLowVal, sortHiVal } = this.state;
-          const filterNone = sortLowVal == -1 && sortHiVal == -1;
-          switch (this.state.sortBy) {
-            case SORT_TYPES.NAME:
-              v = name.charAt(0).charCodeAt(0);
-              break;
-            case SORT_TYPES.ALPHA2:
-              v = codes.alpha2Code.charAt(0).charCodeAt(0);
-              break;
-            case SORT_TYPES.ALPHA3:
-              v = codes.alpha3Code.charAt(0).charCodeAt(0);
-              break;
-            // Numerical cases: default to no filter and return entire range
-            case SORT_TYPES.NUM_CASES:
-              return filterNone
-                ? cases
-                : (cases - sortLowVal) * (cases - sortHiVal) <= 0 &&
-                    searchText.includes(searchValue);
-            case SORT_TYPES.POPULATION:
-              return filterNone
-                ? population
-                : (population - sortLowVal) * (population - sortHiVal) <= 0 &&
-                    searchText.includes(searchValue);
-          }
-          sortLowVal = sortLowVal.charCodeAt(0);
-          sortHiVal = sortHiVal.charCodeAt(0);
-          return (
-            (v - sortLowVal) * (v - sortHiVal) <= 0 &&
-            searchText.includes(searchValue)
-          );
-        });
+      filteredCountries = filterCountries(
+        data,
+        this.state.sortLowVal,
+        this.state.sortHiVal,
+        this.state.sortBy,
+        this.state.searchValue
+      );
       this.setState({
-        filteredCountries: filteredCountries,
+        filteredCountries,
         pageNumber: 1,
         firstCardIndex: 0,
         lastCardIndex: this.state.numPerPage,
@@ -253,7 +199,7 @@ export default class Countries extends Component {
         onChange={this.changeSort}
       />
     );
-    const gridControl = (
+    const gridControl = this.state.currentViewCards ? (
       <CountryGridControl
         selectSort={countrySortSelection}
         sortBy={this.state.sortBy}
@@ -262,8 +208,8 @@ export default class Countries extends Component {
         onChange={this.handleUpdateRange}
         pagination={pagination}
       />
-    );
-    return (
+    ) : null;
+    return this.state.currentViewCards ? (
       <div className="App">
         <h1 style={{ fontWeight: "800", fontSize: "2em", margin: "20px 0" }}>
           Countries{" "}
@@ -299,6 +245,8 @@ export default class Countries extends Component {
           {gridControl}
         </div>
       </div>
+    ) : (
+      <StandardSpinner />
     );
   }
 }

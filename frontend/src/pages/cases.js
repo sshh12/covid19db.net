@@ -6,7 +6,7 @@ import "../components/cases/caseInstance.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/casesSearchBar";
-import { CountrySortSelection } from "../components/country/countryModelComponents";
+import CaseComparison from "../components/cases/components/caseComparison";
 
 export default class Cases extends Component {
   constructor() {
@@ -247,7 +247,7 @@ export default class Cases extends Component {
             <div>
               {caseData?.map((c) => {
                 if (c.compare) {
-                  return <Button>{c.country.codes.alpha3Code}</Button>;
+                  return <CaseComparison country={c} />;
                 }
               })}
             </div>

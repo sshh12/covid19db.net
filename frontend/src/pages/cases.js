@@ -3,7 +3,6 @@ import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
 import { Collapse } from "react-collapse";
 import axios from "../client";
-import "../styling/caseInstance.css";
 import "../styling/case.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
@@ -60,9 +59,11 @@ export default class Cases extends Component {
   handleChange = (pagination, filters) => {
     this.setState({ filteredInfo: filters });
   };
+
   clearFilters = () => {
     this.setState({ filteredInfo: null });
   };
+
   clearComparisons = () => {
     var { caseData } = this.state;
     caseData.forEach((c) => {
@@ -72,14 +73,23 @@ export default class Cases extends Component {
     });
     this.setState({ showComparisons: false, comparisons: 0 });
   };
+
+  toggleShowComparisons = () => {
+    this.setState({
+      showComparisons:
+        !this.state.showComparisons && this.state.comparisons != 0,
+    });
+  };
+
   setDataSource = (dataSource) => {
     this.setState({ dataSource: dataSource });
   };
+
   setSearchValue = (value) => {
     this.setState({ searchValue: value });
   };
+
   addCompareInstance = (countryCode) => {
-    console.log("checkbox!");
     var { caseData } = this.state;
     const index = caseData.findIndex(
       (c) => c.country.codes.alpha3Code == countryCode
@@ -88,18 +98,14 @@ export default class Cases extends Component {
     if (!selected && this.state.comparisons < 5) {
       caseData[index].compare.value = true;
       this.setState({ comparisons: this.state.comparisons + 1 });
-      console.log(this.state.comparisons);
     } else if (selected) {
       caseData[index].compare.value = false;
       this.setState({ comparisons: this.state.comparisons - 1 });
-      console.log(this.state.comparisons);
     }
-    console.log(selected);
-    console.log(this.state.comparisons);
   };
 
   render() {
-    let { filteredInfo, caseData, searchValue, selectedRowKeys } = this.state;
+    let { filteredInfo, caseData, searchValue } = this.state;
     filteredInfo = filteredInfo || {};
 
     const columns = [
@@ -117,7 +123,6 @@ export default class Cases extends Component {
           </Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
-        //width: 300,
       },
       {
         title: "Cases",
@@ -220,35 +225,10 @@ export default class Cases extends Component {
 
     return (
       <div className="App">
-        <div
-          style={{
-            backgroundColor: "#323776",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingBottom: 40,
-              paddingTop: 20,
-              alignItems: "center",
-              justifyContent: "center",
-              width: "75vw",
-            }}
-          >
-            <h1
-              style={{
-                fontWeight: 800,
-                marginBottom: 20,
-                fontSize: "2em",
-                color: "white",
-              }}
-            >
-              Cases
-            </h1>
-            <p style={{ color: "white", fontSize: "1.1em", marginBottom: 20 }}>
+        <div className="page-header">
+          <div className="page-header-content">
+            <h1 className="page-title">Cases</h1>
+            <p className="page-description">
               The table below displays the total case statistics in each
               country. Click a country's name to see more information.
             </p>
@@ -259,9 +239,7 @@ export default class Cases extends Component {
               setDataSource={this.setDataSource}
               setSearchValue={this.setSearchValue}
             />
-            <div
-              style={{ paddingTop: 10, alignSelf: "start", display: "flex" }}
-            >
+            <div className="page-header-button-group">
               <Button style={{ marginRight: 10 }} onClick={this.clearFilters}>
                 Clear filters
               </Button>
@@ -271,15 +249,7 @@ export default class Cases extends Component {
               >
                 Clear comparisons
               </Button>
-              <Button
-                onClick={() => {
-                  this.setState({
-                    showComparisons:
-                      !this.state.showComparisons &&
-                      this.state.comparisons != 0,
-                  });
-                }}
-              >
+              <Button onClick={this.toggleShowComparisons}>
                 {this.state.showComparisons ? "Hide" : "Show"} comparisons (
                 {this.state.comparisons})
               </Button>
@@ -289,14 +259,7 @@ export default class Cases extends Component {
                 <h2 style={{ paddingTop: 20 }} className="compare-title">
                   Comparisons
                 </h2>
-                <div
-                  style={{
-                    display: "flex",
-                    paddingTop: 0,
-                    alignContent: "start",
-                    justifyContent: "flex-start",
-                  }}
-                >
+                <div style={{ display: "flex" }}>
                   {caseData?.map((c) => {
                     if (c.compare.value) {
                       return <CaseComparison country={c} />;
@@ -308,14 +271,7 @@ export default class Cases extends Component {
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div
-            style={{
-              width: "75vw",
-              userSelect: "none",
-              marginTop: 40,
-              marginBottom: 40,
-            }}
-          >
+          <div className="table-div">
             <Table
               style={{
                 margin: "0 0vw",

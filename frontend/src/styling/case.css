@@ -1,3 +1,45 @@
+.page-title {
+  font-weight: 800;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: white;
+}
+
+.page-description {
+  color: white;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.page-header {
+  background-color: #323776;
+  justify-content: center;
+  display: flex;
+}
+
+.page-header-content {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px;
+  padding-top: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 75vw;
+}
+
+.page-header-button-group {
+  padding-top: 10px;
+  align-self: start;
+  display: flex;
+}
+
+.table-div {
+  width: 75vw;
+  user-select: "none";
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
 .compare-div {
   flex: 1;
   background-color: #686eba;
@@ -5,8 +47,8 @@
   flex-direction: column;
   align-items: start;
   margin-right: 15px;
-  padding: 10px;
-  width: 200px;
+  padding: 12px;
+  width: 205px;
   border-radius: 5px;
   justify-content: left;
 }
@@ -25,7 +67,7 @@
 }
 
 .compare-link {
-  background-color: rgb(42, 39, 90);
+  background-color: rgb(47, 43, 102);
   padding-left: 3px;
   padding-right: 3px;
   border-radius: 5px;

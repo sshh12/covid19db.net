@@ -25,11 +25,9 @@ export default function ProviderVisualizationC() {
   useEffect(() => {
     /* can't directly request from the API because no CORS or HTTPS enabled
     on their end */
-    fetch(
-      "http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/college"
-    )
+    fetch("http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/college")
       .then((resp) => {
-        if(!resp.ok){
+        if (!resp.ok) {
           throw Error(resp.statusText);
         }
         return resp.json();
@@ -55,7 +53,7 @@ export default function ProviderVisualizationC() {
   // perform state wide analysis on data
   let stateData = {};
   for (let college of colleges) {
-    if(!Object.keys(stateData).includes(college.state)){
+    if (!Object.keys(stateData).includes(college.state)) {
       stateData[college.state] = {
         id: college.state,
         sumPercentFullTime: 0,
@@ -67,7 +65,7 @@ export default function ProviderVisualizationC() {
   }
   // transform stateData into usable format for bar graph
   let data = [];
-  for(let state of Object.keys(stateData)){
+  for (let state of Object.keys(stateData)) {
     const stateObj = stateData[state];
     data.push({
       id: stateObj.id,
@@ -83,28 +81,26 @@ export default function ProviderVisualizationC() {
     return (
       <div>
         <div
-          style = {{
+          style={{
             float: "left",
             width: 13,
             height: 13,
             margin: 5,
-            backgroundColor: node.color
+            backgroundColor: node.color,
           }}
         ></div>
-        <strong>
-          {node.data.id}
-        </strong>
+        <strong>{node.data.id}</strong>
         {`: ${node.data.value}%`}
       </div>
     );
-  }
+  };
   return (
     <ResponsiveBar
       data={data}
-      margin={{top: 20, right: 50, bottom: 80, left: 50}}
+      margin={{ top: 20, right: 50, bottom: 80, left: 50 }}
       padding={0.15}
       maxValue={100}
-      labelFormat={(d)=>{
+      labelFormat={(d) => {
         return `${d}%`;
       }}
       labelSkipHeight={15}
@@ -112,17 +108,17 @@ export default function ProviderVisualizationC() {
       axisLeft={{
         tickSize: 0,
         tickPadding: 5,
-        legend: 'Average Percentage of Full-Time Enrollment',
+        legend: "Average Percentage of Full-Time Enrollment",
         legendPosition: "middle",
-        legendOffset: -40
+        legendOffset: -40,
       }}
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'State',
-        legendPosition: 'middle',
-        legendOffset: 40
+        legend: "State",
+        legendPosition: "middle",
+        legendOffset: 40,
       }}
     />
   );

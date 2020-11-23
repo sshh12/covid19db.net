@@ -13,7 +13,7 @@ import {
 } from "./pages/allPages";
 import RiskInstance from "./components/risks/riskInstance";
 import CountryInstance from "./components/country/countryInstance";
-import CaseInstance from "./components/caseInstances/caseInstance";
+import CaseInstance from "./components/cases/caseInstance";
 
 function Routes() {
   return (

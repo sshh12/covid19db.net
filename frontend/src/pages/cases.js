@@ -7,7 +7,8 @@ import "../styling/case.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/casesSearchBar";
-import CaseComparison from "../components/cases/components/caseComparison";
+import CaseComparisonCollapse from "../components/cases/components/caseComparisonCollapse";
+import CaseButtonGroup from "../components/cases/components/caseButtonGroup";
 
 export default class Cases extends Component {
   constructor() {
@@ -28,27 +29,23 @@ export default class Cases extends Component {
     axios
       .get("case-statistics", {
         params: {
-          attributes: "country,totals,new",
+          attributes: "country,totals",
         },
       })
       .then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
-            newCases: data.new.cases,
             totalCases: data.totals.cases,
             totalCases: data.totals.cases,
             totalDeaths: data.totals.deaths,
             totalRecovered: data.totals.recovered,
             totalActive: data.totals.active,
-            exploreCase: data.country.codes.alpha3Code,
-            exploreRisk: data.country.codes.alpha3Code,
             compare: {
               value: false,
               code: data.country.codes.alpha3Code,
             },
           };
-
           return compiledCase;
         });
         this.setState({ caseData });
@@ -239,35 +236,17 @@ export default class Cases extends Component {
               setDataSource={this.setDataSource}
               setSearchValue={this.setSearchValue}
             />
-            <div className="page-header-button-group">
-              <Button style={{ marginRight: 10 }} onClick={this.clearFilters}>
-                Clear filters
-              </Button>
-              <Button
-                style={{ marginRight: 10 }}
-                onClick={this.clearComparisons}
-              >
-                Clear comparisons
-              </Button>
-              <Button onClick={this.toggleShowComparisons}>
-                {this.state.showComparisons ? "Hide" : "Show"} comparisons (
-                {this.state.comparisons})
-              </Button>
-            </div>
-            <div style={{ alignSelf: "start" }}>
-              <Collapse isOpened={this.state.showComparisons}>
-                <h2 style={{ paddingTop: 20 }} className="compare-title">
-                  Comparisons
-                </h2>
-                <div style={{ display: "flex" }}>
-                  {caseData?.map((c) => {
-                    if (c.compare.value) {
-                      return <CaseComparison country={c} />;
-                    }
-                  })}
-                </div>
-              </Collapse>
-            </div>
+            <CaseButtonGroup
+              clearFilters={this.clearFilters}
+              clearComparisons={this.clearComparisons}
+              toggleShowComparisons={this.toggleShowComparisons}
+              showComparisons={this.state.showComparisons}
+              comparisons={this.state.comparisons}
+            />
+            <CaseComparisonCollapse
+              isOpened={this.state.showComparisons}
+              data={caseData}
+            />
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>

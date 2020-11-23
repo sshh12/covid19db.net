@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Tooltip } from "antd";
 import "../../../styling/case.css";
 
-// component used to display various other COVID-19 statistics
+// component used to all country case statistics for comparing
 function CaseComparison(props) {
   return (
     <div className="compare-div">

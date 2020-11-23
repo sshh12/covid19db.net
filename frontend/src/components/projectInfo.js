@@ -46,16 +46,16 @@ export default function ProjectInfo({ tools, dataSources }) {
                 their data, but the OWID dataset is only available in file
                 format (<code>.json</code> in this case).
                 <ul className="list-unstyled">
-                  {dataSources.map((url) => (
-                    <li key={url}>
-                      <a href={url}>
+                  {dataSources.map((source) => (
+                    <li key={source.url}>
+                      <a href={source.url}>
                         <img
                           style={{ marginRight: "10px" }}
                           src={"/icons/server.png"}
                           width={"100rem"}
                           height={"100rem"}
                         />
-                        {url.replace("https://", "")}
+                        {source.name}
                       </a>
                     </li>
                   ))}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Checkbox } from "antd";
+import { Button, Table, Checkbox, Collapse } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/cases/caseInstance.css";
@@ -18,6 +18,7 @@ export default class Cases extends Component {
       sortedInfo: null,
       searchValue: null,
       comparisons: 0,
+      showComparisons: false,
     };
   }
 
@@ -41,7 +42,10 @@ export default class Cases extends Component {
             totalActive: data.totals.active,
             exploreCase: data.country.codes.alpha3Code,
             exploreRisk: data.country.codes.alpha3Code,
-            compare: false,
+            compare: {
+              value: false,
+              code: data.country.codes.alpha3Code,
+            },
           };
 
           return compiledCase;
@@ -63,28 +67,28 @@ export default class Cases extends Component {
   setSearchValue = (value) => {
     this.setState({ searchValue: value });
   };
-  addCompareInstance = (e, countryCode) => {
+  addCompareInstance = (countryCode) => {
     console.log("checkbox!");
-    console.log(e.target.checked);
     var { caseData } = this.state;
     const index = caseData.findIndex(
       (c) => c.country.codes.alpha3Code == countryCode
     );
-    if (e.target.checked && this.state.comparisons < 5) {
-      caseData[index].compare = true;
+    const selected = caseData[index].compare.value;
+    if (!selected && this.state.comparisons < 5) {
+      caseData[index].compare.value = true;
       this.setState({ comparisons: this.state.comparisons + 1 });
       console.log(this.state.comparisons);
-    } else if (!e.target.checked && caseData[index].compare) {
-      caseData[index].compare = false;
+    } else if (selected) {
+      caseData[index].compare.value = false;
       this.setState({ comparisons: this.state.comparisons - 1 });
       console.log(this.state.comparisons);
     }
-    console.log("current comp");
+    console.log(selected);
     console.log(this.state.comparisons);
   };
 
   render() {
-    let { filteredInfo, caseData, searchValue } = this.state;
+    let { filteredInfo, caseData, searchValue, selectedRowKeys } = this.state;
     filteredInfo = filteredInfo || {};
 
     const columns = [
@@ -186,16 +190,19 @@ export default class Cases extends Component {
       },
       {
         title: "Compare",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Checkbox
-            onChange={(e) =>
-              this.addCompareInstance(e, country.codes.alpha3Code)
-            }
-          ></Checkbox>
+        dataIndex: "compare",
+        key: "compare",
+        render: (compare) => (
+          <Button
+            onClick={() => {
+              console.log("Pressed");
+              this.addCompareInstance(compare.code);
+            }}
+          >
+            {compare.value ? "Remove" : "Add"}
+          </Button>
         ),
-        width: 100,
+        width: 120,
         align: "center",
       },
     ];
@@ -241,16 +248,29 @@ export default class Cases extends Component {
               setDataSource={this.setDataSource}
               setSearchValue={this.setSearchValue}
             />
-            <div style={{ paddingTop: 10, alignSelf: "start" }}>
+            <div
+              style={{ paddingTop: 10, alignSelf: "start", display: "flex" }}
+            >
               <Button onClick={this.clearFilters}>Clear filters</Button>
+              <Button
+                onClick={() => {
+                  this.setState({
+                    showComparisons: !this.state.showComparisons,
+                  });
+                }}
+              >
+                Show comparisons ({this.state.comparisons})
+              </Button>
             </div>
-            <div>
-              {caseData?.map((c) => {
-                if (c.compare) {
-                  return <CaseComparison country={c} />;
-                }
-              })}
-            </div>
+            <Collapse isOpened={this.state.showComparisons}>
+              <div style={{ display: "flex" }}>
+                {caseData?.map((c) => {
+                  if (c.compare.value) {
+                    return <CaseComparison country={c} />;
+                  }
+                })}
+              </div>
+            </Collapse>
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>

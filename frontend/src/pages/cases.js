@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Button, Table } from "antd";
+import { Button, Table, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/cases/caseInstance.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
 import SearchBar from "../components/search/casesSearchBar";
+import { CountrySortSelection } from "../components/country/countryModelComponents";
 
 export default class Cases extends Component {
   constructor() {
@@ -16,6 +17,7 @@ export default class Cases extends Component {
       filteredInfo: null,
       sortedInfo: null,
       searchValue: null,
+      comparisons: 0,
     };
   }
 
@@ -39,6 +41,7 @@ export default class Cases extends Component {
             totalActive: data.totals.active,
             exploreCase: data.country.codes.alpha3Code,
             exploreRisk: data.country.codes.alpha3Code,
+            compare: false,
           };
 
           return compiledCase;
@@ -59,6 +62,25 @@ export default class Cases extends Component {
   };
   setSearchValue = (value) => {
     this.setState({ searchValue: value });
+  };
+  addCompareInstance = (e, countryCode) => {
+    console.log("checkbox!");
+    console.log(e.target.checked);
+    var { caseData } = this.state;
+    const index = caseData.findIndex(
+      (c) => c.country.codes.alpha3Code == countryCode
+    );
+    if (e.target.checked && this.state.comparisons < 5) {
+      caseData[index].compare = true;
+      this.setState({ comparisons: this.state.comparisons + 1 });
+      console.log(this.state.comparisons);
+    } else if (!e.target.checked && caseData[index].compare) {
+      caseData[index].compare = false;
+      this.setState({ comparisons: this.state.comparisons - 1 });
+      console.log(this.state.comparisons);
+    }
+    console.log("current comp");
+    console.log(this.state.comparisons);
   };
 
   render() {
@@ -162,6 +184,20 @@ export default class Cases extends Component {
         ellipsis: true,
         align: "right",
       },
+      {
+        title: "Compare",
+        dataIndex: "country",
+        key: "country",
+        render: (country) => (
+          <Checkbox
+            onChange={(e) =>
+              this.addCompareInstance(e, country.codes.alpha3Code)
+            }
+          ></Checkbox>
+        ),
+        width: 100,
+        align: "center",
+      },
     ];
 
     return (
@@ -207,6 +243,13 @@ export default class Cases extends Component {
             />
             <div style={{ paddingTop: 10, alignSelf: "start" }}>
               <Button onClick={this.clearFilters}>Clear filters</Button>
+            </div>
+            <div>
+              {caseData?.map((c) => {
+                if (c.compare) {
+                  return <Button>{c.country.codes.alpha3Code}</Button>;
+                }
+              })}
             </div>
           </div>
         </div>

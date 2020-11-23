@@ -1,8 +1,7 @@
 import SORT_TYPES from "./modelComponents/countrySortTypes";
 
 function filterCountries(data, sortLowVal, sortHiVal, sortBy, searchValue) {
-  console.log(data, sortLowVal, sortHiVal);
-  data
+  return data
     .sort((a, b) => {
       // Sort cards by chosen category, reversing if necessary
       var reversed = sortLowVal > sortHiVal ? -1 : 1;
@@ -58,11 +57,10 @@ function filterCountries(data, sortLowVal, sortHiVal, sortBy, searchValue) {
             : (population - sortLowVal) * (population - sortHiVal) <= 0 &&
                 searchText.includes(searchValue);
       }
-      sortLowVal = sortLowVal.charCodeAt(0);
-      sortHiVal = sortHiVal.charCodeAt(0);
+      var slvNum = sortLowVal.charCodeAt(0);
+      var shvNum = sortHiVal.charCodeAt(0);
       return (
-        (v - sortLowVal) * (v - sortHiVal) <= 0 &&
-        searchText.includes(searchValue)
+        (v - slvNum) * (v - shvNum) <= 0 && searchText.includes(searchValue)
       );
     });
 }

@@ -98,7 +98,7 @@ export default class Countries extends Component {
         this.state.searchValue
       );
       this.setState({
-        filteredCountries,
+        filteredCountries: filteredCountries,
         pageNumber: 1,
         firstCardIndex: 0,
         lastCardIndex: this.state.numPerPage,
@@ -150,6 +150,7 @@ export default class Countries extends Component {
         sortHiVal = -1;
         break;
     }
+    console.log(sortLowVal);
     this.setState({
       sortBy: value,
       filteredCountries: null,

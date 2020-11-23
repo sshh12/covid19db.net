@@ -71,7 +71,7 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <Link to={`/countries/${country.codes.alpha3Code}`}>
+          <Link to={`/case-statistics/${country.codes.alpha3Code}`}>
             {searchValue != "" ? (
               <HighlighterText text={country.name} searchValue={searchValue} />
             ) : (
@@ -80,6 +80,7 @@ export default class Cases extends Component {
           </Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
+        //width: 300,
       },
       {
         title: "Cases",
@@ -99,6 +100,7 @@ export default class Cases extends Component {
           record.totalCases <
             value + filterData.totalCasesFilterMappings[value],
         ellipsis: true,
+        align: "right",
       },
       {
         title: "Deaths",
@@ -118,6 +120,7 @@ export default class Cases extends Component {
           record.totalDeaths <
             value + filterData.totalDeathsFilterMappings[value],
         ellipsis: true,
+        align: "right",
       },
       {
         title: "Recovered",
@@ -137,6 +140,7 @@ export default class Cases extends Component {
           record.totalRecovered <
             value + filterData.totalRecoveredFilterMappings[value],
         ellipsis: true,
+        align: "right",
       },
       {
         title: "Active",
@@ -156,31 +160,32 @@ export default class Cases extends Component {
           record.totalActive <
             value + filterData.totalActiveFilterMappings[value],
         ellipsis: true,
+        align: "right",
       },
-      {
-        title: "Explore Cases",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </Link>
-        ),
-        width: 130,
-        align: "center",
-      },
-      {
-        title: "Explore Risks",
-        dataIndex: "country",
-        key: "country",
-        render: (country) => (
-          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
-            <Button>Explore</Button>
-          </Link>
-        ),
-        width: 130,
-        align: "center",
-      },
+      // {
+      //   title: "Explore Cases",
+      //   dataIndex: "country",
+      //   key: "country",
+      //   render: (country) => (
+      //     <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
+      //       <Button>Explore</Button>
+      //     </Link>
+      //   ),
+      //   width: 130,
+      //   align: "center",
+      // },
+      // {
+      //   title: "Explore Risks",
+      //   dataIndex: "country",
+      //   key: "country",
+      //   render: (country) => (
+      //     <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
+      //       <Button>Explore</Button>
+      //     </Link>
+      //   ),
+      //   width: 130,
+      //   align: "center",
+      // },
     ];
 
     return (
@@ -233,17 +238,13 @@ export default class Cases extends Component {
           <div
             style={{
               width: "75vw",
-              //backgroundColor: "#323776",
               userSelect: "none",
               marginTop: 40,
-              marginBottom: 20,
+              marginBottom: 40,
             }}
           >
             <Table
               style={{
-                width: "75vw",
-                marginTop: 40,
-                marginBottom: 20,
                 margin: "0 0vw",
                 outline: "1px solid lightgrey",
               }}

@@ -119,6 +119,22 @@ export default class CountryInstance extends Component {
             />
           </div>
 
+          {/* links to related instances */}
+          <div>
+            <div id="title-div">
+              <h2 id="subtitle">Links</h2>
+            </div>
+            <Link
+              to={`/case-statistics/${codes.alpha3Code}`}
+              style={{ marginRight: 10 }}
+            >
+              <Button variant="outline-secondary">{`Case Statistics for ${name}`}</Button>
+            </Link>
+            <Link to={`/risk-factor-statistics/${codes.alpha3Code}`}>
+              <Button variant="outline-secondary">{`Risk Factors for ${name}`}</Button>
+            </Link>
+          </div>
+
           <div style={{ marginTop: "1vh", marginBottom: "10vh" }}>
             <div id="title-div">
               <h2 id="subtitle">News</h2>

@@ -32,7 +32,7 @@ class CaseInstance extends Component {
       <div className="App">
         <header className="Case-header">
           <Link to="/case-statistics">
-            <Button variant="outline-secondary">Go back to cases</Button>
+            <Button variant="outline-secondary">Go back to Cases</Button>
           </Link>
           <h1 id="page-title">
             Cases in {data.country.name} ({data.country.codes.alpha3Code})

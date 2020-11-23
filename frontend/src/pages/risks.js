@@ -19,18 +19,11 @@ export default class Risks extends Component {
   }
   // Api call here
   componentDidMount() {
-    axios
-      .get("risk-factor-statistics", {
-        params: {
-          attributes:
-            "country,location,populationDensity,humanDevelopmentIndex,gini,gdpPerCapita,medianAge,aged65Older,aged70Older,extremePovertyRate,cardiovascDeathRate,diabetesPrevalence,femaleSmokers,maleSmokers,hospitalBedsPerThousand,lifeExpectancy,handwashingFacilities",
-        },
-      })
-      .then((res) => {
-        const riskData = res.data;
-        this.setState({ riskData });
-        this.setState({ dataSource: riskData });
-      });
+    axios.get("risk-factor-statistics").then((res) => {
+      const riskData = res.data;
+      this.setState({ riskData });
+      this.setState({ dataSource: riskData });
+    });
   }
 
   // navigate to route upon item selection
@@ -82,7 +75,9 @@ export default class Risks extends Component {
             dataIndex: "country",
             key: "country",
             render: (country) => (
-              <Link to={`/countries/${country?.codes?.alpha3Code}`}>
+              <Link
+                to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}
+              >
                 {searchValue != "" ? (
                   <HighlighterText
                     text={country.name}
@@ -189,28 +184,6 @@ export default class Risks extends Component {
             onFilter: (value, record) =>
               record.gini > value && record.gini < value + 25,
             ellipsis: true,
-          },
-          {
-            title: "Explore Risks",
-            dataIndex: "country",
-            key: "country",
-            render: (country) => (
-              <Link
-                to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}
-              >
-                <Button>Explore</Button>
-              </Link>
-            ),
-          },
-          {
-            title: "Explore Cases",
-            dataIndex: "country",
-            key: "country",
-            render: (country) => (
-              <Link to={`/case-statistics/${country?.codes?.alpha3Code}`}>
-                <Button>Explore</Button>
-              </Link>
-            ),
           },
         ],
       },

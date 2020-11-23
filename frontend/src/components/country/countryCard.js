@@ -51,9 +51,10 @@ export default class CountryCard extends Component {
       <Layout
         style={{
           position: "relative",
-          height: 390,
+          height: 340,
           width: 300,
           border: "1px grey",
+          marginBottom: 20,
         }}
       >
         <div style={{ position: "absolute", top: 5, right: 5, zIndex: 1 }}>
@@ -105,18 +106,6 @@ export default class CountryCard extends Component {
               />
             </Card>
           </Link>
-        </Content>
-        <Content style={{ height: 50, backgroundColor: "white" }}>
-          <Row>
-            <Col span={12}>
-              <Link to={`/case-statistics/${codes?.alpha3Code}`}>Cases</Link>
-            </Col>
-            <Col span={12}>
-              <Link to={`/risk-factor-statistics/${codes?.alpha3Code}`}>
-                Risks
-              </Link>
-            </Col>
-          </Row>
         </Content>
       </Layout>
     );

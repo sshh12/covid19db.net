@@ -29,6 +29,6 @@ api = Api(app)
 @app.route("/")
 def index():
     """
-    Temporary base route for API
+    Base route for API
     """
     return "api.covid19db.net"

@@ -14,24 +14,14 @@ from ..models.case_statistics import CaseStatistics
 
 
 class CaseStatisticsAPI:
-    @staticmethod
-    def polish_attributes(attributes):
-        # add defaults to attributes if specified
-        if attributes is not None:
-            attributes = frozenset({"country", "date", *attributes})
-        # if attributes unspecified, include all
-        else:
-            attributes = frozenset(const.VALID_CASE_STATS_ATTRIBUTES)
-        return attributes
-
     class CaseStatistics(Resource):
         def get(self):
             """
             Get all case statistics
             """
             args = parser.parse_args()
-            attributes = CaseStatisticsAPI.polish_attributes(
-                get_attributes(args)
+            attributes = get_attributes(
+                args, {"country", "date"}, const.VALID_CASE_STATS_ATTRIBUTES
             )
             # validate attributes parameter
             if not validate_attributes(
@@ -53,8 +43,8 @@ class CaseStatisticsAPI:
                 return error_response(422, "Bad identifier")
 
             args = parser.parse_args()
-            attributes = CaseStatisticsAPI.polish_attributes(
-                get_attributes(args)
+            attributes = get_attributes(
+                args, {"country", "date"}, const.VALID_CASE_STATS_ATTRIBUTES
             )
             # validate attributes parameter
             if not validate_attributes(

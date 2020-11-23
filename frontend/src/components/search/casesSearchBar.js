@@ -4,6 +4,8 @@ import { Input } from "antd";
 function SearchBar(props) {
   return (
     <Input
+      style={{ width: "75vw" }}
+      allowClear
       placeholder="Search"
       value={props.searchValue}
       onChange={(e) => {

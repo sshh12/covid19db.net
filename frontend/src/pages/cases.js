@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Table, Checkbox, Collapse } from "antd";
+import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
+import { Collapse } from "react-collapse";
 import axios from "../client";
 import "../components/cases/caseInstance.css";
 import filterData from "../components/cases/caseModelData.js";
@@ -255,7 +256,9 @@ export default class Cases extends Component {
               <Button
                 onClick={() => {
                   this.setState({
-                    showComparisons: !this.state.showComparisons,
+                    showComparisons:
+                      !this.state.showComparisons &&
+                      this.state.comparisons != 0,
                   });
                 }}
               >

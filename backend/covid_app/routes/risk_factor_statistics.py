@@ -14,24 +14,14 @@ from ..models.risk_factor_statistics import RiskFactorStatistics
 
 
 class RiskFactorStatisticsAPI:
-    @staticmethod
-    def polish_attributes(attributes):
-        # add defaults to attributes if specified
-        if attributes is not None:
-            attributes = frozenset({"country", *attributes})
-        # if attributes unspecified, include all
-        else:
-            attributes = frozenset(const.VALID_RISK_FACTOR_STATS_ATTRIBUTES)
-        return attributes
-
     class RiskFactorStatistics(Resource):
         def get(self):
             """
             Get all risk factor statistics
             """
             args = parser.parse_args()
-            attributes = RiskFactorStatisticsAPI.polish_attributes(
-                get_attributes(args)
+            attributes = get_attributes(
+                args, {"country"}, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES
             )
             # validate attributes parameter
             if not validate_attributes(
@@ -55,8 +45,8 @@ class RiskFactorStatisticsAPI:
                 return error_response(422, "Bad identifier")
 
             args = parser.parse_args()
-            attributes = RiskFactorStatisticsAPI.polish_attributes(
-                get_attributes(args)
+            attributes = get_attributes(
+                args, {"country"}, const.VALID_RISK_FACTOR_STATS_ATTRIBUTES
             )
             # validate attributes parameter
             if not validate_attributes(

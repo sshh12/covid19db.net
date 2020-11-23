@@ -21,7 +21,7 @@ export default function Main() {
       .then((res) => setCases(res.data));
   }, []);
   const globalStats = !data ? (
-    <Skeleton active />
+    null
   ) : (
     <Fragment>
       <h1 style={{ paddingTop: 20, paddingBottom: 40 }} className="main-text">

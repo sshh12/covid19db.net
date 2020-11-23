@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Button, Row, Space } from "antd";
+import { Button, Row, Skeleton, Space } from "antd";
 import axios from "../../client";
 import { Link } from "react-router-dom";
 
@@ -25,25 +25,7 @@ export default class CountryInstance extends Component {
 
   render() {
     const data = this.state.countryData;
-    if (!data) {
-      return <div />;
-    }
-
-    const {
-      borders,
-      capital,
-      codes,
-      currencies,
-      flag,
-      languages,
-      location,
-      name,
-      news,
-      population,
-      region,
-    } = data;
-
-    const headerVisuals = (
+    const headerVisuals = data ? (
       <Fragment>
         <Link to="/countries">
           <Button variant="outline-secondary">Go back to countries</Button>
@@ -51,10 +33,10 @@ export default class CountryInstance extends Component {
         <Space size="large">
           <h1 id="page-title">
             {" "}
-            {name} ({codes.alpha3Code})
+            {data.name} ({data.codes.alpha3Code})
           </h1>
           <img
-            src={flag}
+            src={data.flag}
             alt="Country flag"
             style={{
               paddingLeft: 20,
@@ -65,18 +47,23 @@ export default class CountryInstance extends Component {
         </Space>
         <div>
           <div id="title-div">
-            <h2 id="subtitle"> Capital - {capital.name}</h2>
+            <h2 id="subtitle"> Capital - {data.capital.name}</h2>
           </div>
           <img
-            src={capital.img}
-            alt={"Image of " + capital.name}
+            src={data.capital.img}
+            alt={"Image of " + data.capital.name}
             id="capital-image"
           />
         </div>
       </Fragment>
+    ) : (
+      <Fragment>
+        <Skeleton active />
+        <Skeleton.Image active />
+      </Fragment>
     );
 
-    const generalInfo = (
+    const generalInfo = data ? (
       <Fragment>
         <div>
           <div id="title-div">
@@ -91,11 +78,11 @@ export default class CountryInstance extends Component {
           >
             <GeneralInfo
               title="Population"
-              data={population?.toLocaleString()}
+              data={data.population?.toLocaleString()}
             />
-            <GeneralInfo title="Currency" data={currencies[0].code} />
-            <GeneralInfo title="Longitude" data={location.lng} />
-            <GeneralInfo title="Latitude" data={location.lat} />
+            <GeneralInfo title="Currency" data={data.currencies[0].code} />
+            <GeneralInfo title="Longitude" data={data.location.lng} />
+            <GeneralInfo title="Latitude" data={data.location.lat} />
           </div>
         </div>
         <div style={{ marginTop: "1vh" }}>
@@ -106,44 +93,56 @@ export default class CountryInstance extends Component {
               justifyContent: "left",
             }}
           >
-            <GeneralInfo title="Region" data={region.region} />
-            <GeneralInfo title="Sub-Region" data={region.subregion} />
-            <GeneralInfo title="Border Country" data={borders[0]} />
-            <GeneralInfo title="Languages" data={languages[0].name} />
+            <GeneralInfo title="Region" data={data.region.region} />
+            <GeneralInfo title="Sub-Region" data={data.region.subregion} />
+            <GeneralInfo title="Border Country" data={data.borders[0]} />
+            <GeneralInfo title="Languages" data={data.languages[0].name} />
           </div>
         </div>
       </Fragment>
+    ) : (
+      <Fragment>
+        <Skeleton active />
+      </Fragment>
     );
-    const map = (
+    const map = data ? (
       <div style={{ marginTop: "1vh" }}>
         <div id="title-div">
           <h2 id="subtitle">Map of Capital</h2>
         </div>
         <Map
-          center={[capital.location.lng, capital.location.lat]}
+          center={[data.capital.location.lng, data.capital.location.lat]}
           zoom={8}
           height={window.innerHeight * 0.4}
           width={window.innerWidth * 0.4}
         />
       </div>
+    ) : (
+      <Fragment>
+        <Skeleton.Image active />
+      </Fragment>
     );
-    const links = (
+    const links = data ? (
       <div>
         <div id="title-div">
           <h2 id="subtitle">Links</h2>
         </div>
         <Link
-          to={`/case-statistics/${codes.alpha3Code}`}
+          to={`/case-statistics/${data.codes.alpha3Code}`}
           style={{ marginRight: 10 }}
         >
-          <Button variant="outline-secondary">{`Case Statistics for ${name}`}</Button>
+          <Button variant="outline-secondary">{`Case Statistics for ${data.name}`}</Button>
         </Link>
-        <Link to={`/risk-factor-statistics/${codes.alpha3Code}`}>
-          <Button variant="outline-secondary">{`Risk Factors for ${name}`}</Button>
+        <Link to={`/risk-factor-statistics/${data.codes.alpha3Code}`}>
+          <Button variant="outline-secondary">{`Risk Factors for ${data.name}`}</Button>
         </Link>
       </div>
+    ) : (
+      <Fragment>
+        <Skeleton.Button active />
+      </Fragment>
     );
-    const newsFooter = (
+    const newsFooter = data ? (
       <div style={{ marginTop: "1vh", marginBottom: "10vh" }}>
         <div id="title-div">
           <h2 id="subtitle">News</h2>
@@ -155,9 +154,13 @@ export default class CountryInstance extends Component {
             justifyContent: "left",
           }}
         >
-          <Row gutter={8}>{AllNews(news)}</Row>
+          <Row gutter={8}>{AllNews(data.news)}</Row>
         </div>
       </div>
+    ) : (
+      <Fragment>
+        <Skeleton active />
+      </Fragment>
     );
     return (
       <div className="App">

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Card, Col, Row, Layout } from "antd";
+import { Card, Checkbox, Col, Row, Layout, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import Highlight from "../search/highlight";
 import "./countryInstance.css";
@@ -48,17 +48,38 @@ export default class CountryCard extends Component {
     const { capital, cases, codes, flag, name, population, region } =
       this.props.data || {};
     return (
-      <Layout style={{ height: 390, width: 300, border: "1px grey" }}>
+      <Layout
+        style={{
+          position: "relative",
+          height: 390,
+          width: 300,
+          border: "1px grey",
+        }}
+      >
+        <div style={{ position: "absolute", top: 5, right: 5, zIndex: 1 }}>
+          <Tooltip title="Compare" color="#323776">
+            <Checkbox
+              checked={this.props.comparing}
+              onChange={(e) => this.props.onChange(e, codes.alpha3Code)}
+            />
+          </Tooltip>
+        </div>
         <Content style={{ height: 340 }}>
           <Link to={`/countries/${codes?.alpha3Code}`}>
             <Card
               hoverable
               cover={
-                <img
-                  alt="example"
-                  src={flag}
-                  style={{ height: 165, width: 300 }}
-                />
+                <div>
+                  <img
+                    alt="example"
+                    src={flag}
+                    style={{
+                      top: 1,
+                      height: 165,
+                      width: 300,
+                    }}
+                  />
+                </div>
               }
               style={{ height: 340 }}
             >

@@ -63,6 +63,15 @@ export default class Cases extends Component {
   clearFilters = () => {
     this.setState({ filteredInfo: null });
   };
+  clearComparisons = () => {
+    var { caseData } = this.state;
+    caseData.forEach((c) => {
+      if (c.compare.value) {
+        c.compare.value = false;
+      }
+    });
+    this.setState({ showComparisons: false, comparisons: 0 });
+  };
   setDataSource = (dataSource) => {
     this.setState({ dataSource: dataSource });
   };
@@ -255,6 +264,12 @@ export default class Cases extends Component {
             >
               <Button style={{ marginRight: 10 }} onClick={this.clearFilters}>
                 Clear filters
+              </Button>
+              <Button
+                style={{ marginRight: 10 }}
+                onClick={this.clearComparisons}
+              >
+                Clear comparisons
               </Button>
               <Button
                 onClick={() => {

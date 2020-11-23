@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Table } from "antd";
 import SearchBar from "../components/search/risksSearchBar";
 import HighlighterText from "../components/search/highlighterText";
+import StandardSpinner from "../components/standardSpinner";
 
 export default class Risks extends Component {
   constructor() {
@@ -172,7 +173,7 @@ export default class Risks extends Component {
         align: "right",
       },
     ];
-    return (
+    return this.state.dataSource ? (
       <div className="App">
         <div
           style={{
@@ -240,6 +241,8 @@ export default class Risks extends Component {
           </div>
         </div>
       </div>
+    ) : (
+      <StandardSpinner />
     );
   }
 }

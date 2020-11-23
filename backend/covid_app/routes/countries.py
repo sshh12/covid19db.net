@@ -14,26 +14,15 @@ from ..models.countries import Countries
 
 
 class CountriesAPI:
-    @staticmethod
-    def polish_attributes(attributes):
-        """
-        Adds defaults to the attributes that were specified by the client.
-        """
-        # add defaults to attributes if specified
-        if attributes is not None:
-            attributes = frozenset({"name", "codes", *attributes})
-        # if attributes unspecified, include all
-        else:
-            attributes = frozenset(const.VALID_COUNTRIES_ATTRIBUTES)
-        return attributes
-
     class Countries(Resource):
         def get(self):
             """
             Get all countries
             """
             args = parser.parse_args()
-            attributes = CountriesAPI.polish_attributes(get_attributes(args))
+            attributes = get_attributes(
+                args, {"name", "codes"}, const.VALID_COUNTRIES_ATTRIBUTES
+            )
             # validate attributes parameter
             if not validate_attributes(
                 attributes, const.VALID_COUNTRIES_ATTRIBUTES
@@ -54,7 +43,9 @@ class CountriesAPI:
                 return error_response(422, "Bad identifier")
 
             args = parser.parse_args()
-            attributes = CountriesAPI.polish_attributes(get_attributes(args))
+            attributes = get_attributes(
+                args, {"name", "codes"}, const.VALID_COUNTRIES_ATTRIBUTES
+            )
             # validate attributes parameter
             if not validate_attributes(
                 attributes, const.VALID_COUNTRIES_ATTRIBUTES

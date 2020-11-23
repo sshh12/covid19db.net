@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "../client";
 import "../components/caseInstances/caseInstance.css";
 import filterData from "../components/caseInstances/caseModelData.js";
-import HighlighterText from "../components/highlighterText";
-import SearchBar from "../components/searchBar";
+import HighlighterText from "../components/search/highlighterText";
+import SearchBar from "../components/search/casesSearchBar";
 
 export default class Cases extends Component {
   constructor() {

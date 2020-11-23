@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { Col, Input} from "antd";
+import { Col, Input } from "antd";
 import axios from "../client";
-
 import CountryCard from "../components/country/countryCard.js";
 import {
   CountryCardView,
   CountryGridControl,
   CountryPagination,
   CountrySortSelection,
+  CountryComparison,
   SORT_TYPES,
 } from "../components/country/countryModelComponents.js";
 
@@ -32,6 +32,7 @@ export default class Countries extends Component {
     this.changeSort = this.changeSort.bind(this);
     this.handleUpdateRange = this.handleUpdateRange.bind(this);
     this.retrieveCases = this.retrieveCases.bind(this);
+    this.handleUpdateComparison = this.handleUpdateComparison.bind(this);
   }
 
   componentDidMount() {
@@ -56,10 +57,8 @@ export default class Countries extends Component {
         },
       })
       .then((res) => {
-        const caseStats = res.data;
-        const { countryCardsData } = this.state;
-        const dataWithCases = countryCardsData?.map((data) => {
-          data.cases = caseStats.find(
+        const dataWithCases = this.state.countryCardsData?.map((data) => {
+          data.cases = res.data.find(
             (c) => c.country.codes.alpha3Code == data.codes.alpha3Code
           ).totals.cases;
           return data;
@@ -165,7 +164,12 @@ export default class Countries extends Component {
         .slice(this.state.firstCardIndex, this.state.lastCardIndex)
         .map((cardData) => (
           <Col key={cardData.codes.alpha3Code}>
-            <CountryCard data={cardData} searchValue={this.state.searchValue} />
+            <CountryCard
+              data={cardData}
+              searchValue={this.state.searchValue}
+              onChange={this.handleUpdateComparison}
+              comparing={cardData.compare}
+            />
           </Col>
         ));
       this.setState({ currentViewCards: currentViewCards });
@@ -185,7 +189,6 @@ export default class Countries extends Component {
 
   changeSort(value) {
     if (value == this.state.sortBy) return;
-
     var sortLowVal, sortHiVal;
     switch (value) {
       case SORT_TYPES.NAME:
@@ -195,10 +198,6 @@ export default class Countries extends Component {
         sortHiVal = "Z";
         break;
       case SORT_TYPES.NUM_CASES:
-        // Numerical range: begin with max range
-        sortLowVal = 20000000;
-        sortHiVal = -1;
-        break;
       case SORT_TYPES.POPULATION:
         // Numerical range: begin with max range
         sortLowVal = 2000000000;
@@ -213,26 +212,36 @@ export default class Countries extends Component {
     });
   }
 
-  createCountryGrid(countryCards) {
-    return countryCards;
-  }
-
   // Update hi or low value for range
   handleUpdateRange(target, value) {
+    this.setState({ [target]: value, filteredCountries: null });
+  }
+
+  // Add/remove country to/from comparison data list
+  handleUpdateComparison(e, countryCode) {
+    const compare = e.target.checked;
+    var { countryCardsData, filteredCountries } = this.state;
+    const index = countryCardsData.findIndex(
+      (c) => c.codes.alpha3Code == countryCode
+    );
+    countryCardsData[index].compare = compare;
+    const filteredIndex = filteredCountries.findIndex(
+      (c) => c.codes.alpha3Code == countryCode
+    );
+    filteredCountries[filteredIndex].compare = compare;
     this.setState({
-      [target]: value,
-      filteredCountries: null,
+      countryCardsData,
+      filteredCountries,
+      currentViewCards: null,
     });
   }
 
   render() {
-    // Get all loaded country cards in the current view
-    const { currentViewCards, filteredCountries, searchValue } = this.state;
     // Form model view if data has been loaded
     const pagination = (
       <CountryPagination
-        display={currentViewCards && filteredCountries}
-        numCountries={filteredCountries?.length}
+        display={this.state.currentViewCards && this.state.filteredCountries}
+        numCountries={this.state.filteredCountries?.length}
         pageNumber={this.state.pageNumber}
         numPerPage={this.state.numPerPage}
         onChange={this.changeNumDisplayed}
@@ -254,16 +263,21 @@ export default class Countries extends Component {
         pagination={pagination}
       />
     );
-
     return (
       <div className="App">
         <h1 style={{ fontWeight: "800", fontSize: "2em", margin: "20px 0" }}>
           Countries{" "}
         </h1>
+        <CountryComparison
+          gutter={16}
+          data={this.state.countryCardsData}
+          onChange={this.handleUpdateComparison}
+          searchValue={this.state.searchValue}
+        />
         <Input
           style={{ width: "50vw", margin: "2vh" }}
           placeholder="Search"
-          value={searchValue}
+          value={this.state.searchValue}
           onChange={(e) => {
             const currValue = e.target.value;
             this.setState({ searchValue: currValue, filteredCountries: null });
@@ -280,7 +294,7 @@ export default class Countries extends Component {
           {gridControl}
           <CountryCardView
             gutter={16}
-            countryGrid={this.createCountryGrid(currentViewCards)}
+            countryGrid={this.state.currentViewCards}
           />
           {gridControl}
         </div>

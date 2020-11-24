@@ -11,7 +11,7 @@ export default function Visualizations() {
   // provider's visualizations
   const providerVis = (
     <Fragment>
-      <div style={{ textAlign: "center"}}>
+      <div style={{ textAlign: "center" }}>
         <h1
           style={{
             fontWeight: "800",
@@ -20,7 +20,14 @@ export default function Visualizations() {
             marginBottom: "20px",
           }}
         >
-          <a href="https://collegesearch.me" target="_blank" rel="noopener noreferrer">Provider</a> Visualizations
+          <a
+            href="https://collegesearch.me"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Provider
+          </a>{" "}
+          Visualizations
         </h1>
       </div>
       <Row justify="center">
@@ -50,11 +57,23 @@ export default function Visualizations() {
         </Col>
       </Row>
     </Fragment>
-  )
+  );
 
   // our team's visualizations
   const myVis = (
     <Fragment>
+      <div style={{ textAlign: "center" }}>
+        <h1
+          style={{
+            fontWeight: "800",
+            fontSize: "2em",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          Visualizations
+        </h1>
+      </div>
       <Row justify="center">
         <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
@@ -82,19 +101,9 @@ export default function Visualizations() {
         </Col>
       </Row>
     </Fragment>
-  )
+  );
   return (
     <div className="App">
-      <h1
-        style={{
-          fontWeight: "800",
-          fontSize: "2em",
-          marginTop: "20px",
-          marginBottom: "20px",
-        }}
-      >
-        Visualizations
-      </h1>
       {myVis}
       <hr />
       {providerVis}

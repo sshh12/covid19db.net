@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "../client";
 import { Card, Col, Row } from "antd";
+import StandardSpinner from "../components/standardSpinner";
 
 const { Meta } = Card;
 
@@ -63,7 +64,7 @@ export default class GlobalNews extends Component {
     // do not render until data has been pulled
     const data = this.state.globalNewsData;
     if (!data) {
-      return <div />;
+      return <StandardSpinner />;
     }
 
     const newsList = this.state.globalNewsData.map((a, i) => (

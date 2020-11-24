@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Spin } from "antd";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import axios from "../../client";
 
@@ -26,7 +27,7 @@ export default function VisualizationA() {
       });
   }, []);
   if (cases.length == 0 || countries.length == 0) {
-    return <p>Loading...</p>;
+    return <Spin size="large" />;
   }
   let dataByRegion = {};
   for (let country of countries) {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Spin } from "antd";
 import { ResponsiveTreeMap } from "@nivo/treemap";
 import axios from "../../client";
 
@@ -16,7 +17,7 @@ export default function VisualizationB() {
       });
   }, []);
   if (cases.length == 0) {
-    return <p>Loading...</p>;
+    return <Spin size="large" />;
   }
   let data = {
     root: {

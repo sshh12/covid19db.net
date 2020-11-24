@@ -39,9 +39,12 @@ export default class CountryInstance extends Component {
             src={data.flag}
             alt="Country flag"
             style={{
-              paddingLeft: 20,
-              height: 165,
-              width: 300,
+              marginLeft: 20,
+              maxWidth: "14vw",
+              maxHeight: "14vh",
+              width: "auto",
+              height: "auto",
+              border: "1px solid rgba(0,0,0,0.15)",
             }}
           />
         </Space>

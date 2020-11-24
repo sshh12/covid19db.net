@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Map from "../map";
 import { BigStat, DemographicFactor, HealthFactor } from "./riskComponents";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Skeleton } from "antd";
 import axios from "../../client";
 import Agg from "./data/Aggregate.json";
-import StandardSpinner from "../../components/standardSpinner";
+// import StandardSpinner from "../../components/standardSpinner";
 
 export default class RiskInstance extends Component {
   constructor() {
@@ -41,7 +41,6 @@ export default class RiskInstance extends Component {
       return <div />;
     }
     const activeCases = caseData.new.active;
-
     const {
       country,
       location,
@@ -60,15 +59,16 @@ export default class RiskInstance extends Component {
       hospitalBedsPerThousand,
       lifeExpectancy,
       handwashingFacilities,
-    } = data;
+    } = data
+    
+    
+    
 
-    return this.state.riskData ? (
-      <div className="App">
-        <header className="risk-header">
-          <Link to="/risk-factor-statistics">
-            <Button variant="outline-secondary">Go back to risks</Button>
-          </Link>
-          <h1 id="page-title">
+
+    const basicInfo = (
+      <Fragment>
+        {/* Risk Factor Basic Info */}
+        <h1 id="page-title">
             Risk Factors for {country?.name} ({country?.codes?.alpha3Code})
           </h1>
           <h3>{country?.name}</h3>
@@ -114,46 +114,69 @@ export default class RiskInstance extends Component {
               />
             </div>
           </div>
-          <div style={{ marginTop: "30px" }}>
-            <div id="demogr-factor-title-div">
-              <h2 id="subtitle">Demographic Risk Factors</h2>
-            </div>
-            <div
-              style={{
-                marginTop: "5px",
-                display: "flex",
-                justifyContent: "left",
-                flexWrap: "wrap",
-              }}
-            >
-              <DemographicFactor
-                title="Population Density"
-                data={populationDensity?.toFixed(1)}
-                suffix="people/sq.km."
-                avg={Agg.populationDensity.toFixed(1)}
-                description="Number of people per square kilometer"
-              />
-              <DemographicFactor
-                title="Median Age"
-                data={medianAge?.toFixed(1)}
-                suffix="yrs."
-                avg={Agg.medianAge.toFixed(1)}
-                description="The median age of the population"
-              />
-              <DemographicFactor
-                title="Age 65 and Older"
-                data={`${aged65Older?.toFixed(1)}%`}
-                avg={`${Agg.aged65Older.toFixed(1)} %`}
-                description="Percentage of population that is 65 or older"
-              />
-              <DemographicFactor
-                title="Age 70 and Older"
-                data={`${aged70Older?.toFixed(1)}%`}
-                avg={`${Agg.aged70Older.toFixed(1)} %`}
-                description="Percentage of population that is 70 or older"
-              />
-            </div>
-          </div>
+      </Fragment>
+    )
+
+    const demographics = (
+      <Fragment>
+        <div style={{ marginTop: "30px" }}>
+        <div id="demogr-factor-title-div">
+          <h2 id="subtitle">Demographic Risk Factors</h2>
+        </div>
+        <div
+          style={{
+            marginTop: "5px",
+            display: "flex",
+            justifyContent: "left",
+            flexWrap: "wrap",
+          }}
+        >
+          <DemographicFactor
+            title="Population Density"
+            data={populationDensity?.toFixed(1)}
+            suffix="people/sq.km."
+            avg={Agg.populationDensity.toFixed(1)}
+            description="Number of people per square kilometer"
+          />
+          <DemographicFactor
+            title="Median Age"
+            data={medianAge?.toFixed(1)}
+            suffix="yrs."
+            avg={Agg.medianAge.toFixed(1)}
+            description="The median age of the population"
+          />
+          <DemographicFactor
+            title="Age 65 and Older"
+            data={`${aged65Older?.toFixed(1)}%`}
+            avg={`${Agg.aged65Older.toFixed(1)} %`}
+            description="Percentage of population that is 65 or older"
+          />
+          <DemographicFactor
+            title="Age 70 and Older"
+            data={`${aged70Older?.toFixed(1)}%`}
+            avg={`${Agg.aged70Older.toFixed(1)} %`}
+            description="Percentage of population that is 70 or older"
+          />
+        </div>
+        </div>
+      </Fragment>
+    )
+
+      
+    
+    ;
+
+    return (
+      <div className="App">
+        <header className="risk-header">
+          <Link to="/risk-factor-statistics">
+            <Button variant="outline-secondary">Go back to risks</Button>
+          </Link>
+          {basicInfo}
+          {demographics}
+
+
+          {/* Health Risk Factors */}
           <div style={{ marginTop: "50px" }}>
             <h2 id="subtitle">Health Risk Factors</h2>
             <div
@@ -221,6 +244,10 @@ export default class RiskInstance extends Component {
               />
             </div>
           </div>
+
+
+
+          {/* Links */}
           <div style={{ marginTop: "50px" }}>
             <h2 id="subtitle">Links</h2>
             <Link
@@ -233,6 +260,9 @@ export default class RiskInstance extends Component {
               <Button variant="outline-secondary">{`Case Statistics for ${country.name}`}</Button>
             </Link>
           </div>
+
+
+
           {/* media / visual */}
           <div style={{ marginTop: "1vh" }}>
             <div id="title-div">
@@ -247,6 +277,6 @@ export default class RiskInstance extends Component {
           </div>
         </header>
       </div>
-    ) : (<StandardSpinner />);
+    ) ;
   }
 }

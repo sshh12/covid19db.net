@@ -116,7 +116,8 @@ export default class RiskInstance extends Component {
           </div>
       </Fragment>
     )
-
+    
+    // demographic risk factors
     const demographics = (
       <Fragment>
         <div style={{ marginTop: "30px" }}>
@@ -161,23 +162,11 @@ export default class RiskInstance extends Component {
         </div>
       </Fragment>
     )
-
-      
     
-    ;
-
-    return (
-      <div className="App">
-        <header className="risk-header">
-          <Link to="/risk-factor-statistics">
-            <Button variant="outline-secondary">Go back to risks</Button>
-          </Link>
-          {basicInfo}
-          {demographics}
-
-
-          {/* Health Risk Factors */}
-          <div style={{ marginTop: "50px" }}>
+    //health risk factors 
+    const healthFactors = (
+      <Fragment>
+        <div style={{ marginTop: "50px" }}>
             <h2 id="subtitle">Health Risk Factors</h2>
             <div
               style={{
@@ -244,37 +233,55 @@ export default class RiskInstance extends Component {
               />
             </div>
           </div>
+      </Fragment>
+    )
 
+    const links = (
+      <Fragment>
+        {/* Links */}
+        <div style={{ marginTop: "50px" }}>
+          <h2 id="subtitle">Links</h2>
+          <Link
+            to={`/countries/${country.codes.alpha3Code}`}
+            style={{ marginRight: 10 }}
+          >
+            <Button variant="outline-secondary">{`Country Information for ${country.name}`}</Button>
+          </Link>
+          <Link to={`/case-statistics/${country.codes.alpha3Code}`}>
+            <Button variant="outline-secondary">{`Case Statistics for ${country.name}`}</Button>
+          </Link>
+        </div>
+      </Fragment>
+    )
 
-
-          {/* Links */}
-          <div style={{ marginTop: "50px" }}>
-            <h2 id="subtitle">Links</h2>
-            <Link
-              to={`/countries/${country.codes.alpha3Code}`}
-              style={{ marginRight: 10 }}
-            >
-              <Button variant="outline-secondary">{`Country Information for ${country.name}`}</Button>
-            </Link>
-            <Link to={`/case-statistics/${country.codes.alpha3Code}`}>
-              <Button variant="outline-secondary">{`Case Statistics for ${country.name}`}</Button>
-            </Link>
+    const media = (
+      <Fragment>
+        {/* media / visual */}
+        <div style={{ marginTop: "1vh" }}>
+          <div id="title-div">
+            <h2 id="subtitle">Map</h2>
           </div>
+          <Map
+            center={[location?.lng, location?.lat]}
+            zoom={4}
+            height={window.innerHeight * 0.4}
+            width={window.innerWidth * 0.4}
+          />
+        </div>
+      </Fragment>
+    );
 
-
-
-          {/* media / visual */}
-          <div style={{ marginTop: "1vh" }}>
-            <div id="title-div">
-              <h2 id="subtitle">Map</h2>
-            </div>
-            <Map
-              center={[location?.lng, location?.lat]}
-              zoom={4}
-              height={window.innerHeight * 0.4}
-              width={window.innerWidth * 0.4}
-            />
-          </div>
+    return (
+      <div className="App">
+        <header className="risk-header">
+          <Link to="/risk-factor-statistics">
+            <Button variant="outline-secondary">Go back to risks</Button>
+          </Link>
+          {basicInfo}
+          {demographics}
+          {healthFactors}
+          {links}
+          {media}
         </header>
       </div>
     ) ;

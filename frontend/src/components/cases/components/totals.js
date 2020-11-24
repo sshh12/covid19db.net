@@ -6,9 +6,9 @@ import "../../../styling/caseInstance.css";
 function Totals(props) {
   return (
     <Tooltip title={props.description} color="#323776">
-      <div className="totals">
-        <h2 className="totals-title">{props.title}</h2>
-        <h2 className="totals-data">{props.data?.toLocaleString()}</h2>
+      <div className="case-totals">
+        <h2 className="case-totals-title">{props.title}</h2>
+        <h2 className="case-totals-data">{props.data?.toLocaleString()}</h2>
       </div>
     </Tooltip>
   );

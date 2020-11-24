@@ -5,6 +5,7 @@ function SearchBar(props) {
   return (
     <Input
       placeholder="Search"
+      allowClear
       value={props.searchValue}
       onChange={(e) => {
         const currValue = e.target.value;

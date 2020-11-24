@@ -8,6 +8,7 @@ import ProviderVisualizationC from "./../components/vis/provVisC";
 import { Card, Col, Row } from "antd";
 
 export default function Visualizations() {
+  // provider's visualizations
   const providerVis = (
     <Fragment>
       <div style={{ textAlign: "center"}}>
@@ -51,6 +52,7 @@ export default function Visualizations() {
     </Fragment>
   )
 
+  // our team's visualizations
   const myVis = (
     <Fragment>
       <Row justify="center">
@@ -79,7 +81,6 @@ export default function Visualizations() {
           </Card>
         </Col>
       </Row>
-
     </Fragment>
   )
   return (
@@ -94,10 +95,9 @@ export default function Visualizations() {
       >
         Visualizations
       </h1>
-        {myVis}
+      {myVis}
       <hr />
       {providerVis}
-      
     </div>
   );
 }

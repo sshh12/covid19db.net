@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
 import axios from "../client";
-import "../components/cases/caseInstance.css";
+import "../styling/case.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
-import SearchBar from "../components/search/casesSearchBar";
+import {
+  SearchBar,
+  CaseComparisonCollapse,
+  CaseButtonGroup,
+} from "../components/cases/caseComponents";
 import StandardSpinner from "../components/standardSpinner";
+
 
 export default class Cases extends Component {
   constructor() {
@@ -17,6 +22,8 @@ export default class Cases extends Component {
       filteredInfo: null,
       sortedInfo: null,
       searchValue: null,
+      comparisons: 0,
+      showComparisons: false,
     };
   }
 
@@ -25,23 +32,23 @@ export default class Cases extends Component {
     axios
       .get("case-statistics", {
         params: {
-          attributes: "country,totals,new",
+          attributes: "country,totals",
         },
       })
       .then((res) => {
         const caseData = res.data.map((data) => {
           var compiledCase = {
             country: data.country,
-            newCases: data.new.cases,
             totalCases: data.totals.cases,
             totalCases: data.totals.cases,
             totalDeaths: data.totals.deaths,
             totalRecovered: data.totals.recovered,
             totalActive: data.totals.active,
-            exploreCase: data.country.codes.alpha3Code,
-            exploreRisk: data.country.codes.alpha3Code,
+            compare: {
+              value: false,
+              code: data.country.codes.alpha3Code,
+            },
           };
-
           return compiledCase;
         });
         this.setState({ caseData });
@@ -52,14 +59,49 @@ export default class Cases extends Component {
   handleChange = (pagination, filters) => {
     this.setState({ filteredInfo: filters });
   };
+
   clearFilters = () => {
     this.setState({ filteredInfo: null });
   };
+
+  clearComparisons = () => {
+    var { caseData } = this.state;
+    caseData.forEach((c) => {
+      if (c.compare.value) {
+        c.compare.value = false;
+      }
+    });
+    this.setState({ showComparisons: false, comparisons: 0 });
+  };
+
+  toggleShowComparisons = () => {
+    this.setState({
+      showComparisons:
+        !this.state.showComparisons && this.state.comparisons != 0,
+    });
+  };
+
   setDataSource = (dataSource) => {
     this.setState({ dataSource: dataSource });
   };
+
   setSearchValue = (value) => {
     this.setState({ searchValue: value });
+  };
+
+  addCompareInstance = (countryCode) => {
+    var { caseData } = this.state;
+    const index = caseData.findIndex(
+      (c) => c.country.codes.alpha3Code == countryCode
+    );
+    const selected = caseData[index].compare.value;
+    if (!selected && this.state.comparisons < 5) {
+      caseData[index].compare.value = true;
+      this.setState({ comparisons: this.state.comparisons + 1 });
+    } else if (selected) {
+      caseData[index].compare.value = false;
+      this.setState({ comparisons: this.state.comparisons - 1 });
+    }
   };
 
   render() {
@@ -81,7 +123,6 @@ export default class Cases extends Component {
           </Link>
         ),
         sorter: (a, b) => a.country.name.localeCompare(b.country.name),
-        //width: 300,
       },
       {
         title: "Cases",
@@ -163,39 +204,31 @@ export default class Cases extends Component {
         ellipsis: true,
         align: "right",
       },
+      {
+        title: "Compare",
+        dataIndex: "compare",
+        key: "compare",
+        render: (compare) => (
+          <Button
+            onClick={() => {
+              console.log("Pressed");
+              this.addCompareInstance(compare.code);
+            }}
+          >
+            {compare.value ? "Remove" : "Add"}
+          </Button>
+        ),
+        width: 120,
+        align: "center",
+      },
     ];
 
     return this.state.dataSource ? (
       <div className="App">
-        <div
-          style={{
-            backgroundColor: "#323776",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingBottom: 40,
-              paddingTop: 20,
-              alignItems: "center",
-              justifyContent: "center",
-              width: "75vw",
-            }}
-          >
-            <h1
-              style={{
-                fontWeight: 800,
-                marginBottom: 20,
-                fontSize: "2em",
-                color: "white",
-              }}
-            >
-              Cases
-            </h1>
-            <p style={{ color: "white", fontSize: "1.1em", marginBottom: 20 }}>
+        <div className="page-header">
+          <div className="page-header-content">
+            <h1 className="page-title">Cases</h1>
+            <p className="page-description">
               The table below displays the total case statistics in each
               country. Click a country's name to see more information.
             </p>
@@ -206,20 +239,21 @@ export default class Cases extends Component {
               setDataSource={this.setDataSource}
               setSearchValue={this.setSearchValue}
             />
-            <div style={{ paddingTop: 10, alignSelf: "start" }}>
-              <Button onClick={this.clearFilters}>Clear filters</Button>
-            </div>
+            <CaseButtonGroup
+              clearFilters={this.clearFilters}
+              clearComparisons={this.clearComparisons}
+              toggleShowComparisons={this.toggleShowComparisons}
+              showComparisons={this.state.showComparisons}
+              comparisons={this.state.comparisons}
+            />
+            <CaseComparisonCollapse
+              isOpened={this.state.showComparisons}
+              data={caseData}
+            />
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div
-            style={{
-              width: "75vw",
-              userSelect: "none",
-              marginTop: 40,
-              marginBottom: 40,
-            }}
-          >
+          <div className="table-div">
             <Table
               style={{
                 margin: "0 0vw",

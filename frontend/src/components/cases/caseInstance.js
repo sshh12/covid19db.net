@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "antd";
 import Map from "../../components/map";
 import axios from "../../client";
-import "./caseInstance.css";
+import "../../styling/caseInstance.css";
 
 class CaseInstance extends Component {
   constructor() {

@@ -40,7 +40,7 @@ export default function VisualizationC() {
       <div>
         <strong>{node.data.id}</strong>
         <br />
-        {`${node.data.value}%`}
+        {`${node.data.value}`}
       </div>
     );
   };

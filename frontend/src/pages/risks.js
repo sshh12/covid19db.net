@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
 import { Button, Table } from "antd";
-
 import SearchBar from "../components/search/risksSearchBar";
 import HighlighterText from "../components/search/highlighterText";
 import StandardSpinner from "../components/standardSpinner";

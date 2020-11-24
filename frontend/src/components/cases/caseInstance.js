@@ -214,7 +214,8 @@ class CaseInstance extends Component {
             <Map
               center={[data.location.lng, data.location.lat]}
               zoom={4}
-              height={window.innerHeight - 400}
+              height={window.innerHeight * 0.4}
+              width={window.innerWidth * 0.4}
             />
           </div>
         </header>

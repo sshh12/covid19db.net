@@ -10,6 +10,8 @@ import {
   CaseComparisonCollapse,
   CaseButtonGroup,
 } from "../components/cases/caseComponents";
+import StandardSpinner from "../components/standardSpinner";
+
 
 export default class Cases extends Component {
   constructor() {
@@ -221,7 +223,7 @@ export default class Cases extends Component {
       },
     ];
 
-    return (
+    return this.state.dataSource ? (
       <div className="App">
         <div className="page-header">
           <div className="page-header-content">
@@ -265,6 +267,8 @@ export default class Cases extends Component {
           </div>
         </div>
       </div>
+    ) : (
+        <StandardSpinner />
     );
   }
 }

@@ -93,6 +93,14 @@ class App extends React.Component {
               Visualizations
             </Link>
           </Menu.Item>
+          <Menu.Item style={{ paddingBottom: 7.5 }}>
+            <Link
+              to="/provider-vis"
+              style={{ fontWeight: "bold", fontsize: 20, color: "white" }}
+            >
+              Provider Visualizations
+            </Link>
+          </Menu.Item>
           <Menu.Item>
             <Form
               ref={this.formRef}

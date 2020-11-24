@@ -1,11 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
 import { Button, Table } from "antd";
-
 import SearchBar from "../components/search/risksSearchBar";
 import HighlighterText from "../components/search/highlighterText";
 import StandardSpinner from "../components/standardSpinner";
+import {
+  RiskComparisonCollapse,
+  RiskButtonGroup,
+} from "../components/risks/riskComponents";
 
 export default class Risks extends Component {
   constructor() {
@@ -15,13 +18,28 @@ export default class Risks extends Component {
       filteredInfo: null,
       dataSource: null,
       searchValue: null,
+      comparisons: 0,
+      showComparisons: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
   // Api call here
   componentDidMount() {
     axios.get("risk-factor-statistics").then((res) => {
-      const riskData = res.data;
+      const riskData = res.data.map((data) => {
+        var compiledCase = {
+          country: data.country,
+          lifeExpectancy: data.lifeExpectancy,
+          humanDevelopmentIndex: data.humanDevelopmentIndex,
+          populationDensity: data.populationDensity,
+          gini: data.gini,
+          compare: {
+            value: false,
+            code: data.country.codes.alpha3Code,
+          },
+        };
+        return compiledCase;
+      });
       this.setState({ riskData });
       this.setState({ dataSource: riskData });
     });
@@ -35,6 +53,38 @@ export default class Risks extends Component {
       window.open(route, "_self");
     }
   }
+  // for comparing 2 risks
+  clearComparisons = () => {
+    var { riskData } = this.state;
+    riskData.forEach((c) => {
+      if (c.compare.value) {
+        c.compare.value = false;
+      }
+    });
+    this.setState({ showComparisons: false, comparisons: 0 });
+  };
+
+  toggleShowComparisons = () => {
+    this.setState({
+      showComparisons:
+        !this.state.showComparisons && this.state.comparisons != 0,
+    });
+  };
+  // adds risk to the comparison zone
+  addCompareInstance = (countryCode) => {
+    var { riskData } = this.state;
+    const index = riskData.findIndex(
+      (c) => c.country?.codes?.alpha3Code == countryCode
+    );
+    const selected = riskData[index].compare.value;
+    if (!selected && this.state.comparisons < 5) {
+      riskData[index].compare.value = true;
+      this.setState({ comparisons: this.state.comparisons + 1 });
+    } else if (selected) {
+      riskData[index].compare.value = false;
+      this.setState({ comparisons: this.state.comparisons - 1 });
+    }
+  };
 
   // load search results asynchronously
   getItemsAsync(query, cb) {
@@ -173,9 +223,27 @@ export default class Risks extends Component {
         ellipsis: true,
         align: "right",
       },
-    ];
-    return this.state.dataSource ? (
-      <div className="App">
+      {
+        title: "Compare",
+        dataIndex: "compare",
+        key: "compare",
+        render: (compare) => (
+          <Button
+            onClick={() => {
+              console.log("Pressed");
+              this.addCompareInstance(compare.code);
+            }}
+          >
+            {compare.value ? "Remove" : "Add"}
+          </Button>
+        ),
+        width: 120,
+        align: "center",
+      },
+    ]
+    
+    const header = this.state.dataSource ? (
+      <Fragment>
         <div
           style={{
             backgroundColor: "#323776",
@@ -215,35 +283,46 @@ export default class Risks extends Component {
               setDataSource={this.setDataSource}
               setSearchValue={this.setSearchValue}
             />
-            <div style={{ paddingTop: 10, alignSelf: "start" }}>
-              <Button onClick={this.clearFilters}>Clear filters</Button>
-            </div>
-          </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <div
-            style={{
-              width: "75vw",
-              userSelect: "none",
-              marginTop: 40,
-              marginBottom: 40,
-            }}
-          >
-            <Table
-              style={{
-                margin: "0 0vw",
-                outline: "1px solid lightgrey",
-              }}
-              columns={columns}
-              dataSource={this.state.dataSource}
-              onChange={this.handleChange}
-              pagination={{ position: ["bottomRight", "topRight"] }}
+            <RiskButtonGroup
+              clearFilters={this.clearFilters}
+              clearComparisons={this.clearComparisons}
+              toggleShowComparisons={this.toggleShowComparisons}
+              showComparisons={this.state.showComparisons}
+              comparisons={this.state.comparisons}
+            />
+            <RiskComparisonCollapse
+              isOpened={this.state.showComparisons}
+              data={riskData}
             />
           </div>
         </div>
+      </Fragment>
+    ) : ( <StandardSpinner /> )
+    const tableOfData = this.state.dataSource ? (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            width: "75vw",
+            userSelect: "none",
+            marginTop: 40,
+            marginBottom: 40,
+          }}
+        >
+          <Table style={{ margin: "0 0vw", outline: "1px solid lightgrey", }}
+            columns={columns}
+            dataSource={this.state.dataSource}
+            onChange={this.handleChange}
+            pagination={{ position: ["bottomRight", "topRight"] }}
+          />
+        </div>
       </div>
-    ) : (
-      <StandardSpinner />
-    );
+    ) : (<StandardSpinner />);
+
+    return this.state.dataSource ? (
+      <div className="App">
+        {header}
+        {tableOfData}
+      </div>
+    ) : ( <StandardSpinner /> );
   }
 }

@@ -3,6 +3,7 @@ import InfectionsMap from "../components/infectionsMap";
 import axios from "../client";
 import TotalStats from "./../components/mainComponents";
 import { Skeleton, Spin } from "antd";
+import landingArt from "../assets/landingArt.png";
 import "./../styling/main.css";
 
 export default function Main() {
@@ -20,23 +21,31 @@ export default function Main() {
       })
       .then((res) => setCases(res.data));
   }, []);
-  const globalStats = !data ? (
-    null
-  ) : (
+  const globalStats = !data ? null : (
     <Fragment>
-      <h1 style={{ paddingTop: 20, paddingBottom: 40 }} className="main-text">
-        Coronavirus sucks. Maybe this can help :)
-      </h1>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 5,
-          marginBottom: 5,
-        }}
-      >
+      <div className="page-header-div">
+        <div className="landing-image-art-div">
+          <img className="landing-image-art" src={landingArt} />
+          <a
+            className="landing-image-art-link"
+            href="https://www.freepik.com/vectors/doctor"
+          >
+            Doctor vector created by freepik - www.freepik.com
+          </a>
+        </div>
+        <div className="header-text-div">
+          <h1 className="main-text">
+            Coronavirus sucks. <br /> Maybe this can help.
+          </h1>
+          <p className="body-text">
+            Over 1 million people have passed away due to COVID-19 in the past
+            year. Our databse gathers various statistics on the virus in all
+            countries and we hope it can help you.
+          </p>
+        </div>
+      </div>
+
+      <div className="main-totals-div">
         <TotalStats
           title="Total Global Cases"
           data={data.totals.cases?.toLocaleString()}

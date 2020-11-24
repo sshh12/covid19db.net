@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveBubble } from "@nivo/circle-packing";
+import { Spin } from "antd";
 
 const restaurantParams = [
   "id",
@@ -16,13 +17,13 @@ const restaurantParams = [
 
 export default function ProviderVisualizationB() {
   let [restaurants, setRestaurants] = useState([]);
-  let [tmpMessage, setTmpMessage] = useState("Loading...");
+  let [errMessage, setErrMessage] = useState(undefined);
   useEffect(() => {
     fetch(
       "http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/restaurant"
     )
       .then((resp) => {
-        if(!resp.ok){
+        if (!resp.ok) {
           throw Error(resp.statusText);
         }
         return resp.json();
@@ -39,11 +40,18 @@ export default function ProviderVisualizationB() {
         )
       )
       .catch((error) => {
-        setTmpMessage(`${error.message} (provider API error)`);
+        setErrMessage(`${error.message} (provider API error)`);
       });
   }, []);
   if (restaurants.length == 0) {
-    return <p>{tmpMessage}</p>;
+    // show spinner if not yet loaded
+    if (errMessage === undefined) {
+      return <Spin size="large" />;
+    }
+    // if error occurred show the message instead
+    else {
+      return <p>{errMessage}</p>;
+    }
   }
   let dataByRegion = {};
   for (let rest of restaurants) {

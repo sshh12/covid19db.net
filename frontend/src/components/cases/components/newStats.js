@@ -1,6 +1,6 @@
 import React from "react";
 import { Tooltip } from "antd";
-import "../caseInstance.css";
+import "../../../styling/caseInstance.css";
 
 // component used to display daily new stats (cases, deaths, etc.)
 function NewStats(props) {

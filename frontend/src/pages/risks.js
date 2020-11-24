@@ -321,13 +321,6 @@ export default class Risks extends Component {
               isOpened={this.state.showComparisons}
               data={riskData}
             />
-
-
-
-
-            {/* <div style={{ paddingTop: 10, alignSelf: "start" }}>
-              <Button onClick={this.clearFilters}>Clear filters</Button>
-            </div> */}
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>

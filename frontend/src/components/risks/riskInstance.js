@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "antd";
 import axios from "../../client";
 import Agg from "./data/Aggregate.json";
+import StandardSpinner from "../../components/standardSpinner";
 
 export default class RiskInstance extends Component {
   constructor() {
@@ -61,7 +62,7 @@ export default class RiskInstance extends Component {
       handwashingFacilities,
     } = data;
 
-    return (
+    return this.state.riskData ? (
       <div className="App">
         <header className="risk-header">
           <Link to="/risk-factor-statistics">
@@ -246,6 +247,6 @@ export default class RiskInstance extends Component {
           </div>
         </header>
       </div>
-    );
+    ) : (<StandardSpinner />);
   }
 }

@@ -31,7 +31,7 @@ class CaseInstance extends Component {
     return (
       <div className="App">
         <header className="Case-header">
-          <Link to="/case-statistics">
+          <Link style={{ marginBottom: 20 }} to="/case-statistics">
             <Button variant="outline-secondary">Go back to cases</Button>
           </Link>
           <h1 id="page-title">

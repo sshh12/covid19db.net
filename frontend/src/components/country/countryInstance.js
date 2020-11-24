@@ -27,7 +27,7 @@ export default class CountryInstance extends Component {
     const data = this.state.countryData;
     const headerVisuals = data ? (
       <Fragment>
-        <Link to="/countries">
+        <Link style={{ marginBottom: 20 }} to="/countries">
           <Button variant="outline-secondary">Go back to countries</Button>
         </Link>
         <Space size="large">

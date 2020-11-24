@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
-import { Collapse } from "react-collapse";
 import axios from "../client";
 import "../styling/case.css";
 import filterData from "../components/cases/caseModelData.js";
 import HighlighterText from "../components/search/highlighterText";
-import SearchBar from "../components/search/casesSearchBar";
-import CaseComparisonCollapse from "../components/cases/components/caseComparisonCollapse";
-import CaseButtonGroup from "../components/cases/components/caseButtonGroup";
+import {
+  SearchBar,
+  CaseComparisonCollapse,
+  CaseButtonGroup,
+} from "../components/cases/caseComponents";
 
 export default class Cases extends Component {
   constructor() {

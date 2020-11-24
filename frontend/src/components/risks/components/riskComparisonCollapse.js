@@ -1,6 +1,6 @@
 import React from "react";
 import { Collapse } from "react-collapse";
-import "../../../styling/case.css";
+// import "../../../styling/risk.css";
 import RiskComparison from "./riskComparison";
 
 // Collapseble component used show to all countries being compared
@@ -13,7 +13,7 @@ function RiskComparisonCollapse(props) {
         </h2>
         <div style={{ display: "flex" }}>
           {props.data?.map((c) => {
-            if (c.compare.value) {
+            if (c?.compare?.value) {
               return <RiskComparison country={c} />;
             }
           })}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../../styling/case.css";
+// import "../../../styling/risk.css";
 
 // component used to all country case statistics for comparing
 function RiskComparison(props) {

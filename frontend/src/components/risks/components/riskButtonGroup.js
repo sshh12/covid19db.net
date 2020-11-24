@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styling/case.css";
+// import "../../../styling/risk.css";
 import { Button } from "antd";
 
 // Button group for model page

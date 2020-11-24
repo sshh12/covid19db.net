@@ -7,7 +7,6 @@ import HighlighterText from "../components/search/highlighterText";
 import StandardSpinner from "../components/standardSpinner";
 
 import {
-  SearchBar,
   RiskComparisonCollapse,
   RiskButtonGroup,
 } from "../components/risks/riskComponents";
@@ -30,7 +29,23 @@ export default class Risks extends Component {
   // Api call here
   componentDidMount() {
     axios.get("risk-factor-statistics").then((res) => {
-      const riskData = res.data;
+      // const riskData = res.data;
+      // this.setState({ riskData });
+      // this.setState({ dataSource: riskData });
+      const riskData = res.data.map((data) => {
+        var compiledCase = {
+          country: data.country,
+          lifeExpectancy: data.lifeExpectancy,
+          humanDevelopmentIndex: data.humanDevelopmentIndex,
+          populationDensity: data.populationDensity,
+          gini: data.gini,
+          compare: {
+            value: false,
+            code: data.country.codes.alpha3Code,
+          },
+        };
+        return compiledCase;
+      });
       this.setState({ riskData });
       this.setState({ dataSource: riskData });
     });
@@ -304,7 +319,7 @@ export default class Risks extends Component {
             />
             <RiskComparisonCollapse
               isOpened={this.state.showComparisons}
-              data={caseData}
+              data={riskData}
             />
 
 

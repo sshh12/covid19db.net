@@ -9,7 +9,7 @@ function RiskComparison(props) {
       <h2 className="compare-title">{`${props.country.country.name} (${props.country.country.codes.alpha3Code})`}</h2>
       <h2 className="compare-data">{`Life Expectancy: ${props.country.lifeExpectancy}`}</h2>
       <h2 className="compare-data">{`HDI: ${props.country.humanDevelopmentIndex}`}</h2>
-      <h2 className="compare-data">{`Population Density: ${props.country.populationDensity}`}</h2>
+      <h2 className="compare-data">{`Pop. Density: ${props.country.populationDensity}`}</h2>
       <h2 className="compare-data">{`Gini: ${props.country.gini}`}</h2>
       <Link
         className="compare-link"

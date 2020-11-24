@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "../client";
 import { Link } from "react-router-dom";
 import { Button, Table } from "antd";
@@ -265,9 +265,10 @@ export default class Risks extends Component {
 
 
 
-    ];
-    return this.state.dataSource ? (
-      <div className="App">
+    ]
+    
+    const header = (
+      <Fragment>
         <div
           style={{
             backgroundColor: "#323776",
@@ -322,7 +323,19 @@ export default class Risks extends Component {
               data={riskData}
             />
           </div>
-        </div>
+        </div>      
+
+
+      </Fragment>
+    )
+    
+    
+    
+    
+    ;
+    return this.state.dataSource ? (
+      <div className="App">
+        {header}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div
             style={{

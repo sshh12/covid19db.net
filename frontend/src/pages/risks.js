@@ -5,12 +5,10 @@ import { Button, Table } from "antd";
 import SearchBar from "../components/search/risksSearchBar";
 import HighlighterText from "../components/search/highlighterText";
 import StandardSpinner from "../components/standardSpinner";
-
 import {
   RiskComparisonCollapse,
   RiskButtonGroup,
 } from "../components/risks/riskComponents";
-
 
 export default class Risks extends Component {
   constructor() {
@@ -29,9 +27,6 @@ export default class Risks extends Component {
   // Api call here
   componentDidMount() {
     axios.get("risk-factor-statistics").then((res) => {
-      // const riskData = res.data;
-      // this.setState({ riskData });
-      // this.setState({ dataSource: riskData });
       const riskData = res.data.map((data) => {
         var compiledCase = {
           country: data.country,
@@ -59,9 +54,6 @@ export default class Risks extends Component {
       window.open(route, "_self");
     }
   }
-
-
-
 
   clearComparisons = () => {
     var { riskData } = this.state;
@@ -94,16 +86,6 @@ export default class Risks extends Component {
       this.setState({ comparisons: this.state.comparisons - 1 });
     }
   };
-
-
-
-
-
-
-
-
-
-
 
   // load search results asynchronously
   getItemsAsync(query, cb) {
@@ -242,8 +224,6 @@ export default class Risks extends Component {
         ellipsis: true,
         align: "right",
       },
-
-
       {
         title: "Compare",
         dataIndex: "compare",
@@ -261,10 +241,6 @@ export default class Risks extends Component {
         width: 120,
         align: "center",
       },
-
-
-
-
     ]
     
     const header = (
@@ -308,9 +284,6 @@ export default class Risks extends Component {
               setDataSource={this.setDataSource}
               setSearchValue={this.setSearchValue}
             />
-
-
-
             <RiskButtonGroup
               clearFilters={this.clearFilters}
               clearComparisons={this.clearComparisons}
@@ -323,16 +296,10 @@ export default class Risks extends Component {
               data={riskData}
             />
           </div>
-        </div>      
-
-
+        </div>
       </Fragment>
-    )
-    
-    
-    
-    
-    ;
+    );
+
     return this.state.dataSource ? (
       <div className="App">
         {header}

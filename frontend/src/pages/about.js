@@ -225,7 +225,9 @@ export default function About() {
               </a>
               <Card.Body>
                 <Card.Title>
-                  <a href={person.url}>{person.name}</a>
+                  <a href={person.url} className="hyperlink">
+                    {person.name}
+                  </a>
                 </Card.Title>
                 <Card.Text>
                   {person.bio}

@@ -116,7 +116,10 @@ export default class Risks extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <Link to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}>
+          <Link
+            to={`/risk-factor-statistics/${country?.codes?.alpha3Code}`}
+            style={{ textDecoration: "underline" }}
+          >
             {searchValue != "" ? (
               <HighlighterText text={country.name} searchValue={searchValue} />
             ) : (

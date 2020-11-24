@@ -113,7 +113,10 @@ export default class Cases extends Component {
         dataIndex: "country",
         key: "country",
         render: (country) => (
-          <Link to={`/case-statistics/${country.codes.alpha3Code}`}>
+          <Link
+            to={`/case-statistics/${country.codes.alpha3Code}`}
+            style={{ textDecoration: "underline" }}
+          >
             {searchValue != "" ? (
               <HighlighterText text={country.name} searchValue={searchValue} />
             ) : (

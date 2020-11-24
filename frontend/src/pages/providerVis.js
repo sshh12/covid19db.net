@@ -21,6 +21,7 @@ export default function ProviderVisualizations() {
             href="https://collegesearch.me"
             target="_blank"
             rel="noopener noreferrer"
+            className="hyperlink"
           >
             Provider
           </a>{" "}

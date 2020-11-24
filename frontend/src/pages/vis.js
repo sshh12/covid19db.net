@@ -3,6 +3,7 @@ import VisualizationA from "./../components/vis/visA";
 import VisualizationB from "./../components/vis/visB";
 import VisualizationC from "./../components/vis/visC";
 import { Card, Col, Row } from "antd";
+import "../styling/links.css";
 
 export default function Visualizations() {
   // our team's visualizations

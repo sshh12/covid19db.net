@@ -105,7 +105,7 @@ class SiteSearch extends Component {
         dataIndex: "value",
         key: "value",
         render: (value) => (
-          <Link to={value.route}>
+          <Link to={value.route} style={{ textDecoration: "underline" }}>
             {query != "" ? (
               <HighlighterText text={value.text} searchValue={query} />
             ) : (

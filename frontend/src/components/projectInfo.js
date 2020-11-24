@@ -24,7 +24,7 @@ export default function ProjectInfo({ tools, dataSources }) {
                 <ul className="list-unstyled">
                   {tools.map((tool) => (
                     <li key={tool.url}>
-                      <a href={tool.url}>
+                      <a href={tool.url} className="hyperlink">
                         <img
                           style={{ marginRight: "10px" }}
                           src={tool.logo}
@@ -48,7 +48,7 @@ export default function ProjectInfo({ tools, dataSources }) {
                 <ul className="list-unstyled">
                   {dataSources.map((source) => (
                     <li key={source.url}>
-                      <a href={source.url}>
+                      <a href={source.url} className="hyperlink">
                         <img
                           style={{ marginRight: "10px" }}
                           src={"/icons/server.png"}

@@ -18,7 +18,6 @@ export default class Risks extends Component {
       filteredInfo: null,
       dataSource: null,
       searchValue: null,
-
       comparisons: 0,
       showComparisons: false,
     };
@@ -243,7 +242,7 @@ export default class Risks extends Component {
       },
     ]
     
-    const header = (
+    const header = this.state.dataSource ? (
       <Fragment>
         <div
           style={{
@@ -298,6 +297,8 @@ export default class Risks extends Component {
           </div>
         </div>
       </Fragment>
+    ) : (
+      <StandardSpinner />
     );
 
     return this.state.dataSource ? (

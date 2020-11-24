@@ -112,7 +112,6 @@ class App extends React.Component {
                   defaultValue=""
                   allowClear
                   onSearch={(value) => {
-                    console.log(value);
                     this.props.history.push("/search", { query: value });
                     this.formRef.current.resetFields();
                   }}

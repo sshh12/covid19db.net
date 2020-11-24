@@ -230,7 +230,6 @@ export default class Risks extends Component {
         render: (compare) => (
           <Button
             onClick={() => {
-              console.log("Pressed");
               this.addCompareInstance(compare.code);
             }}
           >

@@ -210,7 +210,6 @@ export default class Cases extends Component {
         render: (compare) => (
           <Button
             onClick={() => {
-              console.log("Pressed");
               this.addCompareInstance(compare.code);
             }}
           >

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Totals, NewStats, GenStats, CaseResponseLine } from "./caseComponents";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Skeleton } from "antd";
 import Map from "../../components/map";
 import axios from "../../client";
 import "../../styling/caseInstance.css";
@@ -20,6 +20,8 @@ class CaseInstance extends Component {
   }
 
   componentDidMount() {
+    //Setup and organize all data by section
+
     axios.get("case-statistics/" + this.props.code).then((res) => {
       const caseData = res.data;
       const totalData = [
@@ -61,14 +63,10 @@ class CaseInstance extends Component {
   }
 
   render() {
-    //Need to make flex box items responsive when changing window size
     let { totalData, recentData, yesterdayData, generalData } = this.state;
     const data = this.state.caseData;
-    if (!data) {
-      return <div />;
-    }
 
-    const header = (
+    const header = data ? (
       <div
         style={{
           display: "flex",
@@ -83,9 +81,11 @@ class CaseInstance extends Component {
           Cases in {data.country.name} ({data.country.codes.alpha3Code})
         </h1>
       </div>
+    ) : (
+      <Skeleton active />
     );
 
-    const totalStats = (
+    const totalStats = data ? (
       <div
         style={{
           display: "flex",
@@ -103,9 +103,11 @@ class CaseInstance extends Component {
           );
         })}
       </div>
+    ) : (
+      <Skeleton active />
     );
 
-    const recentStats = (
+    const recentStats = data ? (
       <div>
         <div id="new-stats-title-div">
           <h2 id="subtitle">Recent Statistics</h2>
@@ -126,9 +128,11 @@ class CaseInstance extends Component {
           })}
         </div>
       </div>
+    ) : (
+      <Skeleton active />
     );
 
-    const generalStats = (
+    const generalStats = data ? (
       <div style={{ marginTop: "50px" }}>
         <h2 id="subtitle">General Statistics</h2>
         <div className="card-stats-div">
@@ -143,9 +147,11 @@ class CaseInstance extends Component {
           })}
         </div>
       </div>
+    ) : (
+      <Skeleton active />
     );
 
-    const links = (
+    const links = data ? (
       <div style={{ marginTop: "50px" }}>
         <h2 id="subtitle">Links</h2>
         <Link
@@ -158,16 +164,20 @@ class CaseInstance extends Component {
           <Button variant="outline-secondary">{`Risk Factors for ${data.country.name}`}</Button>
         </Link>
       </div>
+    ) : (
+      <Skeleton.Button active />
     );
 
-    const graph = (
+    const graph = data ? (
       <div style={{ marginTop: "50px", height: "500px", width: "100%" }}>
         <h2 id="subtitle">Trends and Visuals</h2>
         <CaseResponseLine data={data.history} />
       </div>
+    ) : (
+      <Skeleton.Image active />
     );
 
-    const map = (
+    const map = data ? (
       <div style={{ marginTop: "50px", height: "500px", width: "100%" }}>
         <h2 id="subtitle">Map</h2>
         <Map
@@ -177,8 +187,11 @@ class CaseInstance extends Component {
           width={window.innerWidth * 0.4}
         />
       </div>
+    ) : (
+      <Skeleton.Image active />
     );
 
+    // Build the page using the section components created above
     return (
       <div className="App">
         <header className="Case-header">

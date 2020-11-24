@@ -23,7 +23,7 @@ export default function Visualizations() {
       <Row justify="center">
         <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
-            <h4>Cases vs Population (Log Scale)</h4>
+            <h4>Population vs Area of Countries (Log Scale)</h4>
             <div style={{ height: "440px", width: "560px" }}>
               <VisualizationA />
             </div>

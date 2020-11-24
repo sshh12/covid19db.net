@@ -53,6 +53,7 @@ export default function ProviderVisualizationB() {
       return <p>{errMessage}</p>;
     }
   }
+  // agg data by region
   let dataByRegion = {};
   for (let rest of restaurants) {
     let region = rest.state_code;
@@ -64,12 +65,12 @@ export default function ProviderVisualizationB() {
         price: 0,
       };
     }
+    // store sum and length to calc avg price of nodes
     dataByRegion[region].priceSum += rest.price;
     dataByRegion[region].priceCnt++;
     dataByRegion[region].price =
       dataByRegion[region].priceSum / dataByRegion[region].priceCnt;
   }
-
   let root = {
     name: "USA",
     children: Object.values(dataByRegion),

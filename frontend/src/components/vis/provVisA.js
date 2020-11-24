@@ -52,6 +52,7 @@ export default function ProviderVisualizationA() {
       return <p>{errMessage}</p>;
     }
   }
+  // agg data by region
   let dataByRegion = {};
   for (let city of cities) {
     let region = city.state_code;

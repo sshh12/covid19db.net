@@ -15,8 +15,8 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Shrivu Shankar
 - EID: ss86692
 - GitLab ID: sshh12
-- Estimated completion time: 6 hrs (phase 1), 8 hrs (phase 2), 8 hrs (phase 3)
-- Actual completion time: 7 hrs (phase 1), 15 hrs (phase 2), 8 hrs (phase 3)
+- Estimated completion time: 6 hrs (phase 1), 8 hrs (phase 2), 8 hrs (phase 3), 8 hrs (phase 4) 
+- Actual completion time: 7 hrs (phase 1), 15 hrs (phase 2), 8 hrs (phase 3), 7 hrs (phase 4) 
 
 ---
 
@@ -47,5 +47,5 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Jeffrey Moulckers
 - EID: jrm7328
 - GitLab ID: jrmoulckers
-- Estimated completion time: 10 hrs (phase 1), 15 hrs (phase 2), 12 hrs (phase 3) 
-- Actual completion time: 10 hrs (phase 1), 25 hrs (phase 2), 20 hrs (phase 3)
+- Estimated completion time: 10 hrs (phase 1), 15 hrs (phase 2), 12 hrs (phase 3), 10 hrs (phase 4) 
+- Actual completion time: 10 hrs (phase 1), 25 hrs (phase 2), 20 hrs (phase 3), 10 hrs (phase 4) 

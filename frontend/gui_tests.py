@@ -65,20 +65,19 @@ class TestCovidDBGUI(unittest.TestCase):
 
     def test_cases_explore(self):
         self.driver.find_elements_by_link_text("Cases")[0].click()
-        expl_btn = self.driver.find_elements_by_partial_link_text("Explore")[0]
-        expl_btn.click()
+        self.driver.find_elements_by_partial_link_text("Zimbabwe")[0].click()
         self.assertEqual(self.driver.current_url, BASE_URL + "/case-statistics/ZWE")
 
     def test_case_instance_explore(self):
         self.driver.find_elements_by_link_text("Cases")[0].click()
-        self.driver.find_elements_by_partial_link_text("Explore")[0].click()
+        self.driver.find_elements_by_partial_link_text("Zimbabwe")[0].click()
         country_name = self.driver.find_elements_by_tag_name("h1")[0]
         self.assertEqual(country_name.get_attribute("textContent"), "Cases in Zimbabwe (ZWE)")
 
     def test_cases_table_sort(self):
         self.driver.find_elements_by_link_text("Cases")[0].click()
         country_header = self.driver.find_element_by_xpath(
-            "/html/body/div[1]/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/div"
+            "/html/body/div[1]/div/div[2]/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/div"
         )
         country_header.click()
         time.sleep(4)
@@ -87,20 +86,19 @@ class TestCovidDBGUI(unittest.TestCase):
 
     def test_risk_explore(self):
         self.driver.find_elements_by_link_text("Risks")[0].click()
-        expl_btn = self.driver.find_elements_by_partial_link_text("Explore")[0]
-        expl_btn.click()
+        self.driver.find_elements_by_partial_link_text("Zimbabwe")[0].click()
         self.assertEqual(self.driver.current_url, BASE_URL + "/risk-factor-statistics/ZWE")
 
     def test_risk_instance_explore(self):
         self.driver.find_elements_by_link_text("Risks")[0].click()
-        self.driver.find_elements_by_partial_link_text("Explore")[0].click()
+        self.driver.find_elements_by_partial_link_text("Zimbabwe")[0].click()
         country_name = self.driver.find_elements_by_tag_name("h1")[0]
         self.assertEqual(country_name.get_attribute("textContent"), "Risk Factors in Zimbabwe (ZWE)")
 
     def test_risk_table_sort(self):
         self.driver.find_elements_by_link_text("Risks")[0].click()
         country_header = self.driver.find_element_by_xpath(
-            "/html/body/div[1]/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/div"
+            "/html/body/div[1]/div/div[2]/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/div"
         )
         country_header.click()
         time.sleep(4)

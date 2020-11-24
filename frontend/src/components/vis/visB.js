@@ -19,6 +19,7 @@ export default function VisualizationB() {
   if (cases.length == 0) {
     return <Spin size="large" />;
   }
+  // build death tree
   let data = {
     root: {
       name: "Deaths",
@@ -32,6 +33,7 @@ export default function VisualizationB() {
       value: countryCases.totals.deaths,
     });
   }
+  // filter out non-top 20
   let thresh = data.root.children
     .map((node) => node.value)
     .sort((a, b) => b - a)[20];

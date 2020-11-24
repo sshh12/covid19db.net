@@ -4,35 +4,25 @@ import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import axios from "../../client";
 
 export default function VisualizationA() {
-  let [cases, setCases] = useState([]);
   let [countries, setCountries] = useState([]);
   useEffect(() => {
     axios
-      .get("case-statistics", {
-        params: {
-          attributes: "country,totals",
-        },
-      })
-      .then((res) => {
-        setCases(res.data);
-      });
-    axios
       .get("countries", {
         params: {
-          attributes: "population,region",
+          attributes: "population,region,area",
         },
       })
       .then((res) => {
         setCountries(res.data);
       });
   }, []);
-  if (cases.length == 0 || countries.length == 0) {
+  if (countries.length == 0) {
     return <Spin size="large" />;
   }
+  // agg by region
   let dataByRegion = {};
   for (let country of countries) {
     let region = country.region.region;
-    let caseData = cases.find((cdata) => cdata.country.name == country.name);
     if (!(region in dataByRegion)) {
       dataByRegion[region] = {
         id: region,
@@ -40,10 +30,10 @@ export default function VisualizationA() {
       };
     }
     dataByRegion[region].data.push({
-      x: Math.log(country.population),
-      y: Math.log(caseData.totals.cases),
+      y: Math.log(country.population),
+      x: Math.log(country.area),
       pop: country.population,
-      cases: caseData.totals.cases,
+      area: country.area,
       name: country.name,
     });
   }
@@ -54,11 +44,12 @@ export default function VisualizationA() {
       xScale={{ type: "linear", min: 0, max: "auto" }}
       yScale={{ type: "linear", min: 0, max: "auto" }}
       blendMode="multiply"
+      // Custom tooltip
       tooltip={({ node }) => {
         return (
           <div>
             {node.data.name} ({node.data.pop.toLocaleString()} people,{" "}
-            {node.data.cases.toLocaleString()} cases)
+            {node.data.area.toLocaleString()} km2)
           </div>
         );
       }}
@@ -78,7 +69,7 @@ export default function VisualizationA() {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "cases (log)",
+        legend: "area (log km2)",
         legendPosition: "middle",
         legendOffset: -60,
       }}

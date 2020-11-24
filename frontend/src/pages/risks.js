@@ -299,32 +299,40 @@ export default class Risks extends Component {
       </Fragment>
     ) : (
       <StandardSpinner />
-    );
+    )
+    const tableOfData = this.state.dataSource ? (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            width: "75vw",
+            userSelect: "none",
+            marginTop: 40,
+            marginBottom: 40,
+          }}
+        >
+          <Table
+            style={{
+              margin: "0 0vw",
+              outline: "1px solid lightgrey",
+            }}
+            columns={columns}
+            dataSource={this.state.dataSource}
+            onChange={this.handleChange}
+            pagination={{ position: ["bottomRight", "topRight"] }}
+          />
+        </div>
+      </div>
+    ) : (<StandardSpinner />)
+    
+    
+    
+    
+    ;
 
     return this.state.dataSource ? (
       <div className="App">
         {header}
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <div
-            style={{
-              width: "75vw",
-              userSelect: "none",
-              marginTop: 40,
-              marginBottom: 40,
-            }}
-          >
-            <Table
-              style={{
-                margin: "0 0vw",
-                outline: "1px solid lightgrey",
-              }}
-              columns={columns}
-              dataSource={this.state.dataSource}
-              onChange={this.handleChange}
-              pagination={{ position: ["bottomRight", "topRight"] }}
-            />
-          </div>
-        </div>
+        {tableOfData}
       </div>
     ) : (
       <StandardSpinner />

@@ -222,53 +222,61 @@ export default class Cases extends Component {
       },
     ];
 
-    return (
-      <div className="App">
-        <div className="page-header">
-          <div className="page-header-content">
-            <h1 className="page-title">Cases</h1>
-            <p className="page-description">
-              The table below displays the total case statistics in each
-              country. Click a country's name to see more information.
-            </p>
-            <SearchBar
-              style={{ width: "100vw", paddingBottom: 100 }}
-              searchValue={searchValue}
-              data={caseData}
-              setDataSource={this.setDataSource}
-              setSearchValue={this.setSearchValue}
-            />
-            <CaseButtonGroup
-              clearFilters={this.clearFilters}
-              clearComparisons={this.clearComparisons}
-              toggleShowComparisons={this.toggleShowComparisons}
-              showComparisons={this.state.showComparisons}
-              comparisons={this.state.comparisons}
-            />
-            <CaseComparisonCollapse
-              isOpened={this.state.showComparisons}
-              data={caseData}
+    const header = (
+      <div className="page-header">
+        <div className="page-header-content">
+          <h1 className="page-title">Cases</h1>
+          <p className="page-description">
+            The table below displays the total case statistics in each country.
+            Click a country's name to see more information.
+          </p>
+          <SearchBar
+            style={{ width: "100vw", paddingBottom: 100 }}
+            searchValue={searchValue}
+            data={caseData}
+            setDataSource={this.setDataSource}
+            setSearchValue={this.setSearchValue}
+          />
+          <CaseButtonGroup
+            clearFilters={this.clearFilters}
+            clearComparisons={this.clearComparisons}
+            toggleShowComparisons={this.toggleShowComparisons}
+            showComparisons={this.state.showComparisons}
+            comparisons={this.state.comparisons}
+          />
+          <CaseComparisonCollapse
+            isOpened={this.state.showComparisons}
+            data={caseData}
+          />
+        </div>
+      </div>
+    );
+
+    const table = (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {this.state.dataSource ? (
+          <div className="table-div">
+            <Table
+              style={{
+                margin: "0 0vw",
+                outline: "1px solid lightgrey",
+              }}
+              columns={columns}
+              dataSource={this.state.dataSource}
+              onChange={this.handleChange}
+              pagination={{ position: ["bottomRight", "topRight"] }}
             />
           </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          {this.state.dataSource ? (
-            <div className="table-div">
-              <Table
-                style={{
-                  margin: "0 0vw",
-                  outline: "1px solid lightgrey",
-                }}
-                columns={columns}
-                dataSource={this.state.dataSource}
-                onChange={this.handleChange}
-                pagination={{ position: ["bottomRight", "topRight"] }}
-              />
-            </div>
-          ) : (
-            <StandardSpinner />
-          )}
-        </div>
+        ) : (
+          <StandardSpinner />
+        )}
+      </div>
+    );
+
+    return (
+      <div className="App">
+        {header}
+        {table}
       </div>
     );
   }

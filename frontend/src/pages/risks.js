@@ -325,7 +325,6 @@ export default class Risks extends Component {
       <div className="App">
         {header}
         {tableOfData}
-        {/* //{this.state.dataSource ? tableOfData : <StandardSpinner />} */}
       </div>
     );
   }

@@ -240,9 +240,9 @@ export default class Risks extends Component {
         width: 120,
         align: "center",
       },
-    ]
-    
-    const header = this.state.dataSource ? (
+    ];
+
+    const header = (
       <Fragment>
         <div
           style={{
@@ -297,7 +297,7 @@ export default class Risks extends Component {
           </div>
         </div>
       </Fragment>
-    ) : ( <StandardSpinner /> )
+    );
     const tableOfData = this.state.dataSource ? (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
@@ -308,7 +308,8 @@ export default class Risks extends Component {
             marginBottom: 40,
           }}
         >
-          <Table style={{ margin: "0 0vw", outline: "1px solid lightgrey", }}
+          <Table
+            style={{ margin: "0 0vw", outline: "1px solid lightgrey" }}
             columns={columns}
             dataSource={this.state.dataSource}
             onChange={this.handleChange}
@@ -316,13 +317,16 @@ export default class Risks extends Component {
           />
         </div>
       </div>
-    ) : (<StandardSpinner />);
+    ) : (
+      <StandardSpinner />
+    );
 
-    return this.state.dataSource ? (
+    return (
       <div className="App">
         {header}
         {tableOfData}
+        {/* //{this.state.dataSource ? tableOfData : <StandardSpinner />} */}
       </div>
-    ) : ( <StandardSpinner /> );
+    );
   }
 }

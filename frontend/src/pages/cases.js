@@ -12,7 +12,6 @@ import {
 } from "../components/cases/caseComponents";
 import StandardSpinner from "../components/standardSpinner";
 
-
 export default class Cases extends Component {
   constructor() {
     super();
@@ -223,7 +222,7 @@ export default class Cases extends Component {
       },
     ];
 
-    return this.state.dataSource ? (
+    return (
       <div className="App">
         <div className="page-header">
           <div className="page-header-content">
@@ -253,22 +252,24 @@ export default class Cases extends Component {
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div className="table-div">
-            <Table
-              style={{
-                margin: "0 0vw",
-                outline: "1px solid lightgrey",
-              }}
-              columns={columns}
-              dataSource={this.state.dataSource}
-              onChange={this.handleChange}
-              pagination={{ position: ["bottomRight", "topRight"] }}
-            />
-          </div>
+          {this.state.dataSource ? (
+            <div className="table-div">
+              <Table
+                style={{
+                  margin: "0 0vw",
+                  outline: "1px solid lightgrey",
+                }}
+                columns={columns}
+                dataSource={this.state.dataSource}
+                onChange={this.handleChange}
+                pagination={{ position: ["bottomRight", "topRight"] }}
+              />
+            </div>
+          ) : (
+            <StandardSpinner />
+          )}
         </div>
       </div>
-    ) : (
-        <StandardSpinner />
     );
   }
 }

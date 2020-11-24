@@ -1,81 +1,70 @@
 import React, { useEffect, useState } from "react";
 import { Spin } from "antd";
-import { ResponsivePie } from "@nivo/pie";
+import { ResponsiveBar } from "@nivo/bar";
 import axios from "../../client";
 
 export default function VisualizationC() {
-  let [allCaseStats, setAllCaseStats] = useState(undefined);
-  let [globalStats, setGlobalStats] = useState(undefined);
+  let [allRiskStats, setAllRiskStats] = useState(undefined);
   // request data from API
   useEffect(() => {
     axios
-      .get("case-statistics", {
+      .get("risk-factor-statistics", {
         params: {
-          attributes: "country,totals",
+          attributes: "country,gini",
         },
       })
       .then((res) => {
-        // sort by total cases
+        // sort by gini
         res.data.sort((a, b) => {
-          return b.totals.cases - a.totals.cases;
+          return b.gini - a.gini;
         });
         // only need top 10
-        setAllCaseStats(res.data.slice(0, 10));
+        setAllRiskStats(res.data.slice(0, 5));
       });
-    axios.get("global-stats").then((res) => {
-      setGlobalStats(res.data);
-    });
   }, []);
-  if (allCaseStats == undefined || globalStats == undefined) {
+  // show spinner if data not retrieved yet
+  if (allRiskStats == undefined) {
     return <Spin size="large" />;
   }
-  const totalGlobalCases = globalStats.totals.cases;
-  const roundToPlace = (number, places) => {
-    return +(Math.round(number + "e+" + places) + "e-" + places);
-  };
   let data = [];
   // push necessary data to data array
-  let sumAccountedCases = 0;
-  for (let caseStats of allCaseStats) {
+  for (let riskStats of allRiskStats) {
     data.push({
-      id: caseStats.country.name,
-      value: caseStats.totals.cases,
+      id: riskStats.country.name,
+      value: riskStats.gini,
     });
-    sumAccountedCases += caseStats.totals.cases;
   }
-  data.push({
-    id: "Other",
-    value: totalGlobalCases - sumAccountedCases,
-  });
   // function to generate a custom tooltip for a pie graph slice
   const customTooltip = (node) => {
-    const percentage = roundToPlace((node.value / totalGlobalCases) * 100, 3);
     return (
       <div>
-        <div
-          style={{
-            float: "left",
-            width: 13,
-            height: 13,
-            margin: 5,
-            backgroundColor: node.color,
-          }}
-        ></div>
-        <strong>{node.id}</strong>
-        {`: ${node.value.toLocaleString()} cases (${percentage}% of global total)`}
+        <strong>{node.data.id}</strong>
+        <br />
+        {`${node.data.value}%`}
       </div>
     );
   };
   return (
-    <ResponsivePie
+    <ResponsiveBar
       data={data}
-      sliceLabel={(d) => {
-        return roundToPlace((d.value / totalGlobalCases) * 100, 2) + "%";
-      }}
-      slicesLabelsSkipAngle={15}
-      margin={{ top: 30, right: 0, left: 0, bottom: 30 }}
-      cornerRadius={2}
+      margin={{ top: 20, right: 50, left: 50, bottom: 65 }}
+      maxValue={100}
       tooltip={customTooltip}
+      axisLeft={{
+        tickSize: 0,
+        tickPadding: 5,
+        legend: "GINI",
+        legendPosition: "middle",
+        legendOffset: -40,
+      }}
+      axisBottom={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: "Country",
+        legendPosition: "middle",
+        legendOffset: 40,
+      }}
     />
   );
 }

@@ -39,7 +39,7 @@ export default function Visualizations() {
         </Col>
         <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
-            <h4>Share of Global Cases</h4>
+            <h4>GINI of Top 5 Countries with the Highest Inequality</h4>
             <div style={{ height: "440px", width: "560px" }}>
               <VisualizationC />
             </div>

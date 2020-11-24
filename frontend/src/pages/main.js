@@ -21,7 +21,7 @@ export default function Main() {
       })
       .then((res) => setCases(res.data));
   }, []);
-  const globalStats = !data ? null : (
+  const globalStats = (
     <Fragment>
       <div className="page-header-div">
         <div className="landing-image-art-div">
@@ -44,25 +44,26 @@ export default function Main() {
           </p>
         </div>
       </div>
-
-      <div className="main-totals-div">
-        <TotalStats
-          title="Total Global Cases"
-          data={data.totals.cases?.toLocaleString()}
-        />
-        <TotalStats
-          title="Total Global Deaths"
-          data={data.totals.deaths?.toLocaleString()}
-        />
-        <TotalStats
-          title="Total Global Recoveries"
-          data={data.totals.recovered?.toLocaleString()}
-        />
-        <TotalStats
-          title="Total Global Active"
-          data={data.totals.active?.toLocaleString()}
-        />
-      </div>
+      {!data ? null : (
+        <div className="main-totals-div">
+          <TotalStats
+            title="Total Global Cases"
+            data={data.totals.cases?.toLocaleString()}
+          />
+          <TotalStats
+            title="Total Global Deaths"
+            data={data.totals.deaths?.toLocaleString()}
+          />
+          <TotalStats
+            title="Total Global Recoveries"
+            data={data.totals.recovered?.toLocaleString()}
+          />
+          <TotalStats
+            title="Total Global Active"
+            data={data.totals.active?.toLocaleString()}
+          />
+        </div>
+      )}
     </Fragment>
   );
   const caseMap = !cases ? (

@@ -4,7 +4,7 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 
 ## Info
 
-- Git SHA: `efb8430255a5ef063b46910e8b86f2c3334f23e2`
+- Git SHA: `0e31e379c26a6cf1ccdf9cca98b62e8649efc898`
 - Project leader: Jeffrey Moulckers
 - GitLab pipelines: https://gitlab.com/jrmoulckers/covid19db-net/-/pipelines
 - Website: https://covid19db.net
@@ -23,8 +23,8 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Cameron Doggett
 - EID: ctd695
 - GitLab ID: camd99
-- Estimated completion time: 8 hrs (phase 1), 18 hrs (phase 2), 12 hrs (phase 3)
-- Actual completion time: 8 hrs (phase 1), 18 hrs (phase 2), 14 hrs (phase 3)
+- Estimated completion time: 8 hrs (phase 1), 18 hrs (phase 2), 12 hrs (phase 3), 10 hrs (phase 4) 
+- Actual completion time: 8 hrs (phase 1), 18 hrs (phase 2), 14 hrs (phase 3), 10 hrs (phase 4) 
 
 ---
 
@@ -39,8 +39,8 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - Name: Yash Shenvi Kakodkar
 - EID: ys22297
 - GitLab ID: YashKakodkar
-- Estimated completion time: 8 hrs (phase 1), 10 hrs (phase 2), 10 hrs (phase 3)
-- Actual completion time: 10 hrs (phase 1), 15 hrs (phase 2), 16 hrs (phase 3)
+- Estimated completion time: 8 hrs (phase 1), 10 hrs (phase 2), 10 hrs (phase 3), 10 hrs (phase 4) 
+- Actual completion time: 10 hrs (phase 1), 15 hrs (phase 2), 16 hrs (phase 3), 10 hrs (phase 4) 
 
 ---
 

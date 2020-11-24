@@ -50,15 +50,15 @@ exports[`Render Components Case: New Stats 1`] = `
 
 exports[`Render Components Case: Totals 1`] = `
 <div
-  className="totals"
+  className="case-totals"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
   <h2
-    className="totals-title"
+    className="case-totals-title"
   />
   <h2
-    className="totals-data"
+    className="case-totals-data"
   />
 </div>
 `;
@@ -864,7 +864,39 @@ exports[`Render Pages Country 1`] = `
 </div>
 `;
 
-exports[`Render Pages Global News 1`] = `<div />`;
+exports[`Render Pages Global News 1`] = `
+<div
+  style={
+    Object {
+      "height": "50vh",
+      "paddingTop": 250,
+      "textAlign": "center",
+      "width": "100vw",
+    }
+  }
+>
+  <div
+    className="ant-spin ant-spin-lg ant-spin-spinning"
+  >
+    <span
+      className="ant-spin-dot ant-spin-dot-spin"
+    >
+      <i
+        className="ant-spin-dot-item"
+      />
+      <i
+        className="ant-spin-dot-item"
+      />
+      <i
+        className="ant-spin-dot-item"
+      />
+      <i
+        className="ant-spin-dot-item"
+      />
+    </span>
+  </div>
+</div>
+`;
 
 exports[`Render Pages Main 1`] = `
 <div

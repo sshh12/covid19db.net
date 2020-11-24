@@ -89,12 +89,6 @@ class TestCovidDBGUI(unittest.TestCase):
         self.driver.find_elements_by_partial_link_text("Zimbabwe")[0].click()
         self.assertEqual(self.driver.current_url, BASE_URL + "/risk-factor-statistics/ZWE")
 
-    def test_risk_instance_explore(self):
-        self.driver.find_elements_by_link_text("Risks")[0].click()
-        self.driver.find_elements_by_partial_link_text("Zimbabwe")[0].click()
-        country_name = self.driver.find_elements_by_tag_name("h1")[0]
-        self.assertEqual(country_name.get_attribute("textContent"), "Risk Factors in Zimbabwe (ZWE)")
-
     def test_risk_table_sort(self):
         self.driver.find_elements_by_link_text("Risks")[0].click()
         country_header = self.driver.find_element_by_xpath(

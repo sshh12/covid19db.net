@@ -237,7 +237,7 @@ export default class RiskInstance extends Component {
     (
       <Fragment> <Skeleton active /> </Fragment>
     )
-
+    // links to other models - cases and countries
     const links = data ? (
       <Fragment>
         {/* Links */}
@@ -257,7 +257,7 @@ export default class RiskInstance extends Component {
     ) : (
       <Fragment> <Skeleton active /> </Fragment>
     ) 
-
+    // media / visualizations for risk instance
     const media = data ? (
       <Fragment>
         {/* media / visual */}

@@ -36,29 +36,25 @@ export default class RiskInstance extends Component {
   render() {
     const data = this.state.riskData;
     const caseData = this.state.caseData;
-    if (!data || !caseData) {
-      return <div />;
-    }
-    const activeCases = caseData.new.active;
-    const {
-      country,
-      location,
-      populationDensity,
-      humanDevelopmentIndex,
-      gini,
-      gdpPerCapita,
-      medianAge,
-      aged65Older,
-      aged70Older,
-      extremePovertyRate,
-      cardiovascDeathRate,
-      diabetesPrevalence,
-      femaleSmokers,
-      maleSmokers,
-      hospitalBedsPerThousand,
-      lifeExpectancy,
-      handwashingFacilities,
-    } = data;
+
+    const activeCases = caseData?.new.active;
+    const country = data?.country;
+    const location = data?.location;
+    const populationDensity = data?.populationDensity;
+    const humanDevelopmentIndex = data?.humanDevelopmentIndex;
+    const gini = data?.gini;
+    const gdpPerCapita = data?.gdpPerCapita;
+    const medianAge = data?.medianAge;
+    const aged65Older = data?.aged65Older;
+    const aged70Older = data?.aged70Older;
+    const extremePovertyRate = data?.extremePovertyRate;
+    const cardiovascDeathRate = data?.cardiovascDeathRate;
+    const diabetesPrevalence = data?.diabetesPrevalence;
+    const femaleSmokers = data?.femaleSmokers;
+    const maleSmokers = data?.maleSmokers;
+    const hospitalBedsPerThousand = data?.hospitalBedsPerThousand;
+    const lifeExpectancy = data?.lifeExpectancy;
+    const handwashingFacilities = data?.handwashingFacilities;
 
     const basicInfo = data ? (
       <Fragment>
@@ -286,7 +282,7 @@ export default class RiskInstance extends Component {
     ) : (
       <Fragment>
         {" "}
-        <Skeleton active />{" "}
+        <Skeleton.Image active />{" "}
       </Fragment>
     );
 

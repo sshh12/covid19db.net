@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Button, Skeleton } from "antd";
 import axios from "../../client";
 import Agg from "./data/Aggregate.json";
-// import StandardSpinner from "../../components/standardSpinner";
 
 export default class RiskInstance extends Component {
   constructor() {
@@ -60,11 +59,7 @@ export default class RiskInstance extends Component {
       lifeExpectancy,
       handwashingFacilities,
     } = data
-    
-    
-    
-
-
+ 
     const basicInfo = (
       <Fragment>
         {/* Risk Factor Basic Info */}

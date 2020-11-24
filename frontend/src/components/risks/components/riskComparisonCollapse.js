@@ -3,7 +3,7 @@ import { Collapse } from "react-collapse";
 import "../../../styling/risk.css";
 import RiskComparison from "./riskComparison";
 
-// Collapseble component used show to all countries being compared
+// Collapsable component used show to all countries being compared
 function RiskComparisonCollapse(props) {
   return (
     <div style={{ alignSelf: "start" }}>

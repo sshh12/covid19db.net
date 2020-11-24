@@ -60,7 +60,7 @@ export default class RiskInstance extends Component {
       handwashingFacilities,
     } = data
  
-    const basicInfo = (
+    const basicInfo = data ? (
       <Fragment>
         {/* Risk Factor Basic Info */}
         <h1 id="page-title">
@@ -110,10 +110,12 @@ export default class RiskInstance extends Component {
             </div>
           </div>
       </Fragment>
+    ) : (
+      <Fragment> <Skeleton active /> </Fragment>
     )
     
     // demographic risk factors
-    const demographics = (
+    const demographics = data ? (
       <Fragment>
         <div style={{ marginTop: "30px" }}>
         <div id="demogr-factor-title-div">
@@ -156,10 +158,12 @@ export default class RiskInstance extends Component {
         </div>
         </div>
       </Fragment>
+    ) : (
+      <Fragment> <Skeleton active /> </Fragment>
     )
     
     //health risk factors 
-    const healthFactors = (
+    const healthFactors = data ? (
       <Fragment>
         <div style={{ marginTop: "50px" }}>
             <h2 id="subtitle">Health Risk Factors</h2>
@@ -229,9 +233,12 @@ export default class RiskInstance extends Component {
             </div>
           </div>
       </Fragment>
+    ) : 
+    (
+      <Fragment> <Skeleton active /> </Fragment>
     )
 
-    const links = (
+    const links = data ? (
       <Fragment>
         {/* Links */}
         <div style={{ marginTop: "50px" }}>
@@ -247,9 +254,11 @@ export default class RiskInstance extends Component {
           </Link>
         </div>
       </Fragment>
-    )
+    ) : (
+      <Fragment> <Skeleton active /> </Fragment>
+    ) 
 
-    const media = (
+    const media = data ? (
       <Fragment>
         {/* media / visual */}
         <div style={{ marginTop: "1vh" }}>
@@ -264,6 +273,8 @@ export default class RiskInstance extends Component {
           />
         </div>
       </Fragment>
+    ) : (
+      <Fragment> <Skeleton active /> </Fragment>
     );
 
     return (

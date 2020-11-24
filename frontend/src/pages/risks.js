@@ -53,7 +53,7 @@ export default class Risks extends Component {
       window.open(route, "_self");
     }
   }
-
+  // for comparing 2 risks
   clearComparisons = () => {
     var { riskData } = this.state;
     riskData.forEach((c) => {
@@ -70,7 +70,7 @@ export default class Risks extends Component {
         !this.state.showComparisons && this.state.comparisons != 0,
     });
   };
-
+  // adds risk to the comparison zone
   addCompareInstance = (countryCode) => {
     var { riskData } = this.state;
     const index = riskData.findIndex(

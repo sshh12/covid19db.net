@@ -209,7 +209,12 @@ export default class Countries extends Component {
         pagination={pagination}
       />
     ) : null;
-    return this.state.currentViewCards ? (
+    const cardView = this.state.currentViewCards ? (
+      <CountryCardView gutter={16} countryGrid={this.state.currentViewCards} />
+    ) : (
+      <Spin size="large" />
+    );
+    return (
       <div className="App">
         <h1 style={{ fontWeight: "800", fontSize: "2em", margin: "20px 0" }}>
           Countries{" "}
@@ -223,7 +228,6 @@ export default class Countries extends Component {
         <Input
           style={{ width: "50vw", margin: "2vh" }}
           placeholder="Search"
-          value={this.state.searchValue}
           onChange={(e) => {
             const currValue = e.target.value;
             this.setState({ searchValue: currValue, filteredCountries: null });
@@ -238,15 +242,10 @@ export default class Countries extends Component {
           }}
         >
           {gridControl}
-          <CountryCardView
-            gutter={16}
-            countryGrid={this.state.currentViewCards}
-          />
+          {cardView}
           {gridControl}
         </div>
       </div>
-    ) : (
-      <StandardSpinner />
     );
   }
 }

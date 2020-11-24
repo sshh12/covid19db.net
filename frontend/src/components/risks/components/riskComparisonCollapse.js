@@ -1,6 +1,6 @@
 import React from "react";
 import { Collapse } from "react-collapse";
-// import "../../../styling/risk.css";
+import "../../../styling/risk.css";
 import RiskComparison from "./riskComparison";
 
 // Collapseble component used show to all countries being compared

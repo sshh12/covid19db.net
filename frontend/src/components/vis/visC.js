@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Spin } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import axios from "../../client";
 
@@ -26,7 +27,7 @@ export default function VisualizationC() {
     });
   }, []);
   if (allCaseStats == undefined || globalStats == undefined) {
-    return <p>Loading...</p>;
+    return <Spin size="large" />;
   }
   const totalGlobalCases = globalStats.totals.cases;
   const roundToPlace = (number, places) => {

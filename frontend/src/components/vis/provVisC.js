@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
+import { Spin } from "antd";
 
 const collegeParams = [
   "id",
@@ -20,11 +21,9 @@ const collegeParams = [
 
 export default function ProviderVisualizationC() {
   let [colleges, setColleges] = useState([]);
-  let [tmpMessage, setTmpMessage] = useState("Loading...");
+  let [errMessage, setErrMessage] = useState(undefined);
   // request data from provider API
   useEffect(() => {
-    /* can't directly request from the API because no CORS or HTTPS enabled
-    on their end */
     fetch("http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/college")
       .then((resp) => {
         if (!resp.ok) {
@@ -44,11 +43,18 @@ export default function ProviderVisualizationC() {
         )
       )
       .catch((error) => {
-        setTmpMessage(`${error.message} (provider API error)`);
+        setErrMessage(`${error.message} (provider API error)`);
       });
   }, []);
   if (colleges.length == 0) {
-    return <p>{tmpMessage}</p>;
+    // show spinner if not yet loaded
+    if (errMessage === undefined) {
+      return <Spin size="large" />;
+    }
+    // if error occurred show the message instead
+    else {
+      return <p>{errMessage}</p>;
+    }
   }
   // perform state wide analysis on data
   let stateData = {};

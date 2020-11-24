@@ -35,7 +35,7 @@ export default function Main() {
         </div>
         <div className="header-text-div">
           <h1 className="main-text">
-            Coronavirus sucks. <br /> Maybe this can help :)
+            Coronavirus sucks. <br /> Maybe this can help.
           </h1>
           <p className="body-text">
             Over 1 million people have passed away due to COVID-19 in the past

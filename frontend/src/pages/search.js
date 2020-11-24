@@ -42,6 +42,14 @@ class SiteSearch extends Component {
         type: "Page",
         value: { text: "Global News", route: "/global-news" },
       },
+      {
+        type: "Page",
+        value: { text: "Visualizations", route: "/vis" },
+      },
+      {
+        type: "Page",
+        value: { text: "Provider Visualizations", route: "/provider-vis" },
+      },
     ].filter(
       (entry) =>
         entry.value.text.toLowerCase().includes(query.toLowerCase()) ||

@@ -6,6 +6,7 @@ import Risks from "./risks";
 import GlobalNews from "./globalNews";
 import SiteSearch from "./search";
 import Visualizations from "./vis";
+import ProviderVisualizations from "./providerVis";
 
 export {
   About,
@@ -16,4 +17,5 @@ export {
   GlobalNews,
   SiteSearch,
   Visualizations,
+  ProviderVisualizations,
 };

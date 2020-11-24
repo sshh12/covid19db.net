@@ -10,6 +10,7 @@ import {
   GlobalNews,
   SiteSearch,
   Visualizations,
+  ProviderVisualizations,
 } from "./pages/allPages";
 import RiskInstance from "./components/risks/riskInstance";
 import CountryInstance from "./components/country/countryInstance";
@@ -65,6 +66,9 @@ function Routes() {
       </Route>
       <Route exact path="/vis">
         <Visualizations />
+      </Route>
+      <Route exact path="/provider-vis">
+        <ProviderVisualizations />
       </Route>
       <Route exact path="/search">
         <SiteSearch />

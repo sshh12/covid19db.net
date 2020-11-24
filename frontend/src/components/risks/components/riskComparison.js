@@ -13,7 +13,7 @@ function RiskComparison(props) {
       <h2 className="compare-data">{`Gini: ${props.country.gini}`}</h2>
       <Link
         className="compare-link"
-        to={`/risk-statistics/${props.country.country.codes.alpha3Code}`}
+        to={`/risk-factor-statistics/${props.country.country.codes.alpha3Code}`}
       >
         See more
       </Link>

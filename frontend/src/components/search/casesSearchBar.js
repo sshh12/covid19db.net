@@ -13,11 +13,13 @@ function SearchBar(props) {
         props.setSearchValue(currValue);
         const filteredData = props.data.filter(
           (entry) =>
-            entry.country.name.toLowerCase().includes(currValue) ||
-            entry.totalCases.toString().includes(currValue) ||
-            entry.totalDeaths.toString().includes(currValue) ||
-            entry.totalRecovered.toString().includes(currValue) ||
-            entry.totalActive.toString().includes(currValue)
+            entry.country.name
+              .toLowerCase()
+              .includes(currValue.toLowerCase()) ||
+            entry.totalCases.toString().includes(currValue.toLowerCase()) ||
+            entry.totalDeaths.toString().includes(currValue.toLowerCase()) ||
+            entry.totalRecovered.toString().includes(currValue.toLowerCase()) ||
+            entry.totalActive.toString().includes(currValue.toLowerCase())
         );
         props.setDataSource(filteredData);
       }}

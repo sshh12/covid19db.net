@@ -12,11 +12,19 @@ function SearchBar(props) {
         props.setSearchValue(currValue);
         const filteredData = props.data.filter(
           (entry) =>
-            entry?.country?.name?.toLowerCase().includes(currValue) ||
-            entry?.lifeExpectancy?.toString().includes(currValue) ||
-            entry?.humanDevelopmentIndex?.toString().includes(currValue) ||
-            entry?.populationDensity?.toString().includes(currValue) ||
-            entry?.gini?.toString().includes(currValue)
+            entry?.country?.name
+              ?.toLowerCase()
+              .includes(currValue.toLowerCase()) ||
+            entry?.lifeExpectancy
+              ?.toString()
+              .includes(currValue.toLowerCase()) ||
+            entry?.humanDevelopmentIndex
+              ?.toString()
+              .includes(currValue.toLowerCase()) ||
+            entry?.populationDensity
+              ?.toString()
+              .includes(currValue.toLowerCase()) ||
+            entry?.gini?.toString().includes(currValue.toLowerCase())
         );
         props.setDataSource(filteredData);
       }}

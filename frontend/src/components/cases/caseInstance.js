@@ -11,13 +11,51 @@ class CaseInstance extends Component {
     super();
     this.state = {
       caseData: null,
+      totalData: null,
+      recentData: null,
+      yesterdayData: null,
+      generalData: null,
     };
   }
 
   componentDidMount() {
     axios.get("case-statistics/" + this.props.code).then((res) => {
       const caseData = res.data;
-      this.setState({ caseData });
+      const totalData = [
+        caseData.totals.cases,
+        caseData.totals.active,
+        caseData.totals.deaths,
+        caseData.totals.recovered,
+        caseData.testing.totalTests.value,
+      ];
+      const recentData = [
+        caseData.new.cases,
+        caseData.new.active,
+        caseData.new.deaths,
+        caseData.new.recovered,
+        caseData.testing.newTests.value,
+      ];
+      const yesterdayData = [
+        caseData.derivativeNew.cases,
+        caseData.derivativeNew.active,
+        caseData.derivativeNew.deaths,
+        caseData.derivativeNew.recovered,
+        caseData.testing.newTestsSmoothed.value,
+      ];
+      const generalData = [
+        caseData.percentages.fatality,
+        caseData.percentages.infected,
+        caseData.testing.positiveRate.value,
+        caseData.percentages.haveRecovered,
+        caseData.percentages.active,
+      ];
+      this.setState({
+        caseData,
+        totalData,
+        recentData,
+        yesterdayData,
+        generalData,
+      });
     });
   }
 

@@ -4,7 +4,7 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 
 ## Info
 
-- Git SHA: `0e31e379c26a6cf1ccdf9cca98b62e8649efc898`
+- Git SHA: `71d5136b9c9aba8af654225163bf71ee53f1018f`
 - Project leader: Jeffrey Moulckers
 - GitLab pipelines: https://gitlab.com/jrmoulckers/covid19db-net/-/pipelines
 - Website: https://covid19db.net

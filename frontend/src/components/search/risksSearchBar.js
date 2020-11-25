@@ -10,7 +10,7 @@ function SearchBar(props) {
       onChange={(e) => {
         const currValue = e.target.value;
         props.setSearchValue(currValue);
-        const filteredData = props.data.filter(
+        const filteredData = props.data?.filter(
           (entry) =>
             entry?.country?.name
               ?.toLowerCase()

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Input, Spin } from "antd";
+import { Col, Input, Spin, Button } from "antd";
 import axios from "../client";
 import CountryCard from "../components/country/countryCard.js";
 import {
@@ -7,13 +7,16 @@ import {
   CountryGridControl,
   CountryPagination,
   CountrySortSelection,
-  CountryComparison,
+  CountryComparisonCollapse,
 } from "../components/country/countryModelComponents.js";
 import {
   filterCountries,
   SORT_TYPES,
 } from "../components/country/filterCountries";
 import StandardSpinner from "../components/standardSpinner";
+import SearchBar from "../components/search/countrySearchBar";
+import "../styling/country.css";
+import { Collapse } from "react-collapse";
 
 export default class Countries extends Component {
   constructor() {
@@ -31,6 +34,7 @@ export default class Countries extends Component {
       sortLowVal: "A",
       sortHiVal: "Z",
       casesRetrieved: false,
+      showComparisons: false,
     };
     this.changeNumDisplayed = this.changeNumDisplayed.bind(this);
     this.changeSort = this.changeSort.bind(this);
@@ -182,6 +186,16 @@ export default class Countries extends Component {
     });
   }
 
+  onSearchChange = (value) => {
+    this.setState({ searchValue: value, filteredCountries: null });
+  };
+
+  toggleShowComparisons = () => {
+    this.setState({
+      showComparisons: !this.state.showComparisons,
+    });
+  };
+
   render() {
     // Form model view if data has been loaded
     const pagination = (
@@ -193,12 +207,14 @@ export default class Countries extends Component {
         onChange={this.changeNumDisplayed}
       />
     );
+
     const countrySortSelection = (
       <CountrySortSelection
         sortBy={this.state.sortBy}
         onChange={this.changeSort}
       />
     );
+
     const gridControl = this.state.currentViewCards ? (
       <CountryGridControl
         selectSort={countrySortSelection}
@@ -209,44 +225,76 @@ export default class Countries extends Component {
         pagination={pagination}
       />
     ) : null;
-    return this.state.currentViewCards ? (
-      <div className="App">
-        <h1 style={{ fontWeight: "800", fontSize: "2em", margin: "20px 0" }}>
-          Countries{" "}
-        </h1>
-        <CountryComparison
-          gutter={16}
+
+    const cardView = this.state.currentViewCards ? (
+      <CountryCardView gutter={16} countryGrid={this.state.currentViewCards} />
+    ) : (
+      <Spin size="large" />
+    );
+
+    const compareGroup = (
+      <div className="compare-group">
+        <Button
+          style={{ marginTop: 10, alignSelf: "start" }}
+          onClick={this.toggleShowComparisons}
+        >
+          {this.state.showComparisons ? "Hide" : "Show"} comparisons
+        </Button>
+        <CountryComparisonCollapse
+          isOpened={this.state.showComparisons}
           data={this.state.countryCardsData}
           onChange={this.handleUpdateComparison}
           searchValue={this.state.searchValue}
         />
-        <Input
-          style={{ width: "50vw", margin: "2vh" }}
-          placeholder="Search"
-          value={this.state.searchValue}
-          onChange={(e) => {
-            const currValue = e.target.value;
-            this.setState({ searchValue: currValue, filteredCountries: null });
-          }}
-        />
-        <div
-          className="country-grid-wrapper"
-          style={{
-            margin: "0 2vw",
-            outline: "1px solid lightgrey",
-            paddingTop: 20,
-          }}
-        >
-          {gridControl}
-          <CountryCardView
-            gutter={16}
-            countryGrid={this.state.currentViewCards}
-          />
-          {gridControl}
-        </div>
       </div>
-    ) : (
-      <StandardSpinner />
+    );
+
+    const searchBox = (
+      <Input
+        style={{ width: "75vw" }}
+        allowClear
+        placeholder="Search"
+        value={this.state.searchValue}
+        onChange={(e) => {
+          const currValue = e.target.value;
+          this.setState({
+            searchValue: currValue.toLowerCase(),
+            filteredCountries: null,
+          });
+        }}
+      />
+    );
+
+    return (
+      <div className="App">
+        <div className="country-page-header">
+          <div className="country-page-header-content">
+            <h1 className="page-title">Countries </h1>
+            <p className="page-description">
+              The grid below displays various information about each country.
+              Click a card to see more information.
+            </p>
+            {searchBox}
+            {compareGroup}
+          </div>
+        </div>
+        {this.state.currentViewCards ? (
+          <div
+            className="country-grid-wrapper"
+            style={{
+              margin: "0 2vw",
+              outline: "1px solid lightgrey",
+              paddingTop: 20,
+            }}
+          >
+            {gridControl}
+            {cardView}
+            {gridControl}
+          </div>
+        ) : (
+          <StandardSpinner />
+        )}
+      </div>
     );
   }
 }

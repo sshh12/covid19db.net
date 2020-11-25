@@ -14,9 +14,7 @@ import {
   SORT_TYPES,
 } from "../components/country/filterCountries";
 import StandardSpinner from "../components/standardSpinner";
-import SearchBar from "../components/search/countrySearchBar";
 import "../styling/country.css";
-import { Collapse } from "react-collapse";
 
 export default class Countries extends Component {
   constructor() {

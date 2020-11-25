@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button, Skeleton } from "antd";
 import axios from "../../client";
 import Agg from "./data/Aggregate.json";
+import riskStaticData from "./riskInstanceStaticData";
 
 export default class RiskInstance extends Component {
   constructor() {
@@ -12,13 +13,35 @@ export default class RiskInstance extends Component {
     this.state = {
       riskData: null,
       caseData: null,
+      myData: null,
+      aggData: null,
     };
   }
 
   componentDidMount() {
     axios.get("risk-factor-statistics/" + this.props.code).then((res) => {
       const riskData = res.data;
-      this.setState({ riskData });
+      const myData = [
+        riskData.lifeExpectancy?.toFixed(1),
+        riskData.extremePovertyRate?.toFixed(1),
+        riskData.hospitalBedsPerThousand?.toFixed(1),
+        riskData.cardiovascDeathRate?.toFixed(1),
+        riskData.diabetesPrevalence?.toFixed(1),
+        riskData.femaleSmokers?.toFixed(1),
+        riskData.maleSmokers?.toFixed(1),
+        riskData.handwashingFacilities?.toFixed(1),
+      ];
+      const aggData = [
+        Agg.lifeExpectancy?.toFixed(1),
+        Agg.extremePovertyRate?.toFixed(1),
+        Agg.hospitalBedsPerThousand?.toFixed(1),
+        Agg.cardiovascDeathRate?.toFixed(1),
+        Agg.diabetesPrevalence?.toFixed(1),
+        Agg.femaleSmokers?.toFixed(1),
+        Agg.maleSmokers?.toFixed(1),
+        Agg.handwashingFacilities?.toFixed(1),
+      ];
+      this.setState({ riskData, myData, aggData });
     });
 
     axios
@@ -34,31 +57,28 @@ export default class RiskInstance extends Component {
   }
 
   render() {
+    let { myData, aggData } = this.state;
     const data = this.state.riskData;
     const caseData = this.state.caseData;
-    if (!data || !caseData) {
-      return <div />;
-    }
-    const activeCases = caseData.new.active;
-    const {
-      country,
-      location,
-      populationDensity,
-      humanDevelopmentIndex,
-      gini,
-      gdpPerCapita,
-      medianAge,
-      aged65Older,
-      aged70Older,
-      extremePovertyRate,
-      cardiovascDeathRate,
-      diabetesPrevalence,
-      femaleSmokers,
-      maleSmokers,
-      hospitalBedsPerThousand,
-      lifeExpectancy,
-      handwashingFacilities,
-    } = data;
+
+    const activeCases = caseData?.new.active;
+    const country = data?.country;
+    const location = data?.location;
+    const populationDensity = data?.populationDensity;
+    const humanDevelopmentIndex = data?.humanDevelopmentIndex;
+    const gini = data?.gini;
+    const gdpPerCapita = data?.gdpPerCapita;
+    const medianAge = data?.medianAge;
+    const aged65Older = data?.aged65Older;
+    const aged70Older = data?.aged70Older;
+    const extremePovertyRate = data?.extremePovertyRate;
+    const cardiovascDeathRate = data?.cardiovascDeathRate;
+    const diabetesPrevalence = data?.diabetesPrevalence;
+    const femaleSmokers = data?.femaleSmokers;
+    const maleSmokers = data?.maleSmokers;
+    const hospitalBedsPerThousand = data?.hospitalBedsPerThousand;
+    const lifeExpectancy = data?.lifeExpectancy;
+    const handwashingFacilities = data?.handwashingFacilities;
 
     const basicInfo = data ? (
       <Fragment>
@@ -180,61 +200,17 @@ export default class RiskInstance extends Component {
               flexWrap: "wrap",
             }}
           >
-            <HealthFactor
-              title="Life Expectancy"
-              data={lifeExpectancy?.toFixed(1)}
-              suffix="yrs."
-              avg={`${Agg.lifeExpectancy.toFixed(1)}`}
-              description="Life expectancy at birth"
-            />
-            <HealthFactor
-              title="Extreme Poverty Rate"
-              data={`${extremePovertyRate?.toFixed(1)}%`}
-              avg={`${Agg.extremePovertyRate.toFixed(1)}%`}
-              description="Percentage of population living in extreme poverty"
-            />
-            <HealthFactor
-              title="Hospital Beds Per Thousand"
-              data={hospitalBedsPerThousand?.toFixed(1)}
-              avg={Agg.hospitalBedsPerThousand.toFixed(1)}
-              suffix="/thousand"
-              description="Number of hospital beds per 1,000 people"
-            />
-            <HealthFactor
-              title="Cardiovascular Death Rate"
-              data={cardiovascDeathRate?.toFixed(1)}
-              avg={Agg.cardiovascDeathRate.toFixed(1)}
-              suffix="/100,000"
-              description="Annual number of deaths per 100,000 people resulting from cardiovascular disease"
-            />
-            <HealthFactor
-              title="Diabetes Prevlaence"
-              data={`${diabetesPrevalence?.toFixed(1)}%`}
-              avg={`${Agg.diabetesPrevalence.toFixed(1)}%`}
-              suffix=" of adults"
-              description="Percentage of population which has diabetes"
-            />
-            <HealthFactor
-              title="Female Smokers"
-              data={`${femaleSmokers?.toFixed(1)}%`}
-              avg={`${Agg.femaleSmokers.toFixed(1)}%`}
-              suffix="of adults"
-              description="Percentage of women who smoke"
-            />
-            <HealthFactor
-              title="Male Smokers"
-              data={`${maleSmokers?.toFixed(1)}%`}
-              avg={`${Agg.maleSmokers.toFixed(1)}%`}
-              suffix="of adults"
-              description="Percentage of men who smoke"
-            />
-            <HealthFactor
-              title="Handwashing Facilities"
-              data={`${handwashingFacilities?.toFixed(1)}%`}
-              avg={`${Agg.handwashingFacilities?.toFixed(1)}%`}
-              suffix=" access"
-              description="Percentage of the population with access to basic handwashing facilities"
-            />
+            {[...Array(8).keys()].map((i) => {
+              return (
+                <HealthFactor
+                  title={riskStaticData.titles[i]}
+                  data={myData[i]}
+                  suffix={riskStaticData.suffixes[i]}
+                  avg={aggData[i]}
+                  description={riskStaticData.descriptions[i]}
+                />
+              );
+            })}
           </div>
         </div>
       </Fragment>
@@ -286,7 +262,7 @@ export default class RiskInstance extends Component {
     ) : (
       <Fragment>
         {" "}
-        <Skeleton active />{" "}
+        <Skeleton.Image active />{" "}
       </Fragment>
     );
 

@@ -210,10 +210,25 @@ export default class Countries extends Component {
       />
     ) : null;
     const cardView = this.state.currentViewCards ? (
-      <CountryCardView gutter={16} countryGrid={this.state.currentViewCards} />
+      <div
+        className="country-grid-wrapper"
+        style={{
+          margin: "0 2vw",
+          outline: "1px solid lightgrey",
+          paddingTop: 20,
+        }}
+      >
+        {gridControl}
+        <CountryCardView
+          gutter={16}
+          countryGrid={this.state.currentViewCards}
+        />
+        {gridControl}
+      </div>
     ) : (
-      <Spin size="large" />
+      <StandardSpinner />
     );
+
     return (
       <div className="App">
         <h1 style={{ fontWeight: "800", fontSize: "2em", margin: "20px 0" }}>
@@ -232,19 +247,8 @@ export default class Countries extends Component {
             const currValue = e.target.value;
             this.setState({ searchValue: currValue, filteredCountries: null });
           }}
-        />
-        <div
-          className="country-grid-wrapper"
-          style={{
-            margin: "0 2vw",
-            outline: "1px solid lightgrey",
-            paddingTop: 20,
-          }}
-        >
-          {gridControl}
-          {cardView}
-          {gridControl}
-        </div>
+        />{" "}
+        {cardView}
       </div>
     );
   }

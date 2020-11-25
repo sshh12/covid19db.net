@@ -63,37 +63,39 @@ export default class GlobalNews extends Component {
   render() {
     // do not render until data has been pulled
     const data = this.state.globalNewsData;
-    if (!data) {
-      return <StandardSpinner />;
-    }
-
-    const newsList = this.state.globalNewsData.map((a, i) => (
-      <NewsCard
-        key={a.url}
-        title={a.title}
-        published={a.publishedAt}
-        link={a.url}
-        img={a.urlToImage}
-        description={a.description}
-        key={i}
-      ></NewsCard>
-    ));
 
     return (
       <div className="App">
-        <h1
-          style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          Global News
-        </h1>
-        <div className="site-card-wrapper" style={{ margin: "0 5vw" }}>
-          <Row type="flex">{newsList}</Row>
+        <div className="about-page-header">
+          <div className="about-page-header-content">
+            <h1 className="about-page-title">Global News</h1>
+            <div className="about-page-description">
+              Read news about COVID-19 from around the world.
+            </div>
+          </div>
         </div>
+        {data ? (
+          <div
+            className="site-card-wrapper"
+            style={{ margin: "0 5vw", marginTop: 20 }}
+          >
+            <Row type="flex">
+              {this.state.globalNewsData.map((a, i) => (
+                <NewsCard
+                  key={a.url}
+                  title={a.title}
+                  published={a.publishedAt}
+                  link={a.url}
+                  img={a.urlToImage}
+                  description={a.description}
+                  key={i}
+                ></NewsCard>
+              ))}
+            </Row>
+          </div>
+        ) : (
+          <StandardSpinner />
+        )}
       </div>
     );
   }

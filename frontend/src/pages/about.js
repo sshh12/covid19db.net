@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Spinner } from "react-bootstrap";
 import ProjectInfo from "./../components/projectInfo";
+import "../styling/about.css";
 
 const GITLAB_API_BASE = "https://gitlab.com/api/v4";
 const REPO_ID = "21269899";
@@ -156,28 +157,73 @@ export default function About() {
     0
   );
   let loaded = issues.length > 0 && commits.length > 0;
+
+  const memberCardGroup = (
+    <div>
+      {GROUP_MEMBERS.map((person) => {
+        let personIssues = issues.filter((issue) =>
+          issue.assignees.find((assignee) => assignee.username == person.gitlab)
+        );
+        let personCommits = commits.filter(
+          (commit) => commit.author_name == person.name
+        );
+        return (
+          <Card
+            key={person.name}
+            style={{
+              margin: "10px",
+              width: "22rem",
+              display: "inline-block",
+            }}
+          >
+            <a href={person.url}>
+              <Card.Img variant="top" src={`/imgs/${person.gitlab}.jpg`} />
+            </a>
+            <Card.Body>
+              <Card.Title>
+                <a href={person.url} className="hyperlink">
+                  {person.name}
+                </a>
+              </Card.Title>
+              <Card.Text>
+                {person.bio}
+                <hr />
+                <b>Role</b> {person.role} {person.lead && <b>(Team Lead)</b>}
+                <hr />
+                {loaded ? (
+                  <>
+                    <b>Commits</b> {personCommits.length} | <b>Issues</b>{" "}
+                    {personIssues.length} | <b>Unit Tests</b> {person.unitTests}
+                  </>
+                ) : (
+                  <Spinner animation="border" variant="primary" />
+                )}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        );
+      })}
+    </div>
+  );
+
   return (
     <div className="App">
-      <h1
-        style={{
-          fontWeight: "800",
-          fontSize: "2em",
-          marginTop: "20px",
-          marginBottom: "20px",
-        }}
-      >
-        About
-      </h1>
-      <div style={{ marginTop: "18px", paddingBottom: "18px" }}>
-        Our COVID-19 Database site allows users to gather quick statistics on
-        the coronavirus in terms of country, cases, and potential risks. This
-        website is intended for those susceptible to contracting the virus (that
-        means you!), and our aim is to keep users informed about the
-        coronavirus. Integrating disparate data sets allows us to form a broad
-        overview of how countries have handled the COVID-19 pandemic, present
-        some of the unique risks each country's population faces, and possibly
-        indicate the near future trajectory of the pandemic.
+      <div className="about-page-header">
+        <div className="about-page-header-content">
+          <h1 className="about-page-title">About</h1>
+          <div className="about-page-description">
+            Our COVID-19 Database site allows users to gather quick statistics
+            on the coronavirus in terms of country, cases, and potential risks.
+            This website is intended for those susceptible to contracting the
+            virus (that means you!), and our aim is to keep users informed about
+            the coronavirus. Integrating disparate data sets allows us to form a
+            broad overview of how countries have handled the COVID-19 pandemic,
+            present some of the unique risks each country's population faces,
+            and possibly indicate the near future trajectory of the pandemic.
+          </div>
+        </div>
       </div>
+
       <hr />
       <ProjectInfo tools={TOOLS} dataSources={DATA_SOURCES} />
       <hr />
@@ -201,54 +247,7 @@ export default function About() {
         </a>
       </div>
       <hr />
-      <div>
-        {GROUP_MEMBERS.map((person) => {
-          let personIssues = issues.filter((issue) =>
-            issue.assignees.find(
-              (assignee) => assignee.username == person.gitlab
-            )
-          );
-          let personCommits = commits.filter(
-            (commit) => commit.author_name == person.name
-          );
-          return (
-            <Card
-              key={person.name}
-              style={{
-                margin: "10px",
-                width: "22rem",
-                display: "inline-block",
-              }}
-            >
-              <a href={person.url}>
-                <Card.Img variant="top" src={`/imgs/${person.gitlab}.jpg`} />
-              </a>
-              <Card.Body>
-                <Card.Title>
-                  <a href={person.url} className="hyperlink">
-                    {person.name}
-                  </a>
-                </Card.Title>
-                <Card.Text>
-                  {person.bio}
-                  <hr />
-                  <b>Role</b> {person.role} {person.lead && <b>(Team Lead)</b>}
-                  <hr />
-                  {loaded ? (
-                    <>
-                      <b>Commits</b> {personCommits.length} | <b>Issues</b>{" "}
-                      {personIssues.length} | <b>Unit Tests</b>{" "}
-                      {person.unitTests}
-                    </>
-                  ) : (
-                    <Spinner animation="border" variant="primary" />
-                  )}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          );
-        })}
-      </div>
+      {memberCardGroup}
     </div>
   );
 }

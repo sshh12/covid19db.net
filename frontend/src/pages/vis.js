@@ -9,17 +9,13 @@ export default function Visualizations() {
   // our team's visualizations
   const myVis = (
     <Fragment>
-      <div style={{ textAlign: "center" }}>
-        <h1
-          style={{
-            fontWeight: "800",
-            fontSize: "2em",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          Visualizations
-        </h1>
+      <div className="about-page-header">
+        <div className="about-page-header-content">
+          <h1 className="about-page-title">Visualizations</h1>
+          <div className="about-page-description">
+            Here are some cool visualizations based on our data!
+          </div>
+        </div>
       </div>
       <Row justify="center">
         <Col>

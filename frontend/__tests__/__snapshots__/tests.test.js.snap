@@ -104,27 +104,23 @@ exports[`Render Pages About 1`] = `
 <div
   className="App"
 >
-  <h1
-    style={
-      Object {
-        "fontSize": "2em",
-        "fontWeight": "800",
-        "marginBottom": "20px",
-        "marginTop": "20px",
-      }
-    }
-  >
-    About
-  </h1>
   <div
-    style={
-      Object {
-        "marginTop": "18px",
-        "paddingBottom": "18px",
-      }
-    }
+    className="about-page-header"
   >
-    Our COVID-19 Database site allows users to gather quick statistics on the coronavirus in terms of country, cases, and potential risks. This website is intended for those susceptible to contracting the virus (that means you!), and our aim is to keep users informed about the coronavirus. Integrating disparate data sets allows us to form a broad overview of how countries have handled the COVID-19 pandemic, present some of the unique risks each country's population faces, and possibly indicate the near future trajectory of the pandemic.
+    <div
+      className="about-page-header-content"
+    >
+      <h1
+        className="about-page-title"
+      >
+        About
+      </h1>
+      <div
+        className="about-page-description"
+      >
+        Our COVID-19 Database site allows users to gather quick statistics on the coronavirus in terms of country, cases, and potential risks. This website is intended for those susceptible to contracting the virus (that means you!), and our aim is to keep users informed about the coronavirus. Integrating disparate data sets allows us to form a broad overview of how countries have handled the COVID-19 pandemic, present some of the unique risks each country's population faces, and possibly indicate the near future trajectory of the pandemic.
+      </div>
+    </div>
   </div>
   <hr />
   <div
@@ -197,6 +193,7 @@ exports[`Render Pages About 1`] = `
             >
               <li>
                 <a
+                  className="hyperlink"
                   href="https://reactjs.org/"
                 >
                   <img
@@ -217,6 +214,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://ant.design/"
                 >
                   <img
@@ -237,6 +235,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://nivo.rocks/"
                 >
                   <img
@@ -257,6 +256,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://jestjs.io/"
                 >
                   <img
@@ -277,6 +277,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://github.com/axios/axios"
                 >
                   <img
@@ -297,6 +298,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://flask.palletsprojects.com/en/1.1.x/"
                 >
                   <img
@@ -317,6 +319,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://www.sqlalchemy.org/"
                 >
                   <img
@@ -337,6 +340,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://cloud.google.com"
                 >
                   <img
@@ -357,6 +361,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://www.postman.com"
                 >
                   <img
@@ -377,6 +382,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://gitlab.com/explore"
                 >
                   <img
@@ -397,6 +403,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://www.selenium.dev/"
                 >
                   <img
@@ -439,6 +446,7 @@ exports[`Render Pages About 1`] = `
             >
               <li>
                 <a
+                  className="hyperlink"
                   href="https://api.covid19api.com"
                 >
                   <img
@@ -456,6 +464,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://restcountries.eu"
                 >
                   <img
@@ -473,6 +482,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://newsapi.org"
                 >
                   <img
@@ -490,6 +500,7 @@ exports[`Render Pages About 1`] = `
               </li>
               <li>
                 <a
+                  className="hyperlink"
                   href="https://covid.ourworldindata.org/data/owid-covid-data.json"
                 >
                   <img
@@ -574,6 +585,7 @@ exports[`Render Pages About 1`] = `
           className="card-title h5"
         >
           <a
+            className="hyperlink"
             href="https://www.linkedin.com/in/shrivushankar/"
           >
             Shrivu Shankar
@@ -622,6 +634,7 @@ exports[`Render Pages About 1`] = `
           className="card-title h5"
         >
           <a
+            className="hyperlink"
             href="https://www.linkedin.com/in/cameron-doggett-186761164/"
           >
             Cameron Doggett
@@ -670,6 +683,7 @@ exports[`Render Pages About 1`] = `
           className="card-title h5"
         >
           <a
+            className="hyperlink"
             href="https://www.linkedin.com/in/yashkakodkar/"
           >
             Yash Kakodkar
@@ -718,6 +732,7 @@ exports[`Render Pages About 1`] = `
           className="card-title h5"
         >
           <a
+            className="hyperlink"
             href="https://www.linkedin.com/in/jeffreymoulckers/"
           >
             Jeffrey Moulckers
@@ -769,6 +784,7 @@ exports[`Render Pages About 1`] = `
           className="card-title h5"
         >
           <a
+            className="hyperlink"
             href="https://www.linkedin.com/in/vassi-gianitsos-a3881b167/"
           >
             Vassi Gianitsos
@@ -798,102 +814,403 @@ exports[`Render Pages About 1`] = `
 
 exports[`Render Pages Cases 1`] = `
 <div
-  style={
-    Object {
-      "height": "50vh",
-      "paddingTop": 250,
-      "textAlign": "center",
-      "width": "100vw",
-    }
-  }
+  className="App"
 >
   <div
-    className="ant-spin ant-spin-lg ant-spin-spinning"
+    className="page-header"
   >
-    <span
-      className="ant-spin-dot ant-spin-dot-spin"
+    <div
+      className="page-header-content"
     >
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-    </span>
+      <h1
+        className="page-title"
+      >
+        Cases
+      </h1>
+      <p
+        className="page-description"
+      >
+        The table below displays the total case statistics in each country. Click a country's name to see more information.
+      </p>
+      <span
+        className="ant-input-affix-wrapper"
+        onMouseUp={[Function]}
+        style={
+          Object {
+            "width": "75vw",
+          }
+        }
+      >
+        <input
+          className="ant-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Search"
+          style={null}
+          type="text"
+          value=""
+        />
+        <span
+          className="ant-input-suffix"
+        >
+          <span
+            aria-label="close-circle"
+            className="anticon anticon-close-circle ant-input-clear-icon-hidden ant-input-clear-icon"
+            onClick={[Function]}
+            role="button"
+            tabIndex={-1}
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="close-circle"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+      <div
+        className="page-header-button-group"
+      >
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginRight": 10,
+            }
+          }
+          type="button"
+        >
+          <span>
+            Clear filters
+          </span>
+        </button>
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginRight": 10,
+            }
+          }
+          type="button"
+        >
+          <span>
+            Clear comparisons
+          </span>
+        </button>
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          type="button"
+        >
+          <span>
+            Show comparisons (0)
+          </span>
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "alignSelf": "start",
+          }
+        }
+      >
+        <div
+          aria-hidden={true}
+          className="ReactCollapse--collapse"
+          style={
+            Object {
+              "height": "0px",
+              "overflow": "hidden",
+            }
+          }
+        >
+          <div
+            className="ReactCollapse--content"
+          >
+            <h2
+              className="compare-title"
+              style={
+                Object {
+                  "paddingTop": 20,
+                }
+              }
+            >
+              Comparisons
+            </h2>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "height": "50vh",
+          "paddingTop": 250,
+          "textAlign": "center",
+          "width": "100vw",
+        }
+      }
+    >
+      <div
+        className="ant-spin ant-spin-lg ant-spin-spinning"
+      >
+        <span
+          className="ant-spin-dot ant-spin-dot-spin"
+        >
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Render Pages Country 1`] = `
 <div
-  style={
-    Object {
-      "height": "50vh",
-      "paddingTop": 250,
-      "textAlign": "center",
-      "width": "100vw",
-    }
-  }
+  className="App"
 >
   <div
-    className="ant-spin ant-spin-lg ant-spin-spinning"
+    className="country-page-header"
   >
-    <span
-      className="ant-spin-dot ant-spin-dot-spin"
+    <div
+      className="country-page-header-content"
     >
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-    </span>
+      <h1
+        className="page-title"
+      >
+        Countries 
+      </h1>
+      <p
+        className="page-description"
+      >
+        The grid below displays various information about each country. Click a card to see more information.
+      </p>
+      <span
+        className="ant-input-affix-wrapper"
+        onMouseUp={[Function]}
+        style={
+          Object {
+            "width": "75vw",
+          }
+        }
+      >
+        <input
+          className="ant-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Search"
+          style={null}
+          type="text"
+          value=""
+        />
+        <span
+          className="ant-input-suffix"
+        >
+          <span
+            aria-label="close-circle"
+            className="anticon anticon-close-circle ant-input-clear-icon-hidden ant-input-clear-icon"
+            onClick={[Function]}
+            role="button"
+            tabIndex={-1}
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="close-circle"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+      <div
+        className="compare-group"
+      >
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "alignSelf": "start",
+              "marginTop": 10,
+            }
+          }
+          type="button"
+        >
+          <span>
+            Show comparisons
+          </span>
+        </button>
+        <div
+          style={
+            Object {
+              "alignSelf": "start",
+            }
+          }
+        >
+          <div
+            aria-hidden={true}
+            className="ReactCollapse--collapse"
+            style={
+              Object {
+                "height": "0px",
+                "overflow": "hidden",
+              }
+            }
+          >
+            <div
+              className="ReactCollapse--content"
+            >
+              <h2
+                className="compare-title"
+                style={
+                  Object {
+                    "paddingTop": 20,
+                  }
+                }
+              >
+                Comparisons
+              </h2>
+              <div />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "height": "50vh",
+        "paddingTop": 250,
+        "textAlign": "center",
+        "width": "100vw",
+      }
+    }
+  >
+    <div
+      className="ant-spin ant-spin-lg ant-spin-spinning"
+    >
+      <span
+        className="ant-spin-dot ant-spin-dot-spin"
+      >
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+      </span>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Render Pages Global News 1`] = `
 <div
-  style={
-    Object {
-      "height": "50vh",
-      "paddingTop": 250,
-      "textAlign": "center",
-      "width": "100vw",
-    }
-  }
+  className="App"
 >
   <div
-    className="ant-spin ant-spin-lg ant-spin-spinning"
+    className="about-page-header"
   >
-    <span
-      className="ant-spin-dot ant-spin-dot-spin"
+    <div
+      className="about-page-header-content"
     >
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-    </span>
+      <h1
+        className="about-page-title"
+      >
+        Global News
+      </h1>
+      <div
+        className="about-page-description"
+      >
+        Read news about COVID-19 from around the world.
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "height": "50vh",
+        "paddingTop": 250,
+        "textAlign": "center",
+        "width": "100vw",
+      }
+    }
+  >
+    <div
+      className="ant-spin ant-spin-lg ant-spin-spinning"
+    >
+      <span
+        className="ant-spin-dot ant-spin-dot-spin"
+      >
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+      </span>
+    </div>
   </div>
 </div>
 `;
@@ -908,6 +1225,40 @@ exports[`Render Pages Main 1`] = `
     }
   }
 >
+  <div
+    className="page-header-div"
+  >
+    <div
+      className="landing-image-art-div"
+    >
+      <img
+        className="landing-image-art"
+        src="test-file-stub"
+      />
+      <a
+        className="landing-image-art-link"
+        href="https://www.freepik.com/vectors/doctor"
+      >
+        Doctor vector created by freepik - www.freepik.com
+      </a>
+    </div>
+    <div
+      className="header-text-div"
+    >
+      <h1
+        className="main-text"
+      >
+        Coronavirus sucks. 
+        <br />
+         Maybe this can help.
+      </h1>
+      <p
+        className="body-text"
+      >
+        Over 1 million people have passed away due to COVID-19 in the past year. Our databse gathers various statistics on the virus in all countries and we hope it can help you.
+      </p>
+    </div>
+  </div>
   <div
     className="ant-spin ant-spin-lg ant-spin-spinning"
   >
@@ -933,34 +1284,207 @@ exports[`Render Pages Main 1`] = `
 
 exports[`Render Pages Risk 1`] = `
 <div
-  style={
-    Object {
-      "height": "50vh",
-      "paddingTop": 250,
-      "textAlign": "center",
-      "width": "100vw",
-    }
-  }
+  className="App"
 >
   <div
-    className="ant-spin ant-spin-lg ant-spin-spinning"
+    style={
+      Object {
+        "backgroundColor": "#323776",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
   >
-    <span
-      className="ant-spin-dot ant-spin-dot-spin"
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "paddingBottom": 40,
+          "paddingTop": 20,
+          "width": "75vw",
+        }
+      }
     >
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-    </span>
+      <h1
+        style={
+          Object {
+            "color": "white",
+            "fontSize": "2em",
+            "fontWeight": 800,
+            "marginBottom": 20,
+          }
+        }
+      >
+        Risk Factors
+      </h1>
+      <p
+        style={
+          Object {
+            "color": "white",
+            "fontSize": "1.1em",
+            "marginBottom": 20,
+          }
+        }
+      >
+        The table below displays the risk factor statistics in each country. Click a country's name to see more information.
+      </p>
+      <span
+        className="ant-input-affix-wrapper"
+        onMouseUp={[Function]}
+      >
+        <input
+          className="ant-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Search"
+          style={null}
+          type="text"
+          value=""
+        />
+        <span
+          className="ant-input-suffix"
+        >
+          <span
+            aria-label="close-circle"
+            className="anticon anticon-close-circle ant-input-clear-icon-hidden ant-input-clear-icon"
+            onClick={[Function]}
+            role="button"
+            tabIndex={-1}
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="close-circle"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+      <div
+        className="page-header-button-group"
+      >
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginRight": 10,
+            }
+          }
+          type="button"
+        >
+          <span>
+            Clear filters
+          </span>
+        </button>
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginRight": 10,
+            }
+          }
+          type="button"
+        >
+          <span>
+            Clear comparisons
+          </span>
+        </button>
+        <button
+          className="ant-btn"
+          onClick={[Function]}
+          type="button"
+        >
+          <span>
+            Show comparisons (0)
+          </span>
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "alignSelf": "start",
+          }
+        }
+      >
+        <div
+          aria-hidden={true}
+          className="ReactCollapse--collapse"
+          style={
+            Object {
+              "height": "0px",
+              "overflow": "hidden",
+            }
+          }
+        >
+          <div
+            className="ReactCollapse--content"
+          >
+            <h2
+              className="compare-title"
+              style={
+                Object {
+                  "paddingTop": 20,
+                }
+              }
+            >
+              Comparisons
+            </h2>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "height": "50vh",
+        "paddingTop": 250,
+        "textAlign": "center",
+        "width": "100vw",
+      }
+    }
+  >
+    <div
+      className="ant-spin ant-spin-lg ant-spin-spinning"
+    >
+      <span
+        className="ant-spin-dot ant-spin-dot-spin"
+      >
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+        <i
+          className="ant-spin-dot-item"
+        />
+      </span>
+    </div>
   </div>
 </div>
 `;

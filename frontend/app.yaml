@@ -16,6 +16,14 @@ handlers:
     static_files: build/index.html
     secure: always
     upload: build/index.html
+  - url: /vis
+    static_files: build/index.html
+    secure: always
+    upload: build/index.html
+  - url: /provider-vis
+    static_files: build/index.html
+    secure: always
+    upload: build/index.html
   - url: /countries(.*)
     static_files: build/index.html
     secure: always
@@ -24,7 +32,7 @@ handlers:
     static_files: build/index.html
     secure: always
     upload: build/index.html
-  - url: /globalNews(.*)
+  - url: /global-news(.*)
     static_files: build/index.html
     secure: always
     upload: build/index.html

@@ -46,7 +46,7 @@ export default function ProviderVisualizations() {
         </Col>
         <Col>
           <Card hoverable style={{ height: "520px", width: "600px" }}>
-            <h4>Average Percentage of Full-Time College Enrollment by State</h4>
+            <h4>Percentage of Full-Time Enrollment at Colleges</h4>
             <div style={{ height: "440px", width: "560px" }}>
               <ProviderVisualizationC />
             </div>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { Spin } from "antd";
+import collegesData from "../../data/provCollegesData.json";
 
 const collegeParams = [
   "id",
@@ -20,83 +20,38 @@ const collegeParams = [
 ];
 
 export default function ProviderVisualizationC() {
-  let [colleges, setColleges] = useState([]);
-  let [errMessage, setErrMessage] = useState(undefined);
-  // request data from provider API
-  useEffect(() => {
-    fetch("http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/college")
-      .then((resp) => {
-        if (!resp.ok) {
-          throw Error(resp.statusText);
-        }
-        return resp.json();
-      })
-      .then((data) =>
-        setColleges(
-          data.map((row) => {
-            let obj = {};
-            for (let i in collegeParams) {
-              obj[collegeParams[i]] = row[i];
-            }
-            return obj;
-          })
-        )
-      )
-      .catch((error) => {
-        setErrMessage(`${error.message} (provider API error)`);
-      });
-  }, []);
-  if (colleges.length == 0) {
-    // show spinner if not yet loaded
-    if (errMessage === undefined) {
-      return <Spin size="large" />;
+  let colleges = collegesData.map((row) => {
+    let obj = {};
+    for (let i in collegeParams) {
+      obj[collegeParams[i]] = row[i];
     }
-    // if error occurred show the message instead
-    else {
-      return <p>{errMessage}</p>;
-    }
-  }
-  // perform state wide analysis on data
-  let stateData = {};
-  for (let college of colleges) {
-    if (!Object.keys(stateData).includes(college.state)) {
-      stateData[college.state] = {
-        id: college.state,
-        sumPercentFullTime: 0,
-        numColleges: 0,
-      };
-    }
-    stateData[college.state].sumPercentFullTime += college.percent_full_time;
-    ++stateData[college.state].numColleges;
-  }
-  // transform stateData into usable format for bar graph
+    return obj;
+  });
+  // transform json data into usable format for graph
   let data = [];
-  for (let state of Object.keys(stateData)) {
-    const stateObj = stateData[state];
+  for (let college of colleges) {
     data.push({
-      id: stateObj.id,
-      value: Math.round(stateObj.sumPercentFullTime / stateObj.numColleges),
+      id: college.name,
+      value: college.percent_full_time,
+      collegeData: college,
     });
   }
-  // sort data by state name
+  // sort and limit data to 10 entries
   data.sort((a, b) => {
-    return a.id.localeCompare(b.id);
+    return b.value - a.value;
   });
-  // function to generate a custom tooltip for a pie graph slice
+  const sliceSize = data.length >= 10 ? 10 : data.length;
+  data = data.slice(0, sliceSize);
+  // function to generate a custom tooltip
   const customTooltip = (node) => {
     return (
       <div>
-        <div
-          style={{
-            float: "left",
-            width: 13,
-            height: 13,
-            margin: 5,
-            backgroundColor: node.color,
-          }}
-        ></div>
         <strong>{node.data.id}</strong>
         {`: ${node.data.value}%`}
+        <br />
+        <span>
+          {node.data.collegeData.city}, {node.data.collegeData.state}
+        </span>
       </div>
     );
   };
@@ -114,7 +69,7 @@ export default function ProviderVisualizationC() {
       axisLeft={{
         tickSize: 0,
         tickPadding: 5,
-        legend: "Average Percentage of Full-Time Enrollment",
+        legend: "Percentage of Full-Time Enrollment",
         legendPosition: "middle",
         legendOffset: -40,
       }}
@@ -122,9 +77,13 @@ export default function ProviderVisualizationC() {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "State",
+        legend: "College",
         legendPosition: "middle",
         legendOffset: 40,
+        format: (d) => {
+          const charLimit = 5;
+          return `${d.substr(0, charLimit)}...`;
+        },
       }}
     />
   );

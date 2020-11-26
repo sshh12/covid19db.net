@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
-import { Spin } from "antd";
+import citiesData from "../../data/provCitiesData.json";
 
 const cityParams = [
   "id",
@@ -17,41 +17,13 @@ const cityParams = [
 ];
 
 export default function ProviderVisualizationA() {
-  let [cities, setCities] = useState([]);
-  let [errMessage, setErrMessage] = useState(undefined);
-  useEffect(() => {
-    fetch("http://ec2-18-188-243-226.us-east-2.compute.amazonaws.com/city")
-      .then((resp) => {
-        if (!resp.ok) {
-          throw Error(resp.statusText);
-        }
-        return resp.json();
-      })
-      .then((data) =>
-        setCities(
-          data.map((row) => {
-            let obj = {};
-            for (let i in cityParams) {
-              obj[cityParams[i]] = row[i];
-            }
-            return obj;
-          })
-        )
-      )
-      .catch((error) => {
-        setErrMessage(`${error.message} (provider API error)`);
-      });
-  }, []);
-  if (cities.length == 0) {
-    // show spinner if not yet loaded
-    if (errMessage === undefined) {
-      return <Spin size="large" />;
+  let cities = citiesData.map((row) => {
+    let obj = {};
+    for (let i in cityParams) {
+      obj[cityParams[i]] = row[i];
     }
-    // if error occurred show the message instead
-    else {
-      return <p>{errMessage}</p>;
-    }
-  }
+    return obj;
+  });
   // agg data by region
   let dataByRegion = {};
   for (let city of cities) {

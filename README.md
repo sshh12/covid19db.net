@@ -9,6 +9,7 @@ Repository for our SWE IDB Project (Fall 2020, 10 AM, Group 9).
 - GitLab pipelines: https://gitlab.com/jrmoulckers/covid19db-net/-/pipelines
 - Website: https://covid19db.net
 - API: https://api.covid19db.net
+- Presentation: https://youtu.be/441iiFJt1I4
 
 ## Members
 
